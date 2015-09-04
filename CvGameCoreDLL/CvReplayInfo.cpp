@@ -35,7 +35,6 @@ CvReplayInfo::CvReplayInfo() :
 
 CvReplayInfo::~CvReplayInfo()
 {
-	ReplayMessageList::const_iterator it;
 	for (uint i = 0; i < m_listReplayMessages.size(); i++)
 	{
 		SAFE_DELETE(m_listReplayMessages[i]);
@@ -690,7 +689,6 @@ void CvReplayInfo::write(FDataStreamBase& stream)
 	}
 	stream.Write((int)m_eVictoryType);
 	stream.Write((int)m_listReplayMessages.size());
-	ReplayMessageList::const_iterator it;
 	for (uint i = 0; i < m_listReplayMessages.size(); i++)
 	{
 		if (NULL != m_listReplayMessages[i])

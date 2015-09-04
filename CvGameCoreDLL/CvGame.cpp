@@ -1359,7 +1359,7 @@ void CvGame::normalizeRemoveBadFeatures()
 										}
 										else
 										{
-											if (!(iDistance == iMaxRange) && (getSorenRandNum((2 + (pLoopPlot->getBonusType() == NO_BONUS) ? 0 : 2), "Remove Bad Feature") == 0))
+											if (!(iDistance == iMaxRange) && (getSorenRandNum(2 + (pLoopPlot->getBonusType() == NO_BONUS ? 0 : 2), "Remove Bad Feature") == 0))
 											{
 												pLoopPlot->setFeatureType(NO_FEATURE);                                            
 											}
@@ -2165,6 +2165,7 @@ void CvGame::update()
 	startProfilingDLL(false);
 	PROFILE_BEGIN("CvGame::update");
 
+again:
 	if (!gDLL->GetWorldBuilderMode() || isInAdvancedStart())
 	{
 		sendPlayerOptions();
@@ -2217,6 +2218,16 @@ void CvGame::update()
 			gDLL->getInterfaceIFace()->setWorldBuilder(true);
 		}
 	}
+
+	CvPlayerAI& kActivePlayer = GET_PLAYER(getActivePlayer());
+	if ((!kActivePlayer.isTurnActive() || kActivePlayer.isAutoMoves()) && !kActivePlayer.hasBusyUnit() && !isNetworkMultiPlayer() &&
+		getBugOptionBOOL("MainInterface__MinimizeAITurnSlices", true))
+	{
+		updateTimers();
+
+		goto again;
+	}
+
 	PROFILE_END();
 	stopProfilingDLL(false);
 }
@@ -3094,7 +3105,7 @@ void CvGame::clearSecretaryGeneral(VoteSourceTypes eVoteSource)
 				kData.eVoteSource = eVoteSource;
 				kData.kVoteOption.eVote = (VoteTypes)j;
 				kData.kVoteOption.iCityId = -1;
-				kData.kVoteOption.szText.empty();
+				kData.kVoteOption.szText.clear();
 				kData.kVoteOption.ePlayer = NO_PLAYER;
 				setVoteOutcome(kData, NO_PLAYER_VOTE);
 				setSecretaryGeneralTimer(eVoteSource, 0);

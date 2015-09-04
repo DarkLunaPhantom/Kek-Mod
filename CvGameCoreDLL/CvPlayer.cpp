@@ -18270,11 +18270,11 @@ void CvPlayer::createGreatPeople(UnitTypes eGreatPersonUnit, bool bIncrementThre
 
 
 	CvPlot* pPlot = GC.getMapINLINE().plot(iX, iY);
-	CvCity* pCity = pPlot->getPlotCity();
 	CvWString szReplayMessage;
 
 	if (pPlot)
 	{
+		CvCity* pCity = pPlot->getPlotCity();
 		if (pCity)
 		{
 			CvWString szCity;
@@ -19444,7 +19444,7 @@ void CvPlayer::applyEvent(EventTypes eEvent, int iEventTriggeredId, bool bUpdate
 				{
 					if (GET_PLAYER((PlayerTypes)iI).isAlive())
 					{
-						if (GET_PLAYER((PlayerTypes)iI).getTeam() == getID())
+						if (GET_PLAYER((PlayerTypes)iI).getTeam() == getTeam())
 						{
 							CvWString szBuffer = gDLL->getText("TXT_KEY_MISC_PROGRESS_TOWARDS_TECH", iBeakers, GC.getTechInfo(eBestTech).getTextKeyWide());
 
@@ -19851,7 +19851,6 @@ void CvPlayer::applyEvent(EventTypes eEvent, int iEventTriggeredId, bool bUpdate
 		{
 			if (NO_PLAYER != pTriggeredData->m_eOtherPlayer)
 			{
-				std::vector<CvCity*> apCities;
 				int iLoop;
 				for (CvCity* pLoopCity = GET_PLAYER(pTriggeredData->m_eOtherPlayer).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(pTriggeredData->m_eOtherPlayer).nextCity(&iLoop))
 				{
@@ -21860,7 +21859,7 @@ bool CvPlayer::canDefyResolution(VoteSourceTypes eVoteSource, const VoteSelectio
 		for (int iTeam = 0; iTeam < MAX_CIV_TEAMS; ++iTeam)
 		{
 			CvTeam& kTeam = GET_TEAM((TeamTypes)iTeam);
-			if ((PlayerTypes)iTeam != getTeam())
+			if ((TeamTypes)iTeam != getTeam())
 			{
 				if (kTeam.isVotingMember(eVoteSource))
 				{
@@ -21877,7 +21876,7 @@ bool CvPlayer::canDefyResolution(VoteSourceTypes eVoteSource, const VoteSelectio
 		for (int iTeam = 0; iTeam < MAX_CIV_TEAMS; ++iTeam)
 		{
 			CvTeam& kTeam = GET_TEAM((TeamTypes)iTeam);
-			if ((PlayerTypes)iTeam != getTeam())
+			if ((TeamTypes)iTeam != getTeam())
 			{
 				if (kTeam.isVotingMember(eVoteSource))
 				{

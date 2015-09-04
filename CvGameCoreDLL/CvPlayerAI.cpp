@@ -2706,7 +2706,7 @@ CvPlayerAI::CvFoundSettings::CvFoundSettings(const CvPlayerAI& kPlayer, bool bSt
 			{
 				BuildingTypes eCivBuilding = (BuildingTypes)GC.getCivilizationInfo(kPlayer.getCivilizationType()).getCivilizationBuildings(iI);
 				BuildingTypes eDefaultBuilding = (BuildingTypes)GC.getBuildingClassInfo((BuildingClassTypes)iI).getDefaultBuildingIndex();
-				if (eCivBuilding != NO_UNIT && eCivBuilding != eDefaultBuilding)
+				if (eCivBuilding != NO_BUILDING && eCivBuilding != eDefaultBuilding)
 				{
 					if (GC.getBuildingInfo(eCivBuilding).isWater())
 					{
@@ -14879,7 +14879,7 @@ int CvPlayerAI::AI_espionageVal(PlayerTypes eTargetPlayer, EspionageMissionTypes
 					}*/
 					// K-Mod. AI_unitValue is a relative rating value. It shouldn't be used for this.
 					// (The espionage mission is not enabled anyway, so I'm not going to put a lot of effort into it.)
-					iValue += GC.getUnitInfo(eUnit).getProductionCost() * canTrain(eUnit) ? 4 : 8;
+					iValue += GC.getUnitInfo(eUnit).getProductionCost() * (canTrain(eUnit) ? 4 : 8);
 					//
 				}
 			}
@@ -22980,7 +22980,6 @@ int CvPlayerAI::AI_getMinFoundValue() const
 	
 void CvPlayerAI::AI_updateCitySites(int iMinFoundValueThreshold, int iMaxSites)
 {
-	std::vector<int>::iterator it;
 	int iValue;
 	int iI;
 

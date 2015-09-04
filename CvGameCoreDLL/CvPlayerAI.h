@@ -79,11 +79,11 @@ public:
 	{
 		CvFoundSettings(const CvPlayerAI& kPlayer, bool bStartingLoc);
 		int iMinRivalRange;
-		bool bStartingLoc;
 		int iClaimThreshold; // culture required to pop the 2nd borders. (from original bts)
 
 		// some trait information that will influence where we settle
 		int iGreed; // a number from the original bts code.
+		bool bStartingLoc;
 		bool bEasyCulture; // easy for us to pop the culture to the 2nd border
 		bool bAmbitious; // expectation of taking foreign land, either by culture or by force
 		bool bFinancial; // more value for rivers

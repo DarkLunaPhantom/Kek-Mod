@@ -10297,8 +10297,6 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		(AI_getUnitAIType() == UNITAI_COUNTER) ||
 		(AI_getUnitAIType() == UNITAI_CITY_COUNTER) ||
 		  (AI_getUnitAIType() == UNITAI_ATTACK_SEA) ||
-		  (AI_getUnitAIType() == UNITAI_RESERVE_SEA) ||
-			(AI_getUnitAIType() == UNITAI_ATTACK_SEA) ||
 			(AI_getUnitAIType() == UNITAI_PARADROP) ||
 			(AI_getUnitAIType() == UNITAI_PIRATE_SEA) ||
 			(AI_getUnitAIType() == UNITAI_RESERVE_SEA) ||
