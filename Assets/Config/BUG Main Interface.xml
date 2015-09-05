@@ -116,6 +116,12 @@
 			<!-- Simple selection, by karadoc -->
 			<option id="SimpleSelection" key="Simple Selection"
 					type="boolean" default="False"/>
+			
+			<!-- Execute AI moves in minimal trun slices -->
+			<option id="MinimizeAITurnSlices" key="MinimizeAITurnSlices"
+				type="boolean" default="False"
+				get="isMinimizeAITurnSlices" dirtyBit="MiscButtons"/>
+			
 		</section>
 	</options>
 	

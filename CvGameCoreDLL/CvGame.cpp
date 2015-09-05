@@ -2221,7 +2221,7 @@ again:
 
 	CvPlayerAI& kActivePlayer = GET_PLAYER(getActivePlayer());
 	if ((!kActivePlayer.isTurnActive() || kActivePlayer.isAutoMoves()) && !kActivePlayer.hasBusyUnit() && !isNetworkMultiPlayer() &&
-		getBugOptionBOOL("MainInterface__MinimizeAITurnSlices", true))
+		getBugOptionBOOL("MainInterface__MinimizeAITurnSlices", false))
 	{
 		updateTimers();
 

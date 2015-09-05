@@ -356,4 +356,22 @@
 		<English>When checked, selecting units with the [Shift] key will only ever add a single unit at a time.</English>
 		<Spanish>Activada, seleccionando unidades con la tecla [Mayús] sólo añadir una unidad cada vez.</Spanish>
 	</TEXT>
+	<TEXT>
+	<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__MINIMIZEAITURNSLICES_TEXT</Tag>
+	<English>Minimize AI turn time</English>
+	<French>Minimize AI turn time</French>
+	<German>Minimize AI turn time</German>
+	<Italian>Minimize AI turn time</Italian>
+	<Spanish>Minimize AI turn time</Spanish>
+	<Finnish>Minimize AI turn time</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__MINIMIZEAITURNSLICES_HOVER</Tag>
+		<English>When checked, runs the AI turns in the minimal number of turn slices. This will speed the turn processing up at the expense of animation and general graphical responsiveness while the AI is processing its turns</English>
+		<French>When checked, runs the AI turns in the minimal number of turn slices. This will speed the turn processing up at the expense of animation and general graphical responsiveness while the AI is processing its turns.</French>
+		<German>When checked, runs the AI turns in the minimal number of turn slices. This will speed the turn processing up at the expense of animation and general graphical responsiveness while the AI is processing its turns.</German>
+		<Italian>When checked, runs the AI turns in the minimal number of turn slices. This will speed the turn processing up at the expense of animation and general graphical responsiveness while the AI is processing its turns.</Italian>
+		<Spanish>When checked, runs the AI turns in the minimal number of turn slices. This will speed the turn processing up at the expense of animation and general graphical responsiveness while the AI is processing its turns.</Spanish>
+		<Finnish>When checked, runs the AI turns in the minimal number of turn slices. This will speed the turn processing up at the expense of animation and general graphical responsiveness while the AI is processing its turns.</Finnish>
+	</TEXT>
 </Civ4GameText>

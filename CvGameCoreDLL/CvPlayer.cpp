@@ -18270,11 +18270,12 @@ void CvPlayer::createGreatPeople(UnitTypes eGreatPersonUnit, bool bIncrementThre
 
 
 	CvPlot* pPlot = GC.getMapINLINE().plot(iX, iY);
+	CvCity* pCity = NULL;
 	CvWString szReplayMessage;
 
 	if (pPlot)
 	{
-		CvCity* pCity = pPlot->getPlotCity();
+		pCity = pPlot->getPlotCity();
 		if (pCity)
 		{
 			CvWString szCity;
