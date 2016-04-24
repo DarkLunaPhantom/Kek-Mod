@@ -41,6 +41,9 @@
 from CvPythonExtensions import *
 import BugConfig
 import BugUtil
+# MOD - START - Traditional Python Widget Compatibility
+import BugGameUtils
+# MOD - END - Traditional Python Widget Compatibility
 
 
 ## Widget Types
@@ -121,6 +124,10 @@ def getWidgetHelp(argsList):
 	func = g_widgetHelp.get(eWidgetType)
 	if func:
 		return func(eWidgetType, iData1, iData2, bOption)
+	# MOD - START - Traditional Python Widget Compatibility
+	if eWidgetType == WidgetTypes.WIDGET_PYTHON:
+		return BugGameUtils.getDispatcher()._baseUtils.getWidgetHelp(argsList)
+	# MOD - END - Traditional Python Widget Compatibility
 	return u""
 
 
