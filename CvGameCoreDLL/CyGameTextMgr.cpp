@@ -8,15 +8,15 @@
 #include "CyDeal.h"
 #include "CyUnit.h"
 
-CyGameTextMgr::CyGameTextMgr() : 
-m_pGameTextMgr(NULL)
+CyGameTextMgr::CyGameTextMgr() : m_pGameTextMgr(NULL)
 {
 	m_pGameTextMgr = &CvGameTextMgr::GetInstance();
 }
 
-CyGameTextMgr::CyGameTextMgr(CvGameTextMgr* pGameTextMgr) : 
-m_pGameTextMgr(m_pGameTextMgr)
-{}
+CyGameTextMgr::CyGameTextMgr(CvGameTextMgr* pGameTextMgr) : m_pGameTextMgr(pGameTextMgr)
+{
+
+}
 
 void CyGameTextMgr::Reset()
 {
