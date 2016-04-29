@@ -3285,7 +3285,7 @@ bool CvGameTextMgr::setCombatPlotHelp(CvWStringBuffer &szString, CvPlot* pPlot)
 							}//if
 						}// else if
 					}//for
-					delete CombatRatioThresholds;
+					delete[] CombatRatioThresholds;
 					//throw away the array
 				}//if
 			} // else if
