@@ -14080,12 +14080,12 @@ void CvPlayer::clearSpaceShipPopups()
 			}
 			else
 			{
-				it++;
+				++it;
 			}
 		}
 		else
 		{
-			it++;
+			++it;
 		}
 	}
 }
@@ -14600,7 +14600,7 @@ int CvPlayer::getEspionageMissionBaseCost(EspionageMissionTypes eMission, Player
 	{
 		// Steal Treasury
 		//int iNumTotalGold = (GET_PLAYER(eTargetPlayer).getGold() * kMission.getStealTreasuryTypes()) / 100;
-		int iNumTotalGold;
+		int iNumTotalGold = 0;
 
 		if (NULL != pCity)
 		{
@@ -15422,7 +15422,7 @@ bool CvPlayer::doEspionageMission(EspionageMissionTypes eMission, PlayerTypes eT
 		if (NO_PLAYER != eTargetPlayer)
 		{
 			//int iNumTotalGold = (GET_PLAYER(eTargetPlayer).getGold() * kMission.getStealTreasuryTypes()) / 100;
-			int iNumTotalGold;
+			int iNumTotalGold = 0;
 
 			if (NULL != pPlot)
 			{

@@ -1,4 +1,4 @@
-// unit.cpp
+﻿// unit.cpp
 
 #include "CvGameCoreDLL.h"
 #include "CvUnit.h"
@@ -7453,7 +7453,7 @@ CvCity* CvUnit::getUpgradeCity(UnitTypes eUnit, bool bSearch, int* iSearchValue)
 {
 	if (eUnit == NO_UNIT)
 	{
-		return false;
+		return NULL;
 	}
 	
 	CvPlayerAI& kPlayer = GET_PLAYER(getOwnerINLINE());
@@ -7461,17 +7461,17 @@ CvCity* CvUnit::getUpgradeCity(UnitTypes eUnit, bool bSearch, int* iSearchValue)
 
 	if (GC.getCivilizationInfo(kPlayer.getCivilizationType()).getCivilizationUnits(kUnitInfo.getUnitClassType()) != eUnit)
 	{
-		return false;
+		return NULL;
 	}
 
 	if (!upgradeAvailable(getUnitType(), ((UnitClassTypes)(kUnitInfo.getUnitClassType()))))
 	{
-		return false;
+		return NULL;
 	}
 
 	if (kUnitInfo.getCargoSpace() < getCargo())
 	{
-		return false;
+		return NULL;
 	}
 
 	if (getCargo() > 0) // K-Mod. (no point looping through everything if there is no cargo anyway.)
@@ -7488,7 +7488,7 @@ CvCity* CvUnit::getUpgradeCity(UnitTypes eUnit, bool bSearch, int* iSearchValue)
 				{
 					if (kUnitInfo.getSpecialCargo() != pLoopUnit->getSpecialUnitType())
 					{
-						return false;
+						return NULL;
 					}
 				}
 
@@ -7496,7 +7496,7 @@ CvCity* CvUnit::getUpgradeCity(UnitTypes eUnit, bool bSearch, int* iSearchValue)
 				{
 					if (kUnitInfo.getDomainCargo() != pLoopUnit->getDomainType())
 					{
-						return false;
+						return NULL;
 					}
 				}
 			}
@@ -12866,8 +12866,8 @@ int CvUnit::planBattle(CvBattleDefinition& kBattle, const std::vector<int>& comb
 			if (!bNextRound && (iDefenderUnitsKilled > 0 || iAttackerUnitsKilled > 0))
 			{
 				if (i+1 == combat_log.size() ||
-					iDefenderUnitsKilled >= iAttackerUnits - iAttackerUnitsKilled && combat_log[i] > 0 ||
-					iAttackerUnitsKilled >= iDefenderUnits - iDefenderUnitsKilled && combat_log[i] < 0)
+					(iDefenderUnitsKilled >= iAttackerUnits - iAttackerUnitsKilled && combat_log[i] > 0) ||
+					(iAttackerUnitsKilled >= iDefenderUnits - iDefenderUnitsKilled && combat_log[i] < 0))
 				{
 					bNextRound = true;
 				}

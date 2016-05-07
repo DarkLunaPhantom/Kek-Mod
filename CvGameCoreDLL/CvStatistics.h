@@ -106,7 +106,7 @@ public:
 		
 private:
 	CvPlayerRecord();								// no one can create one of these except CvStatistics
-	~CvPlayerRecord();						// no one can destroy one of these except CvStatistics
+	virtual ~CvPlayerRecord();						// no one can destroy one of these except CvStatistics
 
 	int m_iID;
 	int m_iTime;

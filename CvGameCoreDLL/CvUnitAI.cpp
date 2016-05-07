@@ -1,4 +1,4 @@
-// unitAI.cpp
+﻿// unitAI.cpp
 
 #include "CvGameCoreDLL.h"
 #include "CvUnitAI.h"
@@ -10988,7 +10988,7 @@ CvUnit* CvUnitAI::AI_findTransport(UnitAITypes eUnitAI, int iFlags, int iMaxPath
 
 	// K-Mod
 	if (eUnitAI != NO_UNITAI && GET_PLAYER(getOwnerINLINE()).AI_getNumAIUnits(eUnitAI) == 0)
-		return false;
+		return NULL;
 	// K-Mod end
 
 	int iBestValue = MAX_INT;

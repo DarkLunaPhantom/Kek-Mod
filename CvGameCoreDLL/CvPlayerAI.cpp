@@ -9182,6 +9182,7 @@ bool CvPlayerAI::AI_counterPropose(PlayerTypes ePlayer, const CLinkList<TradeDat
 			}
 			else
 			{
+				SAFE_DELETE_ARRAY(pabBonusDeal);
 				return false; // if there is no peace, there will be no trade
 			}
 		}
@@ -23063,7 +23064,7 @@ bool CvPlayerAI::AI_isPlotCitySite(CvPlot* pPlot) const
 	std::vector<int>::const_iterator it;
 	int iPlotIndex = GC.getMapINLINE().plotNumINLINE(pPlot->getX_INLINE(), pPlot->getY_INLINE());
 	
-	for (it = m_aiAICitySites.begin(); it != m_aiAICitySites.end(); it++)
+	for (it = m_aiAICitySites.begin(); it != m_aiAICitySites.end(); ++it)
 	{
 		if ((*it) == iPlotIndex)
 		{
@@ -23079,7 +23080,7 @@ int CvPlayerAI::AI_getNumAreaCitySites(int iAreaID, int& iBestValue) const
 	int iCount = 0;
 	iBestValue = 0;
 	
-	for (it = m_aiAICitySites.begin(); it != m_aiAICitySites.end(); it++)
+	for (it = m_aiAICitySites.begin(); it != m_aiAICitySites.end(); ++it)
 	{
 		CvPlot* pCitySitePlot = GC.getMapINLINE().plotByIndex((*it));
 		if (pCitySitePlot->getArea() == iAreaID)
@@ -23097,7 +23098,7 @@ int CvPlayerAI::AI_getNumAdjacentAreaCitySites(int iWaterAreaID, int iExcludeAre
 	int iCount = 0;
 	iBestValue = 0;
 
-	for (it = m_aiAICitySites.begin(); it != m_aiAICitySites.end(); it++)
+	for (it = m_aiAICitySites.begin(); it != m_aiAICitySites.end(); ++it)
 	{
 		CvPlot* pCitySitePlot = GC.getMapINLINE().plotByIndex((*it));
 		if (pCitySitePlot->getArea() != iExcludeArea)
@@ -23118,7 +23119,7 @@ int CvPlayerAI::AI_getNumPrimaryAreaCitySites(int iMinimumValue) const
 	int iCount = 0;
 
 	std::vector<int>::const_iterator it;
-	for (it = m_aiAICitySites.begin(); it != m_aiAICitySites.end(); it++)
+	for (it = m_aiAICitySites.begin(); it != m_aiAICitySites.end(); ++it)
 	{
 		CvPlot* pCitySitePlot = GC.getMapINLINE().plotByIndex((*it));
 		if (AI_isPrimaryArea(pCitySitePlot->area()) && pCitySitePlot->getFoundValue(getID()) >= iMinimumValue)

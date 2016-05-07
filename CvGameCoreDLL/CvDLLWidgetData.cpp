@@ -3441,12 +3441,12 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 			if( !szWorstEnemyString.isEmpty() )
 			{
 				szBuffer.append(NEWLINE);
-				szBuffer.append(gDLL->getText(L"TXT_KEY_WORST_ENEMY_OF", szWorstEnemyString));
+				szBuffer.append(gDLL->getText(L"TXT_KEY_WORST_ENEMY_OF", szWorstEnemyString.getCString()));
 			}
 			if( !szWarWithString.isEmpty() )
 			{
 				szBuffer.append(NEWLINE);
-				szBuffer.append(gDLL->getText(L"TXT_KEY_AT_WAR_WITH", szWarWithString));
+				szBuffer.append(gDLL->getText(L"TXT_KEY_AT_WAR_WITH", szWarWithString.getCString()));
 			}
 
 			if( !(kActiveTeam.isAtWar(eTeam)))
