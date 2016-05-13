@@ -67,7 +67,7 @@ CvArtInfo##name##* CvArtFileMgr::get##name##ArtInfo( const char *szArtDefineTag 
 	if ( it == m_map##name##ArtInfos->end() ) \
 	{\
 		char szErrorMsg[256]; \
-		sprintf(szErrorMsg, "get##name##ArtInfo: %s was not found", szArtDefineTag); \
+		sprintf(szErrorMsg, "ArtInfo: '%s' was not found", szArtDefineTag); \
 		FAssertMsg(false, szErrorMsg ); \
 		if ( 0 == strcmp(szArtDefineTag, "ERROR") ) \
 		{ \
