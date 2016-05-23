@@ -508,6 +508,9 @@
 	<TEXT>
 		<Tag>TXT_KEY_PROMOTION_DISORGANIZED</Tag>
 		<English>Disorganized</English>
+		<French>Disorganized</French>
+		<German>Unorganisiert</German>
+		<Italian>Disorganized</Italian>
 		<Spanish>Desorganizado</Spanish>
 	</TEXT>
 
@@ -536,7 +539,6 @@
 		<Spanish>[ICON_BULLET]+1[ICON_COMMERCE] en %d1 [NUM1:casilla:casillas] m&#225;s.</Spanish>
 
 	<!-- Example text
-		<English>Clearing a %s1_FeatName has created %d2_Num [ICON_PRODUCTION] for %s3_CityName.</English>
 	<TEXT>
 		<Tag>TXT_KEY_CIVIC_FEATURE_HAPPINESS</Tag>
 		<English>[ICON_BULLET]%D1_Change%F2_HappOrUnhapp from[SPACE]</English>
@@ -610,5 +612,9 @@
 		<Tag>USER_DIPLO_WARPLAN_TARGET_1</Tag>
 		<English>%s1.</English>
 		<!-- same for all languages -->
+		<French>%s1.</French>
+		<German>%s1.</German>
+		<Italian>%s1.</Italian>
+		<Spanish>%s1.</Spanish>
 	</TEXT>
 </Civ4GameText>

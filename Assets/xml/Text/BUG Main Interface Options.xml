@@ -349,11 +349,17 @@
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__SIMPLESELECTION_TEXT</Tag>
 		<English>Simple [Shift] Unit Selection</English>
+		<French>Simple [Shift] Unit Selection</French>
+		<German>Einfache [Shift] Einheitenselektion</German>
+		<Italian>Simple [Shift] Unit Selection</Italian>
 		<Spanish>Selección de unidades simple [Mayús]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__SIMPLESELECTION_HOVER</Tag>
 		<English>When checked, selecting units with the [Shift] key will only ever add a single unit at a time.</English>
+		<French>When checked, selecting units with the [Shift] key will only ever add a single unit at a time.</French>
+		<German>Wenn aktiviert, wird [Shift]+Klick statt Einheitengruppen immer nur einzelne Einheiten hinzufügen.</German>
+		<Italian>When checked, selecting units with the [Shift] key will only ever add a single unit at a time.</Italian>
 		<Spanish>Activada, seleccionando unidades con la tecla [Mayús] sólo añadir una unidad cada vez.</Spanish>
 	</TEXT>
 	<TEXT>
