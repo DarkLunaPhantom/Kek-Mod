@@ -729,6 +729,7 @@ void CvSelectionGroup::startMission()
 			setActivityType(ACTIVITY_HOLD);
 		// K-Mod end
 
+		// Whole group effects
 		switch (headMissionQueueNode()->m_data.eMissionType)
 		{
 		case MISSION_MOVE_TO:
@@ -801,7 +802,6 @@ void CvSelectionGroup::startMission()
 		case MISSION_AIRBOMB:
 		case MISSION_BOMBARD:
 		case MISSION_RANGE_ATTACK:
-		case MISSION_PILLAGE:
 		case MISSION_SABOTAGE:
 		case MISSION_DESTROY:
 		case MISSION_STEAL_PLANS:
@@ -817,6 +817,53 @@ void CvSelectionGroup::startMission()
 		case MISSION_INFILTRATE:
 		case MISSION_GOLDEN_AGE:
 			break;
+		// K-Mod. Let fast units carry out the pillage action first.
+		// (This is based on the idea from BBAI, which had a buggy implementation.)
+		case MISSION_PILLAGE:
+		{
+			// Fast units pillage first
+			std::vector<std::pair<int, int> > unit_list;
+			CLLNode<IDInfo>* pUnitNode = headUnitNode();
+
+			while (pUnitNode != NULL)
+			{
+				CvUnit* pLoopUnit = ::getUnit(pUnitNode->m_data);
+				pUnitNode = nextUnitNode(pUnitNode);
+
+				if (pLoopUnit->canMove() && pLoopUnit->canPillage(plot()))
+				{
+					int iPriority = 0;
+					if (pLoopUnit->bombardRate() > 0)
+						iPriority--;
+					if (pLoopUnit->isMadeAttack())
+						iPriority++;
+					if (pLoopUnit->isHurt() && !pLoopUnit->hasMoved())
+						iPriority--;
+
+					iPriority = (3 + iPriority)*pLoopUnit->movesLeft() / 3;
+					unit_list.push_back(std::make_pair(iPriority, pLoopUnit->getID()));
+				}
+			}
+			std::sort(unit_list.begin(), unit_list.end(), std::greater<std::pair<int, int> >());
+
+			CvPlayer& kOwner = GET_PLAYER(getOwnerINLINE());
+			for (size_t i = 0; i < unit_list.size(); i++)
+			{
+				CvUnit* pLoopUnit = kOwner.getUnit(unit_list[i].second);
+				FAssert(pLoopUnit);
+
+				if (pLoopUnit->pillage())
+				{
+					bAction = true;
+					if (!isHuman() && canAllMove()) // AI groups might want to reconsider their action after pillaging.
+						break;
+				}
+				if (pLoopUnit->isAttacking())
+					break; // Sea patrol intercept
+			}
+			break;
+		}
+
 		// K-Mod. If the worker is already in danger when the command is issued, use the MOVE_IGNORE_DANGER flag.
 		case MISSION_BUILD:
 			if (!AI_isControlled() && headMissionQueueNode()->m_data.iPushTurn == GC.getGameINLINE().getGameTurn() &&
@@ -841,357 +888,299 @@ void CvSelectionGroup::startMission()
 			NotifyEntity( headMissionQueueNode()->m_data.eMissionType );
 		}
 
-		// K-Mod. Let fast units carry out the pillage action first. (based on the idea from BBAI, which had a buggy implementation)
-		if (headMissionQueueNode()->m_data.eMissionType == MISSION_PILLAGE)
+		// Individual unit effects
+		// K-Mod
+		std::vector<CvUnit*> units_left_behind;
+		bool bAbandonMoveless = false;
+		switch (headMissionQueueNode()->m_data.eMissionType)
 		{
-			// Fast units pillage first
-			std::vector<std::pair<int, int> > unit_list;
-			CLLNode<IDInfo>* pUnitNode = headUnitNode();
+		case MISSION_PARADROP:
+			bAbandonMoveless = true;
+		default:
+			break;
+		}
+		// K-Mod end
+		CLLNode<IDInfo>* pUnitNode = headUnitNode();
 
-			while (pUnitNode != NULL)
+		while (pUnitNode != NULL)
+		{
+			CvUnit* pLoopUnit = ::getUnit(pUnitNode->m_data);
+			pUnitNode = nextUnitNode(pUnitNode);
+
+			if (!pLoopUnit->canMove())
 			{
-				CvUnit* pLoopUnit = ::getUnit(pUnitNode->m_data);
-				pUnitNode = nextUnitNode(pUnitNode);
-
-				if (pLoopUnit->canMove() && pLoopUnit->canPillage(plot()))
-				{
-					int iPriority = 0;
-					if (pLoopUnit->bombardRate() > 0)
-						iPriority--;
-					if (pLoopUnit->isMadeAttack())
-						iPriority++;
-
-					iPriority = (3 + iPriority)*pLoopUnit->movesLeft() / 3;
-					iPriority *= pLoopUnit->currHitPoints();
-					iPriority /= std::max(1, pLoopUnit->maxHitPoints());
-					unit_list.push_back(std::make_pair(iPriority, pLoopUnit->getID()));
-				}
+				if (bAbandonMoveless)
+					units_left_behind.push_back(pLoopUnit);
 			}
-			std::sort(unit_list.begin(), unit_list.end(), std::greater<std::pair<int, int> >());
-
-			CvPlayer& kOwner = GET_PLAYER(getOwnerINLINE());
-			for (size_t i = 0; i < unit_list.size(); i++)
+			else
 			{
-				CvUnit* pLoopUnit = kOwner.getUnit(unit_list[i].second);
-
-				if (pLoopUnit->pillage())
+				switch (headMissionQueueNode()->m_data.eMissionType)
 				{
-					bAction = true;
-					if (!isHuman() && canAllMove()) // AI groups might want to reconsider their action after pillaging.
+				// K-Mod
+				case MISSION_SKIP:
+					// If the unit has some particular purpose for its 'skip' mission, automatically unload it.
+					// (eg. if a unit in a boat wants to do MISSIONAI_GUARD_CITY; we should unload it here.)
+					switch (AI_getMissionAIType())
+					{
+					case NO_MISSIONAI:
+					case MISSIONAI_LOAD_ASSAULT:
+					case MISSIONAI_LOAD_SETTLER:
+					case MISSIONAI_LOAD_SPECIAL:
+						pUnitNode = 0; // don't auto-unload. Just do nothing.
 						break;
+					default:
+						FAssert(AI_isControlled());
+						pLoopUnit->unload(); // this checks canUnload internally
+						break;
+					}
+					break;
+				// K-Mod end
+				case MISSION_MOVE_TO:
+				case MISSION_ROUTE_TO:
+				case MISSION_MOVE_TO_UNIT:
+				case MISSION_SLEEP:
+				case MISSION_FORTIFY:
+				case MISSION_SEAPATROL:
+				case MISSION_HEAL:
+				case MISSION_SENTRY:
+				case MISSION_PILLAGE:
+				case MISSION_BUILD:
+					pUnitNode = 0; // K-Mod. Nothing to do, so we might as well abort the unit loop.
+					break;
+				// K-Mod. (this use to be a "do nothing" case.)
+				case MISSION_AIRPATROL:
+					if (!pLoopUnit->canAirDefend(plot())) // (We can't use 'canAirPatrol', because that checks 'isWaiting'.)
+						units_left_behind.push_back(pLoopUnit);
+					break;
+				// K-Mod end
+
+				case MISSION_AIRLIFT:
+					if (pLoopUnit->airlift(headMissionQueueNode()->m_data.iData1, headMissionQueueNode()->m_data.iData2))
+					{
+						bAction = true;
+					}
+					break;
+
+				case MISSION_NUKE:
+					if (pLoopUnit->nuke(headMissionQueueNode()->m_data.iData1, headMissionQueueNode()->m_data.iData2))
+					{
+						bAction = true;
+
+						if (GC.getMapINLINE().plotINLINE(headMissionQueueNode()->m_data.iData1, headMissionQueueNode()->m_data.iData2)->isVisibleToWatchingHuman())
+						{
+							bNuke = true;
+						}
+					}
+					break;
+
+				case MISSION_RECON:
+					if (pLoopUnit->recon(headMissionQueueNode()->m_data.iData1, headMissionQueueNode()->m_data.iData2))
+					{
+						bAction = true;
+					}
+					break;
+
+				case MISSION_PARADROP:
+					if (pLoopUnit->paradrop(headMissionQueueNode()->m_data.iData1, headMissionQueueNode()->m_data.iData2))
+					{
+						bAction = true;
+					}
+					// K-Mod
+					else
+						units_left_behind.push_back(pLoopUnit);
+					// K-Mod end
+					break;
+
+				case MISSION_AIRBOMB:
+					if (pLoopUnit->airBomb(headMissionQueueNode()->m_data.iData1, headMissionQueueNode()->m_data.iData2))
+					{
+						bAction = true;
+					}
+					break;
+
+				case MISSION_BOMBARD:
+					if (pLoopUnit->bombard())
+					{
+						bAction = true;
+					}
+					break;
+
+				case MISSION_RANGE_ATTACK:
+					if (pLoopUnit->rangeStrike(headMissionQueueNode()->m_data.iData1, headMissionQueueNode()->m_data.iData2))
+					{
+						bAction = true;
+					}
+					break;
+
+				case MISSION_PLUNDER:
+					if (pLoopUnit->plunder())
+					{
+						bAction = true;
+					}
+					break;
+
+				case MISSION_SABOTAGE:
+					if (pLoopUnit->sabotage())
+					{
+						bAction = true;
+					}
+					break;
+
+				case MISSION_DESTROY:
+					if (pLoopUnit->destroy())
+					{
+						bAction = true;
+					}
+					break;
+
+				case MISSION_STEAL_PLANS:
+					if (pLoopUnit->stealPlans())
+					{
+						bAction = true;
+					}
+					break;
+
+				case MISSION_FOUND:
+					if (pLoopUnit->found())
+					{
+						bAction = true;
+					}
+					break;
+
+				case MISSION_SPREAD:
+					if (pLoopUnit->spread((ReligionTypes)(headMissionQueueNode()->m_data.iData1)))
+					{
+						bAction = true;
+					}
+					break;
+
+				case MISSION_SPREAD_CORPORATION:
+					if (pLoopUnit->spreadCorporation((CorporationTypes)(headMissionQueueNode()->m_data.iData1)))
+					{
+						bAction = true;
+					}
+					break;
+
+				case MISSION_JOIN:
+					if (pLoopUnit->join((SpecialistTypes)(headMissionQueueNode()->m_data.iData1)))
+					{
+						bAction = true;
+					}
+					break;
+
+				case MISSION_CONSTRUCT:
+					if (pLoopUnit->construct((BuildingTypes)(headMissionQueueNode()->m_data.iData1)))
+					{
+						bAction = true;
+					}
+					break;
+
+				case MISSION_DISCOVER:
+					if (pLoopUnit->discover())
+					{
+						bAction = true;
+					}
+					break;
+
+				case MISSION_HURRY:
+					if (pLoopUnit->hurry())
+					{
+						bAction = true;
+					}
+					break;
+
+				case MISSION_TRADE:
+					if (pLoopUnit->trade())
+					{
+						bAction = true;
+					}
+					break;
+
+				case MISSION_GREAT_WORK:
+					if (pLoopUnit->greatWork())
+					{
+						bAction = true;
+					}
+					break;
+
+				case MISSION_INFILTRATE:
+					if (pLoopUnit->infiltrate())
+					{
+						bAction = true;
+					}
+					break;
+
+				case MISSION_GOLDEN_AGE:
+					//just play animation, not golden age - JW
+					if (headMissionQueueNode()->m_data.iData1 != -1)
+					{
+						CvMissionDefinition kMission;
+						kMission.setMissionTime(GC.getMissionInfo(MISSION_GOLDEN_AGE).getTime() * gDLL->getSecsPerTurn());
+						kMission.setUnit(BATTLE_UNIT_ATTACKER, pLoopUnit);
+						kMission.setUnit(BATTLE_UNIT_DEFENDER, NULL);
+						kMission.setPlot(pLoopUnit->plot());
+						kMission.setMissionType(MISSION_GOLDEN_AGE);
+						gDLL->getEntityIFace()->AddMission(&kMission);
+						pLoopUnit->NotifyEntity(MISSION_GOLDEN_AGE);
+						bAction = true;
+					}
+					else
+					{
+						if (pLoopUnit->goldenAge())
+						{
+							bAction = true;
+						}
+					}
+					break;
+
+				case MISSION_LEAD:
+					if (pLoopUnit->lead(headMissionQueueNode()->m_data.iData1))
+					{
+						bAction = true;
+					}
+					break;
+
+				case MISSION_ESPIONAGE:
+					if (pLoopUnit->espionage((EspionageMissionTypes)headMissionQueueNode()->m_data.iData1, headMissionQueueNode()->m_data.iData2))
+					{
+						bAction = true;
+					}
+					pUnitNode = NULL; // allow one unit at a time to do espionage
+					break;
+
+				case MISSION_DIE_ANIMATION:
+					bAction = true;
+					break;
+
+				default:
+					FAssert(false);
+					break;
 				}
-				if (pLoopUnit->isAttacking())
-					break; // Sea patrol intercept
+
+				if (getNumUnits() == 0)
+				{
+					break;
+				}
+
+				if (headMissionQueueNode() == NULL)
+				{
+					break;
+				}
 			}
 		}
-		// K-Mod end. (note: I'm not sure what the original bts code was. I deleted the BBAI code.)
-		else
+		// K-Mod
+		if (!units_left_behind.empty())
 		{
-			// K-Mod
-			std::vector<CvUnit*> units_left_behind;
-			bool bAbandonMoveless = false;
-			switch (headMissionQueueNode()->m_data.eMissionType)
+			FAssert(isHuman()); // This isn't a problem. I just don't want the AI to choose missions which cause the group to separate.
+			FAssert((int)units_left_behind.size() < getNumUnits()); // we should never leave _everyone_ behind!
+			units_left_behind[0]->joinGroup(NULL, true);
+			CvSelectionGroup* pNewGroup = units_left_behind[0]->getGroup();
+			for (size_t i = 1; i < units_left_behind.size(); i++)
 			{
-			case MISSION_PARADROP:
-			case MISSION_AIRPATROL:
-				bAbandonMoveless = true;
-			default:
-				break;
+				units_left_behind[i]->joinGroup(pNewGroup, true);
 			}
-			// K-Mod end
-			CLLNode<IDInfo>* pUnitNode = headUnitNode();
-
-			while (pUnitNode != NULL)
-			{
-				CvUnit* pLoopUnit = ::getUnit(pUnitNode->m_data);
-				pUnitNode = nextUnitNode(pUnitNode);
-
-				if (!pLoopUnit->canMove())
-				{
-					if (bAbandonMoveless)
-						units_left_behind.push_back(pLoopUnit);
-				}
-				else
-				{
-					switch (headMissionQueueNode()->m_data.eMissionType)
-					{
-					// K-Mod
-					case MISSION_SKIP:
-						// If the unit has some particular purpose for its 'skip' mission, automatically unload it.
-						// (eg. if a unit in a boat wants to do MISSIONAI_GUARD_CITY; we should unload it here.)
-						switch (AI_getMissionAIType())
-						{
-						case NO_MISSIONAI:
-						case MISSIONAI_LOAD_ASSAULT:
-						case MISSIONAI_LOAD_SETTLER:
-						case MISSIONAI_LOAD_SPECIAL:
-							pUnitNode = 0; // don't auto-unload. Just do nothing.
-							break;
-						default:
-							FAssert(AI_isControlled());
-							pLoopUnit->unload(); // this checks canUnload internally
-							break;
-						}
-						break;
-					// K-Mod end
-					case MISSION_MOVE_TO:
-					case MISSION_ROUTE_TO:
-					case MISSION_MOVE_TO_UNIT:
-					//case MISSION_SKIP:
-					case MISSION_SLEEP:
-					case MISSION_FORTIFY:
-					case MISSION_SEAPATROL:
-					case MISSION_HEAL:
-					case MISSION_SENTRY:
-						pUnitNode = 0; // K-Mod. Nothing to do, so we might as well abort the unit loop.
-						break;
-					// K-Mod. (this use to be a "do nothing" case.)
-					case MISSION_AIRPATROL:
-						if (!pLoopUnit->canAirDefend(plot())) // (We can't use 'canAirPatrol', because that checks 'isWaiting'.)
-							units_left_behind.push_back(pLoopUnit);
-						break;
-					// K-Mod end
-
-					case MISSION_AIRLIFT:
-						if (pLoopUnit->airlift(headMissionQueueNode()->m_data.iData1, headMissionQueueNode()->m_data.iData2))
-						{
-							bAction = true;
-						}
-						break;
-
-					case MISSION_NUKE:
-						if (pLoopUnit->nuke(headMissionQueueNode()->m_data.iData1, headMissionQueueNode()->m_data.iData2))
-						{
-							bAction = true;
-
-							if (GC.getMapINLINE().plotINLINE(headMissionQueueNode()->m_data.iData1, headMissionQueueNode()->m_data.iData2)->isVisibleToWatchingHuman())
-							{
-								bNuke = true;
-							}
-						}
-						break;
-
-					case MISSION_RECON:
-						if (pLoopUnit->recon(headMissionQueueNode()->m_data.iData1, headMissionQueueNode()->m_data.iData2))
-						{
-							bAction = true;
-						}
-						break;
-
-					case MISSION_PARADROP:
-						if (pLoopUnit->paradrop(headMissionQueueNode()->m_data.iData1, headMissionQueueNode()->m_data.iData2))
-						{
-							bAction = true;
-						}
-						// K-Mod
-						else
-							units_left_behind.push_back(pLoopUnit);
-						// K-Mod end
-						break;
-
-					case MISSION_AIRBOMB:
-						if (pLoopUnit->airBomb(headMissionQueueNode()->m_data.iData1, headMissionQueueNode()->m_data.iData2))
-						{
-							bAction = true;
-						}
-						break;
-
-					case MISSION_BOMBARD:
-						if (pLoopUnit->bombard())
-						{
-							bAction = true;
-						}
-						break;
-
-					case MISSION_RANGE_ATTACK:
-						if (pLoopUnit->rangeStrike(headMissionQueueNode()->m_data.iData1, headMissionQueueNode()->m_data.iData2))
-						{
-							bAction = true;
-						}
-						break;
-
-					case MISSION_PILLAGE:
-						/*if (pLoopUnit->pillage())
-						{
-							bAction = true;
-						}*/
-						FAssertMsg(false, "MISSION_PILLAGE handled incorrectly."); // K-mod (see above)
-						break;
-
-					case MISSION_PLUNDER:
-						if (pLoopUnit->plunder())
-						{
-							bAction = true;
-						}
-						break;
-
-					case MISSION_SABOTAGE:
-						if (pLoopUnit->sabotage())
-						{
-							bAction = true;
-						}
-						break;
-
-					case MISSION_DESTROY:
-						if (pLoopUnit->destroy())
-						{
-							bAction = true;
-						}
-						break;
-
-					case MISSION_STEAL_PLANS:
-						if (pLoopUnit->stealPlans())
-						{
-							bAction = true;
-						}
-						break;
-
-					case MISSION_FOUND:
-						if (pLoopUnit->found())
-						{
-							bAction = true;
-						}
-						break;
-
-					case MISSION_SPREAD:
-						if (pLoopUnit->spread((ReligionTypes)(headMissionQueueNode()->m_data.iData1)))
-						{
-							bAction = true;
-						}
-						break;
-
-					case MISSION_SPREAD_CORPORATION:
-						if (pLoopUnit->spreadCorporation((CorporationTypes)(headMissionQueueNode()->m_data.iData1)))
-						{
-							bAction = true;
-						}
-						break;
-
-					case MISSION_JOIN:
-						if (pLoopUnit->join((SpecialistTypes)(headMissionQueueNode()->m_data.iData1)))
-						{
-							bAction = true;
-						}
-						break;
-
-					case MISSION_CONSTRUCT:
-						if (pLoopUnit->construct((BuildingTypes)(headMissionQueueNode()->m_data.iData1)))
-						{
-							bAction = true;
-						}
-						break;
-
-					case MISSION_DISCOVER:
-						if (pLoopUnit->discover())
-						{
-							bAction = true;
-						}
-						break;
-
-					case MISSION_HURRY:
-						if (pLoopUnit->hurry())
-						{
-							bAction = true;
-						}
-						break;
-
-					case MISSION_TRADE:
-						if (pLoopUnit->trade())
-						{
-							bAction = true;
-						}
-						break;
-
-					case MISSION_GREAT_WORK:
-						if (pLoopUnit->greatWork())
-						{
-							bAction = true;
-						}
-						break;
-
-					case MISSION_INFILTRATE:
-						if (pLoopUnit->infiltrate())
-						{
-							bAction = true;
-						}
-						break;
-
-					case MISSION_GOLDEN_AGE:
-						//just play animation, not golden age - JW
-						if (headMissionQueueNode()->m_data.iData1 != -1)
-						{
-							CvMissionDefinition kMission;
-							kMission.setMissionTime(GC.getMissionInfo(MISSION_GOLDEN_AGE).getTime() * gDLL->getSecsPerTurn());
-							kMission.setUnit(BATTLE_UNIT_ATTACKER, pLoopUnit);
-							kMission.setUnit(BATTLE_UNIT_DEFENDER, NULL);
-							kMission.setPlot(pLoopUnit->plot());
-							kMission.setMissionType(MISSION_GOLDEN_AGE);
-							gDLL->getEntityIFace()->AddMission(&kMission);
-							pLoopUnit->NotifyEntity(MISSION_GOLDEN_AGE);
-							bAction = true;
-						}
-						else
-						{
-							if (pLoopUnit->goldenAge())
-							{
-								bAction = true;
-							}
-						}
-						break;
-
-					case MISSION_BUILD:
-						pUnitNode = 0; // K-Mod. Nothing to do, so end the loop.
-						break;
-
-					case MISSION_LEAD:
-						if (pLoopUnit->lead(headMissionQueueNode()->m_data.iData1))
-						{
-							bAction = true;
-						}
-						break;
-
-					case MISSION_ESPIONAGE:
-						if (pLoopUnit->espionage((EspionageMissionTypes)headMissionQueueNode()->m_data.iData1, headMissionQueueNode()->m_data.iData2))
-						{
-							bAction = true;
-						}
-						pUnitNode = NULL; // allow one unit at a time to do espionage
-						break;
-
-					case MISSION_DIE_ANIMATION:
-						bAction = true;
-						break;
-
-					default:
-						FAssert(false);
-						break;
-					}
-
-					if (getNumUnits() == 0)
-					{
-						break;
-					}
-
-					if (headMissionQueueNode() == NULL)
-					{
-						break;
-					}
-				}
-			}
-			// K-Mod
-			if (!units_left_behind.empty())
-			{
-				FAssert(isHuman()); // This isn't a problem. I just don't want the AI to choose missions which cause the group to separate.
-				FAssert((int)units_left_behind.size() < getNumUnits()); // we should never leave _everyone_ behind!
-				units_left_behind[0]->joinGroup(NULL, true);
-				CvSelectionGroup* pNewGroup = units_left_behind[0]->getGroup();
-				for (size_t i = 1; i < units_left_behind.size(); i++)
-				{
-					units_left_behind[i]->joinGroup(pNewGroup, true);
-				}
-			}
-			// K-Mod end
-		} // end if (mission != pillage)
+		}
+		// K-Mod end
 	} // end if (can start mission)
 
 	if ((getNumUnits() > 0) && (headMissionQueueNode() != NULL))
@@ -1305,7 +1294,8 @@ bool CvSelectionGroup::continueMission_bulk(int iSteps)
 		return false;
 	}
 
-	FAssert(bDone || !(headMissionQueueNode()->m_data.iFlags & MOVE_DIRECT_ATTACK)); // K-Mod. ('direct attack' should be used for attack commands only)
+	// K-Mod. 'direct attack' should be used for attack commands only. (But in simultaneous turns mode, the defenders might have already left.)
+	FAssert(bDone || !(headMissionQueueNode()->m_data.iFlags & MOVE_DIRECT_ATTACK) || GC.getGameINLINE().isMPOption(MPOPTION_SIMULTANEOUS_TURNS));
 
 	if (!bDone)
 	{
@@ -4610,7 +4600,11 @@ CvSelectionGroup* CvSelectionGroup::splitGroup(int iSplitSize, CvUnit* pNewHeadU
 
 		int x = (aiTotalAIs[i] * iSplitSize + iGroupSize/2 + iCarry) / iGroupSize;
 
+		// In rare situations x can be rounded up above the maximum,
+		// because iCarry may oversized if one of the original head units is reserved.
+		x = std::min(x, aiTotalAIs[i]);
 		FAssert(x >= 0 && x <= aiTotalAIs[i]);
+
 		iCarry += aiTotalAIs[i] * iSplitSize - x * iGroupSize;
 		aiNewGroupAIs[i] = x;
 		FAssert(iCarry >= -iGroupSize && iCarry <= iGroupSize);

@@ -574,10 +574,8 @@ void CvDLLWidgetData::parseHelp(CvWStringBuffer &szBuffer, CvWidgetDataStruct &w
 	case WIDGET_COMMERCE_MOD_HELP:
 		parseCommerceModHelp(widgetDataStruct, szBuffer);
 		break;
-/*
-** K-Mod, 5/jan/11, karadoc
-** environmental advisor widgets
-*/
+
+	// K-Mod. Environmental advisor widgets.
 	case WIDGET_HELP_POLLUTION_OFFSETS:
 		parsePollutionOffsetsHelp(widgetDataStruct, szBuffer);
 		break;
@@ -596,9 +594,11 @@ void CvDLLWidgetData::parseHelp(CvWStringBuffer &szBuffer, CvWidgetDataStruct &w
 	case WIDGET_HELP_GW_UNHAPPY:
 		szBuffer.assign(gDLL->getText("TXT_KEY_GW_UNHAPPY_HELP"));
 		break;
-/*
-** K-Mod end
-*/
+	// K-Mod. Extra specialist commerce
+	case WIDGET_HELP_EXTRA_SPECIALIST_COMMERCE:
+		GAMETEXT.setCommerceChangeHelp(szBuffer, L"", L"", gDLL->getText("TXT_KEY_CIVIC_PER_SPECIALIST").GetCString(), GC.getTechInfo((TechTypes)(widgetDataStruct.m_iData1)).getSpecialistExtraCommerceArray(), false, false);
+		break;
+	//K-Mod end
 	}
 }
 
@@ -4717,11 +4717,14 @@ void CvDLLWidgetData::parseMaintenanceHelp(CvWidgetDataStruct &widgetDataStruct,
 		}
 		else
 		{
+			int iInflationFactor = 100 + GET_PLAYER(pHeadSelectedCity->getOwnerINLINE()).getInflationRate(); // K-Mod
+
 			//		szBuffer = "Maintenance represents the total cost of governing this city.\n";
 			szBuffer.assign(gDLL->getText("TXT_KEY_MISC_MAINT_INFO"));
 			szBuffer.append(NEWLINE);
 
-			iMaintenanceValue = pHeadSelectedCity->calculateDistanceMaintenanceTimes100();
+			//iMaintenanceValue = pHeadSelectedCity->calculateDistanceMaintenanceTimes100();
+			iMaintenanceValue = pHeadSelectedCity->calculateDistanceMaintenanceTimes100()*iInflationFactor/100; // K-Mod
 			if (iMaintenanceValue != 0)
 			{
 				//			swprintf(szTempBuffer, "\n%s%d%c: %s", ((iMaintenanceValue > 0) ?  "+" : ""), iMaintenanceValue, GC.getCommerceInfo(COMMERCE_GOLD).getChar(), ((GET_PLAYER(pHeadSelectedCity->getOwnerINLINE()).getNumGovernmentCenters() > 0) ? "Distance from Palace" : "No Palace Penalty"));
@@ -4730,7 +4733,8 @@ void CvDLLWidgetData::parseMaintenanceHelp(CvWidgetDataStruct &widgetDataStruct,
 				szBuffer.append(gDLL->getText("TXT_KEY_MISC_NUM_MAINT_FLOAT", szMaint.GetCString()) + ((GET_PLAYER(pHeadSelectedCity->getOwnerINLINE()).getNumGovernmentCenters() > 0) ? gDLL->getText("TXT_KEY_MISC_DISTANCE_FROM_PALACE") : gDLL->getText("TXT_KEY_MISC_NO_PALACE_PENALTY")));
 			}
 
-			iMaintenanceValue = pHeadSelectedCity->calculateNumCitiesMaintenanceTimes100();
+			//iMaintenanceValue = pHeadSelectedCity->calculateNumCitiesMaintenanceTimes100();
+			iMaintenanceValue = pHeadSelectedCity->calculateNumCitiesMaintenanceTimes100()*iInflationFactor/100; // K-Mod
 			if (iMaintenanceValue != 0)
 			{
 				//			swprintf(szTempBuffer, "\n%s%d%c: Number of Cities", ((iMaintenanceValue > 0) ? "+" : ""), iMaintenanceValue, GC.getCommerceInfo(COMMERCE_GOLD).getChar());
@@ -4739,7 +4743,8 @@ void CvDLLWidgetData::parseMaintenanceHelp(CvWidgetDataStruct &widgetDataStruct,
 				szBuffer.append(gDLL->getText("TXT_KEY_MISC_NUM_CITIES_FLOAT", szMaint.GetCString()));
 			}
 
-			iMaintenanceValue = pHeadSelectedCity->calculateColonyMaintenanceTimes100();
+			//iMaintenanceValue = pHeadSelectedCity->calculateColonyMaintenanceTimes100();
+			iMaintenanceValue = pHeadSelectedCity->calculateColonyMaintenanceTimes100()*iInflationFactor/100; // K-Mod
 			if (iMaintenanceValue != 0)
 			{
 				CvWString szMaint = CvWString::format(L"%d.%02d", iMaintenanceValue/100, iMaintenanceValue%100);
@@ -4747,7 +4752,8 @@ void CvDLLWidgetData::parseMaintenanceHelp(CvWidgetDataStruct &widgetDataStruct,
 				szBuffer.append(gDLL->getText("TXT_KEY_MISC_COLONY_MAINT_FLOAT", szMaint.GetCString()));
 			}
 
-			iMaintenanceValue = pHeadSelectedCity->calculateCorporationMaintenanceTimes100();
+			//iMaintenanceValue = pHeadSelectedCity->calculateCorporationMaintenanceTimes100();
+			iMaintenanceValue = pHeadSelectedCity->calculateCorporationMaintenanceTimes100()*iInflationFactor/100; // K-Mod
 			if (iMaintenanceValue != 0)
 			{
 				CvWString szMaint = CvWString::format(L"%d.%02d", iMaintenanceValue/100, iMaintenanceValue%100);
@@ -4758,9 +4764,16 @@ void CvDLLWidgetData::parseMaintenanceHelp(CvWidgetDataStruct &widgetDataStruct,
 			szBuffer.append(SEPARATOR);
 
 			//		swprintf(szTempBuffer, "\n%d%c Total Maintenance", pHeadSelectedCity->getMaintenance(), GC.getCommerceInfo(COMMERCE_GOLD).getChar());
-			CvWString szMaint = CvWString::format(L"%d.%02d", pHeadSelectedCity->getMaintenanceTimes100()/100, pHeadSelectedCity->getMaintenanceTimes100()%100);
+			/* CvWString szMaint = CvWString::format(L"%d.%02d", pHeadSelectedCity->getMaintenanceTimes100()/100, pHeadSelectedCity->getMaintenanceTimes100()%100);
+			szBuffer.append(NEWLINE);
+			szBuffer.append(gDLL->getText("TXT_KEY_MISC_TOTAL_MAINT_FLOAT", szMaint.GetCString())); */
+			// K-Mod
+			iMaintenanceValue = pHeadSelectedCity->getMaintenanceTimes100()*iInflationFactor/100;
+
+			CvWString szMaint = CvWString::format(L"%d.%02d", iMaintenanceValue/100, iMaintenanceValue%100);
 			szBuffer.append(NEWLINE);
 			szBuffer.append(gDLL->getText("TXT_KEY_MISC_TOTAL_MAINT_FLOAT", szMaint.GetCString()));
+			//
 
 			iMaintenanceValue = pHeadSelectedCity->getMaintenanceModifier();
 

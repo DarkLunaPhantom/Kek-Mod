@@ -924,7 +924,7 @@ void CvTeam::shareCounters(TeamTypes eTeam)
 		if (iDelta > 0)
 		{
 			changeProjectCount(eProject, iDelta);
-			// don't count the additional projects that have been added in thiw way
+			// don't count the additional projects that have been added in this way
 			GC.getGameINLINE().incrementProjectCreatedCount(eProject, -iDelta);
 		}
 		//else
@@ -983,6 +983,16 @@ void CvTeam::shareCounters(TeamTypes eTeam)
 		//	kShareTeam.setNoTradeTech((eTech), false);
 		//
 	}
+
+	// K-Mod. Share extra moves.
+	// Note: there is no reliable way to do this. We can't tell if the bonus is from something unique- such as circumnavigation,
+	//       or from something that is already taken into account - such as refrigeration.
+	for (DomainTypes t = (DomainTypes)0; t < NUM_DOMAIN_TYPES; t=(DomainTypes)(t+1))
+	{
+		if (kShareTeam.getExtraMoves(t) > getExtraMoves(t))
+			changeExtraMoves(t, kShareTeam.getExtraMoves(t)-getExtraMoves(t));
+	}
+	// K-Mod end
 }
 
 
@@ -4711,7 +4721,7 @@ void CvTeam::changeProjectCount(ProjectTypes eIndex, int iChange)
 		{
 			if (kProject.getVictoryThreshold(iVictory) > 0)
 			{
-				m_abCanLaunch[iVictory] = GC.getGameINLINE().testVictory((VictoryTypes)iVictory, getID());
+				setCanLaunch((VictoryTypes)iVictory, GC.getGameINLINE().testVictory((VictoryTypes)iVictory, getID()));
 			}
 		}
 
@@ -6474,17 +6484,24 @@ void CvTeam::processTech(TechTypes eTech, int iChange)
 
 	for (iI = 0; iI < MAX_PLAYERS; iI++)
 	{
-		if (GET_PLAYER((PlayerTypes)iI).getTeam() == getID())
+		CvPlayer& kLoopPlayer = GET_PLAYER((PlayerTypes)iI);
+		if (kLoopPlayer.getTeam() == getID())
 		{
-			GET_PLAYER((PlayerTypes)iI).changeFeatureProductionModifier(GC.getTechInfo(eTech).getFeatureProductionModifier() * iChange);
-			GET_PLAYER((PlayerTypes)iI).changeWorkerSpeedModifier(GC.getTechInfo(eTech).getWorkerSpeedModifier() * iChange);
-			GET_PLAYER((PlayerTypes)iI).changeTradeRoutes(GC.getTechInfo(eTech).getTradeRoutes() * iChange);
-			GET_PLAYER((PlayerTypes)iI).changeExtraHealth(GC.getTechInfo(eTech).getHealth() * iChange);
-			GET_PLAYER((PlayerTypes)iI).changeExtraHappiness(GC.getTechInfo(eTech).getHappiness() * iChange);
+			kLoopPlayer.changeFeatureProductionModifier(GC.getTechInfo(eTech).getFeatureProductionModifier() * iChange);
+			kLoopPlayer.changeWorkerSpeedModifier(GC.getTechInfo(eTech).getWorkerSpeedModifier() * iChange);
+			kLoopPlayer.changeTradeRoutes(GC.getTechInfo(eTech).getTradeRoutes() * iChange);
+			kLoopPlayer.changeExtraHealth(GC.getTechInfo(eTech).getHealth() * iChange);
+			kLoopPlayer.changeExtraHappiness(GC.getTechInfo(eTech).getHappiness() * iChange);
 
-			GET_PLAYER((PlayerTypes)iI).changeAssets(GC.getTechInfo(eTech).getAssetValue() * iChange);
-			GET_PLAYER((PlayerTypes)iI).changePower(GC.getTechInfo(eTech).getPowerValue() * iChange);
-			GET_PLAYER((PlayerTypes)iI).changeTechScore(getTechScore(eTech) * iChange);
+			kLoopPlayer.changeAssets(GC.getTechInfo(eTech).getAssetValue() * iChange);
+			kLoopPlayer.changePower(GC.getTechInfo(eTech).getPowerValue() * iChange);
+			kLoopPlayer.changeTechScore(getTechScore(eTech) * iChange);
+			// K-Mod. Extra commerce for specialist (new xml field)
+			for (CommerceTypes eCommerce = (CommerceTypes)0; eCommerce < NUM_COMMERCE_TYPES; eCommerce=(CommerceTypes)(eCommerce+1))
+			{
+				kLoopPlayer.changeSpecialistExtraCommerce(eCommerce, GC.getTechInfo(eTech).getSpecialistExtraCommerce(eCommerce) * iChange);
+			}
+			// K-Mod end
 		}
 	}
 

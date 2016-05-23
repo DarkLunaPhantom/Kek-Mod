@@ -2747,7 +2747,7 @@ UnitTypes CvCityAI::AI_bestUnit(bool bAsync, AdvisorTypes eIgnoreAdvisor, UnitAI
 				aiUnitAIVal[UNITAI_ATTACK] += ((iMilitaryWeight / ((bLandWar || bAssault) ? 9 : 16)) + ((bPrimaryArea && !bAreaAlone) ? 1 : 0));
 				aiUnitAIVal[UNITAI_ATTACK_CITY] += ((iMilitaryWeight / ((bLandWar || bAssault) ? 7 : 15)) + ((bPrimaryArea && !bAreaAlone) ? 1 : 0));
 				aiUnitAIVal[UNITAI_COLLATERAL] += ((iMilitaryWeight / ((bDefense) ? 8 : 14)) + ((bPrimaryArea && !bAreaAlone) ? 1 : 0));
-				aiUnitAIVal[UNITAI_PILLAGE] += ((iMilitaryWeight / ((bLandWar || bAssault) ? 10 : 19)) + ((bPrimaryArea && !bAreaAlone) ? 1 : 0));
+				aiUnitAIVal[UNITAI_PILLAGE] += ((iMilitaryWeight / ((bLandWar) ? 10 : 19)) + ((bPrimaryArea && !bAreaAlone) ? 1 : 0));
 				aiUnitAIVal[UNITAI_RESERVE] += ((iMilitaryWeight / ((bLandWar) ? 12 : 17)) + ((bPrimaryArea && !bAreaAlone) ? 1 : 0));
 				aiUnitAIVal[UNITAI_COUNTER] += ((iMilitaryWeight / ((bLandWar || bAssault) ? 9 : 16)) + ((bPrimaryArea && !bAreaAlone) ? 1 : 0));
 				aiUnitAIVal[UNITAI_PARADROP] += ((iMilitaryWeight / ((bLandWar || bAssault) ? 4 : 8)) + ((bPrimaryArea && !bAreaAlone) ? 1 : 0));
@@ -2794,6 +2794,7 @@ UnitTypes CvCityAI::AI_bestUnit(bool bAsync, AdvisorTypes eIgnoreAdvisor, UnitAI
 		aiUnitAIVal[UNITAI_EXPLORE_SEA] = 0;
 		aiUnitAIVal[UNITAI_ATTACK_CITY] /= 3;
 		aiUnitAIVal[UNITAI_COLLATERAL] /= 2;
+		aiUnitAIVal[UNITAI_PILLAGE] /= 3;
 	}
 	else
 	// K-Mod end
@@ -3454,6 +3455,7 @@ int CvCityAI::AI_buildingValue(BuildingTypes eBuilding, int iFocusFlags) const
 // XXX should some of these count cities, buildings, etc. based on teams (because wonders are shared...)
 // XXX in general, this function needs to be more sensitive to what makes this city unique (more likely to build airports if there already is a harbor...)
 // This function has been heavily edited for K-Mod
+// Scale is roughly 4 = 1 commerce / turn
 int CvCityAI::AI_buildingValue(BuildingTypes eBuilding, int iFocusFlags, int iThreshold, bool bConstCache, bool bAllowRecursion) const
 {
 	PROFILE_FUNC();
@@ -3827,6 +3829,8 @@ int CvCityAI::AI_buildingValue(BuildingTypes eBuilding, int iFocusFlags, int iTh
 				int iNewUpkeep = (iBaseMaintenance * std::max(0, 100 + getMaintenanceModifier() + kBuilding.getMaintenanceModifier())) / 100;
 
 				int iTempValue = (iExistingUpkeep - iNewUpkeep) / 22; // slightly more then 4x savings, just to acomodate growth.
+
+				iTempValue = iTempValue * (100+kOwner.getInflationRate()) / 100; // We want absolute savings, including inflation.
 
 				/* iTempValue *= kOwner.AI_commerceWeight(COMMERCE_GOLD, 0); // (note, not just for this particular city - because this isn't direct gold production)
 				iTempValue /= 100; */
@@ -9386,7 +9390,6 @@ int CvCityAI::AI_yieldValue(short* piYields, short* piCommerceYields, bool bRemo
 						if (bFillingBar)
 							iGrowthValue = iGrowthValue * iFoodToGrow / std::max(1, 2*iFoodToGrow + iFoodLevel + iAdjustedFoodPerTurn);
 
-
 						if (iHealthLevel < (bFillingBar ? 0 : 1))
 							iGrowthValue = iGrowthValue * 2/3;
 
@@ -9414,8 +9417,7 @@ int CvCityAI::AI_yieldValue(short* piYields, short* piCommerceYields, bool bRemo
 
 				//Slavery Override
 				//if (bCanPopRush && (iHappinessLevel > 0))
-				if (kOwner.canPopRush() && getHurryAngerTimer() <= std::max(6-getPopulation(), 0)
-					&& iHappinessLevel >= (getPopulation()%2 == 0 ? 1 : 0)) // K-Mod
+				if (kOwner.canPopRush() && getHurryAngerTimer() <= std::min(3,getPopulation()/2)+2*iHappinessLevel) // K-Mod
 				{
 					//iSlaveryValue = 30 * 14 * std::max(0, aiYields[YIELD_FOOD] - ((iHealthLevel < 0) ? 1 : 0));
 					// K-Mod. Rescaled values.
@@ -10414,6 +10416,8 @@ int CvCityAI::AI_cityValue() const
 	iValue += getCommerceRateTimes100(COMMERCE_GOLD);
 
 	int iCosts = calculateColonyMaintenanceTimes100() + 2*getMaintenanceTimes100()/3;
+	iCosts = iCosts * (100+kOwner.getInflationRate()) / 100;
+
 	// slightly encourage empire split when aiming for a diplomatic victory
 	if (kOwner.AI_isDoVictoryStrategy(AI_VICTORY_DIPLOMACY3) && kOwner.getCommercePercent(COMMERCE_GOLD) > 0)
 	{

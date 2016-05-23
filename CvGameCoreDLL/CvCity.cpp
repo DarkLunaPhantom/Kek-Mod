@@ -3278,7 +3278,7 @@ int CvCity::getProductionDifference(int iProductionNeeded, int iProduction, int 
 		return 0;
 	}
 
-	int iFoodProduction = ((bFoodProduction) ? std::max(0, (getYieldRate(YIELD_FOOD) - foodConsumption(true))) : 0);
+	int iFoodProduction = bFoodProduction ? std::max(0, getYieldRate(YIELD_FOOD) - foodConsumption()) : 0;
 
 	int iOverflow = ((bOverflow) ? (getOverflowProduction() + getFeatureProduction()) : 0);
 
@@ -5848,7 +5848,8 @@ int CvCity::getSavedMaintenanceTimes100ByBuilding(BuildingTypes eBuilding) const
 	if (iModifier != 0 && !isDisorder() && !isWeLoveTheKingDay() && (getPopulation() > 0))
 	{
 		int iNewMaintenance = calculateBaseMaintenanceTimes100() * std::max(0, getMaintenanceModifier() + iModifier + 100) / 100;
-		return getMaintenanceTimes100() - iNewMaintenance;
+		//return getMaintenanceTimes100() - iNewMaintenance;
+		return ROUND_DIVIDE((getMaintenanceTimes100() - iNewMaintenance)*(100+GET_PLAYER(getOwnerINLINE()).getInflationRate()), 100); // K-Mod
 	}
 
 	return 0;
@@ -6148,7 +6149,12 @@ int CvCity::calculateCorporationMaintenanceTimes100(CorporationTypes eCorporatio
 	iMaintenance *= std::max(0, (GET_PLAYER(getOwnerINLINE()).getCorporationMaintenanceModifier() + 100));
 	iMaintenance /= 100;
 
-	int iInflation = GET_PLAYER(getOwnerINLINE()).calculateInflationRate() + 100;
+	// K-Mod note. This division by inflation effectively cancels with the inflation factor in calculateInflatedCosts.
+	// However, since city maintenance is cached and is only updated in particular situations; this adjustment
+	// may result in corporation maintenance sometimes being higher than it should be - as inflation grows and
+	// the correction factor to counter inflation remains unchanged.
+	// This is obviously a bug; but I'm not going to worry about it right now.
+	int iInflation = GET_PLAYER(getOwnerINLINE()).getInflationRate() + 100;
 	if (iInflation > 0)
 	{
 		iMaintenance *= 100;
@@ -13357,7 +13363,7 @@ void CvCity::doReligion()
 							iDivisor /= 100;
 
 							// now iDivisor is in the range [1, 1+iDistanceFactor] * iDivisorBase
-							// this is approximately in the range [4, 60], depending on what the xml value are. (the value currently being tested and tuned.)
+							// this is approximately in the range [5, 50], depending on what the xml value are. (the value currently being tested and tuned.)
 							iSpread /= iDivisor;
 							// K-Mod end
 
@@ -13373,6 +13379,17 @@ void CvCity::doReligion()
 		// scale for game speed
 		iRandThreshold *= 100;
 		iRandThreshold /= GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getVictoryDelayPercent();
+
+		// K-Mod. Give a bonus for the first few cities.
+		/* {
+			int iReligionCities = GC.getGameINLINE().countReligionLevels(eLoopReligion);
+			if (iReligionCities < 3)
+			{
+				iRandThreshold *= 2 + iReligionCities;
+				iRandThreshold /= 1 + iReligionCities;
+			}
+		} */
+		//
 
 		if (GC.getGameINLINE().getSorenRandNum(GC.getDefineINT("RELIGION_SPREAD_RAND"), "Religion Spread") < iRandThreshold)
 		{

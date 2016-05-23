@@ -149,7 +149,8 @@ public:
 	int calculateUnitCost();
 	int calculateUnitSupply();
 	int calculatePreInflatedCosts();
-	int calculateInflationRate();
+	//int calculateInflationRate();
+	int getInflationRate(); // K-Mod
 	int calculateInflatedCosts();
 	int calculateGoldRate();
 	int calculateTotalCommerce();
