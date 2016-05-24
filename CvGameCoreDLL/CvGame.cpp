@@ -2219,14 +2219,17 @@ again:
 		}
 	}
 
-	CvPlayerAI& kActivePlayer = GET_PLAYER(getActivePlayer());
-	if ((!kActivePlayer.isTurnActive() || kActivePlayer.isAutoMoves()) && !kActivePlayer.hasBusyUnit() && !isNetworkMultiPlayer() &&
-		getBugOptionBOOL("MainInterface__MinimizeAITurnSlices", false))
+	// DarkLunaPhantom begin - C2C minimize AI turn time option, if clause is divided in two parts because some functions from the second one would cause pitboss to crash
+	if(!isNetworkMultiPlayer())
 	{
-		updateTimers();
-
-		goto again;
+		CvPlayerAI& kActivePlayer = GET_PLAYER(getActivePlayer());
+		if ((!kActivePlayer.isTurnActive() || kActivePlayer.isAutoMoves()) && !kActivePlayer.hasBusyUnit() && getBugOptionBOOL("MainInterface__MinimizeAITurnSlices", false))
+			{
+				updateTimers();
+				goto again;
+			}
 	}
+	// DarkLunaPhantom end
 
 	PROFILE_END();
 	stopProfilingDLL(false);
