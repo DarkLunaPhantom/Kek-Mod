@@ -5031,7 +5031,9 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 					{
 						if (GET_TEAM(getTeam()).isDefensivePactTrading() || GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).isDefensivePactTrading())
 						{
-							if ((GET_TEAM(getTeam()).getAtWarCount(true) == 0) && (GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).getAtWarCount(true) == 0))
+							// DarkLunaPhantom begin - added possibility of signing defensive pact while in war if BBAI defensive pact option is >= 1
+							if (((GET_TEAM(getTeam()).getAtWarCount(true) == 0) && (GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).getAtWarCount(true) == 0)) || GC.getBBAI_DEFENSIVE_PACT_BEHAVIOR() >= 1)
+							// DarkLunaPhantom end
 							{
 								if (GET_TEAM(getTeam()).canSignDefensivePact(GET_PLAYER(eWhoTo).getTeam()))
 								{

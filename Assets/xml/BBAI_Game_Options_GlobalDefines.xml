@@ -35,7 +35,9 @@
 		<iDefineIntVal>1</iDefineIntVal>
 	</Define>
 	<Define>
-		<!-- Better BTS AI: Vassals of human player build some extra military units (recommended for multiplayer only) -->
+		<!-- Better BTS AI: Vassals of human player build some extra military units (recommended for multiplayer only)
+		DarkLunaPhantom - taken care of by K-mod's "prepare for war" vassal option, so unnecessary?
+		-->
 		<DefineName>BBAI_HUMAN_VASSAL_WAR_BUILD</DefineName>
 		<iDefineIntVal>0</iDefineIntVal>
 	</Define>
@@ -43,11 +45,13 @@
 		<!-- Better BTS AI: Changes behavior of defensive pacts (Def: 0) :
 			0 : Default BTS
 			1 : Defensive pacts do not cancel when a player has war declared on them
+				DarkLunaPhantom - Can be signed while at war.
 			2 : Turns defensive pacts into alliances, so they are now also offensive pacts.  Plus pacts
 				do not cancel when war is declared.  Does not change name/description in game.
+				DarkLunaPhantom - Can be signed while at war.
 		 -->
 		<DefineName>BBAI_DEFENSIVE_PACT_BEHAVIOR</DefineName>
-		<iDefineIntVal>0</iDefineIntVal>
+		<iDefineIntVal>1</iDefineIntVal>
 	</Define>
 	<Define>
 		<!-- Better BTS AI: Allows human player to offer themselves as vassal to an AI.  The AI has been taught to value this appropriately.  (Def: 0) -->
