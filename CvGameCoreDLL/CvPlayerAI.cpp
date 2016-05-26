@@ -6024,6 +6024,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 					if (kLoopPlayer.getTeam() != getTeam() && kLoopPlayer.isAlive())
 					{
 						iTotalPlayers++; // count players even if we haven't met them. (we know they're out there...)
+						// DarkLunaPhantom - Here AI knows who can research what even when it shouldn't (before tech trading tech etc.)?
 						if (kTeam.isHasMet(kLoopPlayer.getTeam()) && (iPathLength <= 1 != kLoopPlayer.canResearch(eTech)))
 						{
 							iCount++; // if path is <= 1, count civs who can't research it. if path > 1, count civs who can research it.
@@ -6039,6 +6040,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 			int iAvailableReligions = 0; // K-Mod
 			for (int iJ = 0; iJ < GC.getNumReligionInfos(); iJ++)
 			{
+				// DarkLunaPhantom - This means that AI can't play properly with "Choose religions" game option.
 				TechTypes eReligionTech = (TechTypes)GC.getReligionInfo((ReligionTypes)iJ).getTechPrereq();
 				/* original bts code
 				if (kTeam.isHasTech(eReligionTech))
@@ -6127,6 +6129,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 							iReligionValue += 84;
 					}
 
+					// DarkLunaPhantom - 4 here denotes number of non-early religions?
 					if (iAvailableReligions <= 4 || AI_getFlavorValue(FLAVOR_RELIGION) > 0)
 					{
 						iReligionValue *= 2;

@@ -4896,7 +4896,9 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 						return true;
 					}
 
-					if (!kMasterTeam.isAtWar(getTeam()) && item.m_eItemType == TRADE_VASSAL)
+					// DarkLunaPhantom begin - Stopped players who have vassals from becoming peace vassals so such players cannot release their vassals this way.
+					if (!kMasterTeam.isAtWar(getTeam()) && item.m_eItemType == TRADE_VASSAL && kVassalTeam.getVassalCount() == 0)
+					// DarkLunaPhantom end
 					{
 						return true;
 					}
