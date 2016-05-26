@@ -3218,6 +3218,8 @@ bool CvUnit::canGift(bool bTestVisible, bool bTestTransport)
 {
 	CvPlot* pPlot = plot();
 	CvUnit* pTransport = getTransportUnit();
+	std::vector<CvUnit*> aCargoUnits;
+	getCargoUnits(aCargoUnits);
 
 	if (!(pPlot->isOwned()))
 	{
@@ -3251,6 +3253,37 @@ bool CvUnit::canGift(bool bTestVisible, bool bTestTransport)
 			return false;
 		}
 	}
+	
+	// DarkLunaPhantom begin - Disabled gifting foreign religion missionaries to theocracies (exploit for religion spread).
+	// Also disabled gifting transports if cannot gift all cargo. It should also work in mods where cargo can have cargo.
+	if(GET_PLAYER(pPlot->getOwnerINLINE()).isNoNonStateReligionSpread())
+	{
+		for (int iReligion = 0; iReligion < GC.getNumReligionInfos(); ++iReligion)
+			{
+				if ((m_pUnitInfo->getReligionSpreads(iReligion) > 0) && (ReligionTypes)iReligion != GET_PLAYER(pPlot->getOwnerINLINE()).getStateReligion())
+				{
+					return false;
+				}
+			}
+	}
+
+	// DarkLunaPhantom - I decided against this, for now. Partly because it doesn't work right.
+	/*for (int iTeam = 0; iTeam < MAX_CIV_TEAMS; ++iTeam)
+		{
+			if(isCombat() && GET_TEAM(pPlot->getTeam()).isAtWar((TeamTypes)iTeam)) // && !GET_TEAM(getTeam()).isAtWar((TeamTypes)iTeam) && !GET_TEAM(getTeam()).canDeclareWar((TeamTypes)iTeam) && isCombat())
+			{
+				return false;
+			}
+		}*/
+		
+	for (uint i = 0; i < aCargoUnits.size(); ++i)
+	{
+		if(!aCargoUnits[i]->canGift(false, false))
+		{
+			return false;
+		}
+	}
+	// DarkLunaPhantom end
 
 	if (bTestTransport)
 	{
