@@ -248,8 +248,8 @@ class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
 		screen.showScreen( PopupStates.POPUPSTATE_IMMEDIATE, False)
 	
 		self.iActiveLeader = CyGame().getActivePlayer()
-		self.iSelectedLeader = self.iActiveLeader
-		self.listSelectedLeaders = []
+		#self.iSelectedLeader = self.iActiveLeader
+		#self.listSelectedLeaders = []
 		#self.listSelectedLeaders.append(self.iSelectedLeader)
 
 ############################################
@@ -762,14 +762,14 @@ class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
 		screen.addPanel(headerPanelName, "", "", True, True, 0, 50, self.W_SCREEN, 60, PanelStyles.PANEL_STYLE_TOPBAR)
 
 		if (bInitial):
-			self.initializeGlance()
 			self.iSelectedLeader = self.iActiveLeader
+			self.initializeGlance()
 
 		self.drawGlanceHeader(screen, headerPanelName)
 
 		mainPanelName = self.getNextWidgetName()
 		screen.addPanel(mainPanelName, "", "", True, True, 0, 104, self.W_SCREEN, self.H_SCREEN - 155, PanelStyles.PANEL_STYLE_MAIN)
-
+		
 		self.drawGlanceRows (screen, mainPanelName, self.iSelectedLeader != self.iActiveLeader, self.iSelectedLeader)
 
 	def initializeGlance (self):
@@ -778,6 +778,8 @@ class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
 		self.ltPlayerMet = [False] * gc.getMAX_PLAYERS()
 
 		for iLoopPlayer in range(gc.getMAX_PLAYERS()):
+			if (self.bRestrictLeaders and not(iLoopPlayer in self.listSelectedLeaders)):
+						continue
 			if (gc.getPlayer(iLoopPlayer).isAlive()
 			and (gc.getTeam(gc.getPlayer(iLoopPlayer).getTeam()).isHasMet(gc.getPlayer(self.iActiveLeader).getTeam())
 			or gc.getGame().isDebugMode())
@@ -788,6 +790,8 @@ class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
 				self.ltPlayerMet [iLoopPlayer] = True
 
 				for nHost in range(gc.getMAX_PLAYERS()):
+					if (self.bRestrictLeaders and not(nHost in self.listSelectedLeaders)):
+						continue
 					if (gc.getPlayer(nHost).isAlive()
 					and nHost != self.iActiveLeader
 					and (gc.getTeam(gc.getPlayer(nHost).getTeam()).isHasMet(gc.getPlayer(self.iActiveLeader).getTeam())
@@ -810,6 +814,8 @@ class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
 	def drawGlanceHeader (self, screen, panelName):
 		nCount = 1
 		for iLoopPlayer in range (gc.getMAX_PLAYERS()):
+			if (self.bRestrictLeaders and not(iLoopPlayer in self.listSelectedLeaders)):
+				continue
 			if self.ltPlayerMet[iLoopPlayer]:
 				if (iLoopPlayer != self.iActiveLeader):
 					szName = self.getNextWidgetName()
@@ -838,11 +844,15 @@ class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
 
 		# loop through all players and display leaderheads
 		for nOffset in range (gc.getMAX_PLAYERS()):
+			if (self.bRestrictLeaders and not(nOffset in self.listSelectedLeaders)):
+				continue
 			if ltSortedRelations[nOffset][1] != -1:
 				break
 
 		for i in range (self.nCount):
 			iLoopPlayer = ltSortedRelations[nOffset + i][1]
+			if (self.bRestrictLeaders and not(iLoopPlayer in self.listSelectedLeaders)):
+				continue
 #			ExoticForPrint ("iLoopPlayer = %d" % iLoopPlayer)
 
 			playerPanelName = self.getNextWidgetName()
@@ -853,6 +863,8 @@ class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
 
 			nCount = 1
 			for j in range (gc.getMAX_PLAYERS()):
+				if (self.bRestrictLeaders and not(j in self.listSelectedLeaders)):
+					continue
 				if self.ltPlayerMet[j]:
 					if j != self.iActiveLeader:
 						szName = self.getNextWidgetName()
@@ -1316,6 +1328,7 @@ class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
 					
 	# Handles the input for this screen...
 	def handleInput (self, inputClass):
+		print "exotic"
 		if (inputClass.getNotifyCode() == NotifyCode.NOTIFY_CLICKED):
 			if (inputClass.getButtonType() == WidgetTypes.WIDGET_LEADERHEAD or BugDll.isWidgetVersion(2, inputClass.getButtonType(), "WIDGET_LEADERHEAD_RELATIONS")):
 				if (inputClass.getFlags() & MouseFlags.MOUSE_LBUTTONUP):

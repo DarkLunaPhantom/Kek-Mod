@@ -64,6 +64,7 @@ class CvForeignAdvisor:
 		self.iActiveLeader = -1
 		self.listSelectedLeaders = []
 		self.iShiftKeyDown = 0
+		self.bRestrictLeaders = False
 				
 		self.iDefaultScreen = FOREIGN_RELATIONS_SCREEN
 						
@@ -101,7 +102,7 @@ class CvForeignAdvisor:
 		self.iActiveLeader = CyGame().getActivePlayer()
 		self.iSelectedLeader = self.iActiveLeader
 		self.listSelectedLeaders = []
-		#self.listSelectedLeaders.append(self.iSelectedLeader)
+		self.listSelectedLeaders.append(self.iSelectedLeader)
 
 		# Set the background and exit button, and show the screen
 		screen.setDimensions(screen.centerX(0), screen.centerY(0), self.W_SCREEN, self.H_SCREEN)
@@ -414,10 +415,17 @@ class CvForeignAdvisor:
 				self.listSelectedLeaders.remove(self.iSelectedLeader)
 			else:
 				self.listSelectedLeaders.append(self.iSelectedLeader)
+		elif self.iSelectedLeader == self.iActiveLeader and not bInitial:
+			self.bRestrictLeaders = not self.bRestrictLeaders
 		else:
-			self.listSelectedLeaders = []
+			#self.listSelectedLeaders = []
 			if (not bInitial):
-				self.listSelectedLeaders.append(self.iSelectedLeader)	
+				self.listSelectedLeaders = []
+				self.listSelectedLeaders.append(self.iSelectedLeader)
+		if not self.listSelectedLeaders or (self.iActiveLeader in self.listSelectedLeaders and len(self.listSelectedLeaders) == 1):
+			self.bRestrictLeaders = False
+		if self.bRestrictLeaders and (self.iActiveLeader not in self.listSelectedLeaders):
+			self.listSelectedLeaders.append(self.iActiveLeader)
 		
 		bNoLeadersSelected = (len(self.listSelectedLeaders) == 0)
 		bSingleLeaderSelected = (len(self.listSelectedLeaders) == 1)
@@ -433,7 +441,7 @@ class CvForeignAdvisor:
 		# Count all other leaders
 		for iPlayer in range(gc.getMAX_PLAYERS()):
 			player = gc.getPlayer(iPlayer)
-			if (player.isAlive() and iPlayer != self.iActiveLeader and (gc.getTeam(player.getTeam()).isHasMet(gc.getPlayer(self.iActiveLeader).getTeam()) or gc.getGame().isDebugMode()) and not player.isBarbarian() and not player.isMinorCiv()):
+			if (player.isAlive() and iPlayer != self.iActiveLeader and (gc.getTeam(player.getTeam()).isHasMet(gc.getPlayer(self.iActiveLeader).getTeam()) or gc.getGame().isDebugMode()) and not player.isBarbarian() and not player.isMinorCiv() and (not self.bRestrictLeaders or iPlayer in self.listSelectedLeaders)):
 				leaderMap[iPlayer] = iCount
 				iCount = iCount + 1
 		fLeaderTop = self.Y_LEADER_CIRCLE_TOP
