@@ -362,6 +362,7 @@
 		<Italian>When checked, selecting units with the [Shift] key will only ever add a single unit at a time.</Italian>
 		<Spanish>Activada, seleccionando unidades con la tecla [Mayús] sólo añadir una unidad cada vez.</Spanish>
 	</TEXT>
+	<!-- K-Mod Extended -->
 	<TEXT>
 	<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__MINIMIZEAITURNSLICES_TEXT</Tag>
 	<English>Minimize AI turn time</English>

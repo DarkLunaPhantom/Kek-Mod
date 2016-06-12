@@ -1328,7 +1328,6 @@ class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
 					
 	# Handles the input for this screen...
 	def handleInput (self, inputClass):
-		print "exotic"
 		if (inputClass.getNotifyCode() == NotifyCode.NOTIFY_CLICKED):
 			if (inputClass.getButtonType() == WidgetTypes.WIDGET_LEADERHEAD or BugDll.isWidgetVersion(2, inputClass.getButtonType(), "WIDGET_LEADERHEAD_RELATIONS")):
 				if (inputClass.getFlags() & MouseFlags.MOUSE_LBUTTONUP):

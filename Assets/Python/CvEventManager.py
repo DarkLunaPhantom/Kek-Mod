@@ -297,13 +297,13 @@ class CvEventManager:
 				elif (theKey == int(InputTypes.KB_F4)):
 					if ( self.bShift ):
 						CvScreensInterface.showUnVictoryScreen(())
-						return 1											
+						return 1
 		return 0
 
 	def onModNetMessage(self, argsList):
 		'Called whenever CyMessageControl().sendModNetMessage() is called - this is all for you modders!'
 		
-		iData1, iData2, iData3, iData4, iData5 = argsList		
+		iData1, iData2, iData3, iData4, iData5 = argsList
 		print("Modder's net message!")
 		
 		CvUtil.pyPrint( 'onModNetMessage' )
@@ -373,8 +373,8 @@ class CvEventManager:
 		iGameTurn = argsList[0]
 ## AI AutoPlay ##
 		if CyGame().getAIAutoPlay() == 0:
-			CvTopCivs.CvTopCivs().turnChecker(iGameTurn)
 ## AI AutoPlay ##
+			CvTopCivs.CvTopCivs().turnChecker(iGameTurn)
 		# PB Mod begin
 		self.bGameTurnProcessing = True
 		# PB Mod end
@@ -541,7 +541,7 @@ class CvEventManager:
 		'Building Completed'
 		pCity, iBuildingType = argsList
 		game = gc.getGame()
-		if ((not gc.getGame().isNetworkMultiPlayer()) and (pCity.getOwner() == gc.getGame().getActivePlayer()) and isWorldWonderClass(gc.getBuildingInfo(iBuildingType).getBuildingClassType())):		
+		if ((not gc.getGame().isNetworkMultiPlayer()) and (pCity.getOwner() == gc.getGame().getActivePlayer()) and isWorldWonderClass(gc.getBuildingInfo(iBuildingType).getBuildingClassType())):
 	## Platy Builder ##
 			if not CyGame().GetWorldBuilderMode():
 	## Platy Builder ##
@@ -581,7 +581,7 @@ class CvEventManager:
 		eOwner = argsList[0]
 		eMission = argsList[1]
 		iNumUnits = argsList[2]
-		listUnitIds = argsList[3]	
+		listUnitIds = argsList[3]
 		if (not self.__LOG_PUSH_MISSION):
 			return
 		if pHeadUnit:
@@ -1085,12 +1085,12 @@ class CvEventManager:
 
 	def __eventEditUnitNameApply(self, playerID, userData, popupReturn):
 		unit = gc.getPlayer(userData[1]).getUnit(userData[0])
-		newName = popupReturn.getEditBoxString(0)		
+		newName = popupReturn.getEditBoxString(0)
 		unit.setName(newName)
 		if CyGame().GetWorldBuilderMode():
 			WBUnitScreen.WBUnitScreen(CvPlatyBuilderScreen.CvWorldBuilderScreen()).placeStats()
 			WBUnitScreen.WBUnitScreen(CvPlatyBuilderScreen.CvWorldBuilderScreen()).placeCurrentUnit()	
-				
+
 	def __eventEditCityNameBegin(self, city, bRename):
 		popup = PyPopup.PyPopup(CvUtil.EventEditCityName, EventContextTypes.EVENTCONTEXT_ALL)
 		popup.setUserData((city.getID(), bRename, CyGame().getActivePlayer()))
@@ -1099,7 +1099,7 @@ class CvEventManager:
 		popup.createEditBox(city.getName())
 		popup.setEditBoxMaxCharCount(15)
 		popup.launch()
-	
+
 	def __eventEditCityNameApply(self, playerID, userData, popupReturn):
 		city = gc.getPlayer(userData[2]).getCity(userData[0])
 		cityName = popupReturn.getEditBoxString(0)

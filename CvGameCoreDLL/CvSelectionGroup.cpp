@@ -3266,14 +3266,16 @@ void CvSelectionGroup::groupMove(CvPlot* pPlot, bool bCombat, CvUnit* pCombatUni
 
 	CLLNode<IDInfo>* pUnitNode;
 	CvUnit* pLoopUnit;
-	std::set<int> movedUnitIds;
-
+	std::set<int> movedUnitIds; // C2C-Lite
+	
+	//pUnitNode = headUnitNode();
 	// K-Mod. Some variables to help us regroup appropriately if not everyone can move.
 	CvSelectionGroup* pStaticGroup = 0;
 	UnitAITypes eHeadAI = getHeadUnitAI();
 
 	// Move the combat unit first, so that no-capture units don't get unneccarily left behind.
 	if (pCombatUnit)
+		//pCombatUnit->move(pPlot, true);
 		{
 			movedUnitIds.insert(pCombatUnit->getID());
 			pCombatUnit->move(pPlot, true);
@@ -3281,8 +3283,11 @@ void CvSelectionGroup::groupMove(CvPlot* pPlot, bool bCombat, CvUnit* pCombatUni
 	// K-Mod end
 
 	// C2C-Lite, bugfix. in the original code it was possible for the pUnitNode pointer to be invalidated in case the remaining units of the group where moved to a valid plot after a unit captured a city
+	//while (pUnitNode != NULL)
 	while (true)
 	{
+		//pLoopUnit = ::getUnit(pUnitNode->m_data);
+		//pUnitNode = nextUnitNode(pUnitNode);
 		pUnitNode = headUnitNode();
 		pLoopUnit = NULL;
 
@@ -3305,10 +3310,12 @@ void CvSelectionGroup::groupMove(CvPlot* pPlot, bool bCombat, CvUnit* pCombatUni
 			break;
 
 		movedUnitIds.insert(pLoopUnit->getID());
-		// C2C-Light end
 
 		//if ((pLoopUnit->canMove() && ((bCombat && (!(pLoopUnit->isNoCapture()) || !(pPlot->isEnemyCity(*pLoopUnit)))) ? pLoopUnit->canMoveOrAttackInto(pPlot) : pLoopUnit->canMoveInto(pPlot))) || (pLoopUnit == pCombatUnit))
 		// K-Mod
+		//if (pLoopUnit == pCombatUnit)
+		//	continue; // this unit is moved before the loop.
+		// C2C-Light end
 		if (pLoopUnit->canMove() && (bCombat ? pLoopUnit->canMoveOrAttackInto(pPlot) : pLoopUnit->canMoveInto(pPlot)))
 		{
 			pLoopUnit->move(pPlot, true);

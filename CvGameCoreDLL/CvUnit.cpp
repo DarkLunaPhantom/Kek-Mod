@@ -3254,8 +3254,10 @@ bool CvUnit::canGift(bool bTestVisible, bool bTestTransport)
 		}
 	}
 	
-	// DarkLunaPhantom begin - Disabled gifting foreign religion missionaries to theocracies (exploit for religion spread).
-	// Also disabled gifting transports if cannot gift all cargo. It should also work in mods where cargo can have cargo.
+	// DarkLunaPhantom begin - Disabled gifting foreign religion missionaries to theocracies (actually whenever non-state religion
+	// cannot spread to receiving player's cities) to stop exploit for religion spread.
+	// Also disabled gifting transports if some cargo unit cannot be gifted. (It should work in mods where cargo can have cargo.)
+	// Maybe all these things should be move somewhere where a message can be displayed explaining why these units cannot be gifted.
 	if(GET_PLAYER(pPlot->getOwnerINLINE()).isNoNonStateReligionSpread())
 	{
 		for (int iReligion = 0; iReligion < GC.getNumReligionInfos(); ++iReligion)
@@ -3267,10 +3269,12 @@ bool CvUnit::canGift(bool bTestVisible, bool bTestTransport)
 			}
 	}
 
-	// DarkLunaPhantom - I decided against this, for now. Partly because it doesn't work right.
+	// DarkLunaPhantom - This was supposed to stop the player from providing units to third parties to fight against rivals with whom
+	// the player has unbreakable (permanent or temporary) peace treaty, but I decided against it, for now. Partly because it doesn't
+	// work right and partly because this makes forced peace (from AP/UN) too powerful.
 	/*for (int iTeam = 0; iTeam < MAX_CIV_TEAMS; ++iTeam)
 		{
-			if(isCombat() && GET_TEAM(pPlot->getTeam()).isAtWar((TeamTypes)iTeam)) // && !GET_TEAM(getTeam()).isAtWar((TeamTypes)iTeam) && !GET_TEAM(getTeam()).canDeclareWar((TeamTypes)iTeam) && isCombat())
+			if(isCombat() && GET_TEAM(pPlot->getTeam()).isAtWar((TeamTypes)iTeam) && !GET_TEAM(getTeam()).isAtWar((TeamTypes)iTeam) && !GET_TEAM(getTeam()).canDeclareWar((TeamTypes)iTeam))
 			{
 				return false;
 			}

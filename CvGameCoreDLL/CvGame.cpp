@@ -2219,16 +2219,15 @@ again:
 		}
 	}
 
-	// DarkLunaPhantom begin - C2C minimize AI turn time option, if clause is divided in two parts because some functions from the second one would cause pitboss to crash
-	if(!isNetworkMultiPlayer())
-	{
-		CvPlayerAI& kActivePlayer = GET_PLAYER(getActivePlayer());
-		if ((!kActivePlayer.isTurnActive() || kActivePlayer.isAutoMoves()) && !kActivePlayer.hasBusyUnit() && getBugOptionBOOL("MainInterface__MinimizeAITurnSlices", false))
-			{
-				updateTimers();
-				goto again;
-			}
-	}
+	// DarkLunaPhantom begin - Fixed bug in K-Mod Extended C2C minimize AI turn time option, multiplayer
+	// needs to be checked first because later checks crash pitboss as it is not a valid active player.
+	// K-Mod Extended
+	CvPlayerAI& kActivePlayer = GET_PLAYER(getActivePlayer());
+	if (!isNetworkMultiPlayer() && (!kActivePlayer.isTurnActive() || kActivePlayer.isAutoMoves()) && !kActivePlayer.hasBusyUnit() && getBugOptionBOOL("MainInterface__MinimizeAITurnSlices", false))
+		{
+			updateTimers();
+			goto again;
+		}
 	// DarkLunaPhantom end
 
 	PROFILE_END();
