@@ -13485,6 +13485,7 @@ void CvCity::doGreatPeople()
 
 void CvCity::doMeltdown()
 {
+	bool bUnused; // DarkLunaPhantom
 	CvWString szBuffer;
 	int iI;
 
@@ -13504,10 +13505,75 @@ void CvCity::doMeltdown()
 
 	for (iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 	{
-		if (getNumBuilding((BuildingTypes)iI) > 0)
+		//DarkLunaPhantom begin - Obsolete buildings and unused power plants (e.g. Nuclear Plant without Uranium or in a city that also has a Hydro Plant or receives power from Three Gorges Dam) shouldn't meltdown.
+		//if (getNumBuilding((BuildingTypes)iI) > 0)
+		if (getNumActiveBuilding((BuildingTypes)iI) > 0)
 		{
-			if (GC.getBuildingInfo((BuildingTypes)iI).getNukeExplosionRand() != 0)
+			CvBuildingInfo& kBuilding = GC.getBuildingInfo((BuildingTypes)iI);
+			
+			//if (GC.getBuildingInfo((BuildingTypes)iI).getNukeExplosionRand() != 0)
+			if (kBuilding.getNukeExplosionRand() != 0)
 			{
+				if (kBuilding.isPower() || kBuilding.getPowerBonus() != NO_BONUS)
+				{
+					if (isAreaCleanPower() || (kBuilding.getPowerBonus() != NO_BONUS && !hasBonus((BonusTypes)kBuilding.getPowerBonus())))
+					{
+						continue;
+					}
+					
+					bUnused = false;
+					
+					for (int iJ = 0; iJ < GC.getNumBuildingInfos(); ++iJ)
+					{
+						if (iI == iJ)
+						{
+							continue;
+						}
+						
+						if (getNumActiveBuilding((BuildingTypes)iJ) > 0)
+						{
+							CvBuildingInfo& kLoopBuilding = GC.getBuildingInfo((BuildingTypes)iJ);
+						
+							if (kLoopBuilding.isPower() || (kLoopBuilding.getPowerBonus() != NO_BONUS && hasBonus((BonusTypes)kLoopBuilding.getPowerBonus())))
+							{	
+								if (kBuilding.isDirtyPower() && !kLoopBuilding.isDirtyPower())
+								{
+									bUnused = true;
+									break;
+								}
+								
+								if (kBuilding.isDirtyPower() == kLoopBuilding.isDirtyPower())
+								{
+									if (kLoopBuilding.getNukeExplosionRand() == 0)
+									{
+										bUnused = true;
+										break;
+									}
+									else if (kBuilding.getNukeExplosionRand() > kLoopBuilding.getNukeExplosionRand())
+									{
+										continue;
+									}
+									else if (kBuilding.getNukeExplosionRand() < kLoopBuilding.getNukeExplosionRand())
+									{
+										bUnused = true;
+										break;
+									}
+									else if (iI < iJ)
+									{
+										bUnused = true;
+										break;
+									}
+								}
+							}
+						}
+					}
+					if (bUnused)
+					{
+						continue;
+					}
+				}
+		// DarkLunaPhantom end - Maybe there should be a function which says whether a power plant in a city is being used to simplify this and make it mod friendly.
+				
 				if (GC.getGameINLINE().getSorenRandNum(GC.getBuildingInfo((BuildingTypes)iI).getNukeExplosionRand(), "Meltdown!!!") == 0)
 				{
 					if (getNumRealBuilding((BuildingTypes)iI) > 0)
@@ -13520,6 +13586,7 @@ void CvCity::doMeltdown()
 					szBuffer = gDLL->getText("TXT_KEY_MISC_MELTDOWN_CITY", getNameKey());
 					gDLL->getInterfaceIFace()->addHumanMessage(getOwnerINLINE(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_MELTDOWN", MESSAGE_TYPE_MINOR_EVENT, ARTFILEMGR.getInterfaceArtInfo("INTERFACE_UNHEALTHY_PERSON")->getPath(), (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), getX_INLINE(), getY_INLINE(), true, true);
 
+					// DarkLunaPhantom - This means max of one meltdown per city per turn. That is ok since we have only one building that can undergo meltdown.
 					break;
 				}
 			}
