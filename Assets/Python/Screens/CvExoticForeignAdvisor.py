@@ -844,15 +844,11 @@ class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
 
 		# loop through all players and display leaderheads
 		for nOffset in range (gc.getMAX_PLAYERS()):
-			if (self.bRestrictLeaders and not(nOffset in self.listSelectedLeaders)):
-				continue
 			if ltSortedRelations[nOffset][1] != -1:
 				break
 
 		for i in range (self.nCount):
 			iLoopPlayer = ltSortedRelations[nOffset + i][1]
-			if (self.bRestrictLeaders and not(iLoopPlayer in self.listSelectedLeaders)):
-				continue
 #			ExoticForPrint ("iLoopPlayer = %d" % iLoopPlayer)
 
 			playerPanelName = self.getNextWidgetName()
@@ -863,8 +859,6 @@ class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
 
 			nCount = 1
 			for j in range (gc.getMAX_PLAYERS()):
-				if (self.bRestrictLeaders and not(j in self.listSelectedLeaders)):
-					continue
 				if self.ltPlayerMet[j]:
 					if j != self.iActiveLeader:
 						szName = self.getNextWidgetName()
