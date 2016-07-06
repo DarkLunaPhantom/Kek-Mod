@@ -4384,6 +4384,12 @@
 					<UnitClassType>UNITCLASS_EXPLORER</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
+				<!-- DarkLunaPhantom begin - Blocked barbarians from building spies. It doesn't really happen, but for consistency... -->
+				<Unit>
+					<UnitClassType>UNITCLASS_SPY</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
+				<!-- DarkLunaPhantom end -->
 				<Unit>
 					<UnitClassType>UNITCLASS_JEWISH_MISSIONARY</UnitClassType>
 					<UnitType>NONE</UnitType>
@@ -4440,6 +4446,7 @@
 					<UnitClassType>UNITCLASS_EXECUTIVE_7</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
+				<!-- DarkLunaPhantom begin - All land and sea units are now available to barbarians.
 				<Unit>
 					<UnitClassType>UNITCLASS_PIKEMAN</UnitClassType>
 					<UnitType>NONE</UnitType>
@@ -4588,6 +4595,7 @@
 					<UnitClassType>UNITCLASS_CARRIER</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
+				DarkLunaPhantom end-->
 				<Unit>
 					<UnitClassType>UNITCLASS_AIRSHIP</UnitClassType>
 					<UnitType>NONE</UnitType>
