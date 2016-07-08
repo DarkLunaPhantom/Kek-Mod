@@ -806,7 +806,9 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 
 	for (iI = 0; iI < MAX_TEAMS; iI++)
 	{
-		m_aiEspionageSpendingWeightAgainstTeam[iI] = 1;
+		// DarkLunaPhantom begin - Changed starting weight from 1 to 0 because 0 is minimum.
+		//m_aiEspionageSpendingWeightAgainstTeam[iI] = 1;
+		m_aiEspionageSpendingWeightAgainstTeam[iI] = 0;
 
 		if (!bConstructorCall && getTeam() != NO_TEAM)
 		{
@@ -814,7 +816,9 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 			{
 				if (GET_PLAYER((PlayerTypes) iJ).getTeam() == iI)
 				{
-					GET_PLAYER((PlayerTypes) iJ).setEspionageSpendingWeightAgainstTeam(getTeam(), 1);
+					//GET_PLAYER((PlayerTypes) iJ).setEspionageSpendingWeightAgainstTeam(getTeam(), 1);
+					GET_PLAYER((PlayerTypes) iJ).setEspionageSpendingWeightAgainstTeam(getTeam(), 0);
+		// DarkLunaPhantom end
 				}
 			}
 		}
