@@ -7406,6 +7406,10 @@ bool CvUnit::canUpgrade(UnitTypes eUnit, bool bTestVisible) const
 
 bool CvUnit::isReadyForUpgrade() const
 {
+	CLLNode<IDInfo>* pUnitNode; // DarkLunaPhantom
+	CvPlot* pLoopPlot; // DarkLunaPhantom
+	CvUnit* pLoopUnit; // DarkLunaPhantom
+
 	if (!canMove())
 	{
 		return false;
@@ -7413,7 +7417,47 @@ bool CvUnit::isReadyForUpgrade() const
 
 	if (plot()->getTeam() != getTeam())
 	{
-		return false;
+		// DarkLunaPhantom begin - Barbarians can upgrade units in their territory and outside if far enough from player units.
+		//return false;
+		if (isBarbarian())
+		{
+			if (plot()->isVisibleToCivTeam())
+			{
+				return false;
+			}
+
+			if (GC.getDefineINT("MIN_BARBARIAN_STARTING_DISTANCE") != -1)
+			{
+				for (int iDX = -(GC.getDefineINT("MIN_BARBARIAN_STARTING_DISTANCE")); iDX <= GC.getDefineINT("MIN_BARBARIAN_STARTING_DISTANCE"); iDX++)
+				{
+					for (int iDY = -(GC.getDefineINT("MIN_BARBARIAN_STARTING_DISTANCE")); iDY <= GC.getDefineINT("MIN_BARBARIAN_STARTING_DISTANCE"); iDY++)
+					{
+						pLoopPlot = plotXY(plot()->getX_INLINE(), plot()->getY_INLINE(), iDX, iDY);
+
+						if (pLoopPlot != NULL)
+						{
+							pUnitNode = pLoopPlot->headUnitNode();
+							
+							while (pUnitNode != NULL)
+							{
+								pLoopUnit = ::getUnit(pUnitNode->m_data);
+								pUnitNode = pLoopPlot->nextUnitNode(pUnitNode);
+								
+								if (!GET_PLAYER(pLoopUnit->getOwnerINLINE()).isBarbarian())
+								{
+									return false;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		else
+		{
+			return false;
+		}
+		// DarkLunaPhantom end
 	}
 
 	return true;

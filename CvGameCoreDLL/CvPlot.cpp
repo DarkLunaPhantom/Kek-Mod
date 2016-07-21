@@ -10174,7 +10174,17 @@ bool CvPlot::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible) const
 
 		if (GC.getUnitInfo(eUnit).getPrereqAndBonus() != NO_BONUS)
 		{
-			if (NULL == pCity)
+			// DarkLunaPhantom begin - Enabled barbarians to build units without having resources, requiring only the tech that enables them.
+			if (isBarbarian())
+			{
+				if (!GET_TEAM(BARBARIAN_TEAM).isHasTech((TechTypes)GC.getBonusInfo((BonusTypes)GC.getUnitInfo(eUnit).getPrereqAndBonus()).getTechCityTrade()))
+				{
+					return false;
+				}
+			}
+			//if (NULL == pCity)
+			else if (NULL == pCity)
+			// DarkLunaPhantom end
 			{
 				if (!isPlotGroupConnectedBonus(getOwnerINLINE(), (BonusTypes)GC.getUnitInfo(eUnit).getPrereqAndBonus()))
 				{
@@ -10199,7 +10209,18 @@ bool CvPlot::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible) const
 			{
 				bRequiresBonus = true;
 
-				if (NULL == pCity)
+				// DarkLunaPhantom begin - Enabled barbarians to build units without having resources, requiring only the tech that enables them.
+				if (isBarbarian())
+				{
+					if (GET_TEAM(BARBARIAN_TEAM).isHasTech((TechTypes)GC.getBonusInfo((BonusTypes)GC.getUnitInfo(eUnit).getPrereqOrBonuses(iI)).getTechCityTrade()))
+					{
+						bNeedsBonus = false;
+						break;
+					}
+				}
+				//if (NULL == pCity)
+				else if (NULL == pCity)
+				// DarkLunaPhantom end
 				{
 					if (isPlotGroupConnectedBonus(getOwnerINLINE(), (BonusTypes)GC.getUnitInfo(eUnit).getPrereqOrBonuses(iI)))
 					{
