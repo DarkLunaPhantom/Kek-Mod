@@ -214,6 +214,10 @@ class CvVictoryScreen:
 					#aiVoteBuildingClass.append((gc.getBuildingInfo(i).getBuildingClassType(), iUNTeam, bUnknown))
 					aiVoteBuildingClass.append((j, gc.getBuildingInfo(i).getBuildingClassType(), iUNTeam, bUnknown)) # K-Mod
 
+		# DarkLunaPhantom begin - Sort list of votesources alphabetically.
+		aiVoteBuildingClass.sort(key = lambda x: localText.getText("TXT_KEY_VICTORY_SCREEN_ELECTION", (gc.getBuildingClassInfo(x[1]).getTextKey(), )).lower())
+		# DarkLunaPhantom end
+
 		if (len(aiVoteBuildingClass) == 0):
 			return
 
@@ -953,6 +957,10 @@ class CvVictoryScreen:
 								break
 
 					aiVoteBuildingClass.append((gc.getBuildingInfo(i).getBuildingClassType(), iUNTeam, bUnknown))
+
+		# DarkLunaPhantom begin - Sort list of votesources alphabetically.
+		aiVoteBuildingClass.sort(key = lambda x: localText.getText("TXT_KEY_VICTORY_SCREEN_ELECTION", (gc.getBuildingClassInfo(x[0]).getTextKey(), )).lower())
+		# DarkLunaPhantom end
 
 		#self.bVoteTab = (len(aiVoteBuildingClass) > 0)
 		# K-Mod
