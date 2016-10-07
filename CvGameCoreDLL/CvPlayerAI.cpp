@@ -2928,7 +2928,7 @@ short CvPlayerAI::AI_foundValue_bulk(int iX, int iY, const CvFoundSettings& kSet
 	}
 	// K-Mod end
 
-	std::vector<int> paiBonusCount(GC.getNumBonusInfos(), 0);
+	std::vector<int> viBonusCount(GC.getNumBonusInfos(), 0);
 
 	int iBadTile = 0;
 
@@ -3264,12 +3264,12 @@ short CvPlayerAI::AI_foundValue_bulk(int iX, int iY, const CvFoundSettings& kSet
 				{
 					//iBonusValue = AI_bonusVal(eBonus, 1, true) * ((!kSet.bStartingLoc && (getNumTradeableBonuses(eBonus) == 0) && (paiBonusCount[eBonus] == 1)) ? 80 : 20);
 					// K-Mod
-					int iCount = getNumTradeableBonuses(eBonus) == 0 + paiBonusCount[eBonus];
+					int iCount = getNumTradeableBonuses(eBonus) == 0 + viBonusCount[eBonus];
 					int iBonusValue = AI_bonusVal(eBonus, 0, true) * 80 / (1 + 2*iCount);
 					// Note: 1. the value of starting bonuses is reduced later.
 					//       2. iTempValue use to be used throughout this section. I've replaced all references with iBonusValue, for clarity.
-					paiBonusCount[eBonus]++; // (this use to be above the iBonusValue initialization)
-					FAssert(paiBonusCount[eBonus] > 0);
+					viBonusCount[eBonus]++; // (this use to be above the iBonusValue initialization)
+					FAssert(viBonusCount[eBonus] > 0);
 					//
 
 					iBonusValue *= (kSet.bStartingLoc ? 100 : kSet.iGreed);
@@ -3896,8 +3896,8 @@ short CvPlayerAI::AI_foundValue_bulk(int iX, int iY, const CvFoundSettings& kSet
 		int iUniqueBonusCount = 0;
 		for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
 		{
-			iBonusCount += paiBonusCount[iI];
-			iUniqueBonusCount += (paiBonusCount[iI] > 0) ? 1 : 0;
+			iBonusCount += viBonusCount[iI];
+			iUniqueBonusCount += (viBonusCount[iI] > 0) ? 1 : 0;
 		}
 		if (iBonusCount > 4)
 		{
@@ -4917,22 +4917,11 @@ TechTypes CvPlayerAI::AI_bestTech(int iMaxPathLength, bool bIgnoreCost, bool bAs
 	TechTypes eBestTech = NO_TECH;
 	int iPathLength;
 	CvTeam& kTeam = GET_TEAM(getTeam());
-	
-	int* paiBonusClassRevealed;
-	int* paiBonusClassUnrevealed;
-	int* paiBonusClassHave;
-	
-	paiBonusClassRevealed = new int[GC.getNumBonusClassInfos()];
-	paiBonusClassUnrevealed = new int[GC.getNumBonusClassInfos()];
-	paiBonusClassHave = new int[GC.getNumBonusClassInfos()];
-	
-	for (int iI = 0; iI < GC.getNumBonusClassInfos(); iI++)
-	{
-        paiBonusClassRevealed[iI] = 0;
-        paiBonusClassUnrevealed[iI] = 0;
-        paiBonusClassHave[iI] = 0;	    
-	}
-	
+
+	std::vector<int> viBonusClassRevealed(GC.getNumBonusClassInfos(), 0);
+	std::vector<int> viBonusClassUnrevealed(GC.getNumBonusClassInfos(), 0);
+	std::vector<int> viBonusClassHave(GC.getNumBonusClassInfos(), 0);
+
 	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
 	{
 	    TechTypes eRevealTech = (TechTypes)GC.getBonusInfo((BonusTypes)iI).getTechReveal();
@@ -4941,20 +4930,20 @@ TechTypes CvPlayerAI::AI_bestTech(int iMaxPathLength, bool bIgnoreCost, bool bAs
 	    {
 	        if ((kTeam.isHasTech(eRevealTech)))
 	        {
-	            paiBonusClassRevealed[eBonusClass]++;
+	            viBonusClassRevealed[eBonusClass]++;
 	        }
 	        else
 	        {
-	            paiBonusClassUnrevealed[eBonusClass]++;
+	            viBonusClassUnrevealed[eBonusClass]++;
 	        }
 
             if (getNumAvailableBonuses((BonusTypes)iI) > 0)
             {
-                paiBonusClassHave[eBonusClass]++;                
+                viBonusClassHave[eBonusClass]++;
             }
             else if (countOwnedBonuses((BonusTypes)iI) > 0)
             {
-                paiBonusClassHave[eBonusClass]++;
+                viBonusClassHave[eBonusClass]++;
             }
 	    }
 	}
@@ -4980,7 +4969,7 @@ TechTypes CvPlayerAI::AI_bestTech(int iMaxPathLength, bool bIgnoreCost, bool bAs
 
 							if (iPathLength <= iMaxPathLength)
 							{
-								iValue = AI_techValue( (TechTypes)iI, iPathLength, bIgnoreCost, bAsync, paiBonusClassRevealed, paiBonusClassUnrevealed, paiBonusClassHave );
+								iValue = AI_techValue( (TechTypes)iI, iPathLength, bIgnoreCost, bAsync, viBonusClassRevealed, viBonusClassUnrevealed, viBonusClassHave );
 
 								if( gPlayerLogLevel >= 3 )
 								{
@@ -5005,20 +4994,19 @@ TechTypes CvPlayerAI::AI_bestTech(int iMaxPathLength, bool bIgnoreCost, bool bAs
 		logBBAI("  Player %d (%S) selects tech %S with value %d", getID(), getCivilizationDescription(0), GC.getTechInfo(eBestTech).getDescription(), iBestValue );
 	}
 
-    SAFE_DELETE_ARRAY(paiBonusClassRevealed);
-    SAFE_DELETE_ARRAY(paiBonusClassUnrevealed);
-    SAFE_DELETE_ARRAY(paiBonusClassHave);	
-
 	return eBestTech;
 }
 
 // This function has been mostly rewritten for K-Mod.
-// Note: many of the values used in this function are arbitrary; but adjusted them all to get closer to having a common scale.
+// Note: many of the values used in this function are arbitrary; but I've adjusted them to get closer to having a common scale.
 // The scale is roughly 4 = 1 commerce per turn.
 // (Compared to the original numbers, this is * 1/100 * 7 * 4. 28/100)
-int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost, bool bAsync, int* paiBonusClassRevealed, int* paiBonusClassUnrevealed, int* paiBonusClassHave ) const
+int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost, bool bAsync, const std::vector<int>& viBonusClassRevealed, const std::vector<int>& viBonusClassUnrevealed, const std::vector<int>& viBonusClassHave) const
 {
 	PROFILE_FUNC();
+	FAssert(viBonusClassRevealed.size() == GC.getNumBonusClassInfos());
+	FAssert(viBonusClassUnrevealed.size() == GC.getNumBonusClassInfos());
+	FAssert(viBonusClassHave.size() == GC.getNumBonusClassInfos());
 
 	long iValue; // K-Mod. (the int was overflowing in parts of the calculation)
 
@@ -5290,6 +5278,8 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 	// K-Mod. Extra specialist commerce. (Based on my civic evaluation code)
 	bool bSpecialistCommerce = false;
+	int iTotalBonusSpecialists = -1;
+	int iTotalCurrentSpecialists = -1;
 	for (CommerceTypes i = (CommerceTypes)0; i < NUM_COMMERCE_TYPES; i=(CommerceTypes)(i+1))
 	{
 		bSpecialistCommerce = kTechInfo.getSpecialistExtraCommerce(i) != 0;
@@ -5297,8 +5287,9 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 	if (bSpecialistCommerce)
 	{
-		int iTotalBonusSpecialists = 0;
-		int iTotalCurrentSpecialists = 0;
+		// If there are any bonuses, we need to count our specialists.
+		// (The value from the bonuses will be applied later.)
+		iTotalBonusSpecialists = iTotalCurrentSpecialists = 0;
 
 		int iLoop;
 		CvCity* pLoopCity;
@@ -5310,23 +5301,40 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 			iTotalCurrentSpecialists += pLoopCity->getNumGreatPeople();
 			iTotalCurrentSpecialists += pLoopCity->getSpecialistPopulation();
 		}
-
-		for (CommerceTypes i = (CommerceTypes)0; i < NUM_COMMERCE_TYPES; i=(CommerceTypes)(i+1))
-		{
-			iValue += 4*AI_averageCommerceMultiplier(i)*(kTechInfo.getSpecialistExtraCommerce(i) * std::max((getTotalPopulation()+12*iTotalBonusSpecialists) / 12, iTotalCurrentSpecialists));
-		}
 	}
-	// K-Mod end
 
-	for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
+	for (CommerceTypes i = (CommerceTypes)0; i < NUM_COMMERCE_TYPES; i=(CommerceTypes)(i+1))
 	{
-		if (kTechInfo.isCommerceFlexible(iJ))
+		int iCommerceValue = 0;
+
+		// Commerce for specialists
+		if (bSpecialistCommerce)
 		{
+			iCommerceValue += 4*AI_averageCommerceMultiplier(i)*(kTechInfo.getSpecialistExtraCommerce(i) * std::max((getTotalPopulation()+12*iTotalBonusSpecialists) / 12, iTotalCurrentSpecialists));
+		}
+
+		// Commerce multipliers. (using iCommerceValue from the specialists bonuses to calculate compound effect).
+		iCommerceValue += kTechInfo.getCommerceModifier(i) * (4*getCommerceRate(i)+iCommerceValue) / AI_averageCommerceMultiplier(i);
+
+		// Flexible commerce. (This is difficult to evaluate accurately without checking a lot of things - which I'm not going to do right now.)
+		if (kTechInfo.isCommerceFlexible(i))
+		{
+
+			iCommerceValue += 80 + 4 * iCityCount;
+			/* original
 			iValue += 4 * iCityCount * (3*AI_averageCulturePressure()-200) / 100;
-			if ((iJ == COMMERCE_CULTURE) && (AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2)))
+			if (i == COMMERCE_CULTURE && AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2))
 			{
 				iValue += 280;
-			}
+			} */
+		}
+
+		if (iCommerceValue)
+		{
+			iCommerceValue *= AI_commerceWeight(i);
+			iCommerceValue /= 100;
+
+			iValue += iCommerceValue;
 		}
 	}
 
@@ -5675,7 +5683,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 			iRevealValue += AI_bonusVal((BonusTypes)iJ, 1, true) * iCityCount * 2/3;
 
 			BonusClassTypes eBonusClass = (BonusClassTypes)GC.getBonusInfo((BonusTypes)iJ).getBonusClassType();
-			int iBonusClassTotal = (paiBonusClassRevealed[eBonusClass] + paiBonusClassUnrevealed[eBonusClass]);
+			int iBonusClassTotal = (viBonusClassRevealed[eBonusClass] + viBonusClassUnrevealed[eBonusClass]);
 
 			//iMultiplier is basically a desperation value
 			//it gets larger as the AI runs out of options
@@ -5685,12 +5693,12 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 			int iMultiplier = 0;
 			if (iBonusClassTotal > 0)
 			{
-                iMultiplier = (paiBonusClassRevealed[eBonusClass] - paiBonusClassHave[eBonusClass]);
+                iMultiplier = (viBonusClassRevealed[eBonusClass] - viBonusClassHave[eBonusClass]);
                 iMultiplier *= 100;
                 iMultiplier /= iBonusClassTotal;
                 
-                iMultiplier *= (paiBonusClassRevealed[eBonusClass] + 1);
-                iMultiplier /= ((paiBonusClassHave[eBonusClass] * iBonusClassTotal) + 1);
+                iMultiplier *= (viBonusClassRevealed[eBonusClass] + 1);
+                iMultiplier /= ((viBonusClassHave[eBonusClass] * iBonusClassTotal) + 1);
 			}
 
 			iMultiplier *= std::min(3, getNumCities());
@@ -9081,44 +9089,21 @@ bool CvPlayerAI::AI_considerOffer(PlayerTypes ePlayer, const CLinkList<TradeData
 	return (iTheirValue >= iOurValue);
 }
 
+// K-Mod. Helper fuction for AI_counterPropose. (lambas would be really nice here, but we can't have nice things.)
+bool maxValueCompare(const std::pair<TradeData*, int>& a, const std::pair<TradeData*, int>& b)
+{
+	return a.second > b.second;
+}
 
 bool CvPlayerAI::AI_counterPropose(PlayerTypes ePlayer, const CLinkList<TradeData>* pTheirList, const CLinkList<TradeData>* pOurList, CLinkList<TradeData>* pTheirInventory, CLinkList<TradeData>* pOurInventory, CLinkList<TradeData>* pTheirCounter, CLinkList<TradeData>* pOurCounter) const
 {
-	CLLNode<TradeData>* pNode;
-	CLLNode<TradeData>* pBestNode;
-	CLLNode<TradeData>* pGoldPerTurnNode;
-	CLLNode<TradeData>* pGoldNode;
-	bool* pabBonusDeal;
-	CvCity* pCity;
-	bool bTheirGoldDeal;
-	bool bOurGoldDeal;
-	//int iHumanDealWeight;
-	//int iAIDealWeight;
-	int iGoldData;
-	int iGoldWeight;
-	int iWeight;
-	int iBestWeight;
-	int iValue;
-	int iBestValue;
-	int iI;
-
-	bTheirGoldDeal = AI_goldDeal(pTheirList);
-	bOurGoldDeal = AI_goldDeal(pOurList);
+	bool bTheirGoldDeal = AI_goldDeal(pTheirList);
+	bool bOurGoldDeal = AI_goldDeal(pOurList);
 
 	if (bOurGoldDeal && bTheirGoldDeal)
 	{
 		return false;
 	}
-
-	pabBonusDeal = new bool[GC.getNumBonusInfos()];
-
-	for (iI = 0; iI < GC.getNumBonusInfos(); iI++)
-	{
-		pabBonusDeal[iI] = false;
-	}
-
-	pGoldPerTurnNode = NULL;
-	pGoldNode = NULL;
 
 	/* original bts code
 	iHumanDealWeight = AI_dealVal(ePlayer, pTheirList);
@@ -9139,12 +9124,12 @@ bool CvPlayerAI::AI_counterPropose(PlayerTypes ePlayer, const CLinkList<TradeDat
 	{
 		// Check to see if there is already an end-war item on the table
 		bool bEndWar = false;
-		for (pNode = pTheirList->head(); !bEndWar && pNode; pNode = pTheirList->next(pNode))
+		for (CLLNode<TradeData>* pNode = pTheirList->head(); !bEndWar && pNode; pNode = pTheirList->next(pNode))
 		{
 			if (CvDeal::isEndWar(pNode->m_data.m_eItemType))
 				bEndWar = true;
 		}
-		for (pNode = pOurList->head(); !bEndWar && pNode; pNode = pOurList->next(pNode))
+		for (CLLNode<TradeData>* pNode = pOurList->head(); !bEndWar && pNode; pNode = pOurList->next(pNode))
 		{
 			if (CvDeal::isEndWar(pNode->m_data.m_eItemType))
 				bEndWar = true;
@@ -9190,211 +9175,208 @@ bool CvPlayerAI::AI_counterPropose(PlayerTypes ePlayer, const CLinkList<TradeDat
 			}
 		}
 	}
-	// K-Mod end
 
+	// When counterProposing, we want balance the deal - but if we can't balance it, we want to make sure it favours us; not them.
+	// So if their value is greater, we don't mind suggesting items which take them past balance.
+	// But if our value is greater, we will never suggest adding items which overshoot the balance.
 	if (iValueForThem > iValueForUs)
 	{
-		if (atWar(getTeam(), GET_PLAYER(ePlayer).getTeam()))
+		// First, try to make up the difference with gold.
+		CLLNode<TradeData>* pGoldPerTurnNode = NULL;
+		CLLNode<TradeData>* pGoldNode = NULL;
+
+		if (!bOurGoldDeal)
 		{
-			iBestValue = 0;
-			iBestWeight = 0;
-			pBestNode = NULL;
-
-			for (pNode = pTheirInventory->head(); pNode && iValueForThem > iValueForUs; pNode = pTheirInventory->next(pNode))
+			for (CLLNode<TradeData>* pNode = pTheirInventory->head(); pNode; pNode = pTheirInventory->next(pNode))
 			{
-				if (!pNode->m_data.m_bOffering && !pNode->m_data.m_bHidden)
+				if (pNode->m_data.m_bOffering || pNode->m_data.m_bHidden)
+					continue;
+
+				if (GET_PLAYER(ePlayer).getTradeDenial(getID(), pNode->m_data) != NO_DENIAL)
+					continue;
+
+				FAssert(GET_PLAYER(ePlayer).canTradeItem(getID(), pNode->m_data));
+
+				switch (pNode->m_data.m_eItemType)
 				{
-					if (pNode->m_data.m_eItemType == TRADE_CITIES)
+				case TRADE_GOLD:
+					pGoldNode = pNode;
+					break;
+				case TRADE_GOLD_PER_TURN:
+					pGoldPerTurnNode = pNode;
+					break;
+				}
+			}
+		}
+
+		if (pGoldNode)
+		{
+			int iGoldData = ((iValueForThem - iValueForUs) * 100 + (iGoldValuePercent - 1)) / iGoldValuePercent; // round up
+
+			if (GET_PLAYER(ePlayer).AI_maxGoldTrade(getID()) >= iGoldData)
+			{
+				pGoldNode->m_data.m_iData = iGoldData;
+				iValueForUs += (iGoldData * iGoldValuePercent) / 100;
+				pTheirCounter->insertAtEnd(pGoldNode->m_data);
+				pGoldNode = NULL;
+			}
+		}
+
+		std::pair<TradeData*, int> final_item(NULL, 0); // An item we may or may not use to finalise the deal. (See later)
+		if (iValueForThem > iValueForUs)
+		{
+			// We were unable to balance the trade with just gold. So lets look at all the other items.
+
+			// Exclude bonuses that we've already put on the table
+			std::vector<bool> vbBonusDeal(GC.getNumBonusInfos(), false);
+			for (CLLNode<TradeData>* pNode = pOurList->head(); pNode; pNode = pOurList->next(pNode))
+			{
+				FAssert(!(pNode->m_data.m_bHidden));
+
+				if (pNode->m_data.m_eItemType == TRADE_RESOURCES)
+					vbBonusDeal[pNode->m_data.m_iData] = true;
+			}
+
+			// We're only going to allow one city on the list. (For flavour reasons.)
+			int iBestCityValue = 0;
+			int iBestCityWeight = 0;
+			CLLNode<TradeData>* pBestCityNode = NULL;
+
+			// Evaluate everything they're willing to trade.
+			std::vector<std::pair<TradeData*, int> > item_value_list; // (item*, value)
+
+			for (CLLNode<TradeData>* pNode = pTheirInventory->head(); pNode; pNode = pTheirInventory->next(pNode))
+			{
+				if (pNode->m_data.m_bOffering || pNode->m_data.m_bHidden)
+					continue;
+
+				if (GET_PLAYER(ePlayer).getTradeDenial(getID(), pNode->m_data) != NO_DENIAL)
+					continue;
+
+				FAssert(GET_PLAYER(ePlayer).canTradeItem(getID(), pNode->m_data));
+
+				int iItemValue = 0;
+
+				switch (pNode->m_data.m_eItemType)
+				{
+				case TRADE_MAPS:
+					iItemValue = GET_TEAM(getTeam()).AI_mapTradeVal(GET_PLAYER(ePlayer).getTeam());
+					break;
+				case TRADE_TECHNOLOGIES:
+					iItemValue = GET_TEAM(getTeam()).AI_techTradeVal((TechTypes)(pNode->m_data.m_iData), GET_PLAYER(ePlayer).getTeam());
+					break;
+				case TRADE_RESOURCES:
+					if (!vbBonusDeal[pNode->m_data.m_iData])
 					{
-						FAssert(GET_PLAYER(ePlayer).canTradeItem(getID(), pNode->m_data));
-
-						if (GET_PLAYER(ePlayer).getTradeDenial(getID(), pNode->m_data) == NO_DENIAL)
+						// Don't ask for the last of a resource, or corporation resources; because we're not going to evaluate losses.
+						if (GET_PLAYER(ePlayer).getNumTradeableBonuses((BonusTypes)(pNode->m_data.m_iData)) > 1)
 						{
-							pCity = GET_PLAYER(ePlayer).getCity(pNode->m_data.m_iData);
-
-							if (pCity != NULL)
+							if (GET_PLAYER(ePlayer).AI_corporationBonusVal((BonusTypes)pNode->m_data.m_iData) == 0)
 							{
-								iWeight = AI_cityTradeVal(pCity);
+								iItemValue = AI_bonusTradeVal((BonusTypes)pNode->m_data.m_iData, ePlayer, 1);
+								vbBonusDeal[pNode->m_data.m_iData] = true;
+							}
+						}
+					}
+					break;
+				case TRADE_CITIES:
+					if (atWar(getTeam(), GET_PLAYER(ePlayer).getTeam()))
+					{
+						CvCity* pCity = GET_PLAYER(ePlayer).getCity(pNode->m_data.m_iData);
 
-								if (iWeight > 0)
+						if (pCity != NULL)
+						{
+							int iWeight = AI_targetCityValue(pCity, false);
+
+							if (iWeight > iBestCityWeight)
+							{
+								int iValue = AI_cityTradeVal(pCity);
+
+								if (iValue > 0)
 								{
-									iValue = AI_targetCityValue(pCity, false);
-
-									if (iValue > iBestValue)
-									{
-										iBestValue = iValue;
-										iBestWeight = iWeight;
-										pBestNode = pNode;
-									}
+									iBestCityValue = iValue;
+									iBestCityWeight = iWeight;
+									pBestCityNode = pNode;
 								}
 							}
 						}
 					}
+					break;
+				}
+
+				if (iItemValue > 0)
+				{
+					item_value_list.push_back(std::make_pair(&pNode->m_data, iItemValue));
 				}
 			}
 
-			if (pBestNode != NULL)
+			if (pBestCityNode != NULL)
 			{
-				iValueForUs += iBestWeight;
-				pTheirCounter->insertAtEnd(pBestNode->m_data);
+				item_value_list.push_back(std::make_pair(&pBestCityNode->m_data, iBestCityValue));
 			}
-		}
 
-		for (pNode = pTheirInventory->head(); pNode && iValueForThem > iValueForUs; pNode = pTheirInventory->next(pNode))
-		{
-			if (!pNode->m_data.m_bOffering && !pNode->m_data.m_bHidden)
+			// We want to get as close as we can to a balanced trade - but ensure that the deal favours us!
+			// Find the best item, add it to the list; and repeat until we've closed the game in the trade values.
+			while (iValueForThem > iValueForUs && !item_value_list.empty())
 			{
-				FAssert(GET_PLAYER(ePlayer).canTradeItem(getID(), pNode->m_data));
+				int value_gap = iValueForThem - iValueForUs;
 
-				if (GET_PLAYER(ePlayer).getTradeDenial(getID(), pNode->m_data) == NO_DENIAL)
+				// Find the best item to put us ahead, but as close to fair as possible.
+				// Note: We're not doing this for perfect balance. We're counter-proposing so that the deal favours us!
+				//   If we wanted to get closer to a balanced deal, we just remove that first condition.
+				//   (Maybe that's what we should be doing for AI-AI trades; but there are still flavour considersations...)
+				std::vector<std::pair<TradeData*, int> >::iterator it, best_it;
+				for (best_it = it = item_value_list.begin(); it != item_value_list.end(); ++it)
 				{
-					switch (pNode->m_data.m_eItemType)
+					if ((it->second > value_gap && best_it->second < value_gap) ||
+						(std::abs(it->second - value_gap) < std::abs(best_it->second - value_gap)))
 					{
-					case TRADE_GOLD:
-						if (!bOurGoldDeal)
-						{
-							pGoldNode = pNode;
-						}
-						break;
-					case TRADE_GOLD_PER_TURN:
-						if (!bOurGoldDeal)
-						{
-							pGoldPerTurnNode = pNode;
-						}
-						break;
+						best_it = it;
 					}
 				}
+
+				// Only add the item if it will get us closer to balance.
+				if (best_it->second <= 2*(iValueForThem - iValueForUs))
+				{
+					pTheirCounter->insertAtEnd(*best_it->first);
+					iValueForUs += best_it->second;
+					item_value_list.erase(best_it);
+				}
+				else
+				{
+					// If nothing on the list can bring us closer to balance; we'll try to balance it with gold.
+					// But if that doesn't work, we may need to add this last item. So lets bookmark it.
+					final_item = *best_it;
+					break;
+				}
 			}
 		}
 
-		int iGoldWeight = iValueForThem - iValueForUs;
-
-		if (iGoldWeight > 0)
+		// If their value is still higher, try one more time to make up the difference with gold.
+		// If this we're counter-proposing an AI deal, just get as close to the right value as we can.
+		// But for humans, if they don't have enough gold then ask for one final item, to favour us.
+		bool bAddFinalItem = false;
+		if (iValueForThem > iValueForUs)
 		{
 			if (pGoldNode)
 			{
-				iGoldData = iGoldWeight * 100;
-				iGoldData /= iGoldValuePercent;
-/************************************************************************************************/
-/* UNOFFICIAL_PATCH                       09/17/09                     dilandau & jdog5000      */
-/*                                                                                              */
-/* Bugfix				                                                                        */
-/************************************************************************************************/
-/* original bts code
-				if ((iGoldData * iGoldValuePercent) < iGoldWeight)
-*/
-				if ((iGoldData * iGoldValuePercent) < iGoldWeight * 100)
-/************************************************************************************************/
-/* UNOFFICIAL_PATCH                        END                                                  */
-/************************************************************************************************/
+				int iGoldData = ((iValueForThem - iValueForUs) * 100 + (iGoldValuePercent - 1)) / iGoldValuePercent; // round up
+				int iGoldAvailable = GET_PLAYER(ePlayer).AI_maxGoldTrade(getID());
+
+				if (GET_PLAYER(ePlayer).isHuman() && iGoldData > iGoldAvailable)
 				{
-					iGoldData++;
+					bAddFinalItem = true;
 				}
-				if (GET_PLAYER(ePlayer).AI_maxGoldTrade(getID()) >= iGoldData)
+				else
 				{
-					pGoldNode->m_data.m_iData = iGoldData;
-					iValueForUs += (iGoldData * iGoldValuePercent) / 100;
-					pTheirCounter->insertAtEnd(pGoldNode->m_data);
-					pGoldNode = NULL;
-				}
-			}
-		}
-
-		for (pNode = pOurList->head(); pNode; pNode = pOurList->next(pNode))
-		{
-			FAssert(!(pNode->m_data.m_bHidden));
-
-			switch (pNode->m_data.m_eItemType)
-			{
-			case TRADE_RESOURCES:
-				pabBonusDeal[pNode->m_data.m_iData] = true;
-				break;
-			}
-		}
-		
-		for (pNode = pTheirInventory->head(); pNode && iValueForThem > iValueForUs; pNode = pTheirInventory->next(pNode))
-		{
-			if (!pNode->m_data.m_bOffering && !pNode->m_data.m_bHidden)
-			{
-				FAssert(GET_PLAYER(ePlayer).canTradeItem(getID(), pNode->m_data));
-
-				if (GET_PLAYER(ePlayer).getTradeDenial(getID(), pNode->m_data) == NO_DENIAL)
-				{
-					iWeight = 0;
-
-					switch (pNode->m_data.m_eItemType)
+					iGoldData = std::min(iGoldData, iGoldAvailable);
+					if (iGoldData > 0)
 					{
-					case TRADE_TECHNOLOGIES:
-						iWeight += GET_TEAM(getTeam()).AI_techTradeVal((TechTypes)(pNode->m_data.m_iData), GET_PLAYER(ePlayer).getTeam());
-						break;
-					case TRADE_RESOURCES:
-						if (!pabBonusDeal[pNode->m_data.m_iData])
-						{
-							if (GET_PLAYER(ePlayer).getNumTradeableBonuses((BonusTypes)(pNode->m_data.m_iData)) > 1)
-							{
-								if (GET_PLAYER(ePlayer).AI_corporationBonusVal((BonusTypes)(pNode->m_data.m_iData)) == 0)
-								{
-									iWeight += AI_bonusTradeVal(((BonusTypes)(pNode->m_data.m_iData)), ePlayer, 1);
-									pabBonusDeal[pNode->m_data.m_iData] = true;
-								}
-							}
-						}
-						break;
+						pGoldNode->m_data.m_iData = iGoldData;
+						iValueForUs += (iGoldData * iGoldValuePercent) / 100;
+						pTheirCounter->insertAtEnd(pGoldNode->m_data);
+						pGoldNode = NULL;
 					}
-
-					if (iWeight > 0)
-					{
-						iValueForUs += iWeight;
-						pTheirCounter->insertAtEnd(pNode->m_data);
-					}
-				}
-			}
-		}
-
-		for (pNode = pTheirInventory->head(); pNode && iValueForThem > iValueForUs; pNode = pTheirInventory->next(pNode))
-		{
-			if (!pNode->m_data.m_bOffering && !pNode->m_data.m_bHidden)
-			{
-				if (pNode->m_data.m_eItemType == TRADE_MAPS)
-				{
-					FAssert(GET_PLAYER(ePlayer).canTradeItem(getID(), pNode->m_data));
-
-					if (GET_PLAYER(ePlayer).getTradeDenial(getID(), pNode->m_data) == NO_DENIAL)
-					{
-						iWeight = GET_TEAM(getTeam()).AI_mapTradeVal(GET_PLAYER(ePlayer).getTeam());
-
-						if (iWeight > 0)
-						{
-							iValueForUs += iWeight;
-							pTheirCounter->insertAtEnd(pNode->m_data);
-						}
-					}
-				}
-			}
-		}
-
-		iGoldWeight = iValueForThem - iValueForUs;
-
-		if (iGoldWeight > 0)
-		{
-			if (pGoldNode)
-			{
-				iGoldData = iGoldWeight * 100;
-				iGoldData /= iGoldValuePercent;
-				
-				if ((iGoldWeight * 100) > (iGoldData * iGoldValuePercent))
-				{
-					iGoldData++;
-				}
-
-				iGoldData = std::min(iGoldData, GET_PLAYER(ePlayer).AI_maxGoldTrade(getID()));
-
-				if (iGoldData > 0)
-				{
-					pGoldNode->m_data.m_iData = iGoldData;
-					iValueForUs += (iGoldData * iGoldValuePercent) / 100;
-					pTheirCounter->insertAtEnd(pGoldNode->m_data);
-					pGoldNode = NULL;
 				}
 			}
 		}
@@ -9403,308 +9385,247 @@ bool CvPlayerAI::AI_counterPropose(PlayerTypes ePlayer, const CLinkList<TradeDat
 		{
 			if (pGoldPerTurnNode)
 			{
-				iGoldData = 0;
+				int iGoldData = 0;
+				int iGoldAvailable = GET_PLAYER(ePlayer).AI_maxGoldPerTurnTrade(getID());
 
 				while (AI_goldPerTurnTradeVal(iGoldData) < (iValueForThem - iValueForUs))
 				{
 					iGoldData++;
 				}
 
-				iGoldData = std::min(iGoldData, GET_PLAYER(ePlayer).AI_maxGoldPerTurnTrade(getID()));
-
-				if (iGoldData > 0)
+				if (GET_PLAYER(ePlayer).isHuman() && iGoldData > iGoldAvailable)
 				{
-					pGoldPerTurnNode->m_data.m_iData = iGoldData;
-					iValueForUs += AI_goldPerTurnTradeVal(pGoldPerTurnNode->m_data.m_iData);
-					pTheirCounter->insertAtEnd(pGoldPerTurnNode->m_data);
-					pGoldPerTurnNode = NULL;
+					bAddFinalItem = true;
+				}
+				else
+				{
+					iGoldData = std::min(iGoldData, iGoldAvailable);
+					if (iGoldData > 0)
+					{
+						pGoldPerTurnNode->m_data.m_iData = iGoldData;
+						iValueForUs += AI_goldPerTurnTradeVal(pGoldPerTurnNode->m_data.m_iData);
+						pTheirCounter->insertAtEnd(pGoldPerTurnNode->m_data);
+						pGoldPerTurnNode = NULL;
+					}
 				}
 			}
 		}
 
-		for (pNode = pTheirInventory->head(); pNode && iValueForThem > iValueForUs; pNode = pTheirInventory->next(pNode))
+		// When counter proposing a suggestion from a human, the AI will insist on having the better value.
+		// So lets add the cheapest item still on our list.
+		// We would have added the item already if it was going to be 'fair'. So we can be sure will favour us.
+		if (bAddFinalItem && final_item.first != NULL)
 		{
-			if (!pNode->m_data.m_bOffering && !pNode->m_data.m_bHidden)
-			{
-				if (pNode->m_data.m_eItemType == TRADE_RESOURCES)
-				{
-					FAssert(GET_PLAYER(ePlayer).canTradeItem(getID(), pNode->m_data));
+			FAssert(iValueForThem > iValueForUs && GET_PLAYER(ePlayer).isHuman());
 
-					if (GET_PLAYER(ePlayer).getTradeDenial(getID(), pNode->m_data) == NO_DENIAL)
-					{
-						iWeight = 0;
-
-						if (!pabBonusDeal[pNode->m_data.m_iData])
-						{
-							if (GET_PLAYER(ePlayer).getNumTradeableBonuses((BonusTypes)(pNode->m_data.m_iData)) > 0)
-							{
-								iWeight += AI_bonusTradeVal(((BonusTypes)(pNode->m_data.m_iData)), ePlayer, 1);
-								pabBonusDeal[pNode->m_data.m_iData] = true;
-							}
-						}
-
-						if (iWeight > 0)
-						{
-							iValueForUs += iWeight;
-							pTheirCounter->insertAtEnd(pNode->m_data);
-						}
-					}
-				}
-			}
+			pTheirCounter->insertAtEnd(*final_item.first);
+			iValueForUs += final_item.second;
+			FAssert(iValueForUs >= iValueForThem);
 		}
 	}
 	else if (iValueForUs > iValueForThem)
 	{
-		if (atWar(getTeam(), GET_PLAYER(ePlayer).getTeam()))
+		// First, try to make up the difference with gold.
+		CLLNode<TradeData>* pGoldPerTurnNode = NULL;
+		CLLNode<TradeData>* pGoldNode = NULL;
+
+		if (!bTheirGoldDeal)
 		{
-			/* original bts code
-			bool bSurrender = false;
-			for (pNode = pOurInventory->head(); pNode; pNode = pOurInventory->next(pNode))
+			for (CLLNode<TradeData>* pNode = pOurInventory->head(); pNode; pNode = pOurInventory->next(pNode))
 			{
-				if (!pNode->m_data.m_bOffering && !pNode->m_data.m_bHidden)
-				{
-					if (pNode->m_data.m_eItemType == TRADE_SURRENDER)
-					{
-						if (getTradeDenial(ePlayer, pNode->m_data) == NO_DENIAL)
-						{
-							iValueForThem += GET_TEAM(GET_PLAYER(ePlayer).getTeam()).AI_surrenderTradeVal(getTeam());
-							pOurCounter->insertAtEnd(pNode->m_data);
-							bSurrender = true;
-						}
-						break;
-					}
-				}
-			}
+				if (pNode->m_data.m_bOffering || pNode->m_data.m_bHidden)
+					continue;
 
-			if (!bSurrender)
-			{
-				for (pNode = pOurInventory->head(); pNode; pNode = pOurInventory->next(pNode))
-				{
-					if (!pNode->m_data.m_bOffering && !pNode->m_data.m_bHidden)
-					{
-						if (pNode->m_data.m_eItemType == TRADE_PEACE_TREATY)
-						{
-							pOurCounter->insertAtEnd(pNode->m_data);
-							break;
-						}
-					}
-				}
-			} */ // Disabled by K-Mod. This is obsolete.
+				if (getTradeDenial(ePlayer, pNode->m_data) != NO_DENIAL)
+					continue;
 
-			iBestValue = 0;
-			iBestWeight = 0;
-			pBestNode = NULL;
-
-			for (pNode = pOurInventory->head(); pNode && iValueForUs > iValueForThem; pNode = pOurInventory->next(pNode))
-			{
-				if (!pNode->m_data.m_bOffering && !pNode->m_data.m_bHidden)
-				{
-					if (pNode->m_data.m_eItemType == TRADE_CITIES)
-					{
-						FAssert(canTradeItem(ePlayer, pNode->m_data));
-
-						if (getTradeDenial(ePlayer, pNode->m_data) == NO_DENIAL)
-						{
-							pCity = getCity(pNode->m_data.m_iData);
-
-							if (pCity != NULL)
-							{
-								iWeight = GET_PLAYER(ePlayer).AI_cityTradeVal(pCity);
-
-								if (iWeight > 0)
-								{
-									iValue = GET_PLAYER(ePlayer).AI_targetCityValue(pCity, false);
-
-									if (iValue > iBestValue)
-									{
-										if (iValueForUs >= (iValueForThem + iWeight))
-										{
-											iBestValue = iValue;
-											iBestWeight = iWeight;
-											pBestNode = pNode;
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-
-			if (pBestNode != NULL)
-			{
-				iValueForThem += iBestWeight;
-				pOurCounter->insertAtEnd(pBestNode->m_data);
-			}
-		}
-
-		for (pNode = pOurInventory->head(); pNode && iValueForUs > iValueForThem; pNode = pOurInventory->next(pNode))
-		{
-			if (!pNode->m_data.m_bOffering && !pNode->m_data.m_bHidden)
-			{
 				FAssert(canTradeItem(ePlayer, pNode->m_data));
 
-				if (getTradeDenial(ePlayer, pNode->m_data) == NO_DENIAL)
+				switch (pNode->m_data.m_eItemType)
 				{
-					switch (pNode->m_data.m_eItemType)
-					{
-					case TRADE_GOLD:
-						if (!bTheirGoldDeal)
-						{
-							pGoldNode = pNode;
-						}
-						break;
-					case TRADE_GOLD_PER_TURN:
-						if (!bTheirGoldDeal)
-						{
-							pGoldPerTurnNode = pNode;
-						}
-						break;
-					}
+				case TRADE_GOLD:
+					pGoldNode = pNode;
+					break;
+				case TRADE_GOLD_PER_TURN:
+					pGoldPerTurnNode = pNode;
+					break;
 				}
 			}
 		}
 
-		iGoldWeight = iValueForUs - iValueForThem;
-
-		if (iGoldWeight > 0)
+		if (pGoldNode)
 		{
-			if (pGoldNode)
+			int iGoldData = (iValueForUs - iValueForThem) * 100 / iGoldValuePercent; // round down
+
+			if (AI_maxGoldTrade(ePlayer) >= iGoldData)
 			{
-				int iGoldData = iGoldWeight * 100;
-				iGoldData /= iGoldValuePercent;
-
-				if (AI_maxGoldTrade(ePlayer) >= iGoldData)
-				{
-					pGoldNode->m_data.m_iData = iGoldData;
-					iValueForThem += ((iGoldData * iGoldValuePercent) / 100);
-					pOurCounter->insertAtEnd(pGoldNode->m_data);
-					pGoldNode = NULL;
-				}
-			}
-		}
-
-		for (pNode = pTheirList->head(); pNode; pNode = pTheirList->next(pNode))
-		{
-			FAssert(!(pNode->m_data.m_bHidden));
-
-			switch (pNode->m_data.m_eItemType)
-			{
-			case TRADE_RESOURCES:
-				pabBonusDeal[pNode->m_data.m_iData] = true;
-				break;
-			}
-		}
-
-		for (pNode = pOurInventory->head(); pNode && iValueForUs > iValueForThem; pNode = pOurInventory->next(pNode))
-		{
-			if (!pNode->m_data.m_bOffering && !pNode->m_data.m_bHidden)
-			{
-				FAssert(canTradeItem(ePlayer, pNode->m_data));
-
-				if (getTradeDenial(ePlayer, pNode->m_data) == NO_DENIAL)
-				{
-					iWeight = 0;
-
-					switch (pNode->m_data.m_eItemType)
-					{
-					case TRADE_TECHNOLOGIES:
-						iWeight += GET_TEAM(GET_PLAYER(ePlayer).getTeam()).AI_techTradeVal((TechTypes)(pNode->m_data.m_iData), getTeam());
-						break;
-					case TRADE_RESOURCES:
-						if (!pabBonusDeal[pNode->m_data.m_iData])
-						{
-							if (getNumTradeableBonuses((BonusTypes)(pNode->m_data.m_iData)) > 1)
-							{
-								iWeight += GET_PLAYER(ePlayer).AI_bonusTradeVal(((BonusTypes)(pNode->m_data.m_iData)), getID(), 1);
-								pabBonusDeal[pNode->m_data.m_iData] = true;
-							}
-						}
-						break;
-					}
-
-					if (iWeight > 0)
-					{
-						if (iValueForUs >= (iValueForThem + iWeight))
-						{
-							iValueForThem += iWeight;
-							pOurCounter->insertAtEnd(pNode->m_data);
-						}
-					}
-				}
-			}
-		}
-
-		for (pNode = pOurInventory->head(); pNode && iValueForUs > iValueForThem; pNode = pOurInventory->next(pNode))
-		{
-			if (!pNode->m_data.m_bOffering && !pNode->m_data.m_bHidden)
-			{
-				if (pNode->m_data.m_eItemType == TRADE_MAPS)
-				{
-					FAssert(canTradeItem(ePlayer, pNode->m_data));
-
-					if (getTradeDenial(ePlayer, pNode->m_data) == NO_DENIAL)
-					{
-						iWeight = GET_TEAM(GET_PLAYER(ePlayer).getTeam()).AI_mapTradeVal(getTeam());
-
-						if (iWeight > 0)
-						{
-							if (iValueForUs >= (iValueForThem + iWeight))
-							{
-								iValueForThem += iWeight;
-								pOurCounter->insertAtEnd(pNode->m_data);
-							}
-						}
-					}
-				}
-			}
-		}
-
-		iGoldWeight = iValueForUs - iValueForThem;
-		if (iGoldWeight > 0)
-		{
-			if (pGoldNode)
-			{
-				iGoldData = iGoldWeight * 100;
-				iGoldData /= AI_goldTradeValuePercent();
-
-				iGoldData = std::min(iGoldData, AI_maxGoldTrade(ePlayer));
-
-				if (iGoldData > 0)
-				{
-					pGoldNode->m_data.m_iData = iGoldData;
-					iValueForThem += (iGoldData * iGoldValuePercent) / 100;
-					pOurCounter->insertAtEnd(pGoldNode->m_data);
-					pGoldNode = NULL;
-				}
+				pGoldNode->m_data.m_iData = iGoldData;
+				iValueForThem += ((iGoldData * iGoldValuePercent) / 100);
+				pOurCounter->insertAtEnd(pGoldNode->m_data);
+				pGoldNode = NULL;
 			}
 		}
 
 		if (iValueForUs > iValueForThem)
 		{
-			if (pGoldPerTurnNode)
+			// We were unable to balance the trade with just gold. So lets look at all the other items.
+
+			// Exclude bonuses that they've already put on the table
+			std::vector<bool> vbBonusDeal(GC.getNumBonusInfos(), false);
+			for (CLLNode<TradeData>* pNode = pTheirList->head(); pNode; pNode = pTheirList->next(pNode))
 			{
-				iGoldData = 0;
+				FAssert(!(pNode->m_data.m_bHidden));
 
-				while (GET_PLAYER(ePlayer).AI_goldPerTurnTradeVal(iGoldData + 1) <= (iValueForUs - iValueForThem))
+				if (pNode->m_data.m_eItemType == TRADE_RESOURCES)
+					vbBonusDeal[pNode->m_data.m_iData] = true;
+			}
+
+			// We're only going to allow one city on the list. (For flavour reasons.)
+			int iBestCityValue = 0;
+			int iBestCityWeight = 0;
+			CLLNode<TradeData>* pBestCityNode = NULL;
+
+			// Build the value list!
+			std::vector<std::pair<TradeData*, int> > item_value_list; // (item*, value)
+			// Note: unlike the previous version, the numbers in this list are the actual values - not deltas.
+			// We want to balance the trade without letting their value get higher than ours.
+
+			for (CLLNode<TradeData>* pNode = pOurInventory->head(); pNode; pNode = pOurInventory->next(pNode))
+			{
+				if (pNode->m_data.m_bOffering || pNode->m_data.m_bHidden)
+					continue;
+
+				if (getTradeDenial(ePlayer, pNode->m_data) != NO_DENIAL)
+					continue;
+
+				FAssert(canTradeItem(ePlayer, pNode->m_data));
+
+				int iItemValue = 0;
+
+				switch (pNode->m_data.m_eItemType)
 				{
-					iGoldData++;
+				case TRADE_MAPS:
+					iItemValue = GET_TEAM(GET_PLAYER(ePlayer).getTeam()).AI_mapTradeVal(getTeam());
+					break;
+				case TRADE_TECHNOLOGIES:
+					iItemValue = GET_TEAM(GET_PLAYER(ePlayer).getTeam()).AI_techTradeVal((TechTypes)(pNode->m_data.m_iData), getTeam());
+					break;
+				case TRADE_RESOURCES:
+					if (!vbBonusDeal[pNode->m_data.m_iData])
+					{
+						// Don't offer the last of a resource, or corporation resources; because we're not going to evaluate losses.
+						if (getNumTradeableBonuses((BonusTypes)(pNode->m_data.m_iData)) > 1)
+						{
+							if (AI_corporationBonusVal((BonusTypes)pNode->m_data.m_iData) == 0)
+							{
+								iItemValue = GET_PLAYER(ePlayer).AI_bonusTradeVal((BonusTypes)pNode->m_data.m_iData, getID(), 1);
+								vbBonusDeal[pNode->m_data.m_iData] = true;
+							}
+						}
+					}
+					break;
+				case TRADE_CITIES:
+					if (atWar(getTeam(), GET_PLAYER(ePlayer).getTeam()))
+					{
+						CvCity* pCity = getCity(pNode->m_data.m_iData);
+
+						if (pCity != NULL)
+						{
+							int iWeight = GET_PLAYER(ePlayer).AI_targetCityValue(pCity, false);
+							if (iWeight > iBestCityWeight)
+							{
+								int iValue = GET_PLAYER(ePlayer).AI_cityTradeVal(pCity);
+								if (iValue > 0 && iValueForUs >= (iValueForThem + iValue))
+								{
+									iBestCityValue = iValue;
+									iBestCityWeight = iWeight;
+									pBestCityNode = pNode;
+								}
+							}
+						}
+					}
+					break;
 				}
-
-				iGoldData = std::min(iGoldData, AI_maxGoldPerTurnTrade(ePlayer));
-
-				if (iGoldData > 0)
+				if (iItemValue > 0 && iValueForUs >= (iValueForThem + iItemValue))
 				{
-					pGoldPerTurnNode->m_data.m_iData = iGoldData;
-					iValueForThem += GET_PLAYER(ePlayer).AI_goldPerTurnTradeVal(pGoldPerTurnNode->m_data.m_iData);
-					pOurCounter->insertAtEnd(pGoldPerTurnNode->m_data);
-					pGoldPerTurnNode = NULL;
+					item_value_list.push_back(std::make_pair(&pNode->m_data, iItemValue));
+				}
+			}
+			if (pBestCityNode != NULL)
+			{
+				FAssert(iValueForUs >= (iValueForThem + iBestCityValue));
+				item_value_list.push_back(std::make_pair(&pBestCityNode->m_data, iBestCityValue));
+			}
+
+			// Sort the values from largest to smallest
+			std::sort(item_value_list.begin(), item_value_list.end(), maxValueCompare);
+
+			// Use the list to balance the trade.
+			for (std::vector<std::pair<TradeData*, int> >::iterator it = item_value_list.begin(); it != item_value_list.end() && iValueForUs > iValueForThem; ++it)
+			{
+				int iItemValue = it->second;
+
+				if (iValueForUs >= (iValueForThem + iItemValue))
+				{
+					pOurCounter->insertAtEnd(*it->first);
+					iValueForThem += iItemValue;
+				}
+			}
+		}
+
+		// If our value is still higher, try one more time to make up the difference with gold.
+		// This time add the gold even if it isn't enough to balance the deal.
+		// ... But first, consider the special case of a human player auto-counter-proposing a deal from an AI.
+		// Humans are picky with trades. They turn down most AI deals. So to increase the chance of the human
+		// ultimately accepting, lets see if the AI would allow the deal without any added gold. If the AI will
+		// accept, then we won't add the gold. And this will be a rare example of the AI favouring the human.
+		if (isHuman() && 100*iValueForThem >= GET_PLAYER(ePlayer).AI_tradeAcceptabilityThreshold(getID())*iValueForUs)
+		{
+			// The AI would accept! So lets not add any gold.
+		}
+		else // If we don't add some gold, there will be no deal.
+		{
+			if (iValueForUs > iValueForThem)
+			{
+				if (pGoldNode)
+				{
+					int iGoldData = (iValueForUs - iValueForThem) * 100 / AI_goldTradeValuePercent(); // round down
+					iGoldData = std::min(iGoldData, AI_maxGoldTrade(ePlayer));
+
+					if (iGoldData > 0)
+					{
+						pGoldNode->m_data.m_iData = iGoldData;
+						iValueForThem += (iGoldData * iGoldValuePercent) / 100;
+						pOurCounter->insertAtEnd(pGoldNode->m_data);
+						pGoldNode = NULL;
+					}
+				}
+			}
+
+			if (iValueForUs > iValueForThem)
+			{
+				if (pGoldPerTurnNode)
+				{
+					int iGoldData = 0;
+
+					while (GET_PLAYER(ePlayer).AI_goldPerTurnTradeVal(iGoldData + 1) <= (iValueForUs - iValueForThem))
+					{
+						iGoldData++;
+					}
+
+					iGoldData = std::min(iGoldData, AI_maxGoldPerTurnTrade(ePlayer));
+
+					if (iGoldData > 0)
+					{
+						pGoldPerTurnNode->m_data.m_iData = iGoldData;
+						iValueForThem += GET_PLAYER(ePlayer).AI_goldPerTurnTradeVal(pGoldPerTurnNode->m_data.m_iData);
+						pOurCounter->insertAtEnd(pGoldPerTurnNode->m_data);
+						pGoldPerTurnNode = NULL;
+					}
 				}
 			}
 		}
 	}
-
-	SAFE_DELETE_ARRAY(pabBonusDeal);
 
 	/* original bts code
 	return ((iValueForThem <= iValueForUs) && ((pOurList->getLength() > 0) || (pOurCounter->getLength() > 0) || (pTheirCounter->getLength() > 0))); */
@@ -9758,13 +9679,13 @@ int CvPlayerAI::AI_tradeAcceptabilityThreshold(PlayerTypes eTrader) const
 
 	// adjust for team rank.
 	int iRankDelta = GC.getGameINLINE().getTeamRank(GET_PLAYER(eTrader).getTeam()) - GC.getGameINLINE().getTeamRank(getTeam());
-	iDiscount += 5 * iRankDelta / std::max(6, GC.getGameINLINE().countCivTeamsAlive());
+	iDiscount += 10 * iRankDelta / std::max(6, GC.getGameINLINE().countCivTeamsAlive());
 
 	if (GET_PLAYER(eTrader).isHuman())
 	{
 		// note. humans get no discount for trades that they propose.
 		// The discount here only applies to deals that the AI offers to the human.
-		iDiscount /= 2;
+		iDiscount = iDiscount*2/3;
 	}
 	return 100 - iDiscount;
 }

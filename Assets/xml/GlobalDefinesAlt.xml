@@ -15,8 +15,16 @@
 	</Define>
 	<Define>
 		<DefineName>BASE_REVOLT_OCCUPATION_TURNS</DefineName>
-		<iDefineIntVal>3</iDefineIntVal> <!-- increased from 2, because of changes that I've made to its usage -->
+		<iDefineIntVal>2</iDefineIntVal> <!-- same as original value -->
 	</Define>
+	<Define>
+		<DefineName>REVOLT_TEST_PROB</DefineName>
+		<iDefineIntVal>15</iDefineIntVal>
+	</Define> <!-- increased from 10 -->
+	<Define>
+		<DefineName>NUM_WARNING_REVOLTS</DefineName>
+		<iDefineIntVal>2</iDefineIntVal>
+	</Define> <!-- increased from 1 -->
 	<Define>
 		<DefineName>EVENT_MESSAGE_STAGGER_TIME</DefineName>
 		<iDefineIntVal>2</iDefineIntVal> <!-- decreased from 3 -->
@@ -76,6 +84,11 @@
 		<DefineName>GLOBAL_WARMING_RESISTANCE</DefineName>
 		<iDefineIntVal>9</iDefineIntVal>
 	</Define>
+	<!-- global warming index above the threshold is decreased by a percentage given by the restoration rate -->
+	<Define>
+		<DefineName>GLOBAL_WARMING_RESTORATION_RATE</DefineName>
+		<iDefineIntVal>1</iDefineIntVal>
+	</Define>
 	<Define>
 		<DefineName>GLOBAL_WARMING_INDEX_PER_CHANCE</DefineName>
 		<iDefineIntVal>500</iDefineIntVal>
@@ -131,15 +144,19 @@
 	</Define>
 	<Define>
 		<DefineName>RELIGION_INFLUENCE_DISTANCE_WEIGHT</DefineName>
-		<iDefineIntVal>40</iDefineIntVal>
+		<iDefineIntVal>50</iDefineIntVal>
 	</Define>
 	<Define>
 		<DefineName>RELIGION_INFLUENCE_TIME_WEIGHT</DefineName>
-		<iDefineIntVal>70</iDefineIntVal>
+		<iDefineIntVal>60</iDefineIntVal>
+	</Define>
+	<Define>
+		<DefineName>RELIGION_INFLUENCE_TIME_SCALE</DefineName>
+		<iDefineIntVal>50</iDefineIntVal>
 	</Define>
 	<Define>
 		<DefineName>RELIGION_INFLUENCE_SHRINE_WEIGHT</DefineName>
-		<iDefineIntVal>15</iDefineIntVal>
+		<iDefineIntVal>20</iDefineIntVal>
 	</Define>
 	<Define>
 		<DefineName>RELIGION_INFLUENCE_STATE_RELIGION_WEIGHT</DefineName>

@@ -155,9 +155,23 @@ void CvSelectionGroup::doTurn()
 	{
 		bool bCouldAllMove = canAllMove(); // K-Mod
 
-		bool bHurt = false;
+		// K-Mod. Wake spies when they reach max fortify turns in foreign territory. I'm only checking the head unit.
+		// Note: We only want to wake once. So this needs to be done before the fortify counter is increased.
+		if (isHuman() && getActivityType() == ACTIVITY_SLEEP)
+		{
+			CvUnit* pHeadUnit = getHeadUnit();
+			if (pHeadUnit && pHeadUnit->isSpy() && pHeadUnit->plot()->getTeam() != getTeam())
+			{
+				if (pHeadUnit->getFortifyTurns() == GC.getDefineINT("MAX_FORTIFY_TURNS")-1)
+				{
+					setActivityType(ACTIVITY_AWAKE); // time to wake up!
+				}
+			}
+		}
+		// K-Mod end
 
 		// do unit's turns (checking for damage)
+		bool bHurt = false;
 		{
 			CLLNode<IDInfo>* pUnitNode = headUnitNode();
 			while (pUnitNode != NULL)
@@ -3257,65 +3271,41 @@ bool CvSelectionGroup::groupAttack(int iX, int iY, int iFlags, bool& bFailedAlre
 	return bAttack;
 }
 
-
+// Most of this function has been restructured / edited for K-Mod.
 void CvSelectionGroup::groupMove(CvPlot* pPlot, bool bCombat, CvUnit* pCombatUnit, bool bEndMove)
 {
 	//PROFILE_FUNC();
+	FAssert(!isBusy());
 
-	FAssert(!isBusy()); // K-Mod
-
-	CLLNode<IDInfo>* pUnitNode;
-	CvUnit* pLoopUnit;
-	std::set<int> movedUnitIds; // C2C-Lite
-	
-	//pUnitNode = headUnitNode();
 	// K-Mod. Some variables to help us regroup appropriately if not everyone can move.
 	CvSelectionGroup* pStaticGroup = 0;
 	UnitAITypes eHeadAI = getHeadUnitAI();
 
-	// Move the combat unit first, so that no-capture units don't get unneccarily left behind.
+	// Copy the list of units to move. (Units may be bumped or killed during the move process; which could mess up the group.)
+	std::vector<IDInfo> originalGroup;
+
 	if (pCombatUnit)
-		//pCombatUnit->move(pPlot, true);
+		originalGroup.push_back(pCombatUnit->getIDInfo());
+
+	for (CLLNode<IDInfo>* pUnitNode = headUnitNode(); pUnitNode != NULL; pUnitNode = nextUnitNode(pUnitNode))
 		{
-			movedUnitIds.insert(pCombatUnit->getID());
-			pCombatUnit->move(pPlot, true);
+		if (pCombatUnit == NULL || pUnitNode->m_data != pCombatUnit->getIDInfo())
+			originalGroup.push_back(pUnitNode->m_data);
 		}
+	FAssert(originalGroup.size() == getNumUnits());
 	// K-Mod end
 
-	// C2C-Lite, bugfix. in the original code it was possible for the pUnitNode pointer to be invalidated in case the remaining units of the group where moved to a valid plot after a unit captured a city
 	//while (pUnitNode != NULL)
-	while (true)
+	for (std::vector<IDInfo>::iterator it = originalGroup.begin(); it != originalGroup.end(); ++it) // K-Mod
 	{
-		//pLoopUnit = ::getUnit(pUnitNode->m_data);
+		//CvUnit* pLoopUnit = ::getUnit(pUnitNode->m_data);
 		//pUnitNode = nextUnitNode(pUnitNode);
-		pUnitNode = headUnitNode();
-		pLoopUnit = NULL;
-
-		while (pUnitNode != NULL)
-		{
-			if (movedUnitIds.empty() || std::find(movedUnitIds.begin(), movedUnitIds.end(), pUnitNode->m_data.iID) == movedUnitIds.end())
-			{
-				pLoopUnit = ::getUnit(pUnitNode->m_data);
-
-				FAssertMsg(pLoopUnit != NULL, "NULL unit reached in the selection group");
-
-				if (pLoopUnit != NULL)
-					break;
-			}
-
-			pUnitNode = nextUnitNode(pUnitNode);
-		}
-
-		if (pLoopUnit == NULL)
-			break;
-
-		movedUnitIds.insert(pLoopUnit->getID());
+		CvUnit* pLoopUnit = ::getUnit(*it);
 
 		//if ((pLoopUnit->canMove() && ((bCombat && (!(pLoopUnit->isNoCapture()) || !(pPlot->isEnemyCity(*pLoopUnit)))) ? pLoopUnit->canMoveOrAttackInto(pPlot) : pLoopUnit->canMoveInto(pPlot))) || (pLoopUnit == pCombatUnit))
 		// K-Mod
-		//if (pLoopUnit == pCombatUnit)
-		//	continue; // this unit is moved before the loop.
-		// C2C-Light end
+		if (pLoopUnit == NULL)
+			continue;
 		if (pLoopUnit->canMove() && (bCombat ? pLoopUnit->canMoveOrAttackInto(pPlot) : pLoopUnit->canMoveInto(pPlot)))
 		{
 			pLoopUnit->move(pPlot, true);
@@ -3329,29 +3319,29 @@ void CvSelectionGroup::groupMove(CvPlot* pPlot, bool bCombat, CvUnit* pCombatUni
 			// K-Mod. all units left behind should stay in the same group. (unless it would mean a change of group AI)
 			// (Note: it is important that units left behind are not in the original group.
 			// The later code assumes that the original group has moved, and if it hasn't, there will be an infinite loop.)
-			if (pStaticGroup && (isHuman() || pStaticGroup->getHeadUnitAI() == eHeadAI))
+			if (pStaticGroup)
 				pLoopUnit->joinGroup(pStaticGroup, true);
 			else
 			{
 				pLoopUnit->joinGroup(0, true);
+				if (isHuman() || pLoopUnit->AI_getUnitAIType() == eHeadAI)
 				pStaticGroup = pLoopUnit->getGroup();
+				// else -- wwe could track the ungrouped units; but I don't think there's much point.
 			}
 			//
 		}
 		// K-Mod. If the unit is no longer in the original group; then display it's movement animation now.
-		// (this replaces the ExecuteMove line commented out in the above block, and it also handles the case of loading units onto boats.)
 		if (pLoopUnit->getGroupID() != getID())
 			pLoopUnit->ExecuteMove(((float)(GC.getMissionInfo(MISSION_MOVE_TO).getTime() * gDLL->getMillisecsPerTurn())) / 1000.0f, false);
-		// K-Mod end
 	}
 
-	//execute move
+	// Execute move animation for units still in this group.
 	if(bEndMove || !canAllMove())
 	{
-		pUnitNode = headUnitNode();
+		CLLNode<IDInfo>* pUnitNode = headUnitNode();
 		while(pUnitNode != NULL)
 		{
-			pLoopUnit = ::getUnit(pUnitNode->m_data);
+			CvUnit* pLoopUnit = ::getUnit(pUnitNode->m_data);
 			pUnitNode = nextUnitNode(pUnitNode);
 
 			pLoopUnit->ExecuteMove(((float)(GC.getMissionInfo(MISSION_MOVE_TO).getTime() * gDLL->getMillisecsPerTurn())) / 1000.0f, false);
@@ -4257,6 +4247,7 @@ bool CvSelectionGroup::isAutomated() const
 void CvSelectionGroup::setAutomateType(AutomateTypes eNewValue)
 {
 	FAssert(getOwnerINLINE() != NO_PLAYER);
+	FAssert(isHuman() || eNewValue == NO_AUTOMATE); // The AI shouldn't use automation.
 
 	if (getAutomateType() != eNewValue)
 	{

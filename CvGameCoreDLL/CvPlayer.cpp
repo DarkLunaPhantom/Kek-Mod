@@ -18239,12 +18239,21 @@ void CvPlayer::write(FDataStreamBase* pStream)
 
 void CvPlayer::createGreatPeople(UnitTypes eGreatPersonUnit, bool bIncrementThreshold, bool bIncrementExperience, int iX, int iY)
 {
+	CvPlot* pPlot = GC.getMapINLINE().plot(iX, iY);
+	if (pPlot == NULL)
+	{
+		FAssertMsg(false, "Invalid plot in createGreatPeople()");
+		return;
+	}
+
 	CvUnit* pGreatPeopleUnit = initUnit(eGreatPersonUnit, iX, iY);
 	if (NULL == pGreatPeopleUnit)
 	{
 		FAssert(false);
 		return;
 	}
+
+	CvCity* pCity = pPlot->getPlotCity();
 
 	if (bIncrementThreshold)
 	{
@@ -18276,14 +18285,7 @@ void CvPlayer::createGreatPeople(UnitTypes eGreatPersonUnit, bool bIncrementThre
 		}
 	}
 
-
-	CvPlot* pPlot = GC.getMapINLINE().plot(iX, iY);
-	CvCity* pCity = NULL;
 	CvWString szReplayMessage;
-
-	if (pPlot)
-	{
-		pCity = pPlot->getPlotCity();
 		if (pCity)
 		{
 			CvWString szCity;
@@ -18295,7 +18297,6 @@ void CvPlayer::createGreatPeople(UnitTypes eGreatPersonUnit, bool bIncrementThre
 			szReplayMessage = gDLL->getText("TXT_KEY_MISC_GP_BORN_FIELD", pGreatPeopleUnit->getName().GetCString());
 		}
 		GC.getGameINLINE().addReplayMessage(REPLAY_MESSAGE_MAJOR_EVENT, getID(), szReplayMessage, iX, iY, (ColorTypes)GC.getInfoTypeForString("COLOR_UNIT_TEXT"));
-	}
 
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{
@@ -18318,7 +18319,6 @@ void CvPlayer::createGreatPeople(UnitTypes eGreatPersonUnit, bool bIncrementThre
 	{
 		CvEventReporter::getInstance().greatPersonBorn(pGreatPeopleUnit, getID(), pCity);
 	}
-
 }
 
 

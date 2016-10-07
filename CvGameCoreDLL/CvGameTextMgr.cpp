@@ -3218,7 +3218,7 @@ bool CvGameTextMgr::setCombatPlotHelp(CvWStringBuffer &szString, CvPlot* pPlot)
 				{
 					FAssert(GC.getDefineINT("MAX_EXPERIENCE_PER_COMBAT") > GC.getDefineINT("MIN_EXPERIENCE_PER_COMBAT")); //ensuring the differences is at least 1
 					int size = GC.getDefineINT("MAX_EXPERIENCE_PER_COMBAT") - GC.getDefineINT("MIN_EXPERIENCE_PER_COMBAT");
-					float* CombatRatioThresholds = new float[size];
+					std::vector<float> CombatRatioThresholds(size);
 
 					for (int i = 0; i < size; i++) //setup the array
 					{
@@ -3285,7 +3285,6 @@ bool CvGameTextMgr::setCombatPlotHelp(CvWStringBuffer &szString, CvPlot* pPlot)
 							}//if
 						}// else if
 					}//for
-					delete[] CombatRatioThresholds;
 					//throw away the array
 				}//if
 			} // else if
@@ -4340,20 +4339,10 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 			if( bShift && !bAlt)
 			{
 				const CvPlayerAI& kPlayer = GET_PLAYER(pPlot->getOwnerINLINE());
-				int* paiBonusClassRevealed;
-				int* paiBonusClassUnrevealed;
-				int* paiBonusClassHave;
 
-				paiBonusClassRevealed = new int[GC.getNumBonusClassInfos()];
-				paiBonusClassUnrevealed = new int[GC.getNumBonusClassInfos()];
-				paiBonusClassHave = new int[GC.getNumBonusClassInfos()];
-
-				for (int iI = 0; iI < GC.getNumBonusClassInfos(); iI++)
-				{
-					paiBonusClassRevealed[iI] = 0;
-					paiBonusClassUnrevealed[iI] = 0;
-					paiBonusClassHave[iI] = 0;	    
-				}
+				std::vector<int> viBonusClassRevealed(GC.getNumBonusClassInfos(), 0);
+				std::vector<int> viBonusClassUnrevealed(GC.getNumBonusClassInfos(), 0);
+				std::vector<int> viBonusClassHave(GC.getNumBonusClassInfos(), 0);
 
 				for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
 				{
@@ -4363,20 +4352,20 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 					{
 						if ((GET_TEAM(pPlot->getTeam()).isHasTech(eRevealTech)))
 						{
-							paiBonusClassRevealed[eBonusClass]++;
+							viBonusClassRevealed[eBonusClass]++;
 						}
 						else
 						{
-							paiBonusClassUnrevealed[eBonusClass]++;
+							viBonusClassUnrevealed[eBonusClass]++;
 						}
 
 						if (kPlayer.getNumAvailableBonuses((BonusTypes)iI) > 0)
 						{
-							paiBonusClassHave[eBonusClass]++;                
+							viBonusClassHave[eBonusClass]++;
 						}
 						else if (kPlayer.countOwnedBonuses((BonusTypes)iI) > 0)
 						{
-							paiBonusClassHave[eBonusClass]++;
+							viBonusClassHave[eBonusClass]++;
 						}
 					}
 				}
@@ -4389,7 +4378,7 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 
 					if( iPathLength <= 3 && !GET_TEAM(pPlot->getTeam()).isHasTech((TechTypes)iI) )
 					{
-						szString.append(CvWString::format(L"\n%s(%d)=%8d", GC.getTechInfo((TechTypes)iI).getDescription(), iPathLength, kPlayer.AI_techValue((TechTypes)iI, 1, false, true, paiBonusClassRevealed, paiBonusClassUnrevealed, paiBonusClassHave)));
+						szString.append(CvWString::format(L"\n%s(%d)=%8d", GC.getTechInfo((TechTypes)iI).getDescription(), iPathLength, kPlayer.AI_techValue((TechTypes)iI, 1, false, true, viBonusClassRevealed, viBonusClassUnrevealed, viBonusClassHave)));
 						szString.append(CvWString::format(L" (bld:%d, ", kPlayer.AI_techBuildingValue((TechTypes)iI, true, bDummy)));
 						int iObs = kPlayer.AI_obsoleteBuildingPenalty((TechTypes)iI, true);
 						if (iObs != 0)
@@ -7762,6 +7751,9 @@ void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool
 
 	//	K-Mod. Extra specialist commerce
 	setCommerceChangeHelp(szBuffer, L"", L"", gDLL->getText("TXT_KEY_CIVIC_PER_SPECIALIST").GetCString(), GC.getTechInfo(eTech).getSpecialistExtraCommerceArray());
+
+	//	K-Mod. Global commerce modifers
+	setCommerceChangeHelp(szBuffer, L"", L"", gDLL->getText("TXT_KEY_CIVIC_IN_ALL_CITIES").GetCString(), GC.getTechInfo(eTech).getCommerceModifierArray(), true);
 
 	//	Adjusting culture, science, etc
 	for (iI = 0; iI < NUM_COMMERCE_TYPES; ++iI)
@@ -15539,6 +15531,31 @@ void CvGameTextMgr::setCommerceHelp(CvWStringBuffer &szBuffer, CvCity& city, Com
 		szBuffer.append(NEWLINE);
 		iModifier += iCivicMod;
 	}
+
+	// Techs (K-Mod)
+	/* Rather than counting just tech modifiers. We might as well just have an generic case which supports other sources too.
+	int iTechMod = 0;
+	for (TechTypes i = (TechTypes)0; i < GC.getNumTechInfos(); i=(TechTypes)(i+1))
+	{
+		if (GET_TEAM(owner.getTeam()).isHasTech(i))
+			iTechMod += GC.getTechInfo(i).getCommerceModifier(eCommerceType);
+	}
+	if (iTechMod != 0)
+	{
+		szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_MODIFIER_FROM_CIV", iTechMod, info.getChar()));
+		szBuffer.append(NEWLINE);
+		iModifier += iCivicMod;
+	} */
+
+	// Left over modifiers!
+	int iUnaccountedModifiers = city.getTotalCommerceRateModifier(eCommerceType)-iModifier;
+	if (iUnaccountedModifiers != 0)
+	{
+		szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_MODIFIER_FROM_CIV", iUnaccountedModifiers, info.getChar()));
+		szBuffer.append(NEWLINE);
+		iModifier += iUnaccountedModifiers;
+	}
+	// K-Mod end
 
 	int iModYield = (iModifier * iBaseCommerceRate) / 100;
 

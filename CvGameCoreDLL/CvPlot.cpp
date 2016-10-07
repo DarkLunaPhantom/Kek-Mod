@@ -6224,7 +6224,8 @@ int CvPlot::calculateImprovementYieldChange(ImprovementTypes eImprovement, Yield
 
 	iYield = GC.getImprovementInfo(eImprovement).getYieldChange(eYield);
 
-	if (isRiverSide())
+	//if (isRiverSide())
+	if (isRiver()) // K-Mod
 	{
 		iYield += GC.getImprovementInfo(eImprovement).getRiverSideYieldChange(eYield);
 	}
@@ -8794,7 +8795,7 @@ void CvPlot::doCulture()
 */
 								/* original bts code
 								pCity->changeOccupationTimer(GC.getDefineINT("BASE_REVOLT_OCCUPATION_TURNS") + ((iCityStrength * GC.getDefineINT("REVOLT_OCCUPATION_TURNS_PERCENT")) / 100));*/
-								pCity->changeOccupationTimer(GC.getDefineINT("BASE_REVOLT_OCCUPATION_TURNS") + 2*(pCity->getNumRevolts(eCulturalOwner)-1));
+								pCity->changeOccupationTimer(GC.getDefineINT("BASE_REVOLT_OCCUPATION_TURNS") + std::min(3, pCity->getNumRevolts(eCulturalOwner)-1));
 /*
 ** K-Mod end
 */

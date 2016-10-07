@@ -134,7 +134,7 @@ bool CvUnitAI::AI_update()
 		return false;
 	}
 
-	if (getGroup()->isAutomated())
+	if (getGroup()->isAutomated() && isHuman()) // When the AI fills in for a human player, they should ignore automation
 	{
 		switch (getGroup()->getAutomateType())
 		{
@@ -1261,14 +1261,17 @@ int CvUnitAI::AI_sacrificeValue(const CvPlot* pPlot) const
 
 // Protected Functions...
 
-// K-Mod - test if we should declare war become moving to the target plot.
+// K-Mod - test if we should declare war before moving to the target plot.
 // (originally, DOW were made inside the unit movement mechanics. To me, that seems like a really dumb idea.)
 bool CvUnitAI::AI_considerDOW(CvPlot* pPlot)
 {
 	CvTeamAI& kOurTeam = GET_TEAM(getTeam());
 	TeamTypes ePlotTeam = pPlot->getTeam();
 
-	if (!canEnterArea(ePlotTeam, pPlot->area(), true))
+	// Note: We might be a transport ship which ignores borders, but with escorts and cargo who don't ignore borders.
+	// So, we should check that the whole group can enter the borders. (There are be faster ways to check, but this is good enough.)
+	// If it's an amphibious landing, lets just assume that our cargo will need a DoW!
+	if (!getGroup()->canEnterArea(ePlotTeam, pPlot->area(), true) || getGroup()->isAmphibPlot(pPlot))
 	{
 		if (ePlotTeam != NO_TEAM && kOurTeam.AI_isSneakAttackReady(ePlotTeam))
 		{
@@ -3839,7 +3842,7 @@ void CvUnitAI::AI_pillageMove()
 
 	// K-Mod. Pillage units should focus on pillaging, when possible.
 	// note: having 2 moves doesn't necessarily mean we can move & pillage in the same turn, but it's a good enough approximation.
-	if (AI_pillageRange(getGroup()->maxMoves() > 1 ? 1 : 0, 11))
+	if (AI_pillageRange(getGroup()->baseMoves() > 1 ? 1 : 0, 11))
 	{
 		return;
 	}
@@ -6475,7 +6478,7 @@ void CvUnitAI::AI_barbAttackSeaMove()
 	{
 		// If trapped in small hole in ice or around tiny island, disband to allow other units to be generated
 		bool bScrap = true;
-		int iMaxRange = maxMoves() + 2;
+		int iMaxRange = baseMoves() + 2;
 		for (int iDX = -(iMaxRange); iDX <= iMaxRange; iDX++)
 		{
 			for (int iDY = -(iMaxRange); iDY <= iMaxRange; iDY++)
@@ -6658,7 +6661,7 @@ void CvUnitAI::AI_attackSeaMove()
 				return;
 			}
 
-			if (AI_shadow(UNITAI_ASSAULT_SEA, 4, 34, false, true, getMoves()))
+			if (AI_shadow(UNITAI_ASSAULT_SEA, 4, 34, false, true, baseMoves()))
 			{
 				return;
 			}
@@ -6908,7 +6911,7 @@ void CvUnitAI::AI_reserveSeaMove()
 				return;
 			}
 
-			if (AI_shadow(UNITAI_SETTLER_SEA, 2, -1, false, true, getMoves()))
+			if (AI_shadow(UNITAI_SETTLER_SEA, 2, -1, false, true, baseMoves()))
 			{
 				return;
 			}
@@ -7123,7 +7126,7 @@ void CvUnitAI::AI_escortSeaMove()
 				return;
 			}
 
-			if (AI_group(UNITAI_ASSAULT_SEA, -1, /*iMaxOwnUnitAI*/ 1, -1, /*bIgnoreFaster*/ true, false, false, /*iMaxPath*/ getMoves()))
+			if (AI_group(UNITAI_ASSAULT_SEA, -1, /*iMaxOwnUnitAI*/ 1, -1, /*bIgnoreFaster*/ true, false, false, /*iMaxPath*/ baseMoves()))
 			{
 				return;
 			}
@@ -7402,6 +7405,7 @@ void CvUnitAI::AI_exploreSeaMove()
 				return;
 			}
 			scrap();
+			return;
 		}		
 	}
 
@@ -8980,7 +8984,7 @@ void CvUnitAI::AI_missileCarrierSeaMove()
 
 		if (iEnemyOffense > iOurDefense/2) // was 1 vs 1/4
 		{
-			if (AI_shadow(UNITAI_ASSAULT_SEA, 1, 50, false, true, getMoves()))
+			if (AI_shadow(UNITAI_ASSAULT_SEA, 1, 50, false, true, baseMoves()))
 			{
 				return;
 			}
@@ -16178,6 +16182,7 @@ bool CvUnitAI::AI_blockade()
 
 
 // Returns true if a mission was pushed...
+// K-Mod todo: this function is very slow on large maps. Consider rewritting it!
 bool CvUnitAI::AI_pirateBlockade()
 {
 	PROFILE_FUNC();
@@ -16209,7 +16214,7 @@ bool CvUnitAI::AI_pirateBlockade()
 							{
 								if (pLoopUnit->currEffectiveStr(NULL, NULL, NULL) > currEffectiveStr(pLoopPlot, pLoopUnit, NULL))
 								{
-									iBestHostileMoves = std::max(iBestHostileMoves, pLoopUnit->getMoves());									
+									iBestHostileMoves = std::max(iBestHostileMoves, pLoopUnit->baseMoves());
 								}
 							}
 						}
@@ -16468,7 +16473,7 @@ bool CvUnitAI::AI_seaBombardRange(int iMaxRange)
 				if (pBombardCity != NULL && isEnemy(pBombardCity->getTeam(), pLoopPlot) && pBombardCity->getDefenseDamage() < GC.getMAX_CITY_DEFENSE_DAMAGE())
 				{
 					int iPathTurns;
-					if (generatePath(pLoopPlot, 0, true, &iPathTurns, 1 + iMaxRange/maxMoves()))
+					if (generatePath(pLoopPlot, 0, true, &iPathTurns, 1 + iMaxRange/baseMoves()))
 					{
 /********************************************************************************/
 /* 	BETTER_BTS_AI_MOD						6/24/08				jdog5000	*/
@@ -16476,7 +16481,7 @@ bool CvUnitAI::AI_seaBombardRange(int iMaxRange)
 /* 	Naval AI																*/
 /********************************************************************************/
 						// Loop construction doesn't guarantee we can get there anytime soon, could be on other side of narrow continent
-						if( iPathTurns <= (1 + iMaxRange/maxMoves()) )
+						if (iPathTurns <= (1 + iMaxRange/baseMoves()))
 						{
 							// Check only for supporting our own ground troops first, if none will look for another target
 							int iValue = (kPlayer.AI_plotTargetMissionAIs(pBombardCity->plot(), MISSIONAI_ASSAULT, NULL, 2) * 3);
@@ -16536,10 +16541,10 @@ bool CvUnitAI::AI_seaBombardRange(int iMaxRange)
 						if (pBombardCity != NULL && isEnemy(pBombardCity->getTeam(), pLoopPlot) && pBombardCity->getTotalDefense(false) > 0)
 						{
 							int iPathTurns;
-							if (generatePath(pLoopPlot, 0, true, &iPathTurns, 1 + iMaxRange/maxMoves()))
+							if (generatePath(pLoopPlot, 0, true, &iPathTurns, 1 + iMaxRange/baseMoves()))
 							{	
 								// Loop construction doesn't guarantee we can get there anytime soon, could be on other side of narrow continent
-								if( iPathTurns <= 1 + iMaxRange/maxMoves() )
+								if (iPathTurns <= 1 + iMaxRange/baseMoves())
 								{
 									int iValue = std::min(20,pBombardCity->getDefenseModifier(false)/2); 
 
@@ -17503,7 +17508,7 @@ bool CvUnitAI::AI_assaultSeaReinforce(bool bAttackBarbs)
 	int iFlags = MOVE_AVOID_ENEMY_WEIGHT_3; // K-Mod. (no declare war)
 
 	// Loop over nearby plots for groups in enemy territory to reinforce
-	int iRange = 2*maxMoves();
+	int iRange = 2*getGroup()->baseMoves();
 	for (int iDX = -(iRange); iDX <= iRange; iDX++)
 	{
 		for (int iDY = -(iRange); iDY <= iRange; iDY++)
@@ -19737,9 +19742,9 @@ bool CvUnitAI::AI_improveBonus() // K-Mod. (all that junk wasn't being used anyw
 									{
 										iValue *= 1000;
 
-										if (atPlot(pLoopPlot))
+										if (iPathTurns == 1 && getPathFinder().GetFinalMoves() != 0)
 										{
-											iValue *= 3;
+											iValue *= 2;
 										}
 
 										iValue /= (iPathTurns + 1);
