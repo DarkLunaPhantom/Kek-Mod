@@ -287,7 +287,7 @@ public:
 	DllExport void finalizeProjectArtTypes();
 
 	int getProjectMaking(ProjectTypes eIndex) const;																		// Exposed to Python
-	void changeProjectMaking(ProjectTypes eIndex, int iChange);
+	//void changeProjectMaking(ProjectTypes eIndex, int iChange); // DarkLunaPhantom
 
 	int getUnitClassCount(UnitClassTypes eIndex) const;																	// Exposed to Python
 	bool isUnitClassMaxedOut(UnitClassTypes eIndex, int iExtra = 0) const;							// Exposed to Python
@@ -471,7 +471,7 @@ protected:
 	int* m_paiProjectCount;
 	int* m_paiProjectDefaultArtTypes;
 	std::vector<int> *m_pavProjectArtTypes;
-	int* m_paiProjectMaking;
+	//int* m_paiProjectMaking; // DarkLunaPhantom
 	int* m_paiUnitClassCount;
 	int* m_paiBuildingClassCount;
 	int* m_paiObsoleteBuildingCount;

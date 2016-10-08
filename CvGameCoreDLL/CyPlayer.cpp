@@ -1778,6 +1778,13 @@ int CyPlayer::getBuildingClassCountPlusMaking(int /*BuildingClassTypes*/ iIndex)
 	return m_pPlayer ? m_pPlayer->getBuildingClassCountPlusMaking((BuildingClassTypes)iIndex) : -1;
 }
 
+// DarkLunaPhantom begin
+int CyPlayer::getProjectMaking(int /*ProjectTypes*/ iIndex)
+{
+	return m_pPlayer ? m_pPlayer->getProjectMaking((ProjectTypes)iIndex) : -1;
+}
+// DarkLunaPhantom end
+
 int CyPlayer::getHurryCount(int /*HurryTypes*/ eIndex)
 {
 	return m_pPlayer ? m_pPlayer->getHurryCount((HurryTypes)eIndex) : (int) NO_HURRY;

@@ -408,6 +408,7 @@ void CyPlayerPythonInterface1(python::class_<CyPlayer>& x)
 		.def("isBuildingClassMaxedOut", &CyPlayer::isBuildingClassMaxedOut, "bool (int /*BuildingClassTypes*/ iIndex, int iExtra)")
 		.def("getBuildingClassMaking", &CyPlayer::getBuildingClassMaking, "int (int /*BuildingClassTypes*/ iIndex)")
 		.def("getBuildingClassCountPlusMaking", &CyPlayer::getBuildingClassCountPlusMaking, "int (int /*BuildingClassTypes*/ iIndex)")
+		.def("getProjectMaking", &CyPlayer::getProjectMaking, "int (int /*ProjectTypes*/ iIndex)") // DarkLunaPhantom
 		.def("getHurryCount", &CyPlayer::getHurryCount, "int (int (HurryTypes) eIndex)")
 		.def("canHurry", &CyPlayer::canHurry, "int (int (HurryTypes) eIndex)")
 		.def("getSpecialBuildingNotRequiredCount", &CyPlayer::getSpecialBuildingNotRequiredCount, "int (int (SpecialBuildingTypes) eIndex)")

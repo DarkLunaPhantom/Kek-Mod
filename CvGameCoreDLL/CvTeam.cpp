@@ -59,7 +59,7 @@ CvTeam::CvTeam()
 	m_paiProjectCount = NULL;
 	m_paiProjectDefaultArtTypes = NULL;
 	m_pavProjectArtTypes = NULL;
-	m_paiProjectMaking = NULL;
+	//m_paiProjectMaking = NULL; // DarkLunaPhantom
 	m_paiUnitClassCount = NULL;
 	m_paiBuildingClassCount = NULL;
 	m_paiObsoleteBuildingCount = NULL;
@@ -152,7 +152,7 @@ void CvTeam::uninit()
 	SAFE_DELETE_ARRAY(m_paiProjectCount);
 	SAFE_DELETE_ARRAY(m_paiProjectDefaultArtTypes);
 	SAFE_DELETE_ARRAY(m_pavProjectArtTypes);
-	SAFE_DELETE_ARRAY(m_paiProjectMaking);
+	//SAFE_DELETE_ARRAY(m_paiProjectMaking); // DarkLunaPhantom
 	SAFE_DELETE_ARRAY(m_paiUnitClassCount);
 	SAFE_DELETE_ARRAY(m_paiBuildingClassCount);
 	SAFE_DELETE_ARRAY(m_paiObsoleteBuildingCount);
@@ -285,13 +285,13 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 		m_paiProjectDefaultArtTypes = new int [GC.getNumProjectInfos()];
 		FAssertMsg(m_pavProjectArtTypes==NULL, "about to leak memory, CvPlayer::m_pavProjectArtTypes");
 		m_pavProjectArtTypes = new std::vector<int> [GC.getNumProjectInfos()];
-		FAssertMsg(m_paiProjectMaking==NULL, "about to leak memory, CvPlayer::m_paiProjectMaking");
-		m_paiProjectMaking = new int [GC.getNumProjectInfos()];
+		//FAssertMsg(m_paiProjectMaking==NULL, "about to leak memory, CvPlayer::m_paiProjectMaking"); // DarkLunaPhantom
+		//m_paiProjectMaking = new int [GC.getNumProjectInfos()]; // DarkLunaPhantom
 		for (iI = 0; iI < GC.getNumProjectInfos(); iI++)
 		{
 			m_paiProjectCount[iI] = 0;
 			m_paiProjectDefaultArtTypes[iI] = 0;
-			m_paiProjectMaking[iI] = 0;
+			//m_paiProjectMaking[iI] = 0; // DarkLunaPhantom
 		}
 
 		FAssertMsg(m_paiUnitClassCount==NULL, "about to leak memory, CvTeam::m_paiUnitClassCount");
@@ -922,7 +922,7 @@ void CvTeam::shareCounters(TeamTypes eTeam)
 
 
 		// projects still under construction should be counted for both teams
-		changeProjectMaking(eProject, kShareTeam.getProjectMaking(eProject));
+		//changeProjectMaking(eProject, kShareTeam.getProjectMaking(eProject)); // DarkLunaPhantom - Unnecessary since ProjectMaking moved from CvTeam to CvPlayer.
 		//kShareTeam.changeProjectMaking(eProject, getProjectMaking(eProject) - kShareTeam.setProjectMaking(eProject));
 	}
 
@@ -4782,21 +4782,40 @@ void CvTeam::changeProjectCount(ProjectTypes eIndex, int iChange)
 }
 
 
+// DarkLunaPhantom begin
 int CvTeam::getProjectMaking(ProjectTypes eIndex) const																	 
 {
-	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	/*FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
 	FAssertMsg(eIndex < GC.getNumProjectInfos(), "eIndex is expected to be within maximum bounds (invalid Index)");
-	return m_paiProjectMaking[eIndex];
+	return m_paiProjectMaking[eIndex];*/
+	int iCount;
+	int iI;
+
+	iCount = 0;
+
+	for (iI = 0; iI < MAX_PLAYERS; iI++)
+	{
+		if (GET_PLAYER((PlayerTypes)iI).isAlive())
+		{
+			if (GET_PLAYER((PlayerTypes)iI).getTeam() == getID())
+			{
+				iCount += GET_PLAYER((PlayerTypes)iI).getProjectMaking(eIndex);
+			}
+		}
+	}
+
+	return iCount;
 }
 
 
-void CvTeam::changeProjectMaking(ProjectTypes eIndex, int iChange)										
+/*void CvTeam::changeProjectMaking(ProjectTypes eIndex, int iChange)										
 {
 	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
 	FAssertMsg(eIndex < GC.getNumProjectInfos(), "eIndex is expected to be within maximum bounds (invalid Index)");
 	m_paiProjectMaking[eIndex] = (m_paiProjectMaking[eIndex] + iChange);
 	FAssert(getProjectMaking(eIndex) >= 0);
-}
+}*/
+// DarkLunaPhantom end
 
 
 int CvTeam::getUnitClassCount(UnitClassTypes eIndex) const											
@@ -6670,7 +6689,7 @@ void CvTeam::read(FDataStreamBase* pStream)
 		}
 	}
 
-	pStream->Read(GC.getNumProjectInfos(), m_paiProjectMaking);
+	//pStream->Read(GC.getNumProjectInfos(), m_paiProjectMaking); // DarkLunaPhantom
 	pStream->Read(GC.getNumUnitClassInfos(), m_paiUnitClassCount);
 	pStream->Read(GC.getNumBuildingClassInfos(), m_paiBuildingClassCount);
 	pStream->Read(GC.getNumBuildingInfos(), m_paiObsoleteBuildingCount);
@@ -6767,7 +6786,7 @@ void CvTeam::write(FDataStreamBase* pStream)
 			pStream->Write(m_pavProjectArtTypes[i][j]);
 	}
 
-	pStream->Write(GC.getNumProjectInfos(), m_paiProjectMaking);
+	//pStream->Write(GC.getNumProjectInfos(), m_paiProjectMaking); // DarkLunaPhantom
 	pStream->Write(GC.getNumUnitClassInfos(), m_paiUnitClassCount);
 	pStream->Write(GC.getNumBuildingClassInfos(), m_paiBuildingClassCount);
 	pStream->Write(GC.getNumBuildingInfos(), m_paiObsoleteBuildingCount);

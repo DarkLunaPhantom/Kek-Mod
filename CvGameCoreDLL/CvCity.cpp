@@ -12091,7 +12091,8 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 	case ORDER_CREATE:
 		if (canCreate((ProjectTypes)iData1) || bForce)
 		{
-			GET_TEAM(getTeam()).changeProjectMaking(((ProjectTypes)iData1), 1);
+			//GET_TEAM(getTeam()).changeProjectMaking(((ProjectTypes)iData1), 1);
+			GET_PLAYER(getOwnerINLINE()).changeProjectMaking(((ProjectTypes)iData1), 1); // DarkLunaPhantom
 
 			bValid = true;
 			if( gCityLogLevel >= 1 )
@@ -12477,7 +12478,8 @@ void CvCity::popOrder(int iNum, bool bFinish, bool bChoose)
 	case ORDER_CREATE:
 		eCreateProject = ((ProjectTypes)(pOrderNode->m_data.iData1));
 
-		GET_TEAM(getTeam()).changeProjectMaking(eCreateProject, -1);
+		//GET_TEAM(getTeam()).changeProjectMaking(eCreateProject, -1);
+		GET_PLAYER(getOwnerINLINE()).changeProjectMaking(eCreateProject, -1); // DarkLunaPhantom
 
 		if (bFinish)
 		{

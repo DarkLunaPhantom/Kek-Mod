@@ -70,6 +70,7 @@ CvPlayer::CvPlayer()
 	m_paiUnitClassMaking = NULL;
 	m_paiBuildingClassCount = NULL;
 	m_paiBuildingClassMaking = NULL;
+	m_paiProjectMaking = NULL; // DarkLunaPhantom
 	m_paiHurryCount = NULL;
 	m_paiSpecialBuildingNotRequiredCount = NULL;
 	m_paiHasCivicOptionCount = NULL;
@@ -578,6 +579,7 @@ void CvPlayer::uninit()
 	SAFE_DELETE_ARRAY(m_paiUnitClassMaking);
 	SAFE_DELETE_ARRAY(m_paiBuildingClassCount);
 	SAFE_DELETE_ARRAY(m_paiBuildingClassMaking);
+	SAFE_DELETE_ARRAY(m_paiProjectMaking); // DarkLunaPhantom
 	SAFE_DELETE_ARRAY(m_paiHurryCount);
 	SAFE_DELETE_ARRAY(m_paiSpecialBuildingNotRequiredCount);
 	SAFE_DELETE_ARRAY(m_paiHasCivicOptionCount);
@@ -896,6 +898,15 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 			m_paiBuildingClassCount[iI] = 0;
 			m_paiBuildingClassMaking[iI] = 0;
 		}
+		
+		// DarkLunaPhantom begin
+		FAssertMsg(m_paiProjectMaking==NULL, "about to leak memory, CvPlayer::m_paiProjectMaking");
+		m_paiProjectMaking = new int [GC.getNumProjectInfos()];
+		for (iI = 0; iI < GC.getNumProjectInfos(); iI++)
+		{
+			m_paiProjectMaking[iI] = 0;
+		}
+		// DarkLunaPhantom end
 
 		FAssertMsg(m_paiHurryCount==NULL, "about to leak memory, CvPlayer::m_paiHurryCount");
 		m_paiHurryCount = new int [GC.getNumHurryInfos()];
@@ -6555,12 +6566,16 @@ bool CvPlayer::canCreate(ProjectTypes eProject, bool bContinue, bool bTestVisibl
 
 	if (!bTestVisible)
 	{
-		if (GC.getGameINLINE().isProjectMaxedOut(eProject, (GET_TEAM(getTeam()).getProjectMaking(eProject) + ((bContinue) ? -1 : 0))))
+		// DarkLunaPhantom begin - Changed so that team members do not block players from trying to build limited projects.
+		//if (GC.getGameINLINE().isProjectMaxedOut(eProject, (GET_TEAM(getTeam()).getProjectMaking(eProject) + ((bContinue) ? -1 : 0))))
+		if (GC.getGameINLINE().isProjectMaxedOut(eProject, (getProjectMaking(eProject) + ((bContinue) ? -1 : 0))))
 		{
 			return false;
 		}
 
-		if (GET_TEAM(getTeam()).isProjectMaxedOut(eProject, (GET_TEAM(getTeam()).getProjectMaking(eProject) + ((bContinue) ? -1 : 0))))
+		//if (GET_TEAM(getTeam()).isProjectMaxedOut(eProject, (GET_TEAM(getTeam()).getProjectMaking(eProject) + ((bContinue) ? -1 : 0))))
+		if (GET_TEAM(getTeam()).isProjectMaxedOut(eProject, (getProjectMaking(eProject) + ((bContinue) ? -1 : 0))))
+		// DarkLunaPhantom end
 		{
 			return false;
 		}
@@ -12745,6 +12760,31 @@ int CvPlayer::getBuildingClassCountPlusMaking(BuildingClassTypes eIndex) const
 	return (getBuildingClassCount(eIndex) + getBuildingClassMaking(eIndex));
 }
 
+// DarkLunaPhantom begin
+int CvPlayer::getProjectMaking(ProjectTypes eIndex) const
+{
+	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	FAssertMsg(eIndex < GC.getNumProjectInfos(), "eIndex is expected to be within maximum bounds (invalid Index)");
+	return m_paiProjectMaking[eIndex];
+}
+
+void CvPlayer::changeProjectMaking(ProjectTypes eIndex, int iChange)
+{
+	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	FAssertMsg(eIndex < GC.getNumProjectInfos(), "eIndex is expected to be within maximum bounds (invalid Index)");
+
+	if (iChange != 0)
+	{
+		m_paiProjectMaking[eIndex] = (m_paiProjectMaking[eIndex] + iChange);
+		FAssert(getProjectMaking(eIndex) >= 0);
+
+		if (getID() == GC.getGameINLINE().getActivePlayer())
+		{
+			gDLL->getInterfaceIFace()->setDirty(Help_DIRTY_BIT, true);
+		}
+	}
+}
+// DarkLunaPhantom end
 
 int CvPlayer::getHurryCount(HurryTypes eIndex) const														
 {
@@ -17509,6 +17549,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 	pStream->Read(GC.getNumUnitClassInfos(), m_paiUnitClassMaking);
 	pStream->Read(GC.getNumBuildingClassInfos(), m_paiBuildingClassCount);
 	pStream->Read(GC.getNumBuildingClassInfos(), m_paiBuildingClassMaking);
+	pStream->Read(GC.getNumProjectInfos(), m_paiProjectMaking); // DarkLunaPhantom
 	pStream->Read(GC.getNumHurryInfos(), m_paiHurryCount);
 	pStream->Read(GC.getNumSpecialBuildingInfos(), m_paiSpecialBuildingNotRequiredCount);
 	pStream->Read(GC.getNumCivicOptionInfos(), m_paiHasCivicOptionCount);
@@ -17980,6 +18021,7 @@ void CvPlayer::write(FDataStreamBase* pStream)
 	pStream->Write(GC.getNumUnitClassInfos(), m_paiUnitClassMaking);
 	pStream->Write(GC.getNumBuildingClassInfos(), m_paiBuildingClassCount);
 	pStream->Write(GC.getNumBuildingClassInfos(), m_paiBuildingClassMaking);
+	pStream->Write(GC.getNumProjectInfos(), m_paiProjectMaking); // DarkLunaPhantom
 	pStream->Write(GC.getNumHurryInfos(), m_paiHurryCount);
 	pStream->Write(GC.getNumSpecialBuildingInfos(), m_paiSpecialBuildingNotRequiredCount);
 	pStream->Write(GC.getNumCivicOptionInfos(), m_paiHasCivicOptionCount);

@@ -835,6 +835,9 @@ public:
 	void changeBuildingClassMaking(BuildingClassTypes eIndex, int iChange);
 	int getBuildingClassCountPlusMaking(BuildingClassTypes eIndex) const;															// Exposed to Python
 
+	int getProjectMaking(ProjectTypes eIndex) const; // DarkLunaPhantom																			// Exposed to Python
+	void changeProjectMaking(ProjectTypes eIndex, int iChange); // DarkLunaPhantom
+
 	int getHurryCount(HurryTypes eIndex) const;																												// Exposed to Python
 	DllExport bool canHurry(HurryTypes eIndex) const;																									// Exposed to Python
 	bool canPopRush() const;
@@ -1303,6 +1306,7 @@ protected:
 	int* m_paiUnitClassMaking;
 	int* m_paiBuildingClassCount;
 	int* m_paiBuildingClassMaking;
+	int* m_paiProjectMaking; // DarkLunaPhantom
 	int* m_paiHurryCount;
 	int* m_paiSpecialBuildingNotRequiredCount;
 	int* m_paiHasCivicOptionCount;

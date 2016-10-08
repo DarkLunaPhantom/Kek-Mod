@@ -424,6 +424,7 @@ public:
 	bool isBuildingClassMaxedOut(int /*BuildingClassTypes*/ iIndex, int iExtra);
 	int getBuildingClassMaking(int /*BuildingClassTypes*/ iIndex);
 	int getBuildingClassCountPlusMaking(int /*BuildingClassTypes*/ iIndex);
+	int getProjectMaking(int /*ProjectTypes*/ iIndex); // DarkLunaPhantom
 	int getHurryCount(int /*HurryTypes*/ eIndex);
 	bool canHurry(int /*HurryTypes*/ eIndex);
 	int getSpecialBuildingNotRequiredCount(int /*SpecialBuildingTypes*/ eIndex);
