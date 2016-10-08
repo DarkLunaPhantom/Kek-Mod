@@ -5410,13 +5410,17 @@ ProjectTypes CvCityAI::AI_bestProject(int* piBestValue)
 			int iLimit = -1;
 			if (kLoopProject.getMaxGlobalInstances() >= 0) // global limit
 			{
-				int iRemaining = std::max(0, kLoopProject.getMaxGlobalInstances() - GC.getGameINLINE().getProjectCreatedCount(i) - GET_TEAM(getTeam()).getProjectMaking(i));
+				// DarkLunaPhantom
+				//int iRemaining = std::max(0, kLoopProject.getMaxGlobalInstances() - GC.getGameINLINE().getProjectCreatedCount(i) - GET_TEAM(getTeam()).getProjectMaking(i));
+				int iRemaining = std::max(0, kLoopProject.getMaxGlobalInstances() - GC.getGameINLINE().getProjectCreatedCount(i) - GET_PLAYER(getOwnerINLINE()).getProjectMaking(i));
 				if (iLimit < 0 || iRemaining < iLimit)
 					iLimit = iRemaining;
 			}
 			if (kLoopProject.getMaxTeamInstances() >= 0) // team limit
 			{
-				int iRemaining = std::max(0, kLoopProject.getMaxTeamInstances() - GET_TEAM(getTeam()).getProjectCount(i) - GET_TEAM(getTeam()).getProjectMaking(i));
+				// DarkLunaPhantom
+				//int iRemaining = std::max(0, kLoopProject.getMaxTeamInstances() - GET_TEAM(getTeam()).getProjectCount(i) - GET_TEAM(getTeam()).getProjectMaking(i));
+				int iRemaining = std::max(0, kLoopProject.getMaxTeamInstances() - GET_TEAM(getTeam()).getProjectCount(i) - GET_PLAYER(getOwnerINLINE()).getProjectMaking(i));
 				if (iLimit < 0 || iRemaining < iLimit)
 					iLimit = iRemaining;
 			}
