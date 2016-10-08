@@ -9170,7 +9170,6 @@ bool CvPlayerAI::AI_counterPropose(PlayerTypes ePlayer, const CLinkList<TradeDat
 			}
 			else
 			{
-				SAFE_DELETE_ARRAY(pabBonusDeal);
 				return false; // if there is no peace, there will be no trade
 			}
 		}
