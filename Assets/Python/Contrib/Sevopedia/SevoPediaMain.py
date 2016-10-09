@@ -863,7 +863,12 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 		for i in range(numInfos):
 			item = getInfo(i)
 			if item:
-				list.append((item.getDescription(), i))
+				# DarkLunaPhantom begin - Items sorted without taking "The " into account.
+				if item.getDescription()[:4] == "The ":
+					list.append((item.getDescription(), i, item.getDescription()[4:]))
+				else:
+					list.append((item.getDescription(), i, item.getDescription()))
 		if self.isSortLists() and not noSort:
-			list.sort()
+			list.sort(key = lambda x: x[2])
+			# DarkLunaPhantom end
 		return list

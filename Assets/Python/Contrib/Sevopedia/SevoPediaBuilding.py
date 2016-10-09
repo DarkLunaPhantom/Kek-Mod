@@ -257,10 +257,15 @@ class SevoPediaBuilding:
 		list2 = [(0,0)] * numInfos
 		i = 0
 		for iBuilding in list1:
-			list2[i] = (gc.getBuildingInfo(iBuilding).getDescription(), iBuilding)
+			# DarkLunaPhantom begin - Items sorted without taking "The " into account.
+			if gc.getBuildingInfo(iBuilding).getDescription()[:4] == "The ":
+				list2[i] = (gc.getBuildingInfo(iBuilding).getDescription(), iBuilding, gc.getBuildingInfo(iBuilding).getDescription()[4:])
+			else:
+				list2[i] = (gc.getBuildingInfo(iBuilding).getDescription(), iBuilding, gc.getBuildingInfo(iBuilding).getDescription())
 			i += 1
 		if self.top.isSortLists():
-			list2.sort()
+			list2.sort(key = lambda x: x[2])
+			# DarkLunaPhantom end
 		return list2
 
 
