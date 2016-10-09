@@ -4534,7 +4534,9 @@ void CvPlayer::handleDiploEvent(DiploEventTypes eDiploEvent, PlayerTypes ePlayer
 
 	case DIPLOEVENT_GIVE_HELP:
 		AI_changeMemoryCount(ePlayer, MEMORY_GIVE_HELP, 1);
-		forcePeace(ePlayer);
+		// DarkLunaPhantom - Forced peace here is one-way only now.
+		//forcePeace(ePlayer);
+		forcePeace(ePlayer, true);
 		break;
 
 	case DIPLOEVENT_REFUSED_HELP:
@@ -4543,7 +4545,9 @@ void CvPlayer::handleDiploEvent(DiploEventTypes eDiploEvent, PlayerTypes ePlayer
 
 	case DIPLOEVENT_ACCEPT_DEMAND:
 		AI_changeMemoryCount(ePlayer, MEMORY_ACCEPT_DEMAND, 1);
-		forcePeace(ePlayer);
+		// DarkLunaPhantom - Forced peace here is one-way only now.
+		//forcePeace(ePlayer);
+		forcePeace(ePlayer, true);
 		break;
 
 	case DIPLOEVENT_REJECTED_DEMAND:
@@ -22264,7 +22268,9 @@ int CvPlayer::getEspionageGoldQuantity(EspionageMissionTypes eMission, PlayerTyp
 	return std::min(iGoldStolen, GET_PLAYER(eTargetPlayer).getGold());
 }
 
-void CvPlayer::forcePeace(PlayerTypes ePlayer)
+//DarkLunaPhantom - One-way forced peace now possible.
+//void CvPlayer::forcePeace(PlayerTypes ePlayer)
+void CvPlayer::forcePeace(PlayerTypes ePlayer, bool bOneWay)
 {
 	/* original bts code
 	if (!GET_TEAM(getTeam()).isAVassal())
@@ -22280,7 +22286,13 @@ void CvPlayer::forcePeace(PlayerTypes ePlayer)
 		TradeData kTradeData;
 		setTradeItem(&kTradeData, TRADE_PEACE_TREATY);
 		playerList.insertAtEnd(kTradeData);
-		loopPlayerList.insertAtEnd(kTradeData);
+		// DarkLunaPhantom begin
+		//loopPlayerList.insertAtEnd(kTradeData);
+		if (!bOneWay)
+		{
+			loopPlayerList.insertAtEnd(kTradeData);
+		}
+		// DarkLunaPhantom end
 
 		GC.getGameINLINE().implementDeal(getID(), ePlayer, &playerList, &loopPlayerList);
 	}

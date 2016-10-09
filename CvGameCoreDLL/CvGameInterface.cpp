@@ -3083,7 +3083,8 @@ void CvGame::handleDiplomacySetAIComment(DiploCommentTypes eComment) const
 			TradeData kTradeData;
 			setTradeItem(&kTradeData, TRADE_PEACE_TREATY);
 			playerList.insertAtEnd(kTradeData);
-			loopPlayerList.insertAtEnd(kTradeData);
+			// DarkLunaPhantom - This forced peace is one-way only now.
+			// loopPlayerList.insertAtEnd(kTradeData);
 
 			gDLL->sendImplementDealMessage(eOtherPlayer, &playerList, &loopPlayerList);
 		}

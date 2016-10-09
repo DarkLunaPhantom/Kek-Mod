@@ -7914,7 +7914,9 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
 				{
 					if (kLoopPlayer.isVotingMember(kData.eVoteSource))
 					{
-						kLoopPlayer.forcePeace(kData.kVoteOption.ePlayer);
+						// DarkLunaPhantom - This forced peace is one-way only now.
+						//kLoopPlayer.forcePeace(kData.kVoteOption.ePlayer);
+						kLoopPlayer.forcePeace(kData.kVoteOption.ePlayer, true);
 					}
 				}
 			}

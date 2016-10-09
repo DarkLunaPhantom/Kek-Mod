@@ -1050,7 +1050,9 @@ public:
 	PlayerTypes pickConqueredCityOwner(const CvCity& kCity) const;
 	bool canHaveTradeRoutesWith(PlayerTypes ePlayer) const;
 
-	void forcePeace(PlayerTypes ePlayer);    // exposed to Python
+	// DarkLunaPhantom
+	//void forcePeace(PlayerTypes ePlayer);
+	void forcePeace(PlayerTypes ePlayer, bool bOneWay = false);    // exposed to Python
 
 	bool canSpiesEnterBorders(PlayerTypes ePlayer) const;
 	int getNewCityProductionValue() const;
