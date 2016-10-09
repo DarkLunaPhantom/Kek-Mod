@@ -1024,7 +1024,9 @@ void CvPlot::nukeExplosion(int iRange, CvUnit* pNukeUnit, bool bBomb)
 				if (pLoopUnit == NULL || pLoopUnit == pNukeUnit)
 					continue;
 
-				if (!pLoopUnit->isNukeImmune() && !pLoopUnit->isDelayedDeath())
+				// DarkLunaPhantom - Nukes target only enemy and own units. Needed because blocking by neutral players disabled.
+				//if (!pLoopUnit->isNukeImmune() && !pLoopUnit->isDelayedDeath())
+				if (!pLoopUnit->isNukeImmune() && !pLoopUnit->isDelayedDeath() && (pNukeUnit == NULL || pLoopUnit->isEnemy(GET_PLAYER(pNukeUnit->getOwnerINLINE()).getTeam()) || GET_PLAYER(pNukeUnit->getOwnerINLINE()).getTeam() == GET_PLAYER(pLoopUnit->getOwnerINLINE()).getTeam()))
 				{
 					int iNukeDamage = (GC.getDefineINT("NUKE_UNIT_DAMAGE_BASE") + GC.getGameINLINE().getSorenRandNum(GC.getDefineINT("NUKE_UNIT_DAMAGE_RAND_1"), "Nuke Damage 1") + GC.getGameINLINE().getSorenRandNum(GC.getDefineINT("NUKE_UNIT_DAMAGE_RAND_2"), "Nuke Damage 2"));
 

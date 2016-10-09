@@ -23970,7 +23970,8 @@ int CvUnitAI::AI_nukeValue(CvPlot* pCenterPlot, int iSearchRange, CvPlot*& pBest
 									}
 									else
 									{
-										FAssertMsg(false, "3rd party unit being considered for nuking.");
+										// DarkLunaPhantom - Possible because nuke targeting changed to disable blocking by neutral players.
+										//FAssertMsg(false, "3rd party unit being considered for nuking.");
 									}
 								}
 							}

@@ -4118,7 +4118,9 @@ bool CvUnit::isNukeVictim(const CvPlot* pPlot, TeamTypes eTeam) const
 					return true;
 				}
 
-				if (pLoopPlot->plotCheck(PUF_isCombatTeam, eTeam, getTeam()) != NULL)
+				// DarkLunaPhantom - Disabled blocking by neutral players.
+				//if (pLoopPlot->plotCheck(PUF_isCombatTeam, eTeam, getTeam()) != NULL)
+				if (pLoopPlot->plotCheck(PUF_isCombatTeam, eTeam, getTeam()) != NULL && isEnemy(eTeam))
 				{
 					return true;
 				}
