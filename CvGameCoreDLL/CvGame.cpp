@@ -6952,13 +6952,22 @@ void CvGame::createBarbarianUnits()
 	}
 
 	bAnimals = false;
+	
+//Added in Final Frontier SDK: TC01
+//	If we haven't yet reached the turn pirates should appear, don't let them spawn
+	if (getElapsedGameTurns() < GC.getDefineINT("TURN_BARBARIANS_APPEAR"))
+	{
+		return;
+	}
+//End of Final Frontier SDK
 
 	if (GC.getEraInfo(getCurrentEra()).isNoBarbUnits())
 	{
 		bAnimals = true;
 	}
 
-	if (getNumCivCities() < ((countCivPlayersAlive() * 3) / 2) && !isOption(GAMEOPTION_ONE_CITY_CHALLENGE))
+	// FFP
+	/*if (getNumCivCities() < ((countCivPlayersAlive() * 3) / 2) && !isOption(GAMEOPTION_ONE_CITY_CHALLENGE))
 	{
 		bAnimals = true;
 	}
@@ -6966,7 +6975,7 @@ void CvGame::createBarbarianUnits()
 	if (getElapsedGameTurns() < ((GC.getHandicapInfo(getHandicapType()).getBarbarianCreationTurnsElapsed() * GC.getGameSpeedInfo(getGameSpeedType()).getBarbPercent()) / 100))
 	{
 		bAnimals = true;
-	}
+	}*/
 
 	if (bAnimals)
 	{
@@ -6992,9 +7001,33 @@ void CvGame::createBarbarianUnits()
 				iDivisor = std::max(1, (iDivisor / 2));
 			}
 
+			// FFP : GAMEOPTION_REDUCED_PIRATES added for v1.8
+			if (GC.getGame().isOption(GAMEOPTION_REDUCED_PIRATES))
+			{
+				iDivisor *= 2; // Divide by twice the value to get half as many
+			}
+			
 			if (iDivisor > 0)
 			{
-				iNeededBarbs = ((pLoopArea->getNumUnownedTiles() / iDivisor) - pLoopArea->getUnitsPerPlayer(BARBARIAN_PLAYER)); // XXX eventually need to measure how many barbs of eBarbUnitAI we have in this area...
+/************************************************************************/
+//Added in Final Frontier SDK: TC01
+//	Change way max number of barbarian units is generated
+//	Target = ((Number of Unowned Tiles / Divisor) * (Current Era + 1)) - Num Barbs		(unless Pirate Hordes is enabled, then don't divide by iDivisor)
+//	To get actual value, subtract rand number less than half the Target
+/*	Old Code:
+				iNeededBarbs = ((pLoopArea->getNumUnownedTiles() / iDivisor) - pLoopArea->getUnitsPerPlayer(BARBARIAN_PLAYER)); XXX eventually need to measure how many barbs of eBarbUnitAI we have in this area...
+New Code:*/
+				int iNumBarbs = pLoopArea->getUnitsPerPlayer(BARBARIAN_PLAYER);
+
+				int iTarget = ((pLoopArea->getNumUnownedTiles() / iDivisor) * ((int)GC.getGame().getCurrentEra() + 2)) - iNumBarbs;
+				if (GC.getGame().isOption(GAMEOPTION_PIRATE_HORDES))
+				{
+					iTarget = (pLoopArea->getNumUnownedTiles() * ((int)GC.getGame().getCurrentEra() + 2)) - iNumBarbs;
+				}
+				int iFinalFrontierRand = GC.getGame().getSorenRandNum(iTarget / 2, "Barbarian spawns");
+				iNeededBarbs = iTarget - iFinalFrontierRand;
+//End of Final Frontier SDK
+/************************************************************************/
 
 				if (iNeededBarbs > 0)
 				{
@@ -7034,8 +7067,14 @@ void CvGame::createBarbarianUnits()
 					{
 						pPlot = GC.getMapINLINE().syncRandPlot((RANDPLOT_NOT_VISIBLE_TO_CIV | RANDPLOT_ADJACENT_LAND | RANDPLOT_PASSIBLE), pLoopArea->getID(), GC.getDefineINT("MIN_BARBARIAN_STARTING_DISTANCE"));
 
-						if (pPlot != NULL)
+						// DarkLunaPhantom - Merged ifs to avoid shifting everything to the right.
+						//if (pPlot != NULL)
+						//{
+//Added in Final Frontier SDK: TC01
+//Blocks barbarians from spawning on certain features...
+						if (pPlot != NULL && pPlot->canBarbSpawn())
 						{
+//End of Final Frontier SDK
 							eBestUnit = NO_UNIT;
 							iBestValue = 0;
 
@@ -7066,6 +7105,14 @@ void CvGame::createBarbarianUnits()
 										}
 									}
 
+/************************************************************************/
+//Added in Final Frontier SDK: TC01
+//	DON'T check if...
+//		The barbarians have the needed techs
+//		The barbarians have the needed resources
+//		Any other condition is true for the barbarians
+//	Instead, check if we've passed the unit's barbarian game turn. Also check if that barbarian unit has "expired"
+/*	Old Code:
 									if (bValid)
 									{
 										if (!GET_PLAYER(BARBARIAN_PLAYER).canTrain(eLoopUnit))
@@ -7112,6 +7159,18 @@ void CvGame::createBarbarianUnits()
 											bValid = false;
 										}
 									}
+//New Code:*/
+									if (bValid)
+									{
+										EraTypes eCurrentEra = getCurrentEra();
+										EraTypes eMinEra = (EraTypes)kUnit.getMinBarbarianSpawnEra();
+										EraTypes eMaxEra = (EraTypes)kUnit.getMaxBarbarianSpawnEra();
+										if (eMinEra == NO_ERA || eMinEra > eCurrentEra || eMaxEra == NO_ERA || eMaxEra < eCurrentEra)
+										{
+											bValid = false;
+										}
+									}
+/************************************************************************/
 
 									if (bValid)
 									{
@@ -7121,6 +7180,14 @@ void CvGame::createBarbarianUnits()
 										{
 											iValue += 200;
 										}
+
+//Added in Final Frontier SDK: TC01
+//	Increase chances of certain units to be barbarian
+										if (kUnit.getBarbarianChanceMultiplier() > 0)
+										{
+											iValue *= kUnit.getBarbarianChanceMultiplier();
+										}
+//End of Final Frontier SDK
 
 										if (iValue > iBestValue)
 										{
