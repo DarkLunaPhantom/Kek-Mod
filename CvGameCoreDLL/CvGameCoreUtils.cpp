@@ -1764,7 +1764,7 @@ int pathCost(FAStarNode* parent, FAStarNode* node, int data, const void* pointer
 		{
 			if (pToPlot->getFeatureType() != NO_FEATURE)
 			{
-				iWorstCost += (GC.getPATH_DAMAGE_WEIGHT() * std::max(0, GC.getFeatureInfo(pToPlot->getFeatureType()).getTurnDamage())) / GC.getMAX_HIT_POINTS();
+				iWorstCost += (GC.getPATH_DAMAGE_WEIGHT() * std::max(0, GC.getFeatureInfo(pToPlot->getFeatureType()).getTurnDamage() + pLoopUnit->featureDamageModifier(pToPlot->getFeatureType()))) / GC.getMAX_HIT_POINTS(); // FFP - Feature damage modifier
 			}
 
 			if (pToPlot->getExtraMovePathCost() > 0)
@@ -2672,6 +2672,7 @@ void getActivityTypeString(CvWString& szString, ActivityTypes eActivityType)
 	case ACTIVITY_SLEEP: szString = L"ACTIVITY_SLEEP"; break;
 	case ACTIVITY_HEAL: szString = L"ACTIVITY_HEAL"; break;
 	case ACTIVITY_SENTRY: szString = L"ACTIVITY_SENTRY"; break;
+	case ACTIVITY_SENTRY_WHILE_HEAL: szString = L"ACTIVITY_SENTRY_WHILE_HEAL"; break;		//Added in Final Frontier Plus: TC01 (source: Pep's Unit Orders)
 	case ACTIVITY_INTERCEPT: szString = L"ACTIVITY_INTERCEPT"; break;
 	case ACTIVITY_MISSION: szString = L"ACTIVITY_MISSION"; break;
 // K-Mod. There were some missing activity strings...
@@ -2702,6 +2703,7 @@ void getMissionTypeString(CvWString& szString, MissionTypes eMissionType)
 	case MISSION_SEAPATROL: szString = L"MISSION_SEAPATROL"; break;
 	case MISSION_HEAL: szString = L"MISSION_HEAL"; break;
 	case MISSION_SENTRY: szString = L"MISSION_SENTRY"; break;
+	case MISSION_SENTRY_WHILE_HEAL: szString = L"MISSION_SENTRY_WHILE_HEAL"; break;		//Added in Final Frontier Plus: TC01
 	case MISSION_AIRLIFT: szString = L"MISSION_AIRLIFT"; break;
 	case MISSION_NUKE: szString = L"MISSION_NUKE"; break;
 	case MISSION_RECON: szString = L"MISSION_RECON"; break;
