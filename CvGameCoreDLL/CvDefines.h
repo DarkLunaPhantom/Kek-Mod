@@ -147,6 +147,6 @@
 #define PYRandomEventModule					"CvRandomEventInterface"
 
 #define DANGER_RANGE						(4)
-#define BORDER_DANGER_RANGE					(2) // K-Mod
+#define BORDER_DANGER_RANGE					(3) // K-Mod // DarkLunaPhantom - Changed from 2 to 3.
 
 #endif	// CVDEFINES_H
