@@ -984,6 +984,17 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 			}
 		}
 
+// FFP - Feature damage modifier - start
+		for (iI = 0; iI < GC.getNumFeatureInfos(); ++iI)
+		{
+			if (pUnit->featureDamageModifier((FeatureTypes)iI) != 0)
+			{
+				szString.append(NEWLINE);
+				szString.append(gDLL->getText("TXT_KEY_PROMOTION_FEATURE_DAMAGE_TEXT", pUnit->featureDamageModifier((FeatureTypes)iI), GC.getFeatureInfo((FeatureTypes) iI).getTextKeyWide()));
+			}
+		}
+// FFP - Feature damage modifier - end
+		
 		for (iI = 0; iI < GC.getNumUnitClassInfos(); ++iI)
 		{
 			if (pUnit->getUnitInfo().getUnitClassAttackModifier(iI) == GC.getUnitInfo(pUnit->getUnitType()).getUnitClassDefenseModifier(iI))
@@ -1012,6 +1023,31 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 
 		for (iI = 0; iI < GC.getNumUnitCombatInfos(); ++iI)
 		{
+			// < Unit Combat Attack Defense Mod Start >
+			if (pUnit->getUnitInfo().getUnitCombatAttackModifier(iI) == GC.getUnitInfo(pUnit->getUnitType()).getUnitCombatDefenseModifier(iI))
+			{
+				if (pUnit->getUnitInfo().getUnitCombatAttackModifier(iI) != 0)
+				{
+					szString.append(NEWLINE);
+					szString.append(gDLL->getText("TXT_KEY_UNIT_MOD_VS_TYPE", pUnit->getUnitInfo().getUnitCombatAttackModifier(iI), GC.getUnitCombatInfo((UnitCombatTypes)iI).getTextKeyWide()));
+				}
+			}
+			else
+			{
+				if (pUnit->getUnitInfo().getUnitCombatAttackModifier(iI) != 0)
+				{
+					szString.append(NEWLINE);
+					szString.append(gDLL->getText("TXT_KEY_UNIT_ATTACK_MOD_VS_COMBAT", pUnit->getUnitInfo().getUnitCombatAttackModifier(iI), GC.getUnitCombatInfo((UnitCombatTypes)iI).getTextKeyWide()));
+				}
+
+				if (pUnit->getUnitInfo().getUnitCombatDefenseModifier(iI) != 0)
+				{
+					szString.append(NEWLINE);
+					szString.append(gDLL->getText("TXT_KEY_UNIT_DEFENSE_MOD_VS_COMBAT", pUnit->getUnitInfo().getUnitCombatDefenseModifier(iI), GC.getUnitCombatInfo((UnitCombatTypes) iI).getTextKeyWide()));
+				}
+			}
+			// < Unit Combat Attack Defense Mod End   >
+
 			if (pUnit->unitCombatModifier((UnitCombatTypes)iI) != 0)
 			{
 				szString.append(NEWLINE);
@@ -3511,6 +3547,16 @@ bool CvGameTextMgr::setCombatPlotHelp(CvWStringBuffer &szString, CvPlot* pPlot)
 
 			if (pAttacker->getUnitCombatType() != NO_UNITCOMBAT)
 			{
+				// < Unit Combat Attack Defense Mod Start >
+				iModifier = pAttacker->unitCombatAttackModifier(pDefender->getUnitCombatType());
+
+				if (iModifier != 0)
+				{
+					szString.append(NEWLINE);
+					szString.append(gDLL->getText("TXT_KEY_COMBAT_PLOT_MOD_VS_TYPE", iModifier, GC.getUnitCombatInfo(pDefender->getUnitCombatType()).getTextKeyWide()));
+				}
+				// < Unit Combat Attack Defense Mod End   >
+				
 				iModifier = pDefender->unitCombatModifier(pAttacker->getUnitCombatType());
 
 				if (iModifier != 0)
@@ -3579,7 +3625,11 @@ bool CvGameTextMgr::setCombatPlotHelp(CvWStringBuffer &szString, CvPlot* pPlot)
 					szString.append(gDLL->getText("TXT_KEY_COMBAT_PLOT_UNIT_MOD", iModifier, GC.getFeatureInfo(pPlot->getFeatureType()).getTextKeyWide()));
 				}
 			}
-			else
+// FFP terrain defense modifier change start
+//	change: always apply both feature and terrain defense modifiers
+// original code:
+//			else
+// FFP terrain defense modifier change end
 			{
 				iModifier = pDefender->terrainDefenseModifier(pPlot->getTerrainType());
 
@@ -6609,6 +6659,15 @@ void CvGameTextMgr::parsePromotionHelp(CvWStringBuffer &szBuffer, PromotionTypes
 		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_IMMUNE_FIRST_STRIKES_TEXT"));
 	}
 
+// FFP - Move on impassable - start
+// the  _PROMOTION_ and _UNIT_ versions of these sorts of messages are the same, so I didn't make a new one
+	if (GC.getPromotionInfo(ePromotion).isCanMoveImpassable())
+	{
+		szBuffer.append(pcNewline);
+		szBuffer.append(gDLL->getText("TXT_KEY_UNIT_CAN_MOVE_IMPASSABLE"));
+	}
+// FFP - Move on impassable - end
+
 	for (iI = 0; iI < GC.getNumTerrainInfos(); ++iI)
 	{
 		if (GC.getPromotionInfo(ePromotion).getTerrainDoubleMove(iI))
@@ -6848,6 +6907,17 @@ void CvGameTextMgr::parsePromotionHelp(CvWStringBuffer &szBuffer, PromotionTypes
 			szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_DEFENSE_TEXT", GC.getPromotionInfo(ePromotion).getFeatureDefensePercent(iI), GC.getFeatureInfo((FeatureTypes) iI).getTextKeyWide()));
 		}
 	}
+	
+// FFP - Feature damage modifier - start
+	for (iI = 0; iI < GC.getNumFeatureInfos(); ++iI)
+	{
+		if (GC.getPromotionInfo(ePromotion).getFeatureDamageModifierPercent(iI) != 0)	// FFP
+		{
+			szBuffer.append(pcNewline);
+			szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_FEATURE_DAMAGE_TEXT", GC.getPromotionInfo(ePromotion).getFeatureDamageModifierPercent(iI), GC.getFeatureInfo((FeatureTypes) iI).getTextKeyWide()));
+		}
+	}
+// FFP - Feature damage modifier - end
 
 	for (iI = 0; iI < GC.getNumUnitCombatInfos(); ++iI)
 	{
@@ -7381,6 +7451,23 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 	//	Specialist Commerce
 	setCommerceChangeHelp(szHelpText, L"", L"", gDLL->getText("TXT_KEY_CIVIC_PER_SPECIALIST").GetCString(), GC.getCivicInfo(eCivic).getSpecialistExtraCommerceArray());
 
+//Added in Final Frontier: TC01
+	//Planet yield modifiers
+	setYieldChangeHelp(szHelpText, L"", L"", gDLL->getText("TXT_KEY_CIVIC_PLANET_YIELD").GetCString(), GC.getCivicInfo(eCivic).getPlanetYieldChangesArray());
+//End of Final Frontier
+
+// Added for FFP 1.8.1 : start
+	// Unit Combat production cost modifiers
+	for (iI = 0; iI < GC.getNumUnitCombatInfos(); ++iI)
+	{
+		if (GC.getCivicInfo(eCivic).getUnitCombatCostMods(iI) != 0)
+		{
+			szHelpText.append(NEWLINE);
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_UNITCOMBAT_COST_MOD", GC.getCivicInfo(eCivic).getUnitCombatCostMods(iI), GC.getUnitCombatInfo((UnitCombatTypes)iI).getTextKeyWide()));
+		}
+	}
+// End for FFP 1.8.1
+	
 	//	Largest City Happiness
 	if (GC.getCivicInfo(eCivic).getLargestCityHappiness() != 0)
 	{
@@ -8522,6 +8609,17 @@ void CvGameTextMgr::setBasicUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit,
 		}
 	}
 
+// FFP - Feature damage modifier - start
+	for (iI = 0; iI < GC.getNumFeatureInfos(); ++iI)
+	{
+		if (GC.getUnitInfo(eUnit).getFeatureDamageModifier(iI)!= 0)
+		{
+			szBuffer.append(NEWLINE);
+			szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_FEATURE_DAMAGE_TEXT", GC.getUnitInfo(eUnit).getFeatureDamageModifier(iI), GC.getFeatureInfo((FeatureTypes) iI).getTextKeyWide()));
+		}
+	}
+// FFP - Feature damage modifier - end
+	
 	for (iI = 0; iI < GC.getNumUnitClassInfos(); ++iI)
 	{
 		if (GC.getUnitInfo(eUnit).getUnitClassAttackModifier(iI) == GC.getUnitInfo(eUnit).getUnitClassDefenseModifier(iI))
@@ -8550,6 +8648,31 @@ void CvGameTextMgr::setBasicUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit,
 
 	for (iI = 0; iI < GC.getNumUnitCombatInfos(); ++iI)
 	{
+		// < Unit Combat Attack Defense Mod Start >
+		if (GC.getUnitInfo(eUnit).getUnitCombatAttackModifier(iI) == GC.getUnitInfo(eUnit).getUnitCombatDefenseModifier(iI))
+		{
+			if (GC.getUnitInfo(eUnit).getUnitCombatAttackModifier(iI) != 0)
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_UNIT_MOD_VS_TYPE", GC.getUnitInfo(eUnit).getUnitCombatAttackModifier(iI), GC.getUnitCombatInfo((UnitCombatTypes)iI).getTextKeyWide()));
+			}
+		}
+		else
+		{
+			if (GC.getUnitInfo(eUnit).getUnitCombatAttackModifier(iI) != 0)
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_UNIT_ATTACK_MOD_VS_COMBAT", GC.getUnitInfo(eUnit).getUnitCombatAttackModifier(iI), GC.getUnitCombatInfo((UnitCombatTypes)iI).getTextKeyWide()));
+			}
+
+			if (GC.getUnitInfo(eUnit).getUnitCombatDefenseModifier(iI) != 0)
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_UNIT_DEFENSE_MOD_VS_COMBAT", GC.getUnitInfo(eUnit).getUnitCombatDefenseModifier(iI), GC.getUnitCombatInfo((UnitCombatTypes) iI).getTextKeyWide()));
+			}
+		}
+		// < Unit Combat Attack Defense Mod End   >
+
 		if (GC.getUnitInfo(eUnit).getUnitCombatModifier(iI) != 0)
 		{
 			szBuffer.append(NEWLINE);
@@ -9404,6 +9527,10 @@ void CvGameTextMgr::setBuildingHelpActual(CvWStringBuffer &szBuffer, BuildingTyp
 		int aiCommerces[NUM_COMMERCE_TYPES];
 		for (int iI = 0; iI < NUM_COMMERCE_TYPES; ++iI)
 		{
+/***************************************************************************/
+//Added in Final Frontier SDK: TC01
+//	Don't count commerces based on the number of buildings in a city.
+/*	Old Code:
 			if ((NULL != pCity) && (pCity->getNumBuilding(eBuilding) > 0))
 			{
 				aiCommerces[iI] = pCity->getBuildingCommerceByBuilding((CommerceTypes)iI, eBuilding);
@@ -9412,6 +9539,12 @@ void CvGameTextMgr::setBuildingHelpActual(CvWStringBuffer &szBuffer, BuildingTyp
 			{
 				aiCommerces[iI] = kBuilding.getCommerceChange(iI);
 				aiCommerces[iI] += kBuilding.getObsoleteSafeCommerceChange(iI);
+			}
+	New Code:*/
+			aiCommerces[iI] = kBuilding.getCommerceChange(iI);
+			aiCommerces[iI] += kBuilding.getObsoleteSafeCommerceChange(iI);
+//End of Final Frontier SDK
+/***************************************************************************/
 /*
 ** K-Mod, 30/dec/10, karadoc
 ** added relgious building bonus info
@@ -9425,7 +9558,7 @@ void CvGameTextMgr::setBuildingHelpActual(CvWStringBuffer &szBuffer, BuildingTyp
 /*
 ** K-Mod end
 */
-			}
+			//}
 		}
 		setCommerceChangeHelp(szBuffer, L", ", L"", L"", aiCommerces, false, false);
 
@@ -9638,6 +9771,26 @@ void CvGameTextMgr::setBuildingHelpActual(CvWStringBuffer &szBuffer, BuildingTyp
 		szBuffer.append(NEWLINE);
 		szBuffer.append(gDLL->getText("TXT_KEY_BUILDING_BORDER_OBSTACLE"));
 	}
+
+//Added in Final Frontier SDK: TC01
+	if (kBuilding.isOnePerSystem())
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_BUILDING_ONLY_ONE_HELP"));
+	}
+
+	if (kBuilding.isMoon())
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_BUILDING_MOON_HELP"));
+	}
+
+	if (kBuilding.isRings())
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_BUILDING_RINGS_HELP"));
+	}
+//End of Final Frontier SDK
 
 	for (iI = 0; iI < GC.getNumVoteSourceInfos(); ++iI)
 	{
@@ -12496,6 +12649,38 @@ void CvGameTextMgr::setReligionHelp(CvWStringBuffer &szBuffer, ReligionTypes eRe
 		}
 	}
 
+//Added in Final Frontier SDK: TC01
+//	Displays religious buildings and units
+	for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); ++iBuilding)
+	{
+		BuildingTypes kBuilding = (BuildingTypes)iBuilding;
+		if (kBuilding != NO_BUILDING)
+		{
+			CvBuildingInfo& eBuilding = GC.getBuildingInfo(kBuilding);
+			if (eReligion == (ReligionTypes)eBuilding.getPrereqReligion())
+			{
+				szBuffer.append(NEWLINE);
+				CvWString szBuilding = CvWString::format(L" <link=literal>%s</link>", eBuilding.getDescription()); 
+				szBuffer.append(gDLL->getText("TXT_KEY_RELIGION_BUILDING"));
+				szBuffer.append(szBuilding);
+			}
+		}
+	}
+	for (int iUnit = 0; iUnit < GC.getNumUnitInfos(); ++iUnit)
+	{
+		UnitTypes kUnit = (UnitTypes)iUnit;
+		if (kUnit != NO_UNIT)
+		{
+			CvUnitInfo& eUnit = GC.getUnitInfo(kUnit);
+			if (eReligion == (ReligionTypes)eUnit.getPrereqReligion())
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_RELIGION_UNIT", eUnit.getType(), eUnit.getTextKeyWide()));
+			}
+		}
+	}
+//End of Final Frontier SDK
+	
 	if (religion.getFreeUnitClass() != NO_UNITCLASS)
 	{
 		if (GC.getGameINLINE().getActivePlayer() != NO_PLAYER)
