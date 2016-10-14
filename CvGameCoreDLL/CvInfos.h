@@ -506,6 +506,7 @@ public:
 	bool isAlwaysHeal() const;				// Exposed to Python
 	bool isHillsDoubleMove() const;				// Exposed to Python
 	bool isImmuneToFirstStrikes() const;				// Exposed to Python
+	bool isCanMoveImpassable() const;	// FFP - Move on impassable	; Exposed to Python
 
 	const TCHAR* getSound() const;				// Exposed to Python
 	void setSound(const TCHAR* szVal);
@@ -518,6 +519,7 @@ public:
 	int getFeatureDefensePercent(int i) const;				// Exposed to Python
 	int getUnitCombatModifierPercent(int i) const;				// Exposed to Python
 	int getDomainModifierPercent(int i) const;				// Exposed to Python
+	int getFeatureDamageModifierPercent(int i) const;	// FFP - Feature damage modifier ; Exposed to Python
 
 	bool getTerrainDoubleMove(int i) const;				// Exposed to Python
 	bool getFeatureDoubleMove(int i) const;				// Exposed to Python
@@ -579,6 +581,7 @@ protected:
 	bool m_bAlwaysHeal;						
 	bool m_bHillsDoubleMove;				
 	bool m_bImmuneToFirstStrikes;				
+	bool m_bCanMoveImpassable;	// FFP - Move on impassable
 
 	CvString m_szSound;
 
@@ -590,6 +593,7 @@ protected:
 	int* m_piFeatureDefensePercent;
 	int* m_piUnitCombatModifierPercent;
 	int* m_piDomainModifierPercent;
+	int* m_piFeatureDamageModifierPercent;	// FFP - Feature damage modifier
 
 	bool* m_pbTerrainDoubleMove;
 	bool* m_pbFeatureDoubleMove;
@@ -895,6 +899,14 @@ public:
 	int getNumUnitNames() const;							// Exposed to Python
 	int getCommandType() const;								// Exposed to Python
 	void setCommandType(int iNewType);
+//Added in Final Frontier SDK: TC01
+	int getCultureRange() const;
+	void setCultureRange(int i);
+	int getMinBarbarianSpawnEra() const;
+	int getMaxBarbarianSpawnEra() const;
+	int getBarbarianChanceMultiplier() const;
+	int getUpgradePriceOverride() const;
+//End of Final Frontier SDK
 
 	bool isAnimal() const;				// Exposed to Python
 	bool isFoodProduction() const;				// Exposed to Python
@@ -935,6 +947,14 @@ public:
 	bool isHiddenNationality() const;			// Exposed to Python
 	bool isAlwaysHostile() const;			// Exposed to Python
 	bool isNoRevealMap() const;			// Exposed to Python
+//Added in Final Frontier: TC01
+	bool isStarbase() const;
+	bool isDelta() const;
+	bool isOmega() const;
+	bool isOtherStation() const;
+	bool isMissile() const;
+	bool isTroopTransport() const;
+//End of Final Frontier
 
 	float getUnitMaxSpeed() const;					// Exposed to Python
 	float getUnitPadTime() const;					// Exposed to Python
@@ -949,8 +969,15 @@ public:
 	int getTerrainDefenseModifier(int i) const;				// Exposed to Python
 	int getFeatureAttackModifier(int i) const;				// Exposed to Python
 	int getFeatureDefenseModifier(int i) const;				// Exposed to Python
+	int getFeatureDamageModifier(int i) const;	// FFP - Feature damage modifier ; exposed to Python
 	int getUnitClassAttackModifier(int i) const;				// Exposed to Python
 	int getUnitClassDefenseModifier(int i) const;				// Exposed to Python
+	
+	// < Unit Combat Attack Defense Mod Start >
+	int getUnitCombatAttackModifier(int i) const;				// Exposed to Python
+	int getUnitCombatDefenseModifier(int i) const;				// Exposed to Python
+	// < Unit Combat Attack Defense Mod End   >
+
 	int getUnitCombatModifier(int i) const;				// Exposed to Python
 	int getUnitCombatCollateralImmune(int i) const;				// Exposed to Python
 	int getDomainModifier(int i) const;				// Exposed to Python
@@ -992,6 +1019,11 @@ public:
 
 	const TCHAR* getButton() const;
 	void updateArtDefineButton();
+
+//Added in Final Frontier: TC01
+	const TCHAR* getMovementSound() const;
+	void setMovementSound(const TCHAR* szVal);
+//End of Final Frontier
 
 	const CvArtInfoUnit* getArtInfo(int i, EraTypes eEra, UnitArtStyleTypes eStyle) const;
 
@@ -1077,6 +1109,13 @@ protected:
 	int m_iNumUnitNames;
 	int m_iCommandType;
 	int m_iLeaderExperience;
+//Added in Final Frontier SDK: TC01
+	int m_iCultureRange;
+	int m_iMinBarbarianSpawnEra;
+	int m_iMaxBarbarianSpawnEra;
+	int m_iBarbarianChanceMultiplier;
+	int m_iUpgradePriceOverride;
+//End of Final Frontier SDK
 
 	bool m_bAnimal;
 	bool m_bFoodProduction;
@@ -1116,6 +1155,14 @@ protected:
 	bool m_bHiddenNationality;
 	bool m_bAlwaysHostile;
 	bool m_bNoRevealMap;
+//Added in Final Frontier SDK: TC01
+	bool m_bStarbase;
+	bool m_bDelta;
+	bool m_bOmega;
+	bool m_bOtherStation;
+	bool m_bMissile;
+	bool m_bTroopTransport;
+//End of Final Frontier
 	int m_iLeaderPromotion;
 
 	float m_fUnitMaxSpeed;
@@ -1131,8 +1178,15 @@ protected:
 	int* m_piTerrainDefenseModifier;
 	int* m_piFeatureAttackModifier;
 	int* m_piFeatureDefenseModifier;
+	int* m_piFeatureDamageModifier; // FFP - Feature damage modifier
 	int* m_piUnitClassAttackModifier;
 	int* m_piUnitClassDefenseModifier;
+
+	// < Unit Combat Attack Defense Mod Start >
+	int* m_piUnitCombatAttackModifier;
+	int* m_piUnitCombatDefenseModifier;
+	// < Unit Combat Attack Defense Mod End   >
+
 	int* m_piUnitCombatModifier;
 	int* m_piUnitCombatCollateralImmune;
 	int* m_piDomainModifier;
@@ -1167,6 +1221,8 @@ protected:
 	CvString* m_paszUnitNames;
 	CvString m_szFormationType;
 	CvString m_szArtDefineButton;
+
+	CvString m_szMovementSound;		//Added in Final Frontier: TC01
 
 	std::vector<int> m_aiSeeInvisibleTypes;
 };
@@ -1352,6 +1408,7 @@ public:
 	int getStateReligionBuildingProductionModifier() const;				// Exposed to Python
 	int getStateReligionFreeExperience() const;								// Exposed to Python
 	int getExpInBorderModifier() const;				// Exposed to Python
+	int getPlanetPopCapIncrease() const;			//Added in Final Frontier: TC01
 
 	bool isMilitaryFoodProduction() const;				// Exposed to Python
 	//bool isNoUnhealthyPopulation() const;				// Exposed to Python
@@ -1381,9 +1438,12 @@ public:
 	int* getCapitalCommerceModifierArray() const;
 	int getSpecialistExtraCommerce(int i) const;				// Exposed to Python
 	int* getSpecialistExtraCommerceArray() const;
+	int getPlanetYieldChanges(int i) const;				//Added in Final Frontier SDK: TC01, and of course exposed to python
+	int* getPlanetYieldChangesArray() const;				//Added in Final Frontier SDK: TC01, and of course exposed to python
 	int getBuildingHappinessChanges(int i) const;				// Exposed to Python
 	int getBuildingHealthChanges(int i) const;				// Exposed to Python
 	int getFeatureHappinessChanges(int i) const;				// Exposed to Python
+	int getUnitCombatCostMods(int i) const;				//Added in Final Frontier SDK: TC01, and of course exposed to python
 
 	bool isHurry(int i) const;													// Exposed to Python
 	bool isSpecialBuildingNotRequired(int i) const;			// Exposed to Python
@@ -1436,6 +1496,7 @@ protected:
 	int m_iStateReligionBuildingProductionModifier;	
 	int m_iStateReligionFreeExperience;	
 	int m_iExpInBorderModifier;
+	int m_iPlanetPopCapIncrease;		//Added in Final Frontier: TC01
 
 	bool m_bMilitaryFoodProduction;
 	//bool m_bNoUnhealthyPopulation; // ...
@@ -1457,9 +1518,11 @@ protected:
 	int* m_piCommerceModifier;
 	int* m_piCapitalCommerceModifier;
 	int* m_piSpecialistExtraCommerce;
+	int* m_piPlanetYieldChanges;			//Added in Final Frontier SDK: TC01
 	int* m_paiBuildingHappinessChanges;
 	int* m_paiBuildingHealthChanges;
 	int* m_paiFeatureHappinessChanges;
+	int* m_paiUnitCombatCostMods;			//Added in Final Frontier SDK: TC01
 
 	bool* m_pabHurry;
 	bool* m_pabSpecialBuildingNotRequired;
@@ -1654,6 +1717,12 @@ public:
 	int getMissionType() const;											// Exposed to Python
 	void setMissionType(int iNewType);
 	int getVoteSourceType() const;				// Exposed to Python
+//Added in Final Frontier SDK: TC01
+	int getCostModIncrease() const;
+	void setCostModIncrease(int iNewType);
+	int getPlanetPopCapIncrease() const;
+	int getSingleRingBuildingLocation() const;
+//End of Final Frontier SDK
 
 	float getVisibilityPriority() const;
 
@@ -1679,6 +1748,11 @@ public:
 	bool isCenterInCity() const;				// Exposed to Python
 	bool isStateReligion() const;				// Exposed to Python
 	bool isAllowsNukes() const;				// Exposed to Python
+//Added in Final Frontier Plus: TC01
+	bool isOnePerSystem() const;
+	bool isMoon() const;
+	bool isRings() const;
+//End of Final Frontier Plus
 
 	const TCHAR* getConstructSound() const;				// Exposed to Python
 	void setConstructSound(const TCHAR* szVal);
@@ -1686,6 +1760,11 @@ public:
 	void setArtDefineTag(const TCHAR* szVal);
 	const TCHAR* getMovieDefineTag() const;				// Exposed to Python
 	void setMovieDefineTag(const TCHAR* szVal);
+
+//Added in Final Frontier Plus: TC01
+	const TCHAR* getSystemArtTag() const;
+	void setSystemArtTag(const TCHAR* szVal);
+//End of Final Frontier Plus
 
 	// Arrays
 
@@ -1737,10 +1816,17 @@ public:
 	int getPrereqNumOfBuildingClass(int i) const;				// Exposed to Python
 	int getFlavorValue(int i) const;				// Exposed to Python
 	int getImprovementFreeSpecialist(int i) const;				// Exposed to Python
+//Added in Final Frontier SDK: TC01
+	int getPlanetYieldChanges(int i) const;
+	int* getPlanetYieldChangesArray() const;
+	int getTraitPlanetYieldChange(int i, int j) const;
+	int* getTraitPlanetYieldChangeArray(int i) const;
+//End of Final Frontier SDK
 
 	bool isCommerceFlexible(int i) const;				// Exposed to Python
 	bool isCommerceChangeOriginalOwner(int i) const;				// Exposed to Python
 	bool isBuildingClassNeededInCity(int i) const;				// Exposed to Python
+	bool isBuildingClassNeededOnPlanet(int i) const;		//Added in Final Frontier: TC01
 
 	int getSpecialistYieldChange(int i, int j) const;			// Exposed to Python
 	int* getSpecialistYieldChangeArray(int i) const;
@@ -1862,6 +1948,11 @@ protected:
 	int m_iEspionageDefenseModifier;
 	int m_iMissionType;
 	int m_iVoteSourceType;
+//Added in Final Frontier SDK: TC01
+	int m_iCostModIncrease;
+	int m_iPlanetPopCapIncrease;
+	int m_iSingleRingBuildingLocation;
+//End of Final Frontier
 
 	float m_fVisibilityPriority;
 
@@ -1887,10 +1978,16 @@ protected:
 	bool m_bCenterInCity;
 	bool m_bStateReligion;
 	bool m_bAllowsNukes;
+//Added in Final Frontier SDK: TC01
+	bool m_bOnePerSystem;
+	bool m_bMoon;
+	bool m_bRings;
+//End of Final Frontier
 
 	CvString m_szConstructSound;
 	CvString m_szArtDefineTag;
 	CvString m_szMovieDefineTag;
+	CvString m_szSystemArtTag;		//Added in Final Frontier SDK: TC01
 
 	// Arrays
 
@@ -1927,10 +2024,15 @@ protected:
 	int* m_piPrereqNumOfBuildingClass;
 	int* m_piFlavorValue;
 	int* m_piImprovementFreeSpecialist;
+//Added in Final Frontier: TC01
+	int* m_piPlanetYieldChanges;
+	int** m_ppaiTraitPlanetYieldChange;
+//End of Final Frontier
 
 	bool* m_pbCommerceFlexible;
 	bool* m_pbCommerceChangeOriginalOwner;
 	bool* m_pbBuildingClassNeededInCity;
+	bool* m_pbBuildingClassNeededOnPlanet;	//Added in Final Frontier SDK: TC01
 
 	int** m_ppaiSpecialistYieldChange;
 	int** m_ppaiBonusYieldModifier;
@@ -2181,6 +2283,7 @@ public:
 
 	DllExport bool isAIPlayable() const;				// Expose to Python
 	DllExport bool isPlayable() const;				// Expose to Python
+	bool isAlien() const;				//Added in Final Frontier SDK: TC01
 
 	std::wstring pyGetShortDescription(uint uiForm) { return getShortDescription(uiForm); }				// Exposed to Python
 	DllExport const wchar* getShortDescription(uint uiForm = 0);
@@ -2235,6 +2338,7 @@ protected:
 
 	bool m_bAIPlayable;			
 	bool m_bPlayable;				
+	bool m_bAlien;				//Added in Final Frontier SDK: TC01
 
 	CvString m_szArtDefineTag;
 	CvWString m_szShortDescriptionKey;
@@ -2640,6 +2744,7 @@ public:
 	void setMissionType(int iNewType);
 
 	bool isKill() const;				// Exposed to Python
+	bool isStarbase() const;			//Added in Final Frontier SDK, and of course exposed to python
 
 	// Arrays
 
@@ -2664,6 +2769,7 @@ protected:
 	int m_iMissionType;
 
 	bool m_bKill;
+	bool m_bStarbase;			//Added in Final Frontier SDK: TC01
 
 	// Arrays
 
@@ -2705,13 +2811,19 @@ public:
 	int getUnitClassType() const;				// Exposed to Python
 	int getBarbarianUnitClass() const;				// Exposed to Python
 
+	int getRequiredImprovement() const;			//Added in Final Frontier SDK: TC01
+
 	bool isTech() const;				// Exposed to Python
 	bool isBad() const;				// Exposed to Python
+	bool isDamageUnit() const;		//Added in Final Frontier SDK: TC01
+	bool isNewCiv() const;			//Added in Final Frontier SDK: TC01
 
 	const TCHAR* getSound() const;				// Exposed to Python
 	void setSound(const TCHAR* szVal);
 
 	bool read(CvXMLLoadUtility* pXML);
+
+	bool readPass3();			//Added in Final Frontier SDK: TC01
 
 	//---------------------------------------PROTECTED MEMBER VARIABLES---------------------------------
 
@@ -2730,9 +2842,12 @@ protected:
 	int m_iMinBarbarians;			
 	int m_iUnitClassType;			
 	int m_iBarbarianUnitClass;	
+	int m_iRequiredImprovement;		//Added in Final Frontier SDK: TC01
 
 	bool m_bTech;						
 	bool m_bBad;						
+	bool m_bDamageUnit;			//Added in Final Frontier SDK: TC01
+	bool m_bNewCiv;			//Added in Final Frontier SDK: TC01
 
 	CvString m_szSound;
 
@@ -2867,6 +2982,8 @@ public:
 	void setImprovementPillage(int i);
 	int getImprovementUpgrade() const;				// Exposed to Python
 	void setImprovementUpgrade(int i);
+	int getUnitClassBuilt() const;			//Added in Final Frontier SDK: TC01, and of course exposed to python
+	void setUnitClassBuilt(int i);			//Added in Final Frontier SDK: TC01, and of course exposed to python
 
 	bool isActsAsCity() const;				// Exposed to Python
 	bool isHillsMakesValid() const;				// Exposed to Python
@@ -2945,6 +3062,7 @@ protected:
 	int m_iPillageGold;
 	int m_iImprovementPillage;
 	int m_iImprovementUpgrade;
+	int m_iUnitClassBuilt;			//Added in Final Frontier SDK: TC01
 
 	bool m_bActsAsCity;				
 	bool m_bHillsMakesValid;				
@@ -3158,7 +3276,8 @@ public:
 	int getDefenseModifier() const;						// Exposed to Python
 	int getAdvancedStartRemoveCost() const;						// Exposed to Python
 	int getTurnDamage() const;						// Exposed to Python
-	int getWarmingDefense() const; //GWmod	
+	int getWarmingDefense() const; //GWmod
+	int getExtraMovePathCost() const;				//Added in Final Frontier SDK: TC01	
 
 	bool isNoCoast() const;						// Exposed to Python
 	bool isNoRiver() const;						// Exposed to Python
@@ -3171,6 +3290,14 @@ public:
 	bool isNoImprovement() const;			// Exposed to Python
 	bool isVisibleAlways() const;			// Exposed to Python
 	bool isNukeImmune() const;			// Exposed to Python
+	bool isNoBarbarianSpawn() const;			//Added in Final Frontier SDK: TC01, and of course exposed to python
+//Start: FeatureEffects - Kaspar
+	int getGravityFieldForce() const;			// Exposed to Python
+	int getBlackHoleInArea() const;			// Exposed to Python
+	int getBlackHoleFeatureType() const;			// Exposed to Python
+	int getTargetWormholeType() const;			// Exposed to Python
+//	CvWString getFeatureDamageText() const;
+//End
 	const TCHAR* getOnUnitChangeTo() const;
 
 	const TCHAR* getArtDefineTag() const;			
@@ -3197,6 +3324,7 @@ public:
 	const TCHAR* getButton() const;
 
 	bool read(CvXMLLoadUtility* pXML);
+	bool readPass2(CvXMLLoadUtility* pXML);
 
 	//---------------------------------------PROTECTED MEMBER VARIABLES---------------------------------
 protected:
@@ -3211,6 +3339,7 @@ protected:
 	int m_iAdvancedStartRemoveCost;
 	int m_iTurnDamage;
 	int m_iWarmingDefense; //GWMod new xml field M.A.
+	int m_iMovePathExtraCost;		//Added in Final Frontier SDK: TC01
 	
 	bool m_bNoCoast;				
 	bool m_bNoRiver;					
@@ -3223,6 +3352,14 @@ protected:
 	bool m_bNoImprovement;	
 	bool m_bVisibleAlways;	
 	bool m_bNukeImmune;	
+	bool m_bNoBarbarianSpawn;		//Added in Final Frontier SDK: TC01
+//Start: FeatureEffects - Kaspar
+	int m_iGravityFieldForce;
+	int m_iBlackHoleInArea;
+	int m_iBlackHoleFeatureType;
+	int m_iTargetWormholeType;
+//	CvWString szFeatureDamageText;
+//End
 	CvString m_szOnUnitChangeTo;
 
 	int m_iWorldSoundscapeScriptId;
@@ -3371,6 +3508,7 @@ public:
 	bool isFound() const;								// Exposed to Python
 	bool isFoundCoast() const;					// Exposed to Python
 	bool isFoundFreshWater() const;			// Exposed to Python
+	bool isFoundFeature() const;			//Added in Final Frontier SDK: TC01, and of course exposed to python
 
 	DllExport const TCHAR* getArtDefineTag() const;			
 	void setArtDefineTag(const TCHAR* szTag);			
@@ -3405,6 +3543,7 @@ protected:
 	bool m_bFound;
 	bool m_bFoundCoast;
 	bool m_bFoundFreshWater;
+	bool m_bFoundFeature;		//Added in Final Frontier SDK: TC01
 
 	int m_iWorldSoundscapeScriptId;
 
@@ -3591,7 +3730,10 @@ public:
 	int getPermanentAllianceRefuseAttitudeThreshold() const;		// Exposed to Python
 	int getVassalRefuseAttitudeThreshold() const;				// Exposed to Python
 	int getVassalPowerModifier() const;				// Exposed to Python
-	int getFavoriteCivic() const;																// Exposed to Python
+	
+	// < Multiple Favorite Civics Start >
+	//int getFavoriteCivic() const;																// Exposed to Python
+	// < Multiple Favorite Civics End   >
 	int getFavoriteReligion() const;																// Exposed to Python
 	int getFreedomAppreciation() const;																// Exposed to Python
 
@@ -3599,6 +3741,12 @@ public:
 	void setArtDefineTag(const TCHAR* szVal);
 	
 	// Arrays
+
+	// < Multiple Favorite Civics Start >
+	bool isHasFavoriteCivic() const;
+	bool hasFavoriteCivic(int i) const;
+	void setFavoriteCivic(int i, bool bNewValue);
+	// < Multiple Favorite Civics End   >
 
 	bool hasTrait(int i) const;				// Exposed to Python
 
@@ -3719,6 +3867,9 @@ protected:
 
 	// Arrays
 
+	// < Multiple Favorite Civics Start >
+	bool* m_pbFavoriteCivics;
+	// < Multiple Favorite Civics End   >
 	bool* m_pbTraits;
 
 	int* m_piFlavorValue;
@@ -4220,6 +4371,12 @@ public:
 	int getMaxGlobalBuildingProductionModifier() const;				// Exposed to Python
 	int getMaxTeamBuildingProductionModifier() const;				// Exposed to Python
 	int getMaxPlayerBuildingProductionModifier() const;				// Exposed to Python
+//Added in Final Frontier SDK: TC01
+	int getFreePopulation() const;
+	int getNumBonusTradeRoutes() const;
+	int getStartingGoldMultiplier() const;
+	int getFreePlanetBuildingClass() const;
+//End of Final Frontier SDK
 
 	const TCHAR* getShortDescription() const;				// Exposed to Python
 	void setShortDescription(const TCHAR* szVal);			
@@ -4230,11 +4387,18 @@ public:
 	int getTradeYieldModifier(int i) const;				// Exposed to Python
 	int getCommerceChange(int i) const;				// Exposed to Python
 	int getCommerceModifier(int i) const;				// Exposed to Python
+//Added in Final Frontier: TC01
+	int getYieldChanges(int i) const;
+	int* getYieldChangesArray() const;
+	int getTradeRouteYieldChanges(int i) const;
+	int* getTradeRouteYieldChangesArray() const;
+//End of Final Frontier
 
 	int isFreePromotion(int i) const;				// Exposed to Python
 	int isFreePromotionUnitCombat(int i) const;			
 
 	bool read(CvXMLLoadUtility* pXML);
+	bool readPass3();			//Added in Final Frontier: TC01
 
 	//---------------------------------------PROTECTED MEMBER VARIABLES---------------------------------
 protected:
@@ -4250,6 +4414,12 @@ protected:
 	int m_iMaxGlobalBuildingProductionModifier;	
 	int m_iMaxTeamBuildingProductionModifier;		
 	int m_iMaxPlayerBuildingProductionModifier;	
+//Added in Final Frontier SDK: TC01
+	int m_iFreePopulation;
+	int m_iNumBonusTradeRoutes;
+	int m_iStartingGoldMultiplier;
+	int m_iFreePlanetBuildingClass;
+//End of Final Frontier SDK
 
 	CvString m_szShortDescription;
 
@@ -4259,6 +4429,10 @@ protected:
 	int* m_paiTradeYieldModifier;
 	int* m_paiCommerceChange;
 	int* m_paiCommerceModifier;
+//Added in Final Frontier: TC01
+	int* m_piYieldChanges;
+	int* m_piTradeRouteYieldChanges;
+//End of Final Frontier
 
 	bool* m_pabFreePromotion;
 	bool* m_pabFreePromotionUnitCombat;

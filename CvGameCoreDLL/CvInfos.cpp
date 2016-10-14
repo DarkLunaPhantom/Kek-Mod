@@ -1687,12 +1687,14 @@ m_bEnemyRoute(false),
 m_bAlwaysHeal(false),
 m_bHillsDoubleMove(false),
 m_bImmuneToFirstStrikes(false),
+m_bCanMoveImpassable(false),	// FFP - Move on impassable
 m_piTerrainAttackPercent(NULL),
 m_piTerrainDefensePercent(NULL),
 m_piFeatureAttackPercent(NULL),
 m_piFeatureDefensePercent(NULL),
 m_piUnitCombatModifierPercent(NULL),
 m_piDomainModifierPercent(NULL),
+m_piFeatureDamageModifierPercent(NULL),	// FFP - Feature damage modifier
 m_pbTerrainDoubleMove(NULL),
 m_pbFeatureDoubleMove(NULL),
 m_pbUnitCombat(NULL)
@@ -1714,6 +1716,7 @@ CvPromotionInfo::~CvPromotionInfo()
 	SAFE_DELETE_ARRAY(m_piFeatureDefensePercent);
 	SAFE_DELETE_ARRAY(m_piUnitCombatModifierPercent);
 	SAFE_DELETE_ARRAY(m_piDomainModifierPercent);
+	SAFE_DELETE_ARRAY(m_piFeatureDamageModifierPercent);
 	SAFE_DELETE_ARRAY(m_pbTerrainDoubleMove);
 	SAFE_DELETE_ARRAY(m_pbFeatureDoubleMove);
 	SAFE_DELETE_ARRAY(m_pbUnitCombat);
@@ -1969,6 +1972,13 @@ bool CvPromotionInfo::isImmuneToFirstStrikes() const
 	return m_bImmuneToFirstStrikes;
 }
 
+// FFP - Move on impassable - start
+bool CvPromotionInfo::isCanMoveImpassable() const
+{
+	return m_bCanMoveImpassable;
+}
+// FFP - Move on impassable - end
+
 const TCHAR* CvPromotionInfo::getSound() const										
 {
 	return m_szSound;
@@ -2022,6 +2032,15 @@ int CvPromotionInfo::getDomainModifierPercent(int i) const
 	FAssertMsg(i > -1, "Index out of bounds");
 	return m_piDomainModifierPercent ? m_piDomainModifierPercent[i] : -1;
 }
+
+// FFP - Feature damage modifier - start
+int CvPromotionInfo::getFeatureDamageModifierPercent(int i) const
+{
+	FAssertMsg(i < GC.getNumFeatureInfos(), "Index out of bounds");
+	FAssertMsg(i > -1, "Index out of bounds");
+	return m_piFeatureDamageModifierPercent ? m_piFeatureDamageModifierPercent[i] : -1;
+}
+// FFP - Feature damage modifier - end
 
 bool CvPromotionInfo::getTerrainDoubleMove(int i) const
 {
@@ -2097,6 +2116,7 @@ void CvPromotionInfo::read(FDataStreamBase* stream)
 	stream->Read(&m_bAlwaysHeal);
 	stream->Read(&m_bHillsDoubleMove);
 	stream->Read(&m_bImmuneToFirstStrikes);				
+	stream->Read(&m_bCanMoveImpassable);	// FFP - Move on impassable
 
 	stream->ReadString(m_szSound);
 
@@ -2125,6 +2145,12 @@ void CvPromotionInfo::read(FDataStreamBase* stream)
 	SAFE_DELETE_ARRAY(m_piDomainModifierPercent);
 	m_piDomainModifierPercent = new int[NUM_DOMAIN_TYPES];
 	stream->Read(NUM_DOMAIN_TYPES, m_piDomainModifierPercent);
+
+	// FFP - Feature damage modifier - start
+	SAFE_DELETE_ARRAY(m_piFeatureDamageModifierPercent);
+	m_piFeatureDamageModifierPercent = new int[GC.getNumFeatureInfos()];
+	stream->Read(GC.getNumFeatureInfos(), m_piFeatureDamageModifierPercent);
+	// FFP - Feature damage modifier - end
 
 	SAFE_DELETE_ARRAY(m_pbTerrainDoubleMove);
 	m_pbTerrainDoubleMove = new bool[GC.getNumTerrainInfos()];
@@ -2192,6 +2218,7 @@ void CvPromotionInfo::write(FDataStreamBase* stream)
 	stream->Write(m_bAlwaysHeal);
 	stream->Write(m_bHillsDoubleMove);
 	stream->Write(m_bImmuneToFirstStrikes);
+	stream->Write(m_bCanMoveImpassable);	// FFP - Move on impassable
 
 	stream->WriteString(m_szSound);
 
@@ -2203,6 +2230,7 @@ void CvPromotionInfo::write(FDataStreamBase* stream)
 	stream->Write(GC.getNumFeatureInfos(), m_piFeatureDefensePercent);
 	stream->Write(GC.getNumUnitCombatInfos(), m_piUnitCombatModifierPercent);
 	stream->Write(NUM_DOMAIN_TYPES, m_piDomainModifierPercent);
+	stream->Write(GC.getNumFeatureInfos(), m_piFeatureDamageModifierPercent);
 	stream->Write(GC.getNumTerrainInfos(), m_pbTerrainDoubleMove);
 	stream->Write(GC.getNumFeatureInfos(), m_pbFeatureDoubleMove);
 	stream->Write(GC.getNumUnitCombatInfos(), m_pbUnitCombat);
@@ -2240,6 +2268,7 @@ bool CvPromotionInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_bAlwaysHeal, "bAlwaysHeal");
 	pXML->GetChildXmlValByName(&m_bHillsDoubleMove, "bHillsDoubleMove");
 	pXML->GetChildXmlValByName(&m_bImmuneToFirstStrikes, "bImmuneToFirstStrikes");
+	pXML->GetChildXmlValByName(&m_bCanMoveImpassable, "bCanMoveImpassable");	// FFP - Move on impassable
 	pXML->GetChildXmlValByName(&m_iVisibilityChange, "iVisibilityChange");
 	pXML->GetChildXmlValByName(&m_iMovesChange, "iMovesChange");
 	pXML->GetChildXmlValByName(&m_iMoveDiscountChange, "iMoveDiscountChange");
@@ -2275,6 +2304,7 @@ bool CvPromotionInfo::read(CvXMLLoadUtility* pXML)
 	pXML->SetVariableListTagPair(&m_piFeatureDefensePercent, "FeatureDefenses", sizeof(GC.getFeatureInfo((FeatureTypes)0)), GC.getNumFeatureInfos());
 	pXML->SetVariableListTagPair(&m_piUnitCombatModifierPercent, "UnitCombatMods", sizeof(GC.getUnitCombatInfo((UnitCombatTypes)0)), GC.getNumUnitCombatInfos());
 	pXML->SetVariableListTagPair(&m_piDomainModifierPercent, "DomainMods", sizeof(GC.getDomainInfo((DomainTypes)0)), NUM_DOMAIN_TYPES);
+	pXML->SetVariableListTagPair(&m_piFeatureDamageModifierPercent, "FeatureDamageModifiers", sizeof(GC.getFeatureInfo((FeatureTypes)0)), GC.getNumFeatureInfos()); // FFP - Feature damage modifier
 
 	pXML->SetVariableListTagPair(&m_pbTerrainDoubleMove, "TerrainDoubleMoves", sizeof(GC.getTerrainInfo((TerrainTypes)0)), GC.getNumTerrainInfos());
 	pXML->SetVariableListTagPair(&m_pbFeatureDoubleMove, "FeatureDoubleMoves", sizeof(GC.getFeatureInfo((FeatureTypes)0)), GC.getNumFeatureInfos());
@@ -3120,7 +3150,14 @@ m_iCultureGarrisonValue(0),
 m_iExtraCost(0),							
 m_iAssetValue(0),						
 m_iPowerValue(0),						
+//Added in Final Frontier SDK: TC01
+m_iCultureRange(0),
+m_iMinBarbarianSpawnEra(-1),
+m_iMaxBarbarianSpawnEra(-1),
+m_iBarbarianChanceMultiplier(1),
 m_iUnitClassType(NO_UNITCLASS),
+m_iUpgradePriceOverride(-1),
+//End of Final Frontier
 m_iSpecialUnitType(NO_SPECIALUNIT),
 m_iUnitCaptureClassType(NO_UNITCLASS),
 m_iUnitCombatType(NO_UNITCOMBAT),
@@ -3182,6 +3219,14 @@ m_bHiddenNationality(false),
 m_bAlwaysHostile(false),
 m_bNoRevealMap(false),
 m_iLeaderPromotion(NO_PROMOTION),
+//Added in Final Frontier SDK: TC01
+m_bStarbase(false),
+m_bDelta(false),
+m_bOmega(false),
+m_bOtherStation(false),
+m_bMissile(false),
+m_bTroopTransport(false),
+//End of Final Frontier
 m_fUnitMaxSpeed(0.0f),
 m_fUnitPadTime(0.0f),
 m_pbUpgradeUnitClass(NULL),
@@ -3210,8 +3255,13 @@ m_piTerrainAttackModifier(NULL),
 m_piTerrainDefenseModifier(NULL),
 m_piFeatureAttackModifier(NULL),
 m_piFeatureDefenseModifier(NULL),
+m_piFeatureDamageModifier(NULL), // FFP - Feature damage modifier
 m_piUnitClassAttackModifier(NULL),
 m_piUnitClassDefenseModifier(NULL),
+// < Unit Combat Attack Defense Mod Start >
+m_piUnitCombatAttackModifier(NULL),
+m_piUnitCombatDefenseModifier(NULL),
+// < Unit Combat Attack Defense Mod End   >
 m_piUnitCombatModifier(NULL),
 m_piUnitCombatCollateralImmune(NULL),
 m_piDomainModifier(NULL),
@@ -3262,8 +3312,13 @@ CvUnitInfo::~CvUnitInfo()
 	SAFE_DELETE_ARRAY(m_piTerrainDefenseModifier);
 	SAFE_DELETE_ARRAY(m_piFeatureAttackModifier);
 	SAFE_DELETE_ARRAY(m_piFeatureDefenseModifier);
+	SAFE_DELETE_ARRAY(m_piFeatureDamageModifier); // FFP - Feature damage modifier
 	SAFE_DELETE_ARRAY(m_piUnitClassAttackModifier);
 	SAFE_DELETE_ARRAY(m_piUnitClassDefenseModifier);
+	// < Unit Combat Attack Defense Mod Start >
+	SAFE_DELETE_ARRAY(m_piUnitCombatAttackModifier);
+	SAFE_DELETE_ARRAY(m_piUnitCombatDefenseModifier);
+	// < Unit Combat Attack Defense Mod End   >
 	SAFE_DELETE_ARRAY(m_piUnitCombatModifier);
 	SAFE_DELETE_ARRAY(m_piUnitCombatCollateralImmune);
 	SAFE_DELETE_ARRAY(m_piDomainModifier);
@@ -3527,6 +3582,38 @@ int CvUnitInfo::getPowerValue() const
 {
 	return m_iPowerValue;
 }
+
+//Added in Final Frontier SDK: TC01
+int CvUnitInfo::getCultureRange() const
+{
+	return m_iCultureRange;
+}
+
+void CvUnitInfo::setCultureRange(int i)
+{
+	m_iCultureRange = i;
+}
+
+int CvUnitInfo::getMaxBarbarianSpawnEra() const
+{
+	return m_iMaxBarbarianSpawnEra;
+}
+
+int CvUnitInfo::getMinBarbarianSpawnEra() const
+{
+	return m_iMinBarbarianSpawnEra;
+}
+
+int CvUnitInfo::getBarbarianChanceMultiplier() const
+{
+	return m_iBarbarianChanceMultiplier;
+}
+
+int CvUnitInfo::getUpgradePriceOverride() const
+{
+	return m_iUpgradePriceOverride;
+}
+//End of Final Frontier SDK
 
 int CvUnitInfo::getUnitClassType() const
 {
@@ -3840,6 +3927,38 @@ bool CvUnitInfo::isNoRevealMap() const
 	return m_bNoRevealMap;
 }
 
+//Added in Final Frontier SDK: TC01
+bool CvUnitInfo::isStarbase() const		
+{
+	return m_bStarbase;
+}
+
+bool CvUnitInfo::isDelta() const
+{
+	return m_bDelta;
+}
+
+bool CvUnitInfo::isOmega() const
+{
+	return m_bOmega;
+}
+
+bool CvUnitInfo::isOtherStation() const
+{
+	return m_bOtherStation;
+}
+
+bool CvUnitInfo::isMissile() const
+{
+	return m_bMissile;
+}
+
+bool CvUnitInfo::isTroopTransport() const
+{
+	return m_bTroopTransport;
+}
+//End of Final Frontier SDK
+
 float CvUnitInfo::getUnitMaxSpeed() const			
 {
 	return m_fUnitMaxSpeed;
@@ -3919,6 +4038,15 @@ int CvUnitInfo::getFeatureDefenseModifier(int i) const
 	return m_piFeatureDefenseModifier ? m_piFeatureDefenseModifier[i] : -1;
 }
 
+// FFP - Feature damage modifier - start
+int CvUnitInfo::getFeatureDamageModifier(int i) const			
+{
+	FAssertMsg(i < GC.getNumFeatureInfos(), "Index out of bounds");
+	FAssertMsg(i > -1, "Index out of bounds");
+	return m_piFeatureDamageModifier ? m_piFeatureDamageModifier[i] : -1;
+}
+// FFP - Feature damage modifier - end
+
 int CvUnitInfo::getUnitClassAttackModifier(int i) const		
 {
 	FAssertMsg(i < GC.getNumUnitClassInfos(), "Index out of bounds");
@@ -3932,6 +4060,22 @@ int CvUnitInfo::getUnitClassDefenseModifier(int i) const
 	FAssertMsg(i > -1, "Index out of bounds");
 	return m_piUnitClassDefenseModifier ? m_piUnitClassDefenseModifier[i] : -1;
 }
+
+// < Unit Combat Attack Defense Mod Start >
+int CvUnitInfo::getUnitCombatAttackModifier(int i) const		
+{
+	FAssertMsg(i < GC.getNumUnitCombatInfos(), "Index out of bounds");
+	FAssertMsg(i > -1, "Index out of bounds");
+	return m_piUnitCombatAttackModifier ? m_piUnitCombatAttackModifier[i] : -1;
+}
+
+int CvUnitInfo::getUnitCombatDefenseModifier(int i) const
+{
+	FAssertMsg(i < GC.getNumUnitCombatInfos(), "Index out of bounds");
+	FAssertMsg(i > -1, "Index out of bounds");
+	return m_piUnitCombatDefenseModifier ? m_piUnitCombatDefenseModifier[i] : -1;
+}
+// < Unit Combat Attack Defense Mod End   >
 
 int CvUnitInfo::getUnitCombatModifier(int i) const
 {
@@ -4228,6 +4372,18 @@ const TCHAR* CvUnitInfo::getButton() const
 	return m_szArtDefineButton;
 }
 
+//Added in Final Frontier: TC01
+const TCHAR* CvUnitInfo::getMovementSound() const
+{
+	return m_szMovementSound;
+}
+
+void CvUnitInfo::setMovementSound(const TCHAR* szVal)
+{
+	m_szMovementSound = szVal;
+}
+//End of FInal Frontier
+
 void CvUnitInfo::updateArtDefineButton()
 {
 	m_szArtDefineButton = getArtInfo(0, NO_ERA, NO_UNIT_ARTSTYLE)->getButton();
@@ -4305,6 +4461,13 @@ void CvUnitInfo::read(FDataStreamBase* stream)
 	stream->Read(&m_iExtraCost);
 	stream->Read(&m_iAssetValue);
 	stream->Read(&m_iPowerValue);
+//Added in Final Frontier SDK: TC01
+	stream->Read(&m_iCultureRange);
+	stream->Read(&m_iMaxBarbarianSpawnEra);
+	stream->Read(&m_iMinBarbarianSpawnEra);
+	stream->Read(&m_iBarbarianChanceMultiplier);
+	stream->Read(&m_iUpgradePriceOverride);
+//End of Final Frontier
 	stream->Read(&m_iUnitClassType);
 	stream->Read(&m_iSpecialUnitType);
 	stream->Read(&m_iUnitCaptureClassType);
@@ -4376,6 +4539,14 @@ void CvUnitInfo::read(FDataStreamBase* stream)
 	stream->Read(&m_bHiddenNationality);
 	stream->Read(&m_bAlwaysHostile);
 	stream->Read(&m_bNoRevealMap);
+//Added in Final Frontier SDK: TC01
+	stream->Read(&m_bStarbase);
+	stream->Read(&m_bDelta);
+	stream->Read(&m_bOmega);
+	stream->Read(&m_bOtherStation);
+	stream->Read(&m_bMissile);
+	stream->Read(&m_bTroopTransport);
+//End of Final Frontier
 
 	stream->Read(&m_fUnitMaxSpeed);
 	stream->Read(&m_fUnitPadTime);
@@ -4411,7 +4582,11 @@ void CvUnitInfo::read(FDataStreamBase* stream)
 	SAFE_DELETE_ARRAY(m_piFeatureDefenseModifier);
 	m_piFeatureDefenseModifier = new int[GC.getNumFeatureInfos()];
 	stream->Read(GC.getNumFeatureInfos(), m_piFeatureDefenseModifier);
-
+// FFP - Feature damage modifier - start
+	SAFE_DELETE_ARRAY(m_piFeatureDamageModifier);
+	m_piFeatureDamageModifier = new int[GC.getNumFeatureInfos()];
+	stream->Read(GC.getNumFeatureInfos(), m_piFeatureDamageModifier);
+// FFP - Feature damage modifier - end
 	SAFE_DELETE_ARRAY(m_piUnitClassAttackModifier);
 	m_piUnitClassAttackModifier = new int[GC.getNumUnitClassInfos()];
 	stream->Read(GC.getNumUnitClassInfos(), m_piUnitClassAttackModifier);
@@ -4419,6 +4594,16 @@ void CvUnitInfo::read(FDataStreamBase* stream)
 	SAFE_DELETE_ARRAY(m_piUnitClassDefenseModifier);
 	m_piUnitClassDefenseModifier = new int[GC.getNumUnitClassInfos()];
 	stream->Read(GC.getNumUnitClassInfos(), m_piUnitClassDefenseModifier);
+
+	// < Unit Combat Attack Defense Mod Start >
+	SAFE_DELETE_ARRAY(m_piUnitCombatAttackModifier);
+	m_piUnitCombatAttackModifier = new int[GC.getNumUnitCombatInfos()];
+	stream->Read(GC.getNumUnitCombatInfos(), m_piUnitCombatAttackModifier);
+
+	SAFE_DELETE_ARRAY(m_piUnitCombatDefenseModifier);
+	m_piUnitCombatDefenseModifier = new int[GC.getNumUnitCombatInfos()];
+	stream->Read(GC.getNumUnitCombatInfos(), m_piUnitCombatDefenseModifier);
+	// < Unit Combat Attack Defense Mod End   >
 
 	SAFE_DELETE_ARRAY(m_piUnitCombatModifier);
 	m_piUnitCombatModifier = new int[GC.getNumUnitCombatInfos()];
@@ -4545,6 +4730,8 @@ void CvUnitInfo::read(FDataStreamBase* stream)
 
 	stream->ReadString(m_szFormationType);
 
+	stream->ReadString(m_szMovementSound);	//Added in Final Frontier SDK: TC01
+
 	updateArtDefineButton();
 }
 
@@ -4604,6 +4791,13 @@ void CvUnitInfo::write(FDataStreamBase* stream)
 	stream->Write(m_iExtraCost);
 	stream->Write(m_iAssetValue);
 	stream->Write(m_iPowerValue);
+//Added in Final Frontier SDK: TC01
+	stream->Write(m_iCultureRange);	
+	stream->Write(m_iMaxBarbarianSpawnEra);
+	stream->Write(m_iMinBarbarianSpawnEra);
+	stream->Write(m_iBarbarianChanceMultiplier);
+	stream->Write(m_iUpgradePriceOverride);
+//End of Final Frontier
 	stream->Write(m_iUnitClassType);
 	stream->Write(m_iSpecialUnitType);
 	stream->Write(m_iUnitCaptureClassType);
@@ -4672,6 +4866,14 @@ void CvUnitInfo::write(FDataStreamBase* stream)
 	stream->Write(m_bHiddenNationality);
 	stream->Write(m_bAlwaysHostile);
 	stream->Write(m_bNoRevealMap);
+//Added in Final Frontier SDK: TC01
+	stream->Write(m_bStarbase);	
+	stream->Write(m_bDelta);
+	stream->Write(m_bOmega);
+	stream->Write(m_bOtherStation);
+	stream->Write(m_bMissile);
+	stream->Write(m_bTroopTransport);
+//End of Final Frontier
 
 	stream->Write(m_fUnitMaxSpeed);
 	stream->Write(m_fUnitPadTime);
@@ -4684,8 +4886,17 @@ void CvUnitInfo::write(FDataStreamBase* stream)
 	stream->Write(GC.getNumTerrainInfos(), m_piTerrainDefenseModifier);
 	stream->Write(GC.getNumFeatureInfos(), m_piFeatureAttackModifier);
 	stream->Write(GC.getNumFeatureInfos(), m_piFeatureDefenseModifier);
+// FFP - Feature damage modifier - start
+	stream->Write(GC.getNumFeatureInfos(), m_piFeatureDamageModifier);
+// FFP - Feature damage modifier - end
 	stream->Write(GC.getNumUnitClassInfos(), m_piUnitClassAttackModifier);
 	stream->Write(GC.getNumUnitClassInfos(), m_piUnitClassDefenseModifier);
+
+	// < Unit Combat Attack Defense Mod Start >
+	stream->Write(GC.getNumUnitCombatInfos(), m_piUnitCombatAttackModifier);
+	stream->Write(GC.getNumUnitCombatInfos(), m_piUnitCombatDefenseModifier);
+	// < Unit Combat Attack Defense Mod End   >
+
 	stream->Write(GC.getNumUnitCombatInfos(), m_piUnitCombatModifier);
 	stream->Write(GC.getNumUnitCombatInfos(), m_piUnitCombatCollateralImmune);
 	stream->Write(NUM_DOMAIN_TYPES, m_piDomainModifier);
@@ -4722,6 +4933,8 @@ void CvUnitInfo::write(FDataStreamBase* stream)
 	stream->WriteString(m_iNumUnitNames, m_paszUnitNames);
 
 	stream->WriteString(m_szFormationType);
+
+	stream->WriteString(m_szMovementSound);		//Added in Final Frontier SDK: TC01
 }
 
 //
@@ -4776,6 +4989,14 @@ bool CvUnitInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(szTextVal, "Advisor");
 	m_iAdvisorType = pXML->FindInInfoClass(szTextVal);
 
+//Added in Final Frontier SDK: TC01
+	pXML->GetChildXmlValByName(szTextVal, "MaxBarbarianSpawnEra");
+	m_iMaxBarbarianSpawnEra = pXML->FindInInfoClass(szTextVal);
+
+	pXML->GetChildXmlValByName(szTextVal, "MinBarbarianSpawnEra");
+	m_iMinBarbarianSpawnEra = pXML->FindInInfoClass(szTextVal);
+//End of Final Frontier SDK
+
 	pXML->GetChildXmlValByName(&m_bAnimal, "bAnimal");
 	pXML->GetChildXmlValByName(&m_bFoodProduction, "bFood");
 	pXML->GetChildXmlValByName(&m_bNoBadGoodies, "bNoBadGoodies");
@@ -4814,6 +5035,14 @@ bool CvUnitInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_bHiddenNationality,"bHiddenNationality",false);
 	pXML->GetChildXmlValByName(&m_bAlwaysHostile,"bAlwaysHostile",false);
 	pXML->GetChildXmlValByName(&m_bNoRevealMap,"bNoRevealMap",false);
+//Added in Final Frontier: TC01
+	pXML->GetChildXmlValByName(&m_bStarbase, "bStarbase", false);
+	pXML->GetChildXmlValByName(&m_bDelta, "bDelta", false);
+	pXML->GetChildXmlValByName(&m_bOmega, "bOmega", false);
+	pXML->GetChildXmlValByName(&m_bOtherStation, "bOtherStation", false);
+	pXML->GetChildXmlValByName(&m_bMissile, "bMissile", false);
+	pXML->GetChildXmlValByName(&m_bTroopTransport, "bTroopTransport", false);
+//End of Final Frontier
 
 	pXML->SetVariableListTagPair(&m_pbUpgradeUnitClass, "UnitClassUpgrades", sizeof(GC.getUnitClassInfo((UnitClassTypes)0)), GC.getNumUnitClassInfos());
 	pXML->SetVariableListTagPair(&m_pbTargetUnitClass, "UnitClassTargets", sizeof(GC.getUnitClassInfo((UnitClassTypes)0)), GC.getNumUnitClassInfos());
@@ -4990,9 +5219,16 @@ bool CvUnitInfo::read(CvXMLLoadUtility* pXML)
 	pXML->SetVariableListTagPair(&m_piTerrainDefenseModifier, "TerrainDefenses", sizeof(GC.getTerrainInfo((TerrainTypes)0)), GC.getNumTerrainInfos());
 	pXML->SetVariableListTagPair(&m_piFeatureAttackModifier, "FeatureAttacks", sizeof(GC.getFeatureInfo((FeatureTypes)0)), GC.getNumFeatureInfos());
 	pXML->SetVariableListTagPair(&m_piFeatureDefenseModifier, "FeatureDefenses", sizeof(GC.getFeatureInfo((FeatureTypes)0)), GC.getNumFeatureInfos());
-
+// FFP - Feature damage modifier - start
+	pXML->SetVariableListTagPair(&m_piFeatureDamageModifier, "FeatureDamageModifiers", sizeof(GC.getFeatureInfo((FeatureTypes)0)), GC.getNumFeatureInfos());
+// FFP - Feature damage modifier - end
 	pXML->SetVariableListTagPair(&m_piUnitClassAttackModifier, "UnitClassAttackMods", sizeof(GC.getUnitClassInfo((UnitClassTypes)0)), GC.getNumUnitClassInfos());
 	pXML->SetVariableListTagPair(&m_piUnitClassDefenseModifier, "UnitClassDefenseMods", sizeof(GC.getUnitClassInfo((UnitClassTypes)0)), GC.getNumUnitClassInfos());
+
+	// < Unit Combat Attack Defense Mod Start >
+	pXML->SetVariableListTagPair(&m_piUnitCombatAttackModifier, "UnitCombatAttackMods", sizeof(GC.getUnitCombatInfo((UnitCombatTypes)0)), GC.getNumUnitCombatInfos());
+	pXML->SetVariableListTagPair(&m_piUnitCombatDefenseModifier, "UnitCombatDefenseMods", sizeof(GC.getUnitCombatInfo((UnitCombatTypes)0)), GC.getNumUnitCombatInfos());
+	// < Unit Combat Attack Defense Mod End   >
 
 	pXML->SetVariableListTagPair(&m_piUnitCombatModifier, "UnitCombatMods", sizeof(GC.getUnitCombatInfo((UnitCombatTypes)0)), GC.getNumUnitCombatInfos());
 	pXML->SetVariableListTagPair(&m_piUnitCombatCollateralImmune, "UnitCombatCollateralImmunes", sizeof(GC.getUnitCombatInfo((UnitCombatTypes)0)), GC.getNumUnitCombatInfos());
@@ -5015,6 +5251,11 @@ bool CvUnitInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_iExtraCost, "iExtraCost");
 	pXML->GetChildXmlValByName(&m_iAssetValue, "iAsset");
 	pXML->GetChildXmlValByName(&m_iPowerValue, "iPower");
+//Added in Final Frontier SDK: TC01
+	pXML->GetChildXmlValByName(&m_iCultureRange, "iCultureRange");
+	pXML->GetChildXmlValByName(&m_iBarbarianChanceMultiplier, "iBarbarianChanceMultiplier");
+	pXML->GetChildXmlValByName(&m_iUpgradePriceOverride, "iUpgradePriceOverride", -1);
+//End of Final Frontier SDK
 
 	// Read the mesh groups elements
 	if ( gDLL->getXMLIFace()->SetToChildByTagName(pXML->GetXML(),"UnitMeshGroups") )
@@ -5060,6 +5301,11 @@ bool CvUnitInfo::read(CvXMLLoadUtility* pXML)
 
 	pXML->GetChildXmlValByName(szTextVal, "LeaderPromotion");
 	m_iLeaderPromotion = pXML->FindInInfoClass(szTextVal);
+
+//Added in Final Frontier SDK: TC01
+	pXML->GetChildXmlValByName(szTextVal, "MovementSound");
+	setMovementSound(szTextVal);
+//End of Final Frontier SDK
 
 	pXML->GetChildXmlValByName(&m_iLeaderExperience, "iLeaderExperience");
 
@@ -5387,6 +5633,7 @@ m_iStateReligionUnitProductionModifier(0),
 m_iStateReligionBuildingProductionModifier(0),
 m_iStateReligionFreeExperience(0),
 m_iExpInBorderModifier(0),
+m_iPlanetPopCapIncrease(0),		//Added in Final Frontier: TC01
 m_bMilitaryFoodProduction(false),
 //m_bNoUnhealthyPopulation(false), //...
 m_iUnhealthyPopulationModifier(0), // K-Mod
@@ -5402,9 +5649,11 @@ m_piTradeYieldModifier(NULL),
 m_piCommerceModifier(NULL),
 m_piCapitalCommerceModifier(NULL),
 m_piSpecialistExtraCommerce(NULL),
+m_piPlanetYieldChanges(NULL),				//Added in Final Frontier SDK: TC01
 m_paiBuildingHappinessChanges(NULL),
 m_paiBuildingHealthChanges(NULL),
 m_paiFeatureHappinessChanges(NULL),
+m_paiUnitCombatCostMods(NULL),				//Added in Final Frontier SDK: TC01
 m_pabHurry(NULL),
 m_pabSpecialBuildingNotRequired(NULL),
 m_pabSpecialistValid(NULL),
@@ -5429,9 +5678,11 @@ CvCivicInfo::~CvCivicInfo()
 	SAFE_DELETE_ARRAY(m_piCommerceModifier);
 	SAFE_DELETE_ARRAY(m_piCapitalCommerceModifier);
 	SAFE_DELETE_ARRAY(m_piSpecialistExtraCommerce);
+	SAFE_DELETE_ARRAY(m_piPlanetYieldChanges);				//Added in Final Frontier SDK: TC01
 	SAFE_DELETE_ARRAY(m_paiBuildingHappinessChanges);
 	SAFE_DELETE_ARRAY(m_paiBuildingHealthChanges);
 	SAFE_DELETE_ARRAY(m_paiFeatureHappinessChanges);
+	SAFE_DELETE_ARRAY(m_paiUnitCombatCostMods);				//Added in Final Frontier SDK: TC01
 	SAFE_DELETE_ARRAY(m_pabHurry);
 	SAFE_DELETE_ARRAY(m_pabSpecialBuildingNotRequired);
 	SAFE_DELETE_ARRAY(m_pabSpecialistValid);
@@ -5625,6 +5876,13 @@ int CvCivicInfo::getExpInBorderModifier() const
 	return m_iExpInBorderModifier;
 }
 
+//Added in Final Frontier: TC01
+int CvCivicInfo::getPlanetPopCapIncrease() const
+{
+	return m_iPlanetPopCapIncrease;
+}
+//End of Final Frontier
+
 bool CvCivicInfo::isMilitaryFoodProduction() const
 {
 	return m_bMilitaryFoodProduction;
@@ -5749,6 +6007,20 @@ int* CvCivicInfo::getCapitalCommerceModifierArray() const
 	return m_piCapitalCommerceModifier;
 }
 
+//Added in Final Frontier SDK: TC01
+int CvCivicInfo::getPlanetYieldChanges(int i) const
+{
+	FAssertMsg(i < NUM_YIELD_TYPES, "Index out of bounds");
+	FAssertMsg(i > -1, "Index out of bounds");
+	return m_piPlanetYieldChanges ? m_piPlanetYieldChanges[i] : -1;
+}
+
+int* CvCivicInfo::getPlanetYieldChangesArray() const
+{
+	return m_piPlanetYieldChanges;
+}
+//End of Final Frontier SDK
+
 int CvCivicInfo::getSpecialistExtraCommerce(int i) const
 {
 	FAssertMsg(i < NUM_COMMERCE_TYPES, "Index out of bounds");
@@ -5781,6 +6053,15 @@ int CvCivicInfo::getFeatureHappinessChanges(int i) const
 	FAssertMsg(i > -1, "Index out of bounds");
 	return m_paiFeatureHappinessChanges ? m_paiFeatureHappinessChanges[i] : -1;
 }
+
+//Added in Final Frontier SDK: TC01
+int CvCivicInfo::getUnitCombatCostMods(int i) const
+{
+	FAssertMsg(i < GC.getNumUnitCombatInfos(), "IndexOut of bounds");
+	FAssertMsg(i > -1, "Index out of bounds");
+	return m_paiUnitCombatCostMods ? m_paiUnitCombatCostMods[i] : -1;
+}
+//End of Final Frontier SDK
 
 bool CvCivicInfo::isHurry(int i) const							
 {
@@ -5864,6 +6145,7 @@ void CvCivicInfo::read(FDataStreamBase* stream)
 	stream->Read(&m_iStateReligionBuildingProductionModifier);	
 	stream->Read(&m_iStateReligionFreeExperience);	
 	stream->Read(&m_iExpInBorderModifier);
+	stream->Read(&m_iPlanetPopCapIncrease);			//Added in Final Frontier: TC01
 
 	stream->Read(&m_bMilitaryFoodProduction);
 	//stream->Read(&m_bNoUnhealthyPopulation);
@@ -5901,6 +6183,12 @@ void CvCivicInfo::read(FDataStreamBase* stream)
 	m_piSpecialistExtraCommerce = new int[NUM_COMMERCE_TYPES];
 	stream->Read(NUM_COMMERCE_TYPES, m_piSpecialistExtraCommerce);
 
+//Added in Final Frontier SDK: TC01
+	SAFE_DELETE_ARRAY(m_piPlanetYieldChanges);
+	m_piPlanetYieldChanges = new int[NUM_YIELD_TYPES];
+	stream->Read(NUM_YIELD_TYPES, m_piPlanetYieldChanges);
+//End of Final Frontier SDK: TC01
+
 	SAFE_DELETE_ARRAY(m_paiBuildingHappinessChanges);
 	m_paiBuildingHappinessChanges = new int[GC.getNumBuildingClassInfos()];
 	stream->Read(GC.getNumBuildingClassInfos(), m_paiBuildingHappinessChanges);
@@ -5912,6 +6200,12 @@ void CvCivicInfo::read(FDataStreamBase* stream)
 	SAFE_DELETE_ARRAY(m_paiFeatureHappinessChanges);
 	m_paiFeatureHappinessChanges = new int[GC.getNumFeatureInfos()];
 	stream->Read(GC.getNumFeatureInfos(), m_paiFeatureHappinessChanges);
+
+//Added in Final Frontier SDK: TC01
+	SAFE_DELETE_ARRAY(m_paiUnitCombatCostMods);
+	m_paiUnitCombatCostMods = new int[GC.getNumUnitCombatInfos()];
+	stream->Read(GC.getNumUnitCombatInfos(), m_paiUnitCombatCostMods);
+//End of Final Frontier SDK
 
 	SAFE_DELETE_ARRAY(m_pabHurry);
 	m_pabHurry = new bool[GC.getNumHurryInfos()];
@@ -5988,6 +6282,7 @@ void CvCivicInfo::write(FDataStreamBase* stream)
 	stream->Write(m_iStateReligionBuildingProductionModifier);	
 	stream->Write(m_iStateReligionFreeExperience);	
 	stream->Write(m_iExpInBorderModifier);
+	stream->Write(m_iPlanetPopCapIncrease);			//Added in Final Frontier: TC01
 
 	stream->Write(m_bMilitaryFoodProduction);
 	//stream->Write(m_bNoUnhealthyPopulation);
@@ -6007,9 +6302,11 @@ void CvCivicInfo::write(FDataStreamBase* stream)
 	stream->Write(NUM_COMMERCE_TYPES, m_piCommerceModifier);
 	stream->Write(NUM_COMMERCE_TYPES, m_piCapitalCommerceModifier);
 	stream->Write(NUM_COMMERCE_TYPES, m_piSpecialistExtraCommerce);
+	stream->Write(NUM_YIELD_TYPES, m_piPlanetYieldChanges);				//Added in Final Frontier SDK: TC01
 	stream->Write(GC.getNumBuildingClassInfos(), m_paiBuildingHappinessChanges);
 	stream->Write(GC.getNumBuildingClassInfos(), m_paiBuildingHealthChanges);
 	stream->Write(GC.getNumFeatureInfos(), m_paiFeatureHappinessChanges);
+	stream->Write(GC.getNumUnitCombatInfos(), m_paiUnitCombatCostMods);		//Added in Final Frontier SDK: TC01
 	stream->Write(GC.getNumHurryInfos(), m_pabHurry);
 	stream->Write(GC.getNumSpecialBuildingInfos(), m_pabSpecialBuildingNotRequired);
 	stream->Write(GC.getNumSpecialistInfos(), m_pabSpecialistValid);
@@ -6088,6 +6385,7 @@ bool CvCivicInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_iStateReligionBuildingProductionModifier, "iStateReligionBuildingProductionModifier");
 	pXML->GetChildXmlValByName(&m_iStateReligionFreeExperience, "iStateReligionFreeExperience");
 	pXML->GetChildXmlValByName(&m_iExpInBorderModifier, "iExpInBorderModifier");
+	pXML->GetChildXmlValByName(&m_iPlanetPopCapIncrease, "iPlanetPopCapIncrease");
 
 	if (gDLL->getXMLIFace()->SetToChildByTagName(pXML->GetXML(),"YieldModifiers"))
 	{
@@ -6149,6 +6447,18 @@ bool CvCivicInfo::read(CvXMLLoadUtility* pXML)
 		pXML->InitList(&m_piSpecialistExtraCommerce, NUM_COMMERCE_TYPES);
 	}
 
+//Added in Final Frontier SDK: TC01
+	if (gDLL->getXMLIFace()->SetToChildByTagName(pXML->GetXML(),"PlanetYieldChanges"))
+	{
+		pXML->SetYields(&m_piPlanetYieldChanges);
+		gDLL->getXMLIFace()->SetToParent(pXML->GetXML());
+	}
+	else
+	{
+		pXML->InitList(&m_piPlanetYieldChanges, NUM_YIELD_TYPES);
+	}
+//End of Final Frontier SDK
+
 	pXML->SetVariableListTagPair(&m_pabHurry, "Hurrys", sizeof(GC.getHurryInfo((HurryTypes)0)), GC.getNumHurryInfos());
 	pXML->SetVariableListTagPair(&m_pabSpecialBuildingNotRequired, "SpecialBuildingNotRequireds", sizeof(GC.getSpecialBuildingInfo((SpecialBuildingTypes)0)), GC.getNumSpecialBuildingInfos());
 	pXML->SetVariableListTagPair(&m_pabSpecialistValid, "SpecialistValids", sizeof(GC.getSpecialistInfo((SpecialistTypes)0)), GC.getNumSpecialistInfos());
@@ -6156,6 +6466,8 @@ bool CvCivicInfo::read(CvXMLLoadUtility* pXML)
 	pXML->SetVariableListTagPair(&m_paiBuildingHappinessChanges, "BuildingHappinessChanges", sizeof(GC.getBuildingClassInfo((BuildingClassTypes)0)), GC.getNumBuildingClassInfos());
 	pXML->SetVariableListTagPair(&m_paiBuildingHealthChanges, "BuildingHealthChanges", sizeof(GC.getBuildingClassInfo((BuildingClassTypes)0)), GC.getNumBuildingClassInfos());
 	pXML->SetVariableListTagPair(&m_paiFeatureHappinessChanges, "FeatureHappinessChanges", sizeof(GC.getFeatureInfo((FeatureTypes)0)), GC.getNumFeatureInfos());
+	pXML->SetVariableListTagPair(&m_paiUnitCombatCostMods, "UnitCombatCostMods", sizeof(GC.getUnitCombatInfo((UnitCombatTypes)0)), GC.getNumUnitCombatInfos());
+	///		^ Above line added in Final Frontier SDK: TC01 ^
 
 	// initialize the boolean list to the correct size and all the booleans to false
 	FAssertMsg((GC.getNumImprovementInfos() > 0) && (NUM_YIELD_TYPES) > 0,"either the number of improvement infos is zero or less or the number of yield types is zero or less");
@@ -6578,6 +6890,11 @@ m_iAllCityDefenseModifier(0),
 m_iEspionageDefenseModifier(0),
 m_iMissionType(NO_MISSION),
 m_iVoteSourceType(NO_VOTESOURCE),
+//Added in Final Frontier SDK: TC01
+m_iCostModIncrease(0),
+m_iPlanetPopCapIncrease(0),
+m_iSingleRingBuildingLocation(-1),
+//End of Final Frontier
 m_fVisibilityPriority(0.0f),
 m_bTeamShare(false),
 m_bWater(false),								
@@ -6601,6 +6918,9 @@ m_bPrereqReligion(false),
 m_bCenterInCity(false),
 m_bStateReligion(false),
 m_bAllowsNukes(false),
+m_bOnePerSystem(false),		//Added in Final Frontier SDK: TC01
+m_bMoon(false),				//Added in Final Frontier SDK: TC01
+m_bRings(false),			//Added in Final Frontier SDK: TC01
 m_piPrereqAndTechs(NULL),
 m_piPrereqOrBonuses(NULL),
 m_piProductionTraits(NULL),
@@ -6634,10 +6954,13 @@ m_piBuildingHappinessChanges(NULL),
 m_piPrereqNumOfBuildingClass(NULL),
 m_piFlavorValue(NULL),
 m_piImprovementFreeSpecialist(NULL),
+m_piPlanetYieldChanges(NULL),			//Added in Final Frontier SDK: TC01
 m_pbCommerceFlexible(NULL),
 m_pbCommerceChangeOriginalOwner(NULL),
 m_pbBuildingClassNeededInCity(NULL),
+m_pbBuildingClassNeededOnPlanet(NULL),	//Added in Final Frontier SDK: TC01
 m_ppaiSpecialistYieldChange(NULL),
+m_ppaiTraitPlanetYieldChange(NULL),		//Added in Final Frontier: TC01
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                       06/27/10                    Afforess & jdog5000       */
 /*                                                                                              */
@@ -6697,9 +7020,11 @@ CvBuildingInfo::~CvBuildingInfo()
 	SAFE_DELETE_ARRAY(m_piPrereqNumOfBuildingClass);
 	SAFE_DELETE_ARRAY(m_piFlavorValue);
 	SAFE_DELETE_ARRAY(m_piImprovementFreeSpecialist);
+	SAFE_DELETE_ARRAY(m_piPlanetYieldChanges);			//Added in Final Frontier SDK: TC01
 	SAFE_DELETE_ARRAY(m_pbCommerceFlexible);
 	SAFE_DELETE_ARRAY(m_pbCommerceChangeOriginalOwner);
 	SAFE_DELETE_ARRAY(m_pbBuildingClassNeededInCity);
+	SAFE_DELETE_ARRAY(m_pbBuildingClassNeededOnPlanet);	//Added in Final Frontier SDK: TC01
 
 	if (m_ppaiSpecialistYieldChange != NULL)
 	{
@@ -6709,6 +7034,17 @@ CvBuildingInfo::~CvBuildingInfo()
 		}
 		SAFE_DELETE_ARRAY(m_ppaiSpecialistYieldChange);
 	}
+
+//Added in Final Frontier: TC01
+	if (m_ppaiTraitPlanetYieldChange != NULL)
+	{
+		for(int i=0;i<GC.getNumTraitInfos();i++)
+		{
+			SAFE_DELETE_ARRAY(m_ppaiTraitPlanetYieldChange[i]);
+		}
+		SAFE_DELETE_ARRAY(m_ppaiTraitPlanetYieldChange);
+	}
+//End of Final Frontier
 
 	if (m_ppaiBonusYieldModifier != NULL)
 	{
@@ -7155,6 +7491,28 @@ int CvBuildingInfo::getEspionageDefenseModifier() const
 	return m_iEspionageDefenseModifier;
 }
 
+//Added in Final Frontier SDK: TC01
+int CvBuildingInfo::getCostModIncrease() const
+{
+	return m_iCostModIncrease;
+}
+
+void CvBuildingInfo::setCostModIncrease(int iNewType)
+{
+	m_iCostModIncrease = iNewType;
+}
+
+int CvBuildingInfo::getPlanetPopCapIncrease() const
+{
+	return m_iPlanetPopCapIncrease;
+}
+
+int CvBuildingInfo::getSingleRingBuildingLocation() const
+{
+	return m_iSingleRingBuildingLocation;
+}
+//End of Final Frontier SDK
+
 int CvBuildingInfo::getMissionType() const
 {
 	return m_iMissionType;
@@ -7292,6 +7650,23 @@ bool CvBuildingInfo::isAllowsNukes() const
 	return m_bAllowsNukes;
 }
 
+//Added in Final Frontier SDK: TC01
+bool CvBuildingInfo::isOnePerSystem() const
+{
+	return m_bOnePerSystem;
+}
+
+bool CvBuildingInfo::isMoon() const
+{
+	return m_bMoon;
+}
+
+bool CvBuildingInfo::isRings() const
+{
+	return m_bRings;
+}
+//End of Final Frontier SDK
+
 const TCHAR* CvBuildingInfo::getConstructSound() const
 {
 	return m_szConstructSound;
@@ -7321,6 +7696,18 @@ void CvBuildingInfo::setMovieDefineTag(const TCHAR* szVal)
 {
 	m_szMovieDefineTag = szVal;
 }
+
+//Added in Final Frontier Plus: TC01
+const TCHAR* CvBuildingInfo::getSystemArtTag() const
+{
+	return m_szSystemArtTag;
+}
+
+void CvBuildingInfo::setSystemArtTag(const TCHAR* szVal)
+{
+	m_szSystemArtTag = szVal;
+}
+//End of Final Frontier Plus
 
 // Arrays
 
@@ -7625,6 +8012,20 @@ int CvBuildingInfo::getImprovementFreeSpecialist(int i) const
 	return m_piImprovementFreeSpecialist ? m_piImprovementFreeSpecialist[i] : -1;
 }
 
+//Added in Final Frontier SDK: TC01
+int CvBuildingInfo::getPlanetYieldChanges(int i) const
+{
+	FAssertMsg(i < NUM_YIELD_TYPES, "Index out of bounds");
+	FAssertMsg(i > -1, "Index out of bounds");
+	return m_piPlanetYieldChanges ? m_piPlanetYieldChanges[i] : -1;
+}
+
+int* CvBuildingInfo::getPlanetYieldChangesArray() const
+{
+	return m_piPlanetYieldChanges;
+}
+//End of Final Frontier SDK
+
 bool CvBuildingInfo::isCommerceFlexible(int i) const
 {
 	FAssertMsg(i < NUM_COMMERCE_TYPES, "Index out of bounds");
@@ -7645,6 +8046,15 @@ bool CvBuildingInfo::isBuildingClassNeededInCity(int i) const
 	FAssertMsg(i > -1, "Index out of bounds");
 	return m_pbBuildingClassNeededInCity ? m_pbBuildingClassNeededInCity[i] : false;
 }
+
+//Added in Final Frontier SDK: TC01
+bool CvBuildingInfo::isBuildingClassNeededOnPlanet(int i) const
+{
+	FAssertMsg(i < GC.getNumBuildingClassInfos(), "Index out of bounds");
+	FAssertMsg(i > -1, "Index out of bounds");
+	return m_pbBuildingClassNeededOnPlanet ? m_pbBuildingClassNeededOnPlanet[i] : false;
+}
+//End of Final Frontier
 
 int CvBuildingInfo::getSpecialistYieldChange(int i, int j) const
 {
@@ -7679,6 +8089,24 @@ bool CvBuildingInfo::isAnyBonusYieldModifier() const
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
+
+//Added in Final Frontier: TC01
+int CvBuildingInfo::getTraitPlanetYieldChange(int i, int j) const
+{
+	FAssertMsg(i < GC.getNumTraitInfos(), "Index out of bounds");
+	FAssertMsg(i > -1, "Index out of bounds");
+	FAssertMsg(j < NUM_YIELD_TYPES, "Index out of bounds");
+	FAssertMsg(j > -1, "Index out of bounds");
+	return m_ppaiTraitPlanetYieldChange ? m_ppaiTraitPlanetYieldChange[i][j] : -1;
+}
+
+int* CvBuildingInfo::getTraitPlanetYieldChangeArray(int i) const
+{
+	FAssertMsg(i < GC.getNumTraitInfos(), "Index out of bounds");
+	FAssertMsg(i > -1, "Index out of bounds");
+	return m_ppaiTraitPlanetYieldChange[i];
+}
+//End of Final Frontier
 
 int CvBuildingInfo::getBonusYieldModifier(int i, int j) const
 {
@@ -7841,6 +8269,11 @@ void CvBuildingInfo::read(FDataStreamBase* stream)
 	stream->Read(&m_iEspionageDefenseModifier);
 	stream->Read(&m_iMissionType);
 	stream->Read(&m_iVoteSourceType);
+//Added in Final Frontier SDK: TC01
+	stream->Read(&m_iCostModIncrease);
+	stream->Read(&m_iPlanetPopCapIncrease);
+	stream->Read(&m_iSingleRingBuildingLocation);
+//End of Final Frontier
 
 	stream->Read(&m_fVisibilityPriority);
 
@@ -7866,10 +8299,16 @@ void CvBuildingInfo::read(FDataStreamBase* stream)
 	stream->Read(&m_bCenterInCity);
 	stream->Read(&m_bStateReligion);
 	stream->Read(&m_bAllowsNukes);
+//Added in Final Frontier SDK: TC01
+	stream->Read(&m_bOnePerSystem);
+	stream->Read(&m_bMoon);
+	stream->Read(&m_bRings);
+//End of Final Frontier
 
 	stream->ReadString(m_szConstructSound);
 	stream->ReadString(m_szArtDefineTag);
 	stream->ReadString(m_szMovieDefineTag);
+	stream->ReadString(m_szSystemArtTag);	//Added in Final Frontier SDK: TC01
 
 	SAFE_DELETE_ARRAY(m_piPrereqAndTechs);
 	m_piPrereqAndTechs = new int[GC.getNUM_BUILDING_AND_TECH_PREREQS()];
@@ -8003,6 +8442,12 @@ void CvBuildingInfo::read(FDataStreamBase* stream)
 	m_piImprovementFreeSpecialist = new int[GC.getNumImprovementInfos()];
 	stream->Read(GC.getNumImprovementInfos(), m_piImprovementFreeSpecialist);
 
+//Added in Final Frontier SDK: TC01
+	SAFE_DELETE_ARRAY(m_piPlanetYieldChanges);
+	m_piPlanetYieldChanges = new int[NUM_YIELD_TYPES];
+	stream->Read(NUM_YIELD_TYPES, m_piPlanetYieldChanges);
+//End of Final Frontier SDK: TC01
+
 	SAFE_DELETE_ARRAY(m_pbCommerceFlexible);
 	m_pbCommerceFlexible = new bool[NUM_COMMERCE_TYPES];
 	stream->Read(NUM_COMMERCE_TYPES, m_pbCommerceFlexible);
@@ -8014,6 +8459,12 @@ void CvBuildingInfo::read(FDataStreamBase* stream)
 	SAFE_DELETE_ARRAY(m_pbBuildingClassNeededInCity);
 	m_pbBuildingClassNeededInCity = new bool[GC.getNumBuildingClassInfos()];
 	stream->Read(GC.getNumBuildingClassInfos(), m_pbBuildingClassNeededInCity);
+
+//Added in Final Frontier SDK: TC01
+	SAFE_DELETE_ARRAY(m_pbBuildingClassNeededOnPlanet);
+	m_pbBuildingClassNeededOnPlanet = new bool[GC.getNumBuildingClassInfos()];
+	stream->Read(GC.getNumBuildingClassInfos(), m_pbBuildingClassNeededOnPlanet);
+//End of Final Frontier SDK
 
 	int i;
 	if (m_ppaiSpecialistYieldChange != NULL)
@@ -8052,6 +8503,24 @@ void CvBuildingInfo::read(FDataStreamBase* stream)
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
+
+//Added in Final Frontier: TC01
+	if (m_ppaiTraitPlanetYieldChange != NULL)
+	{
+		for(i=0;i<GC.getNumTraitInfos();i++)
+		{
+			SAFE_DELETE_ARRAY(m_ppaiTraitPlanetYieldChange[i]);
+		}
+		SAFE_DELETE_ARRAY(m_ppaiTraitPlanetYieldChange);
+	}
+
+	m_ppaiTraitPlanetYieldChange = new int*[GC.getNumTraitInfos()];
+	for(i=0;i<GC.getNumSpecialistInfos();i++)
+	{
+		m_ppaiTraitPlanetYieldChange[i]  = new int[NUM_YIELD_TYPES];
+		stream->Read(NUM_YIELD_TYPES, m_ppaiTraitPlanetYieldChange[i]);
+	}
+//End of Final Frontier
 
 	if (m_ppaiBonusYieldModifier != NULL)
 	{
@@ -8189,6 +8658,11 @@ void CvBuildingInfo::write(FDataStreamBase* stream)
 	stream->Write(m_iEspionageDefenseModifier);
 	stream->Write(m_iMissionType);
 	stream->Write(m_iVoteSourceType);
+//Added in Final Frontier SDK: TC01
+	stream->Write(m_iCostModIncrease);
+	stream->Write(m_iPlanetPopCapIncrease);
+	stream->Write(m_iSingleRingBuildingLocation);
+//End of Final Frontier
 
 	stream->Write(m_fVisibilityPriority);
 
@@ -8214,10 +8688,16 @@ void CvBuildingInfo::write(FDataStreamBase* stream)
 	stream->Write(m_bCenterInCity);
 	stream->Write(m_bStateReligion);
 	stream->Write(m_bAllowsNukes);
+//Added in Final Frontier SDK: TC01
+	stream->Write(m_bOnePerSystem);
+	stream->Write(m_bMoon);
+	stream->Write(m_bRings);
+//End of Final Frontier
 
 	stream->WriteString(m_szConstructSound);
 	stream->WriteString(m_szArtDefineTag);
 	stream->WriteString(m_szMovieDefineTag);
+	stream->WriteString(m_szSystemArtTag);			//Added in Final Frontier SDK: TC01
 
 	stream->Write(GC.getNUM_BUILDING_AND_TECH_PREREQS(), m_piPrereqAndTechs);
 	stream->Write(GC.getNUM_BUILDING_PREREQ_OR_BONUSES(), m_piPrereqOrBonuses);
@@ -8252,16 +8732,25 @@ void CvBuildingInfo::write(FDataStreamBase* stream)
 	stream->Write(GC.getNumBuildingClassInfos(), m_piPrereqNumOfBuildingClass);
 	stream->Write(GC.getNumFlavorTypes(), m_piFlavorValue);
 	stream->Write(GC.getNumImprovementInfos(), m_piImprovementFreeSpecialist);
+	stream->Write(NUM_YIELD_TYPES, m_piPlanetYieldChanges);			//Added in Final Frontier SDK: TC01
 
 	stream->Write(NUM_COMMERCE_TYPES, m_pbCommerceFlexible);
 	stream->Write(NUM_COMMERCE_TYPES, m_pbCommerceChangeOriginalOwner);
 	stream->Write(GC.getNumBuildingClassInfos(), m_pbBuildingClassNeededInCity);
+	stream->Write(GC.getNumBuildingClassInfos(), m_pbBuildingClassNeededOnPlanet);	//Added in Final Frontier SDK: TC01
 
 	int i;
 	for(i=0;i<GC.getNumSpecialistInfos();i++)
 	{
 		stream->Write(NUM_YIELD_TYPES, m_ppaiSpecialistYieldChange[i]);
 	}
+
+//Added in Final Frontier: TC01
+	for(i=0;i<GC.getNumTraitInfos();i++)
+	{
+		stream->Write(NUM_YIELD_TYPES, m_ppaiTraitPlanetYieldChange[i]);
+	}
+//End of Final Frontier
 
 	for(i=0;i<GC.getNumBonusInfos();i++)
 	{
@@ -8528,6 +9017,14 @@ bool CvBuildingInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_iAssetValue, "iAsset");
 	pXML->GetChildXmlValByName(&m_iPowerValue, "iPower");
 	pXML->GetChildXmlValByName(&m_fVisibilityPriority, "fVisibilityPriority");
+//Added in Final Frontier SDK: TC01
+	pXML->GetChildXmlValByName(&m_bOnePerSystem, "bOnePerSystem");
+	pXML->GetChildXmlValByName(&m_bMoon, "bMoon");
+	pXML->GetChildXmlValByName(&m_bRings, "bRings");
+	pXML->GetChildXmlValByName(&m_iCostModIncrease, "iCostModIncrease");
+	pXML->GetChildXmlValByName(&m_iPlanetPopCapIncrease, "iPlanetPopCapIncrease");
+	pXML->GetChildXmlValByName(&m_iSingleRingBuildingLocation, "iSingleRingBuildingLocation", -1);
+//End of Final Frontier SDK
 
 	// if we can set the current xml node to it's next sibling
 	if (gDLL->getXMLIFace()->SetToChildByTagName(pXML->GetXML(),"SeaPlotYieldChanges"))
@@ -8733,6 +9230,11 @@ bool CvBuildingInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(szTextVal, "ConstructSound");
 	setConstructSound(szTextVal);
 
+//Added in Final Frontier SDK: TC01
+	pXML->GetChildXmlValByName(szTextVal, "SystemArtTag");
+	setSystemArtTag(szTextVal);
+//End of Final Frontier SDK
+
 	pXML->SetVariableListTagPair(&m_piBonusHealthChanges, "BonusHealthChanges", sizeof(GC.getBonusInfo((BonusTypes)0)), GC.getNumBonusInfos());
 	pXML->SetVariableListTagPair(&m_piBonusHappinessChanges, "BonusHappinessChanges", sizeof(GC.getBonusInfo((BonusTypes)0)), GC.getNumBonusInfos());
 	pXML->SetVariableListTagPair(&m_piBonusProductionModifier, "BonusProductionModifiers", sizeof(GC.getBonusInfo((BonusTypes)0)), GC.getNumBonusInfos());
@@ -8744,6 +9246,8 @@ bool CvBuildingInfo::read(CvXMLLoadUtility* pXML)
 
 	pXML->SetVariableListTagPair(&m_piPrereqNumOfBuildingClass, "PrereqBuildingClasses", sizeof(GC.getBuildingClassInfo((BuildingClassTypes)0)), GC.getNumBuildingClassInfos());
 	pXML->SetVariableListTagPair(&m_pbBuildingClassNeededInCity, "BuildingClassNeededs", sizeof(GC.getBuildingClassInfo((BuildingClassTypes)0)), GC.getNumBuildingClassInfos());
+	pXML->SetVariableListTagPair(&m_pbBuildingClassNeededOnPlanet, "PlanetBuildingClassNeededs", sizeof(GC.getBuildingClassInfo((BuildingClassTypes)0)), GC.getNumBuildingClassInfos());
+					//Added in Final Frontier SDK: TC01	^ above line only
 
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                       06/27/10                    Afforess & jdog5000       */
@@ -8803,6 +9307,50 @@ bool CvBuildingInfo::read(CvXMLLoadUtility* pXML)
 		// set the current xml node to it's parent node
 		gDLL->getXMLIFace()->SetToParent(pXML->GetXML());
 	}
+
+//Added in Final Frontier: TC01
+	pXML->Init2DIntList(&m_ppaiTraitPlanetYieldChange, GC.getNumTraitInfos(), NUM_YIELD_TYPES);
+	if (gDLL->getXMLIFace()->SetToChildByTagName(pXML->GetXML(),"TraitPlanetYieldChanges"))
+	{
+		iNumChildren = gDLL->getXMLIFace()->GetNumChildren(pXML->GetXML());
+
+		if (gDLL->getXMLIFace()->SetToChildByTagName(pXML->GetXML(),"TraitPlanetYieldChange"))
+		{
+			for(j=0;j<iNumChildren;j++)
+			{
+				pXML->GetChildXmlValByName(szTextVal, "TraitType");
+				k = pXML->FindInInfoClass(szTextVal);
+				if (k > -1)
+				{
+					// delete the array since it will be reallocated
+					SAFE_DELETE_ARRAY(m_ppaiTraitPlanetYieldChange[k]);
+					if (gDLL->getXMLIFace()->SetToChildByTagName(pXML->GetXML(),"PlanetYieldChanges"))
+					{
+						// call the function that sets the yield change variable
+						pXML->SetYields(&m_ppaiTraitPlanetYieldChange[k]);
+						gDLL->getXMLIFace()->SetToParent(pXML->GetXML());
+					}
+					else
+					{
+						pXML->InitList(&m_ppaiTraitPlanetYieldChange[k], NUM_YIELD_TYPES);
+					}
+				}
+
+				if (!gDLL->getXMLIFace()->NextSibling(pXML->GetXML()))
+				{
+					break;
+				}
+			}
+
+			// set the current xml node to it's parent node
+			gDLL->getXMLIFace()->SetToParent(pXML->GetXML());
+		}
+
+		// set the current xml node to it's parent node
+		gDLL->getXMLIFace()->SetToParent(pXML->GetXML());
+	}
+//End of Final Frontier
+
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
@@ -8869,6 +9417,18 @@ bool CvBuildingInfo::read(CvXMLLoadUtility* pXML)
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
+
+//Added in Final Frontier SDK: TC01
+	if (gDLL->getXMLIFace()->SetToChildByTagName(pXML->GetXML(),"PlanetYieldChanges"))
+	{
+		pXML->SetYields(&m_piPlanetYieldChanges);
+		gDLL->getXMLIFace()->SetToParent(pXML->GetXML());
+	}
+	else
+	{
+		pXML->InitList(&m_piPlanetYieldChanges, NUM_YIELD_TYPES);
+	}
+//End of Final Frontier SDK
 
 	pXML->SetVariableListTagPair(&m_piFlavorValue, "Flavors", GC.getFlavorTypes(), GC.getNumFlavorTypes());
 	pXML->SetVariableListTagPair(&m_piImprovementFreeSpecialist, "ImprovementFreeSpecialists", sizeof(GC.getImprovementInfo((ImprovementTypes)0)), GC.getNumImprovementInfos());
@@ -9339,6 +9899,7 @@ m_iActionSoundScriptId(0),
 m_iDerivativeCiv(NO_CIVILIZATION),
 m_bPlayable(false),
 m_bAIPlayable(false),
+m_bAlien(false),				//Added in Final Frontier SDK: TC01
 m_piCivilizationBuildings(NULL),
 m_piCivilizationUnits(NULL),
 m_piCivilizationFreeUnitsClass(NULL),
@@ -9423,6 +9984,13 @@ bool CvCivilizationInfo::isPlayable() const
 {
 	return m_bPlayable;
 }
+
+//Added in Final Frontier SDK: TC01
+bool CvCivilizationInfo::isAlien() const
+{
+	return m_bAlien;
+}
+//End of Final Frontier SDK
 
 const wchar* CvCivilizationInfo::getShortDescription(uint uiForm)
 {
@@ -9572,6 +10140,7 @@ void CvCivilizationInfo::read(FDataStreamBase* stream)
 
 	stream->Read(&m_bAIPlayable);
 	stream->Read(&m_bPlayable);
+	stream->Read(&m_bAlien);			//Added in Final Frontier SDK: TC01
 
 	stream->ReadString(m_szArtDefineTag);
 	stream->ReadString(m_szShortDescriptionKey);
@@ -9634,6 +10203,7 @@ void CvCivilizationInfo::write(FDataStreamBase* stream)
 
 	stream->Write(m_bAIPlayable);
 	stream->Write(m_bPlayable);
+	stream->Write(m_bAlien);			//Added in Final Frontier SDK: TC01
 
 	stream->WriteString(m_szArtDefineTag);
 	stream->WriteString(m_szShortDescriptionKey);
@@ -9690,6 +10260,7 @@ bool CvCivilizationInfo::read(CvXMLLoadUtility* pXML)
 	// set the current xml node to it's next sibling and then
 	pXML->GetChildXmlValByName(&m_bPlayable, "bPlayable");
 	pXML->GetChildXmlValByName(&m_bAIPlayable, "bAIPlayable");
+	pXML->GetChildXmlValByName(&m_bAlien, "bAlien");			//Added in Final Frontier SDK: TC01
 
 	if (gDLL->getXMLIFace()->SetToChildByTagName(pXML->GetXML(),"Cities"))
 	{
@@ -11049,6 +11620,7 @@ m_iRoute(NO_ROUTE),
 m_iEntityEvent(ENTITY_EVENT_NONE),
 m_iMissionType(NO_MISSION),
 m_bKill(false),
+m_bStarbase(false),				//Added in Final Frontier SDK: TC01
 m_paiFeatureTech(NULL),
 m_paiFeatureTime(NULL),
 m_paiFeatureProduction(NULL),
@@ -11116,6 +11688,13 @@ bool CvBuildInfo::isKill() const
 	return m_bKill;
 }
 
+//Added in Final Frontier SDK: TC01
+bool CvBuildInfo::isStarbase() const
+{
+	return m_bStarbase;
+}
+//End of Final Frontier SDK
+
 // Arrays
 
 int CvBuildInfo::getFeatureTech(int i) const
@@ -11160,6 +11739,7 @@ bool CvBuildInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_iTime, "iTime");
 	pXML->GetChildXmlValByName(&m_iCost, "iCost");
 	pXML->GetChildXmlValByName(&m_bKill, "bKill");
+	pXML->GetChildXmlValByName(&m_bStarbase, "bStarbase");		//Added in Final Frontier SDK: TC01
 
 	pXML->GetChildXmlValByName(szTextVal, "ImprovementType");
 	m_iImprovement = pXML->FindInInfoClass(szTextVal);
@@ -11198,8 +11778,11 @@ m_iBarbarianUnitProb(0),
 m_iMinBarbarians(0),			
 m_iUnitClassType(NO_UNITCLASS),
 m_iBarbarianUnitClass(NO_UNITCLASS),
+m_iRequiredImprovement(NO_IMPROVEMENT),		//Added in Final Frontier SDK: TC01
 m_bTech(false),
-m_bBad(false)
+m_bBad(false),
+m_bDamageUnit(false),				//Added in Final Frontier SDK: TC01
+m_bNewCiv(false)				//Added in Final Frontier SDK: TC01
 {
 }
 
@@ -11279,6 +11862,13 @@ int CvGoodyInfo::getBarbarianUnitClass() const
 	return m_iBarbarianUnitClass;
 }
 
+//Added in Final Frontier SDK: TC01
+int CvGoodyInfo::getRequiredImprovement() const
+{
+	return m_iRequiredImprovement;
+}
+//End of Final Frontier SDK
+
 bool CvGoodyInfo::isTech() const
 {
 	return m_bTech;
@@ -11288,6 +11878,18 @@ bool CvGoodyInfo::isBad() const
 {
 	return m_bBad;
 }
+
+//Added in Final Frontier SDK: TC01
+bool CvGoodyInfo::isDamageUnit() const
+{
+	return m_bDamageUnit;
+}
+
+bool CvGoodyInfo::isNewCiv() const
+{
+	return m_bNewCiv;
+}
+//End of Final Frontier SDK
 
 const TCHAR* CvGoodyInfo::getSound() const	
 {
@@ -11321,6 +11923,8 @@ bool CvGoodyInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_iDamagePrereq, "iDamagePrereq");
 	pXML->GetChildXmlValByName(&m_bTech, "bTech");
 	pXML->GetChildXmlValByName(&m_bBad, "bBad");
+	pXML->GetChildXmlValByName(&m_bDamageUnit, "bDamageUnit");		//Added in Final Frontier SDK: TC01
+	pXML->GetChildXmlValByName(&m_bNewCiv, "bNewCiv");		//Added in Final Frontier SDK: TC01
 
 	pXML->GetChildXmlValByName(szTextVal, "UnitClass");
 	m_iUnitClassType = pXML->FindInInfoClass(szTextVal);
@@ -11328,11 +11932,37 @@ bool CvGoodyInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(szTextVal, "BarbarianClass");
 	m_iBarbarianUnitClass = pXML->FindInInfoClass(szTextVal);
 
+//Added in Final Frontier SDK: TC01
+	pXML->GetChildXmlValByName(szTextVal, "RequiredImprovement");
+	m_aszExtraXMLforPass3.push_back(szTextVal);
+//End of Final Frontier SDK
+
 	pXML->GetChildXmlValByName(&m_iBarbarianUnitProb, "iBarbarianUnitProb");
 	pXML->GetChildXmlValByName(&m_iMinBarbarians, "iMinBarbarians");
 
 	return true;
 }
+
+//Added in Final Frontier SDK: TC01
+bool CvGoodyInfo::readPass3()
+{
+	if (m_aszExtraXMLforPass3.size() < 1)
+	{
+		FAssert(false);
+		return false;
+	}
+
+	/*The bug:
+		GC.getInfoTypeForString() is returning exceptions, probably because the extra XML isn't formatted properly or something. Not sure why or what,
+		but at least I know where.
+	*/
+
+	m_iRequiredImprovement = GC.getInfoTypeForString(m_aszExtraXMLforPass3[0]);
+	m_aszExtraXMLforPass3.clear();
+
+	return true;
+}
+//End of Final Frontier SDK
 
 //======================================================================================================
 //					CvRouteInfo
@@ -11602,6 +12232,7 @@ m_iHappiness(0),
 m_iPillageGold(0),
 m_iImprovementPillage(NO_IMPROVEMENT),
 m_iImprovementUpgrade(NO_IMPROVEMENT),
+m_iUnitClassBuilt(NO_UNITCLASS),		//Added in Final Frontier SDK: TC01
 m_bActsAsCity(true),				
 m_bHillsMakesValid(false),				
 m_bFreshWaterMakesValid(false),	
@@ -11747,6 +12378,18 @@ void CvImprovementInfo::setImprovementUpgrade(int i)
 {
 	m_iImprovementUpgrade = i; 
 }
+
+//Added in Final Frontier SDK: TC01
+int CvImprovementInfo::getUnitClassBuilt() const
+{
+	return m_iUnitClassBuilt;
+}
+
+void CvImprovementInfo::setUnitClassBuilt(int i)
+{
+	m_iUnitClassBuilt = i;
+}
+//End of Final Frontier SDK
 
 bool CvImprovementInfo::isActsAsCity() const
 {
@@ -12007,6 +12650,7 @@ void CvImprovementInfo::read(FDataStreamBase* stream)
 	stream->Read(&m_iPillageGold);
 	stream->Read(&m_iImprovementPillage);
 	stream->Read(&m_iImprovementUpgrade);
+	stream->Read(&m_iUnitClassBuilt);		//Added in Final Frontier SDK: TC01
 
 	stream->Read(&m_bActsAsCity);				
 	stream->Read(&m_bHillsMakesValid);				
@@ -12118,6 +12762,7 @@ void CvImprovementInfo::write(FDataStreamBase* stream)
 	stream->Write(m_iPillageGold);
 	stream->Write(m_iImprovementPillage);
 	stream->Write(m_iImprovementUpgrade);
+	stream->Write(m_iUnitClassBuilt);			//Added in Final Frontier SDK: TC01
 
 	stream->Write(m_bActsAsCity);				
 	stream->Write(m_bHillsMakesValid);				
@@ -12176,6 +12821,11 @@ bool CvImprovementInfo::read(CvXMLLoadUtility* pXML)
 
 	pXML->GetChildXmlValByName(szTextVal, "ArtDefineTag");
 	setArtDefineTag(szTextVal);
+
+//Added in Final Frontier SDK: TC01
+	pXML->GetChildXmlValByName(szTextVal, "UnitClassBuilt");
+	m_iUnitClassBuilt = pXML->FindInInfoClass(szTextVal);
+//End of Final Frontier SDK
 
 	if (gDLL->getXMLIFace()->SetToChildByTagName(pXML->GetXML(),"PrereqNatureYields"))
 	{
@@ -12924,6 +13574,7 @@ m_iDefenseModifier(0),
 m_iAdvancedStartRemoveCost(0),
 m_iTurnDamage(0),
 m_iWarmingDefense(0), //GWMod new xml field M.A.
+m_iMovePathExtraCost(0),		//Added in Final Frontier SDK: TC01
 m_bNoCoast(false),				
 m_bNoRiver(false),					
 m_bNoAdjacent(false),			
@@ -12935,6 +13586,13 @@ m_bNoCity(false),
 m_bNoImprovement(false),	
 m_bVisibleAlways(false),	
 m_bNukeImmune(false),	
+m_bNoBarbarianSpawn(false),		//Added in Final Frontier SDK: TC01
+//Start: FeatureEffects - Kaspar
+m_iGravityFieldForce(0),
+m_iBlackHoleInArea(0),
+m_iBlackHoleFeatureType(NO_FEATURE),
+m_iTargetWormholeType(NO_FEATURE),
+//End
 m_iWorldSoundscapeScriptId(0),
 m_iEffectProbability(0),
 m_piYieldChange(NULL),
@@ -13011,6 +13669,13 @@ int CvFeatureInfo::getWarmingDefense() const			//GWMod new xml field M.A.
 	return m_iWarmingDefense; 
 }
 
+//Added in Final Frontier SDK: TC01
+int CvFeatureInfo::getExtraMovePathCost() const
+{
+	return m_iMovePathExtraCost;
+}
+//End of Final Frontier SDK
+
 bool CvFeatureInfo::isNoCoast() const	
 {
 	return m_bNoCoast; 
@@ -13065,6 +13730,31 @@ bool CvFeatureInfo::isNukeImmune() const
 {
 	return m_bNukeImmune; 
 }
+
+//Added in Final Frontier SDK: TC01
+bool CvFeatureInfo::isNoBarbarianSpawn() const
+{
+	return m_bNoBarbarianSpawn;
+}
+//End of Final Frontier SDK
+//Start: FeatureEffects - Kaspar
+int CvFeatureInfo::getGravityFieldForce() const
+{
+	return m_iGravityFieldForce;
+}
+int CvFeatureInfo::getBlackHoleInArea() const
+{
+	return m_iBlackHoleInArea;
+}
+int CvFeatureInfo::getBlackHoleFeatureType() const
+{
+	return m_iBlackHoleFeatureType;
+}
+int CvFeatureInfo::getTargetWormholeType() const
+{
+	return m_iTargetWormholeType;
+}
+//End
 
 const TCHAR* CvFeatureInfo::getOnUnitChangeTo() const
 {
@@ -13208,6 +13898,7 @@ bool CvFeatureInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_iAppearanceProbability, "iAppearance");
 	pXML->GetChildXmlValByName(&m_iDisappearanceProbability, "iDisappearance");
 	pXML->GetChildXmlValByName(&m_iGrowthProbability, "iGrowth");
+	pXML->GetChildXmlValByName(&m_iMovePathExtraCost, "iMovePathExtraCost");
 	pXML->GetChildXmlValByName(&m_bNoCoast, "bNoCoast");
 	pXML->GetChildXmlValByName(&m_bNoRiver, "bNoRiver");
 	pXML->GetChildXmlValByName(&m_bNoAdjacent, "bNoAdjacent");
@@ -13219,6 +13910,12 @@ bool CvFeatureInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_bNoImprovement, "bNoImprovement");
 	pXML->GetChildXmlValByName(&m_bVisibleAlways, "bVisibleAlways");
 	pXML->GetChildXmlValByName(&m_bNukeImmune, "bNukeImmune");
+	pXML->GetChildXmlValByName(&m_bNoBarbarianSpawn, "bNoBarbarianSpawn");		//Added in Final Frontier SDK: TC01
+//Start: FeatureEffects - Kaspar
+	pXML->GetChildXmlValByName(&m_iGravityFieldForce, "iGravityFieldForce");
+	pXML->GetChildXmlValByName(&m_iBlackHoleInArea, "iBlackHoleInArea");
+//	CvWString szFeatureDamageText;
+//End
 	pXML->GetChildXmlValByName(m_szOnUnitChangeTo, "OnUnitChangeTo");
 
 	pXML->SetVariableListTagPairForAudioScripts(&m_pi3DAudioScriptFootstepIndex, "FootstepSounds", GC.getFootstepAudioTypes(), GC.getNumFootstepAudioTypes());
@@ -13240,6 +13937,21 @@ bool CvFeatureInfo::read(CvXMLLoadUtility* pXML)
 
 	return true;
 }
+//Start: FeatureEffects - Kaspar
+bool CvFeatureInfo::readPass2(CvXMLLoadUtility* pXML)
+{
+	CvString szTextVal;
+	
+	pXML->GetChildXmlValByName(szTextVal, "BlackHoleFeatureType");
+	m_iBlackHoleFeatureType = GC.getInfoTypeForString(szTextVal);
+
+
+	pXML->GetChildXmlValByName(szTextVal,"TargetWormholeType");
+	m_iTargetWormholeType = GC.getInfoTypeForString(szTextVal);
+
+	return true;
+}
+//End
 
 //======================================================================================================
 //					CvCommerceInfo
@@ -13518,6 +14230,7 @@ m_bImpassable(false),
 m_bFound(false),
 m_bFoundCoast(false),
 m_bFoundFreshWater(false),
+m_bFoundFeature(false),				//Added in Final Frontier SDK: TC01
 m_iWorldSoundscapeScriptId(0),
 m_piYields(NULL),
 m_piRiverYieldChange(NULL),
@@ -13590,6 +14303,13 @@ bool CvTerrainInfo::isFoundFreshWater() const
 {
 	return m_bFoundFreshWater; 
 }
+
+//Added in Final Frontier SDK: TC01
+bool CvTerrainInfo::isFoundFeature() const
+{
+	return m_bFoundFeature;
+}
+//End of Final Frontier SD
 
 const TCHAR* CvTerrainInfo::getArtDefineTag() const
 {
@@ -13682,6 +14402,7 @@ bool CvTerrainInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_bFound, "bFound");
 	pXML->GetChildXmlValByName(&m_bFoundCoast, "bFoundCoast");
 	pXML->GetChildXmlValByName(&m_bFoundFreshWater, "bFoundFreshWater");
+	pXML->GetChildXmlValByName(&m_bFoundFeature, "bFoundFeature");			//Added in Final Frontier SDK: TC01
 
 	pXML->GetChildXmlValByName(&m_iMovementCost, "iMovement");
 	pXML->GetChildXmlValByName(&m_iSeeFromLevel, "iSeeFrom");
@@ -13983,8 +14704,13 @@ m_iPermanentAllianceRefuseAttitudeThreshold(NO_ATTITUDE),
 m_iVassalRefuseAttitudeThreshold(NO_ATTITUDE),
 m_iVassalPowerModifier(0),
 m_iFreedomAppreciation(0),
-m_iFavoriteCivic(NO_CIVIC),
+// < Multiple Favorite Civics Start >
+//m_iFavoriteCivic(NO_CIVIC),
+// < Multiple Favorite Civics End   >
 m_iFavoriteReligion(NO_RELIGION),
+// < Multiple Favorite Civics Start >
+m_pbFavoriteCivics(NULL),
+// < Multiple Favorite Civics End   >
 m_pbTraits(NULL),
 m_piFlavorValue(NULL),
 m_piContactRand(NULL),
@@ -14010,6 +14736,9 @@ m_piDiploWarMusicScriptIds(NULL)
 //------------------------------------------------------------------------------------------------------
 CvLeaderHeadInfo::~CvLeaderHeadInfo()
 {
+	// < Multiple Favorite Civics Start >
+	SAFE_DELETE_ARRAY(m_pbFavoriteCivics);
+	// < Multiple Favorite Civics End   >
 	SAFE_DELETE_ARRAY(m_pbTraits);
 	SAFE_DELETE_ARRAY(m_piFlavorValue);
 	SAFE_DELETE_ARRAY(m_piContactRand);
@@ -14422,10 +15151,14 @@ int CvLeaderHeadInfo::getVassalPowerModifier() const
 	return m_iVassalPowerModifier; 
 }
 
+// < Multiple Favorite Civics Start >
+/*
 int CvLeaderHeadInfo::getFavoriteCivic() const
 {
 	return m_iFavoriteCivic; 
 }
+*/
+// < Multiple Favorite Civics End   >
 
 int CvLeaderHeadInfo::getFavoriteReligion() const
 {
@@ -14448,6 +15181,38 @@ void CvLeaderHeadInfo::setArtDefineTag(const TCHAR* szVal)
 }
 
 // Arrays
+// < Multiple Favorite Civics Start >
+bool CvLeaderHeadInfo::isHasFavoriteCivic() const
+{
+	for(int iI = 0; iI < GC.getNumCivicInfos(); iI++)
+	{
+		if(hasFavoriteCivic(iI))
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool CvLeaderHeadInfo::hasFavoriteCivic(int i) const
+{
+	FAssertMsg(i < GC.getNumCivicInfos(), "Index out of bounds");
+	FAssertMsg(i > -1, "Index out of bounds");
+	return m_pbFavoriteCivics ? m_pbFavoriteCivics[i] : false; 
+}
+
+void CvLeaderHeadInfo::setFavoriteCivic(int i, bool bNewValue)
+{
+	FAssertMsg(i < GC.getNumCivicInfos(), "Index out of bounds");
+	FAssertMsg(i > -1, "Index out of bounds");
+
+	if(m_pbFavoriteCivics)
+	{
+		m_pbFavoriteCivics[i] = bNewValue;
+	}
+}
+// < Multiple Favorite Civics End   >
 
 bool CvLeaderHeadInfo::hasTrait(int i) const
 {
@@ -14648,12 +15413,20 @@ void CvLeaderHeadInfo::read(FDataStreamBase* stream)
 	stream->Read(&m_iVassalRefuseAttitudeThreshold);
 	stream->Read(&m_iVassalPowerModifier);
 	stream->Read(&m_iFreedomAppreciation);
-	stream->Read(&m_iFavoriteCivic);
+	// < Multiple Favorite Civics Start >
+	//stream->Read(&m_iFavoriteCivic);
+	// < Multiple Favorite Civics End   >
 	stream->Read(&m_iFavoriteReligion);
 
 	stream->ReadString(m_szArtDefineTag);
 
 	// Arrays
+
+	// < Multiple Favorite Civics Start >
+	SAFE_DELETE_ARRAY(m_pbFavoriteCivics);
+	m_pbFavoriteCivics = new bool[GC.getNumCivicInfos()];
+	stream->Read(GC.getNumCivicInfos(), m_pbFavoriteCivics);
+	// < Multiple Favorite Civics End   >
 
 	SAFE_DELETE_ARRAY(m_pbTraits);
 	m_pbTraits = new bool[GC.getNumTraitInfos()];
@@ -14808,13 +15581,18 @@ void CvLeaderHeadInfo::write(FDataStreamBase* stream)
 	stream->Write(m_iVassalRefuseAttitudeThreshold);
 	stream->Write(m_iVassalPowerModifier);
 	stream->Write(m_iFreedomAppreciation);
-	stream->Write(m_iFavoriteCivic);
+	// < Multiple Favorite Civics Start >
+	//stream->Write(m_iFavoriteCivic);
+	// < Multiple Favorite Civics End   >
 	stream->Write(m_iFavoriteReligion);
 
 	stream->WriteString(m_szArtDefineTag);
 
 	// Arrays
 
+	// < Multiple Favorite Civics Start >
+	stream->Write(GC.getNumCivicInfos(), m_pbFavoriteCivics);
+	// < Multiple Favorite Civics End   >
 	stream->Write(GC.getNumTraitInfos(), m_pbTraits);
 
 	stream->Write(GC.getNumFlavorTypes(), m_piFlavorValue);
@@ -14967,12 +15745,17 @@ bool CvLeaderHeadInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(szTextVal, "VassalRefuseAttitudeThreshold");
 	m_iVassalRefuseAttitudeThreshold = pXML->FindInInfoClass( szTextVal);
 
-	pXML->GetChildXmlValByName(szTextVal, "FavoriteCivic");
-	m_iFavoriteCivic = pXML->FindInInfoClass(szTextVal);
+	// < Multiple Favorite Civics Start >
+	//pXML->GetChildXmlValByName(szTextVal, "FavoriteCivic");
+	//m_iFavoriteCivic = pXML->FindInInfoClass(szTextVal);
+	// < Multiple Favorite Civics End   >
 
 	pXML->GetChildXmlValByName(szTextVal, "FavoriteReligion");
 	m_iFavoriteReligion = pXML->FindInInfoClass(szTextVal);
 
+	// < Multiple Favorite Civics Start >
+	pXML->SetVariableListTagPair(&m_pbFavoriteCivics, "FavoriteCivics", sizeof(GC.getCivicInfo((CivicTypes)0)), GC.getNumCivicInfos());
+	// < Multiple Favorite Civics End   >
 	pXML->SetVariableListTagPair(&m_pbTraits, "Traits", sizeof(GC.getTraitInfo((TraitTypes)0)), GC.getNumTraitInfos());
 
 	pXML->SetVariableListTagPair(&m_piFlavorValue, "Flavors", GC.getFlavorTypes(), GC.getNumFlavorTypes());
@@ -16332,10 +17115,20 @@ m_iDomesticGreatGeneralRateModifier(0),
 m_iMaxGlobalBuildingProductionModifier(0),	
 m_iMaxTeamBuildingProductionModifier(0),		
 m_iMaxPlayerBuildingProductionModifier(0),
+//Added in Final Frontier SDK: TC01
+m_iFreePopulation(0),
+m_iNumBonusTradeRoutes(0),
+m_iStartingGoldMultiplier(1),
+m_iFreePlanetBuildingClass(NO_BUILDINGCLASS),
+//End of Final Frontier
 m_paiExtraYieldThreshold(NULL),
 m_paiTradeYieldModifier(NULL),
 m_paiCommerceChange(NULL),
 m_paiCommerceModifier(NULL),
+//Added in Final Frontier SDK: TC01
+m_piYieldChanges(NULL),	
+m_piTradeRouteYieldChanges(NULL),
+//End of Final Frontier
 m_pabFreePromotionUnitCombat(NULL),
 m_pabFreePromotion(NULL)
 {
@@ -16354,6 +17147,10 @@ CvTraitInfo::~CvTraitInfo()
 	SAFE_DELETE_ARRAY(m_paiTradeYieldModifier);
 	SAFE_DELETE_ARRAY(m_paiCommerceChange);
 	SAFE_DELETE_ARRAY(m_paiCommerceModifier);
+//Added in Final Frontier: TC01
+	SAFE_DELETE_ARRAY(m_piYieldChanges);
+	SAFE_DELETE_ARRAY(m_piTradeRouteYieldChanges);
+//End of Final Frontier
 	SAFE_DELETE_ARRAY(m_pabFreePromotionUnitCombat);
 	SAFE_DELETE_ARRAY(m_pabFreePromotion);
 }
@@ -16413,6 +17210,28 @@ int CvTraitInfo::getMaxPlayerBuildingProductionModifier() const
 	return m_iMaxPlayerBuildingProductionModifier; 
 }
 
+//Added in Final Frontier SDK: TC01
+int CvTraitInfo::getFreePopulation() const
+{
+	return m_iFreePopulation;
+}
+
+int CvTraitInfo::getNumBonusTradeRoutes() const
+{
+	return m_iNumBonusTradeRoutes;
+}
+
+int CvTraitInfo::getStartingGoldMultiplier() const
+{
+	return m_iStartingGoldMultiplier;
+}
+
+int CvTraitInfo::getFreePlanetBuildingClass() const
+{
+	return m_iFreePlanetBuildingClass;
+}
+//End of Final Frontier SDK
+
 const TCHAR* CvTraitInfo::getShortDescription() const
 {
 	return m_szShortDescription; 
@@ -16444,6 +17263,32 @@ int CvTraitInfo::getCommerceModifier(int i) const
 {
 	return m_paiCommerceModifier ? m_paiCommerceModifier[i] : -1; 
 }
+
+//Added in Final Frontier SDK: TC01
+int CvTraitInfo::getYieldChanges(int i) const
+{
+	FAssertMsg(i < NUM_YIELD_TYPES, "Index out of bounds");
+	FAssertMsg(i > -1, "Index out of bounds");
+	return m_piYieldChanges ? m_piYieldChanges[i] : -1;
+}
+
+int* CvTraitInfo::getYieldChangesArray() const
+{
+	return m_piYieldChanges;
+}
+
+int CvTraitInfo::getTradeRouteYieldChanges(int i) const
+{
+	FAssertMsg(i < NUM_YIELD_TYPES, "Index out of bounds");
+	FAssertMsg(i > -1, "Index out of bounds");
+	return m_piTradeRouteYieldChanges ? m_piTradeRouteYieldChanges[i] : -1;
+}
+
+int* CvTraitInfo::getTradeRouteYieldChangesArray() const
+{
+	return m_piTradeRouteYieldChanges;
+}
+//End of Final Frontier SDK
 
 int CvTraitInfo::isFreePromotion(int i) const
 {
@@ -16477,6 +17322,14 @@ bool CvTraitInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_iMaxGlobalBuildingProductionModifier, "iMaxGlobalBuildingProductionModifier");
 	pXML->GetChildXmlValByName(&m_iMaxTeamBuildingProductionModifier, "iMaxTeamBuildingProductionModifier");
 	pXML->GetChildXmlValByName(&m_iMaxPlayerBuildingProductionModifier, "iMaxPlayerBuildingProductionModifier");
+//Added in Final Frontier SDK: TC01
+	pXML->GetChildXmlValByName(&m_iFreePopulation, "iFreePopulation");
+	pXML->GetChildXmlValByName(&m_iNumBonusTradeRoutes, "iFreeTradeRoutes");
+	pXML->GetChildXmlValByName(&m_iStartingGoldMultiplier, "iStartingGoldMultiplier");
+
+	pXML->GetChildXmlValByName(szTextVal, "FreePlanetBuildingClass");
+	m_aszExtraXMLforPass3.push_back(szTextVal);
+//End of Final Frontier SDK
 
 	if (gDLL->getXMLIFace()->SetToChildByTagName(pXML->GetXML(), "ExtraYieldThresholds"))
 	{
@@ -16518,12 +17371,49 @@ bool CvTraitInfo::read(CvXMLLoadUtility* pXML)
 		pXML->InitList(&m_paiCommerceModifier, NUM_COMMERCE_TYPES);
 	}
 
+//Added in Final Frontier SDK: TC01
+	if (gDLL->getXMLIFace()->SetToChildByTagName(pXML->GetXML(),"YieldChanges"))
+	{
+		pXML->SetYields(&m_piYieldChanges);
+		gDLL->getXMLIFace()->SetToParent(pXML->GetXML());
+	}
+	else
+	{
+		pXML->InitList(&m_piYieldChanges, NUM_YIELD_TYPES);
+	}
+
+	if (gDLL->getXMLIFace()->SetToChildByTagName(pXML->GetXML(),"TradeRouteYieldChanges"))
+	{
+		pXML->SetYields(&m_piTradeRouteYieldChanges);
+		gDLL->getXMLIFace()->SetToParent(pXML->GetXML());
+	}
+	else
+	{
+		pXML->InitList(&m_piTradeRouteYieldChanges, NUM_YIELD_TYPES);
+	}
+//End of Final Frontier SDK
+
 	pXML->SetVariableListTagPair(&m_pabFreePromotion, "FreePromotions", sizeof(GC.getPromotionInfo((PromotionTypes)0)), GC.getNumPromotionInfos());
 
 	pXML->SetVariableListTagPair(&m_pabFreePromotionUnitCombat, "FreePromotionUnitCombats", sizeof(GC.getUnitCombatInfo((UnitCombatTypes)0)), GC.getNumUnitCombatInfos());
 
 	return true;
 }
+
+bool CvTraitInfo::readPass3()
+{
+	if (m_aszExtraXMLforPass3.size() < 1)
+	{
+		FAssert(false);
+		return false;
+	}
+
+	m_iFreePlanetBuildingClass = GC.getInfoTypeForString(m_aszExtraXMLforPass3[0]);
+	m_aszExtraXMLforPass3.clear();
+
+	return true;
+}
+
 
 //======================================================================================================
 //					CvCursorInfo
