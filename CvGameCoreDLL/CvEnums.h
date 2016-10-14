@@ -749,6 +749,19 @@ enum GameOptionTypes				// Exposed to Python
 	GAMEOPTION_NO_GOODY_HUTS,
 	GAMEOPTION_NO_EVENTS,
 	GAMEOPTION_NO_ESPIONAGE,
+//Added in Final Frontier SDK: TC01
+	GAMEOPTION_DELAYED_WORMHOLES,
+	GAMEOPTION_NO_ALIENS,
+	GAMEOPTION_NO_STARBASE_MISSILES,
+	GAMEOPTION_PIRATE_HORDES,
+	GAMEOPTION_NO_PIRATE_EXP_CAP,
+	//GAMEOPTION_CALC_TRADE_ROUTES, // DarkLunaPhantom - Unused, i.e. default behaviour enforced.
+	GAMEOPTION_TROOP_TRANSPORTS,
+	//GAMEOPTION_MULTIPLE_PRODUCTION,				//Multiple Production: Added by Denev 07/10/2009 // Replaced by K-Mod's implementation of multiple production.
+	//GAMEOPTION_PRODUCTIVE_PIRATE_CITIES, // DarkLunaPhantom - Unused, i.e. default behaviour enforced.
+	GAMEOPTION_REDUCED_PIRATES,			// FFP for v1.8
+	GAMEOPTION_NO_SPIES,				// FF+ for 1.9; if set, don't let bSpy units be built.
+//End of Final Frontier SDK
 
 #ifdef _USRDLL
 	NUM_GAMEOPTION_TYPES
@@ -1366,6 +1379,7 @@ enum ActivityTypes			// Exposed to Python
 	ACTIVITY_MISSION,
 	ACTIVITY_PATROL,
 	ACTIVITY_PLUNDER,
+	ACTIVITY_SENTRY_WHILE_HEAL,		//Added in Final Frontier Plus: TC01
 
 #ifdef _USRDLL
 	NUM_ACTIVITY_TYPES
@@ -1440,6 +1454,7 @@ enum MissionTypes				// Exposed to Python
 	MISSION_DAMAGE,
 	MISSION_MULTI_SELECT,
 	MISSION_MULTI_DESELECT,
+	MISSION_SENTRY_WHILE_HEAL,		//Added in Final Frontier Plus: TC01
 
 #ifdef _USRDLL
 	NUM_MISSION_TYPES
