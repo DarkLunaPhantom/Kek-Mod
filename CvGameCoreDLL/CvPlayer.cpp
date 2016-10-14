@@ -1520,6 +1520,19 @@ void CvPlayer::initFreeState()
 	setGold(0);
 	changeGold(GC.getHandicapInfo(getHandicapType()).getStartingGold());
 	changeGold(GC.getEraInfo(GC.getGameINLINE().getStartEra()).getStartingGold());
+//Added in Final Frontier SDK: TC01
+	for (int iTrait = 0; iTrait < GC.getNumTraitInfos(); iTrait++)
+	{
+		if (hasTrait((TraitTypes)iTrait))
+		{
+			CvTraitInfo &kTraitInfo = GC.getTraitInfo((TraitTypes)iTrait);
+			if (kTraitInfo.getStartingGoldMultiplier() >= 1)
+			{
+				setGold(getGold() * kTraitInfo.getStartingGoldMultiplier());
+			}
+		}
+	}
+//End of Final Frontier SDK
 
 	clearResearchQueue();
 }
@@ -2344,6 +2357,12 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 
 			if (eBuilding != NO_BUILDING)
 			{
+/*********************************************************************************************/
+//Changed in Final Frontier SDK: TC01
+//	Cities keep all buildings, removals only done in Python override
+//	This way, XML tags can be used for rmoval from different planets but not the entire city
+//	If this isn't done, DLL and Python will disagree over which buildings are in city
+/*	Old Code:
 				if (bTrade || !(GC.getBuildingInfo((BuildingTypes)iI).isNeverCapture()))
 				{
 					if (!isProductionMaxedBuildingClass(((BuildingClassTypes)(GC.getBuildingInfo(eBuilding).getBuildingClassType())), true))
@@ -2356,8 +2375,11 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 							}
 						}
 					}
-				}
-
+				}*/
+//New Code:
+				iNum += paiNumRealBuilding[iI];
+//End of Final Frontier SDK
+/*********************************************************************************************/
 				pNewCity->setNumRealBuildingTimed(eBuilding, std::min(pNewCity->getNumRealBuilding(eBuilding) + iNum, GC.getCITY_MAX_NUM_BUILDINGS()), false, ((PlayerTypes)(paiBuildingOriginalOwner[iI])), paiBuildingOriginalTime[iI]);
 
 			}
@@ -4597,9 +4619,19 @@ void CvPlayer::handleDiploEvent(DiploEventTypes eDiploEvent, PlayerTypes ePlayer
 			paeNewCivics[iI] = GET_PLAYER(ePlayer).getCivics((CivicOptionTypes)iI);
 		}
 
-		FAssertMsg(GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic() != NO_CIVIC, "getFavoriteCivic() must be valid");
+		// < Multiple Favorite Civics Start >
+		//FAssertMsg(GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic() != NO_CIVIC, "getFavoriteCivic() must be valid");
+		FAssertMsg(GC.getLeaderHeadInfo(getPersonalityType()).isHasFavoriteCivic(), "getFavoriteCivic() must be valid");
 
-		paeNewCivics[GC.getCivicInfo((CivicTypes)(GC.getLeaderHeadInfo(getPersonalityType())).getFavoriteCivic()).getCivicOptionType()] = ((CivicTypes)(GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic()));
+		for(iI = 0; iI < GC.getNumCivicInfos(); iI++)
+		{
+			if(GC.getLeaderHeadInfo(getPersonalityType()).hasFavoriteCivic(iI))
+			{
+				paeNewCivics[GC.getCivicInfo((CivicTypes)iI).getCivicOptionType()] = ((CivicTypes)(iI));
+			}
+		}
+		//paeNewCivics[GC.getCivicInfo((CivicTypes)(GC.getLeaderHeadInfo(getPersonalityType())).getFavoriteCivic()).getCivicOptionType()] = ((CivicTypes)(GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic()));
+		// < Multiple Favorite Civics End   >
 
 		GET_PLAYER(ePlayer).revolution(paeNewCivics, true);
 
@@ -5460,6 +5492,10 @@ void CvPlayer::findNewCapital()
 		}
 		FAssertMsg(!(pBestCity->getNumRealBuilding(eCapitalBuilding)), "(pBestCity->getNumRealBuilding(eCapitalBuilding)) did not return false as expected");
 		pBestCity->setNumRealBuilding(eCapitalBuilding, 1);
+		// DarkLunaPhantom FIXME - Is this necessary?
+//Added in Final Frontier SDK: TC01 (code from God-Emperor) to fix a bug with captured Capitals
+		//CvEventReporter::getInstance().buildingBuilt(pBestCity, eCapitalBuilding);
+//End of Final Frontier SDK
 	}
 }
 
@@ -5610,6 +5646,20 @@ bool CvPlayer::canReceiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit) 
 	UnitTypes eUnit;
 	bool bTechFound;
 	int iI;
+	
+//Added in Final Frontier SDK: TC01
+//	If a goody's required improvement does not match the actual improvement, return false
+	CvGoodyInfo kGoody = GC.getGoodyInfo(eGoody);
+	ImprovementTypes eImprovement = pPlot->getImprovementType();
+	ImprovementTypes eRequiredImprovement = (ImprovementTypes)kGoody.getRequiredImprovement();
+	if (eRequiredImprovement != NO_IMPROVEMENT)
+	{
+		if (eRequiredImprovement != eImprovement)
+		{
+			return false;
+		}
+	}
+//End of Final Frontier SDK
 
 	if (GC.getGoodyInfo(eGoody).getExperience() > 0)
 	{
@@ -5904,7 +5954,79 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 			}
 		}
 	}
+//Added in Final Frontier SDK: TC01
+	if (GC.getGoodyInfo(eGoody).isDamageUnit())
+	{
+		if (pUnit->getDamage() < 25)
+		{
+			pUnit->setDamage(pUnit->getDamage()+5);
+		}
+	}
+
+	if (GC.getGoodyInfo(eGoody).isNewCiv())
+	{
+		int iNumTries = 50;		//(There aren't 50 civs in the game, so this should be plenty.
+		for (int i = 0; i < iNumTries; ++i)
+		{
+			CivilizationTypes eCiv = (CivilizationTypes)GC.getGame().getSorenRandNum(GC.getNumCivilizationInfos()-1, "Goodies!");
+			if (eCiv != (CivilizationTypes)GC.getDefineINT("BARBARIAN_PLAYER"))
+			{
+				if (GC.getCivilizationInfo(eCiv).isAlien())
+				{
+					if (goodyCanSpawnCiv(eCiv))
+					{
+						PlayerTypes eSlot;
+						for (int iPlayer = 0; iPlayer < GC.getMAX_PLAYERS(); ++iPlayer)
+						{
+							PlayerTypes ePlayer = (PlayerTypes)iPlayer;
+							if (ePlayer != NO_PLAYER)
+							{
+								if (!(GET_PLAYER(ePlayer).isEverAlive()))
+								{
+									eSlot = ePlayer;
+								}
+							}
+						}
+						LeaderHeadTypes eLeader = (LeaderHeadTypes)goodyGetLeaderForCiv(eCiv);
+						GC.getGame().addPlayer(eSlot, eLeader, eCiv);
+						break;
+					}
+				}
+			}
+		}
+	}
+//End of Final Frontier SDK
 }
+
+//Added in Final Frontier SDK: TC01
+//	Utility to check if a prewarp civ has ever been active before spawning them
+bool CvPlayer::goodyCanSpawnCiv(CivilizationTypes eCiv) const
+{
+	for (int i = 0; i < GC.getNumLeaderHeadInfos(); ++i)
+	{
+		if (GC.getCivilizationInfo(eCiv).isLeaders(i))
+		{
+			if (GC.getGame().isLeaderEverActive((LeaderHeadTypes)i))
+			{
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+	//Utility to get a random leader for the new civ
+int CvPlayer::goodyGetLeaderForCiv(CivilizationTypes eCiv) const
+{
+	for (int i = 0; i < GC.getNumLeaderHeadInfos(); ++i)
+	{
+		if (GC.getCivilizationInfo(eCiv).isLeaders(i))
+		{
+			return i;
+		}
+	}
+}
+//End of Final Frontier SDK
 
 
 void CvPlayer::doGoody(CvPlot* pPlot, CvUnit* pUnit)
@@ -5925,7 +6047,7 @@ void CvPlayer::doGoody(CvPlot* pPlot, CvUnit* pUnit)
 
 	FAssertMsg(pPlot->isGoody(), "pPlot->isGoody is expected to be true");
 
-	pPlot->removeGoody();
+	//pPlot->removeGoody();		Removed in Final Frontier SDK: TC01
 	if (!isBarbarian())
 	{
 		for (int iI = 0; iI < GC.getDefineINT("NUM_DO_GOODY_ATTEMPTS"); iI++)
@@ -5939,6 +6061,7 @@ void CvPlayer::doGoody(CvPlot* pPlot, CvUnit* pUnit)
 
 				if (canReceiveGoody(pPlot, eGoody, pUnit))
 				{
+					pPlot->removeGoody();		//Added in Final Frontier SDK: TC01
 					receiveGoody(pPlot, eGoody, pUnit);
 
 					// Python Event
@@ -5948,6 +6071,7 @@ void CvPlayer::doGoody(CvPlot* pPlot, CvUnit* pUnit)
 			}
 		}
 	}
+	pPlot->removeGoody();		//Added in Final Frontier SDK: TC01
 }
 
 
@@ -5991,6 +6115,19 @@ bool CvPlayer::canFound(int iX, int iY, bool bTestVisible) const
 	{
 		return false;
 	}
+	
+//Added by TC01 in Final Frontier SDK
+//	If a plot is "bFoundFeature", and it has no feature, no city can be founded
+//	Set all non-solar-system features to have bNoCity to 1, and set space terrain to have bFoundFeature to 1
+//	Removes the cannotFound callback in CvGameUtils.py
+	if (pPlot->getFeatureType() == NO_FEATURE)
+	{
+		if (GC.getTerrainInfo(pPlot->getTerrainType()).isFoundFeature())
+		{
+			return false;
+		}
+	}
+//End of Final Frontier SDK
 
 	if (pPlot->getFeatureType() != NO_FEATURE)
 	{
@@ -6240,7 +6377,10 @@ bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
 		}
 	}
 
-	if (GC.getGameINLINE().isOption(GAMEOPTION_NO_ESPIONAGE))
+	// Changed in Final Frontier Plus v1.9: Espionage. (By TC01).
+	// The No Espionage gameoption is kind of overkill (it also disables production of Espionage entirely!)
+	// so add a gameoption that simply bans spies from being trained.
+	if (GC.getGameINLINE().isOption(GAMEOPTION_NO_ESPIONAGE) || GC.getGameINLINE().isOption(GAMEOPTION_NO_SPIES))
 	{
 		if (GC.getUnitInfo(eUnit).isSpy() || GC.getUnitInfo(eUnit).getEspionagePoints() > 0)
 		{
@@ -6744,6 +6884,27 @@ int CvPlayer::getProductionNeeded(UnitTypes eUnit) const
 
 	iProductionNeeded += getUnitExtraCost(eUnitClass);
 
+//Added in Final Frontier SDK: TC01 (fixed by God-Emperor)
+//	Gets unit cost mods from civics used by the player
+//	This eliminates python getUnitCostMod callback in CvGameUtils
+	int iCivicOption, iUnitCombat, iCostMod;
+	CivicTypes eCivic;
+	for (iCivicOption = 0; iCivicOption < GC.getNumCivicOptionInfos(); ++iCivicOption)
+	{
+		eCivic = getCivics((CivicOptionTypes)(iCivicOption));
+		iUnitCombat = GC.getUnitInfo(eUnit).getUnitCombatType();
+		if (iUnitCombat != NO_UNITCOMBAT)
+		{
+			if (GC.getCivicInfo(eCivic).getUnitCombatCostMods(iUnitCombat) != -1)
+			{
+				iCostMod = 100 + GC.getCivicInfo(eCivic).getUnitCombatCostMods(iUnitCombat);
+				iProductionNeeded *= iCostMod;
+				iProductionNeeded /= 100;
+			}
+		}
+	}
+//End of Final Frontier SDK
+	
 	// Python cost modifier
 	if(GC.getUSE_GET_UNIT_COST_MOD_CALLBACK())
 	{
