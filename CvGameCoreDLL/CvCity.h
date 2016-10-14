@@ -1078,6 +1078,16 @@ public:
 
 	int getBestYieldAvailable(YieldTypes eYield) const;
 
+//Added in Final Frontier: TC01
+	int getFoodOverride() const;
+	int getProductionOverride() const;
+	int getGoldOverride() const;
+
+	void setFoodOverride(int iNewValue);
+	void setProductionOverride(int iNewValue);
+	void setGoldOverride(int iNewValue);
+//End of Final Frontier
+
 protected:
 
 	int m_iID;
@@ -1168,6 +1178,11 @@ protected:
 	int m_iCitySizeBoost;
 	int m_iSpecialistFreeExperience;
 	int m_iEspionageDefenseModifier;
+//Added in Final Frontier: TC01
+	int m_iFoodOverride;
+	int m_iProductionOverride;
+	int m_iGoldOverride;
+//End of Final Frontier
 
 	bool m_bNeverLost;
 	bool m_bBombarded;

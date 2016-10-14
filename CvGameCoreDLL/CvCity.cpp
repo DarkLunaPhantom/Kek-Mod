@@ -273,6 +273,17 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 
 	changePopulation(GC.getDefineINT("INITIAL_CITY_POPULATION") + GC.getEraInfo(GC.getGameINLINE().getStartEra()).getFreePopulation());
 
+//Added in Final Frontier: TC01
+	for (int iTrait = 0; iTrait < GC.getNumTraitInfos(); iTrait++)
+	{
+		if (GET_PLAYER(getOwner()).hasTrait((TraitTypes)iTrait))
+		{
+			CvTraitInfo &kTraitInfo = GC.getTraitInfo((TraitTypes)iTrait);
+			changePopulation(kTraitInfo.getFreePopulation());
+		}
+	}
+//End of Final Frontier SDK
+
 	changeAirUnitCapacity(GC.getDefineINT("CITY_AIR_UNIT_CAPACITY"));
 
 	updateFreshWaterHealth();
@@ -457,6 +468,11 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iCitySizeBoost = 0;
 	m_iSpecialistFreeExperience = 0;
 	m_iEspionageDefenseModifier = 0;
+//Added in Final Frontier: TC01
+	m_iFoodOverride = 0;
+	m_iProductionOverride = 0;
+	m_iGoldOverride = 0;
+//End of Final Frontier
 
 	m_bNeverLost = true;
 	m_bBombarded = false;
@@ -1007,6 +1023,82 @@ void CvCity::doTurn()
 	{
 		setWeLoveTheKingDay(false);
 	}
+
+//Added in Final Frontier: TC01
+//	Looks at building yield changes, trait yield changes, trait yield changes with trade routes to set city base yield, and trade route yields
+//	Then, planet-specific yield stuff is done automatically in Python with changeYieldRate, in the callback right after this
+//	There are potential problems... if a city can't have negative base yield rate (Forge gets -1 in all cities). This has been (hopefully) fixed by "Python override"
+//	Would PROBABLY be easier to edit this into the functions elsewhere that do building yield changes... not sure how though
+	CvPlayer& pPlayer = GET_PLAYER(getOwner());
+	int iYield = 0;
+	setFoodOverride(0);
+	setProductionOverride(0);
+	setGoldOverride(0);
+	for (int iYieldLoop = 0; iYieldLoop < NUM_YIELD_TYPES; iYieldLoop++)
+	{
+		//Reset iYield to 0
+		iYield = 0;
+
+		//Building yields
+		for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); iBuilding++)
+		{
+			BuildingTypes eBuilding = (BuildingTypes)iBuilding;
+			if (getNumRealBuilding(eBuilding) > 0)
+			{
+				iYield += GC.getBuildingInfo(eBuilding).getYieldChange(iYieldLoop) * getNumRealBuilding(eBuilding);
+			}
+		}
+
+		//Trait yields, and traits with trade routes yields
+		for (int iTrait = 0; iTrait < GC.getNumTraitInfos(); iTrait++)
+		{
+			TraitTypes eTrait = (TraitTypes)iTrait;
+			if (pPlayer.hasTrait(eTrait))
+			{
+				iYield += GC.getTraitInfo(eTrait).getYieldChanges(iYieldLoop);
+				for (int iTradeCity = 0; iTradeCity < getTradeRoutes(); iTradeCity++)
+				{
+					CvCity* pTradeCity = getTradeCity(iTradeCity);
+					if (pTradeCity != NULL)
+					{
+						iYield += GC.getTraitInfo(eTrait).getTradeRouteYieldChanges(iYieldLoop);
+					}
+				}
+			}
+		}
+
+		//Trade routes (currently, only commerce is used)
+		if (iYieldLoop == 2)
+		{
+			iYield += getTradeYield((YieldTypes)2);
+		}
+
+		//Finally, store the value so Python can access it (because I'm too lazy to move all this back to Python)
+		YieldTypes eYield = (YieldTypes)iYieldLoop;
+		switch (eYield)
+		{
+			case YIELD_FOOD:
+			{
+				setFoodOverride(iYield);
+				break;
+			}
+			case YIELD_PRODUCTION:
+			{
+				setProductionOverride(iYield);
+				break;
+			}
+			case YIELD_COMMERCE:
+			{
+				setGoldOverride(iYield);
+				break;
+			}
+			default:
+			{
+				break;
+			}
+		}
+	}
+//End of Final Frontier
 
 	// ONEVENT - Do turn
 	CvEventReporter::getInstance().cityDoTurn(this, getOwnerINLINE());
@@ -2005,6 +2097,18 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 		}
 	}
 
+//Added in Final Frontier SDK: TC01
+//	Buildings limited  to one per system cannot be built if one is already in the system
+//	Eliminates a portion of cannotConstruct callback + hardcoding in CvGameUtils.py
+	if ((GC.getBuildingInfo(eBuilding)).isOnePerSystem())
+	{
+		if (getNumRealBuilding(eBuilding) > 0)
+		{
+			return false;
+		}
+	}
+//End of Final Frontier SDK
+
 	eCorporation = (CorporationTypes)GC.getBuildingInfo(eBuilding).getPrereqCorporation();
 	if (eCorporation != NO_CORPORATION)
 	{
@@ -2963,6 +3067,23 @@ int CvCity::getProductionNeeded(BuildingTypes eBuilding) const
 			iProductionNeeded /= 100;
 		}
 	}
+
+//Added in Final Frontier SDK: TC01
+//	Performs operations on a building's "CostModIncrease", a value formerly hardcoded for buildings in the python
+//	The result of this is multiplied to the production needed that was already calculated
+//	Removes the getBuildingCostMod function from CvGameUtils.py and removes python hardcoding
+	if (getNumRealBuilding(eBuilding) > 0)
+	{
+		if ((GC.getBuildingInfo(eBuilding)).getCostModIncrease() > 1)
+		{
+			int iBaseProduction=0;
+			int iExtraCostMod=0;
+			iBaseProduction = GC.getBuildingInfo(eBuilding).getProductionCost();
+			iExtraCostMod = (iBaseProduction * (GC.getBuildingInfo(eBuilding)).getCostModIncrease()) - iBaseProduction;
+			iProductionNeeded *= ((iExtraCostMod * getNumRealBuilding(eBuilding)) + iBaseProduction) / iBaseProduction;
+		}
+	}
+//End of Final Frontier SDK
 
 	return iProductionNeeded;
 }
@@ -11911,6 +12032,17 @@ int CvCity::getTradeRoutes() const
 	}
 	iTradeRoutes += getExtraTradeRoutes();
 
+//Added in Final Frontier SDK: TC01
+	for (int iTrait = 0; iTrait < GC.getNumTraitInfos(); iTrait++)
+	{
+		if (GET_PLAYER(getOwner()).hasTrait((TraitTypes)iTrait))
+		{
+			CvTraitInfo &kTraitInfo = GC.getTraitInfo((TraitTypes)iTrait);
+			iTradeRoutes += kTraitInfo.getNumBonusTradeRoutes();
+		}
+	}
+//End of Final Frontier SDK
+
 	return std::min(iTradeRoutes, GC.getDefineINT("MAX_TRADE_ROUTES"));
 }
 
@@ -12424,9 +12556,13 @@ void CvCity::popOrder(int iNum, bool bFinish, bool bChoose)
 				GET_PLAYER(getOwnerINLINE()).removeBuildingClass((BuildingClassTypes)(GC.getBuildingInfo(eConstructBuilding).getBuildingClassType()));
 			}
 
-			setNumRealBuilding(eConstructBuilding, getNumRealBuilding(eConstructBuilding) + 1);
-
+// DarkLunaPhantom - Order is changed so that it works with mods which allow multiple buildings of same type and increase cost for each building already built.
+//Changed in Final Frontier SDK: TC01, thanks to T-hawk
+//A fix needed to make building production overflow work
 			iProductionNeeded = getProductionNeeded(eConstructBuilding);
+			setNumRealBuilding(eConstructBuilding, getNumRealBuilding(eConstructBuilding) + 1);
+//End of Final Frontier SDK
+
 			// max overflow is the value of the item produced (to eliminate prebuild exploits)
 			int iOverflow = getBuildingProduction(eConstructBuilding) - iProductionNeeded;
 			int iMaxOverflow = std::max(iProductionNeeded, getCurrentProductionDifference(false, false));
@@ -12819,7 +12955,12 @@ void CvCity::doGrowth()
 
 	if (getFood() >= growthThreshold())
 	{
+		// DarkLunaPhantom begin - FIXME: check does this work and is this fix needed? Currently, the fix is not used.
+		//Change made in Final Frontier Plus: TC01 (courtesy of God-Emperor)
+		//Fix AI issues with avoid growth- namely, that it doesn't turn on.
 		if (AI_isEmphasizeAvoidGrowth())
+		//if ((isHuman() && AI_isEmphasizeAvoidGrowth()) || (!isHuman() && AI_avoidGrowth()))
+		// DarkLunaPhantom end
 		{
 			setFood(growthThreshold());
 		}
@@ -13840,6 +13981,11 @@ void CvCity::read(FDataStreamBase* pStream)
 		pStream->Read(&iChange);
 		m_aBuildingHealthChange.push_back(std::make_pair((BuildingClassTypes)iBuildingClass, iChange));
 	}
+
+	// FFP for 1.82 - load the yield override values from the save
+	pStream->Read(&m_iFoodOverride);
+	pStream->Read(&m_iProductionOverride);
+	pStream->Read(&m_iGoldOverride);
 }
 
 void CvCity::write(FDataStreamBase* pStream)
@@ -14062,6 +14208,13 @@ void CvCity::write(FDataStreamBase* pStream)
 		pStream->Write((*it).first);
 		pStream->Write((*it).second);
 	}
+
+	// FFP for 1.82 - store the yield override values in the save so they are not all 0 on the
+	//	first turn after loading a save, which causes lost yield if you move population between
+	//	planets that first turn after loading (which is every turn in a PBEM game).
+	pStream->Write(m_iFoodOverride);
+	pStream->Write(m_iProductionOverride);
+	pStream->Write(m_iGoldOverride);
 }
 
 
@@ -15710,3 +15863,36 @@ void CvCity::getBuildQueue(std::vector<std::string>& astrQueue) const
 	}
 }
 
+//Added in Final Frontier: TC01
+//	Accesors for the yield Python overrides (when we would otherwise have to have the base yields be negative)
+//	This can work, because the Python adds the base value generated by FF+'s DLL to the raw planet numbers
+int CvCity::getFoodOverride() const
+{
+	return m_iFoodOverride;
+}
+
+int CvCity::getProductionOverride() const
+{
+	return m_iProductionOverride;
+}
+
+int CvCity::getGoldOverride() const
+{
+	return m_iGoldOverride;
+}
+
+void CvCity::setFoodOverride(int iNewValue)
+{
+	m_iFoodOverride = iNewValue;
+}
+
+void CvCity::setProductionOverride(int iNewValue)
+{
+	m_iProductionOverride = iNewValue;
+}
+
+void CvCity::setGoldOverride(int iNewValue)
+{
+	m_iGoldOverride = iNewValue;
+}
+//End of Final Frontier
