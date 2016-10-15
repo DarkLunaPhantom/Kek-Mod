@@ -2206,7 +2206,7 @@ DomainTypes CvPlayerAI::AI_unitAIDomainType(UnitAITypes eUnitAI) const
 	case UNITAI_CARRIER_SEA:
 	case UNITAI_MISSILE_CARRIER_SEA:
 	case UNITAI_PIRATE_SEA:
-		return DOMAIN_SEA;
+		return DOMAIN_LAND; // FFP AImod : was DOMAIN_SEA - there is no DOMAIN_SEA in FFP
 		break;
 
 	case UNITAI_ATTACK_AIR:
@@ -4261,7 +4261,7 @@ bool CvPlayerAI::AI_getAnyPlotDanger(CvPlot* pPlot, int iRange, bool bTestMoves,
 	if( bCheckBorder )
 	{
 		//if( (iRange >= DANGER_RANGE) && pPlot->isTeamBorderCache(eTeam) )
-		if (iRange >= BORDER_DANGER_RANGE && pPlot->getBorderDangerCache(eTeam)) // K-Mod. border danger doesn't count anything further than range 2.
+		if (iRange >= BORDER_DANGER_RANGE && pPlot->getBorderDangerCache(eTeam)) // K-Mod. border danger doesn't count anything further than range 2 // DarkLunaPhantom - Changed that to 3.
 		{
 			return true;
 		}
@@ -5910,7 +5910,9 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 				iValue += 3 * (iNewCivicValue - iCurrentCivicValue);
 			}
 
-			if (eCivic == GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic())
+			// < Multiple Favorite Civics Start >
+			if (GC.getLeaderHeadInfo(getPersonalityType()).hasFavoriteCivic(eCivic))
+			// < Multiple Favorite Civics End   >
 				iValue += 20*iCityCount;
 			else
 				iValue += 4*iCityCount;
@@ -6137,8 +6139,8 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 							iReligionValue += 84;
 					}
 
-					// DarkLunaPhantom - 4 here denotes number of non-early religions?
-					if (iAvailableReligions <= 4 || AI_getFlavorValue(FLAVOR_RELIGION) > 0)
+					// DarkLunaPhantom - 2 here denotes number of non-early religions?
+					if (iAvailableReligions <= 2 || AI_getFlavorValue(FLAVOR_RELIGION) > 0)
 					{
 						iReligionValue *= 2;
 						iReligionValue += 56 + std::max(0, 6 - iAvailableReligions)*28;
@@ -7928,19 +7930,27 @@ int CvPlayerAI::AI_getFavoriteCivicAttitude(PlayerTypes ePlayer) const
 
 	iAttitude = 0;
 
-	if (GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic() != NO_CIVIC)
+	// < Multiple Favorite Civics Start >
+	if (GC.getLeaderHeadInfo(getPersonalityType()).isHasFavoriteCivic())
 	{
-		if (isCivic((CivicTypes)(GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic())) && GET_PLAYER(ePlayer).isCivic((CivicTypes)(GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic())))
+		for(int iI = 0; iI < GC.getNumCivicInfos(); iI++)
 		{
-			iAttitude += GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivicAttitudeChange();
-
-			if (GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivicAttitudeDivisor() != 0)
+			if(GC.getLeaderHeadInfo(getPersonalityType()).hasFavoriteCivic(iI))
 			{
-				iAttitudeChange = (AI_getFavoriteCivicCounter(ePlayer) / GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivicAttitudeDivisor());
-				iAttitude += range(iAttitudeChange, -(abs(GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivicAttitudeChangeLimit())), abs(GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivicAttitudeChangeLimit()));
+				if (isCivic((CivicTypes)iI) && GET_PLAYER(ePlayer).isCivic((CivicTypes)iI))
+				{
+					iAttitude += GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivicAttitudeChange();
+
+					if (GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivicAttitudeDivisor() != 0)
+					{
+						iAttitudeChange = (AI_getFavoriteCivicCounter(ePlayer) / GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivicAttitudeDivisor());
+						iAttitude += range(iAttitudeChange, -(abs(GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivicAttitudeChangeLimit())), abs(GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivicAttitudeChangeLimit()));
+					}
+				}
 			}
 		}
 	}
+	// < Multiple Favorite Civics End   >
 
 	return iAttitude;
 }
@@ -10805,14 +10815,22 @@ DenialTypes CvPlayerAI::AI_civicTrade(CivicTypes eCivic, PlayerTypes ePlayer) co
 		return DENIAL_ANGER_CIVIC;
 	}
 
-	CivicTypes eFavoriteCivic = (CivicTypes)GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic();
-	if (eFavoriteCivic != NO_CIVIC)
+	// < Multiple Favorite Civics Start >
+	for(int iI = 0; iI < GC.getNumCivicInfos(); iI++)
 	{
-		if (isCivic(eFavoriteCivic) && (GC.getCivicInfo(eCivic).getCivicOptionType() == GC.getCivicInfo(eFavoriteCivic).getCivicOptionType()))
+		if(GC.getLeaderHeadInfo(getPersonalityType()).hasFavoriteCivic(iI))
 		{
-			return DENIAL_FAVORITE_CIVIC;
+			CivicTypes eFavoriteCivic = (CivicTypes)iI;
+			if (eFavoriteCivic != NO_CIVIC)
+			{
+				if (isCivic(eFavoriteCivic) && (GC.getCivicInfo(eCivic).getCivicOptionType() == GC.getCivicInfo(eFavoriteCivic).getCivicOptionType()))
+				{
+					return DENIAL_FAVORITE_CIVIC;
+				}
+			}
 		}
 	}
+	// < Multiple Favorite Civics End   >
 
 	if (GC.getCivilizationInfo(getCivilizationType()).getCivilizationInitialCivics(GC.getCivicInfo(eCivic).getCivicOptionType()) == eCivic)
 	{
@@ -11087,6 +11105,13 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 					{
 						for (iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
 						{
+							// < Unit Combat Attack Defense Mod Start >
+							if (GC.getUnitInfo(eUnit).getUnitCombatAttackModifier(iI) > 0)
+							{
+								bValid = true;
+								break;
+							}
+							// < Unit Combat Attack Defense Mod End   >
 							if (GC.getUnitInfo(eUnit).getUnitCombatModifier(iI) > 0)
 							{
 								bValid = true;
@@ -11333,14 +11358,16 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			{
 				if (GC.getUnitInfo(eUnit).getSpecialCargo() != NO_SPECIALUNIT)
 				{
-					for (int i = 0; i < NUM_UNITAI_TYPES; ++i)
-					{
+/** FFP AImod: bugfix, actually
+ ** This loop is pointless. The loop variable is never used. **/
+//	FFP				for (int i = 0; i < NUM_UNITAI_TYPES; ++i)
+//	FFP				{
 						if (GC.getSpecialUnitInfo((SpecialUnitTypes)GC.getUnitInfo(eUnit).getSpecialCargo()).isCarrierUnitAIType(eUnitAI))
 						{
 							bValid = true;
 							break;
 						}
-					}
+//	FFP
 				}
 			}
 			break;
@@ -11462,12 +11489,23 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		PROFILE("AI_unitValue, UNITAI_ATTACK_CITY evaluation");
 		// Effect army composition to have more collateral/bombard units
 		
+/** FFP AImod: adjust the city attack AI type unit valuation (again) - start
+ **		Adjust the equation to reduce the contribution of the squared combat strenth.
+ **		Also, adjust the non-squared part to round up (affects Omeaga invasion Ship, but not really
+ **		anythign else that matters for this unit AI type in FFP)
+ **	Original:
 		iTempValue = ((iCombatValue * iCombatValue) / 75) + (iCombatValue / 2);
+ **	New:
+		iTempValue = ((iCombatValue / 8) * (iCombatValue / 10)) + ((iCombatValue + 1)/ 2);
+ **	Newer: post v1.81, even less value for the squared part, more for the linear part **/
+		iTempValue = ((iCombatValue / 8) * (iCombatValue / 9)) / 2 + iCombatValue;
+/** FFP AImod:  adjust the city attack AI type unit valuation (again) - end **/
 		iValue += iTempValue;
 		if (GC.getUnitInfo(eUnit).isNoDefensiveBonus())
 		{
 			//iValue -= iTempValue / 2;
-			iValue -= iTempValue / 3; // K-Mod
+			//iValue -= iTempValue / 3; // K-Mod // DarkLunaPhantom - K-Mod changed this from 2 to 3.
+			iValue -= iTempValue / 4;	// FFP AImod : changed from "/ 2", then from "/ 3" post v1.81
 		}
 		if (GC.getUnitInfo(eUnit).getDropRange() > 0)
 		{
@@ -11478,10 +11516,27 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		{
 			iValue += (iTempValue * 8) / 100;
 		}
+/** FFP AImod: no capture and Troop Transport adjustment 1 - start 
+ **		If the unit can't actually capture a star system reduce the strength related value a little.
+ **		It isn't reduces a lot because a strong ship is still good for destroying defenders. **/
+		if (GC.getUnitInfo(eUnit).isNoCapture() || 
+			(GC.getGame().isOption(GAMEOPTION_TROOP_TRANSPORTS) && !GC.getUnitInfo(eUnit).isTroopTransport()))
+		{
+			iValue -= iTempValue / 4;
+		}
+/** FFP AImod: no capture and Troop Transport adjustment 1 - end **/
+
+/** FFP AImod: city attack unit AI city attack modifier modfied - start
+ **		If a unit has this modifer, it should be picked even more that the formerly
+ **		more directly priopotional adjustment: changed from "/ 100" **/
+		//iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getCityAttackModifier()) / 80); // DarkLunaPhantom - Disabled this change and left bbai (even stronger) change.
+/** FFP AImod: city attack unit AI city attack modifier modfied - end **/
+
 		iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getCityAttackModifier()) / 75); // bbai (was 100).
 		// iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getCollateralDamage()) / 400); // (moved)
 		iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getWithdrawalProbability()) / 150); // K-Mod (was 100)
 		// iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getMoves() * iFastMoverMultiplier) / 4);
+
 		// K-Mod
 		if (GC.getUnitInfo(eUnit).getMoves() > 1)
 		{
@@ -11489,7 +11544,16 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			iValue += iCombatValue * iFastMoverMultiplier * GC.getUnitInfo(eUnit).getMoves() / 10;
 		}
 		// K-Mod end
-
+		
+/** FFP AImod: no capture and Troop Transport adjustment 2 - start
+ **		If the troop transport option is active and this is such a unit, give it a nice, but not huge, bonus.
+ **		In conjuntion with adjustment 1, this pushes the omega invasion ship over the 2/5 threshold of
+ **		the omega battleship so it will still consider building them for this unit AI type. **/ // DarkLunaPhantom - This might not work like that anymore.
+		if (GC.getGame().isOption(GAMEOPTION_TROOP_TRANSPORTS) && GC.getUnitInfo(eUnit).isTroopTransport())
+		{
+			iValue += ((iValue + 7) / 8) + 2; // 12.5% (rounded up) + exactly 2
+		}
+/** FFP AImod: no capture and Troop Transport adjustment 2 - end **/
 
 		/* if (!AI_isDoStrategy(AI_STRATEGY_AIR_BLITZ))
 		{
@@ -11597,7 +11661,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		iValue += iCombatValue * GC.getUnitInfo(eUnit).getCollateralDamage() * (1 + GC.getUnitInfo(eUnit).getCollateralDamageMaxUnits()) / 350; // K-Mod (max units is 6-8 in the current xml)
 		iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getMoves()) / 4);
 		iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getWithdrawalProbability()) / 25);
-		iValue -= ((iCombatValue * GC.getUnitInfo(eUnit).getCityAttackModifier()) / 100);
+		iValue -= ((iCombatValue * GC.getUnitInfo(eUnit).getCityAttackModifier()) / 125); // FFP AImod : changed divisor from 100 to 125
 		break;
 
 	case UNITAI_PILLAGE:
@@ -11639,6 +11703,13 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getUnitClassAttackModifier(iI) * AI_getUnitClassWeight((UnitClassTypes)iI)) / 7500);
 			iValue += ((iCombatValue * (GC.getUnitInfo(eUnit).getTargetUnitClass(iI) ? 50 : 0)) / 100);
 		}
+		// < Unit Combat Attack Defense Mod Start >
+		for (iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
+		{
+			iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getUnitCombatAttackModifier(iI) * AI_getUnitCombatWeight((UnitCombatTypes)iI)) / 10000);
+			iValue += ((iCombatValue * (GC.getUnitInfo(eUnit).getTargetUnitCombat(iI) ? 50 : 0)) / 100);
+		}
+		// < Unit Combat Attack Defense Mod End   >
 		for (iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
 		{
 //			int iCombatModifier = GC.getUnitInfo(eUnit).getUnitCombatModifier(iI);
@@ -11716,6 +11787,13 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getUnitClassAttackModifier(iI) * AI_getUnitClassWeight((UnitClassTypes)iI)) / 10000);
 			iValue += ((iCombatValue * (GC.getUnitInfo(eUnit).getDefenderUnitClass(iI) ? 50 : 0)) / 100);
 		}
+		// < Unit Combat Attack Defense Mod Start >
+		for (iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
+		{
+			iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getUnitCombatAttackModifier(iI) * AI_getUnitCombatWeight((UnitCombatTypes)iI)) / 10000);
+			iValue += ((iCombatValue * (GC.getUnitInfo(eUnit).getDefenderUnitCombat(iI) ? 50 : 0)) / 100);
+		}
+		// < Unit Combat Attack Defense Mod End   >
 		for (iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
 		{
 			iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getUnitCombatModifier(iI) * AI_getUnitCombatWeight((UnitCombatTypes)iI)) / 10000);
@@ -12125,7 +12203,11 @@ int CvPlayerAI::AI_neededExplorers(CvArea* pArea) const
 	}
 	else
 	{
-		iNeeded = std::min(iNeeded + (pArea->getNumUnrevealedTiles(getTeam()) / 150), std::min(3, ((getNumCities() / 3) + 2)));
+/** FFP AI mod : reduce needed explorers slightly
+ **		The following used to use "(pArea->getNumUnrevealedTiles(getTeam()) / 150)".
+ **		The old 150 is now 200 in the hopes of accounting for possible large impassable areas of nebula.
+ **/
+		iNeeded = std::min(iNeeded + (pArea->getNumUnrevealedTiles(getTeam()) / 200), std::min(3, ((getNumCities() / 3) + 2)));
 	}
 
 	if (0 == iNeeded)
@@ -14474,7 +14556,9 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 			if (eAttitude >= ATTITUDE_PLEASED)
 			{
 				const CvLeaderHeadInfo& kPersonality = GC.getLeaderHeadInfo(kLoopPlayer.getPersonalityType());
-				if (kPersonality.getFavoriteCivic() == eCivic && kLoopPlayer.isCivic(eCivic))
+				// < Multiple Favorite Civics Start > // DarkLunaPhantom
+				if (kPersonality.hasFavoriteCivic(eCivic) && kLoopPlayer.isCivic(eCivic))
+				// < Multiple Favorite Civics End   >
 				{
 					// (better to use getVotes; but that's more complex.)
 					//iValue += kLoopPlayer.getTotalPopulation() * (2 + kPersonality.getFavoriteCivicAttitudeChangeLimit()) / 20;
@@ -14485,7 +14569,9 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	}
 	// K-Mod end
 
-	if (GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic() == eCivic)
+	// < Multiple Favorite Civics Start >
+	if (GC.getLeaderHeadInfo(getPersonalityType()).hasFavoriteCivic(eCivic))
+	// < Multiple Favorite Civics End   >
 	{
 		if (!kCivic.isStateReligion() || iBestReligionCities > 0)
 		{
@@ -14495,6 +14581,97 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 			iValue += 20; 
 		}
 	}
+	
+//Added in Final Frontier SDK: TC01
+//	Causes the AI to value civics based on their unit combat cost mods.
+//	Causes the AI to value civics that increase planet yields.
+	for (iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
+	{
+		int iUnitCombatCostMod = kCivic.getUnitCombatCostMods(iI);
+		if (iUnitCombatCostMod < 0)
+		{
+			iTempValue = -1 * iUnitCombatCostMod;
+			/*FAssertMsg(iTempValue <= 0, "UnitCombatCostMod Loop 1: Value is being rounded down to 0");
+			FAssertMsg(iTempValue > 0, "UnitCombatCostMod Loop 1: Value is a valid number.");*/
+
+			iTempValue += (-1 * iUnitCombatCostMod) * AI_getUnitCombatWeight((UnitCombatTypes)iI);
+			/*FAssertMsg(iTempValue <= 0, "UnitCombatCostMod Loop 2: Value is being rounded down to 0");
+			FAssertMsg(iTempValue > 0, "UnitCombatCostMod Loop 2: Value is a valid number.");*/
+
+		//	iTempValue *= iWarmongerPercent;
+
+			iValue += iTempValue;
+			/*FAssertMsg(iTempValue <= 0, "UnitCombatCostMod Loop 3: Value is being rounded down to 0");
+			FAssertMsg(iTempValue > 0, "UnitCombatCostMod Loop 3: Value is a valid number.");*/
+		}
+	}
+
+	for (iI = 0; iI < NUM_YIELD_TYPES; iI++)
+	{
+		if (kCivic.getPlanetYieldChanges(iI) > 0)
+		{
+			int iiTempValue = 0;
+			iTempValue = 0;
+			iTempValue += (kCivic.getPlanetYieldChanges(iI) * (getNumCities() * 50));
+			iTempValue *= AI_yieldWeight((YieldTypes)iI);
+			iTempValue /= 100;
+			iValue += iTempValue;
+		}
+	}
+//End of Final Frontier SDK
+
+/** FFP AImod: add value for increasing planet population caps - start
+ ** 	Issue: there is no way for us to know how many planets a system has, or what the current limits are
+ ** 	For now we will just assume about 2 pop per planet with no consideration of number of planets,
+ **		which gives +50% population with no building increases, or +25% with both +1 buildings (this
+ **		should probably be dynamic, checking for total possible increases from buildings, so as to
+ **		be compatible with mod-mods...) for each +1of  pop cap increase
+ **		Going with the +25% potential useful population figure per point increase, that is the equivalent of
+ **		both a +25% production and a +25% commerce modifier (ignoring the food).
+ **		A +25% production modifier gives a value of (25 * number of cities / 2)  * ((AI_avoidScience()) ? 6 : 2)
+ **		A +25% commerce modifier gives a value of (25 * number of cities / 2)  * ((AI_avoidScience()) ? 1 : 2)
+ **		Currently this does not take possible happy cap issues into account. In theory, the percentage
+ **		bonus should be reduced from 25% if there are cities at or near their happy cap.
+ **		I am checking the happy cap in the capital only and giving the full bonus
+ **		only if it has enough happiness to use the estimated amount of useful population after the increase
+ **		(the original capital cities always have 6 planets so a +1 population increase would give +6
+ **		population on top of an assumed 25ish without the increase).
+ **/
+	if (kCivic.getPlanetPopCapIncrease() > 0)
+	{
+		iTempValue = ((25 * getNumCities()) / 2) * ((AI_avoidScience()) ? 6 : 2); // For +25% production
+		iTempValue += ((25 * getNumCities()) / 2) * ((AI_avoidScience()) ? 1 : 2); // For +25% commerce
+		iTempValue *= kCivic.getPlanetPopCapIncrease();
+
+		CvCity* pCapital = getCapitalCity();
+		if (pCapital)
+		{
+			int iMaxUsefulPop = pCapital->happyLevel() - pCapital->unhappyLevel(0) + pCapital->getPopulation();
+			int iNewPopCap = 25 + 6 * kCivic.getPlanetPopCapIncrease(); // the 25 is 6 planets * (2 average + 2 from buildings) pop per planet +1 for a moonbase
+
+			// If they built the wonder that eliminates unhappiness in the Capital we are not going to
+			// be able to do this calculation, just give the full bonus.
+			// Also skip the adjsutment if the civ is in anarchy or city is on occupation timer
+			// (not likely for the capital) or, for some reason, iMaxUsefulPop is < 1.
+			// If any of these conditions happens, just use 1/4 the calculated modifier.
+			// And finally, if the usful population is over the new pop cap just skip this modification too.
+			if (!pCapital->isNoUnhappiness()
+				&& !pCapital->isDisorder()
+				&& (iMaxUsefulPop > 0)
+				&& (iMaxUsefulPop < iNewPopCap))
+			{
+				iTempValue *= iMaxUsefulPop;
+				iTempValue /= iNewPopCap;
+			}
+			else if (!pCapital->isNoUnhappiness() && (iMaxUsefulPop < iNewPopCap))
+			{
+				iTempValue /= 4;
+			}
+		}
+		
+		iValue += iTempValue;
+	}
+/** FFP AImod: add value for increasing planet population caps - end **/
 
 	/* if (AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2) && (GC.getCivicInfo(eCivic).isNoNonStateReligionSpread()))
 	{
@@ -15511,21 +15688,29 @@ void CvPlayerAI::AI_doCounter()
 						}
 					}
 
-					if (GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic() != NO_CIVIC)
+					// < Multiple Favorite Civics Start >
+					if (GC.getLeaderHeadInfo(getPersonalityType()).isHasFavoriteCivic())
 					{
-						if (isCivic((CivicTypes)(GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic())) &&
-							  GET_PLAYER((PlayerTypes)iI).isCivic((CivicTypes)(GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic())))
+						for (iJ = 0; iJ < GC.getNumCivicInfos(); iJ++)
 						{
-							AI_changeFavoriteCivicCounter(((PlayerTypes)iI), 1);
-						}
-						else
-						{
-							if (AI_getFavoriteCivicCounter((PlayerTypes)iI) > 0)
+							if(GC.getLeaderHeadInfo(getPersonalityType()).hasFavoriteCivic(iJ))
 							{
-								AI_changeFavoriteCivicCounter(((PlayerTypes)iI), -1);
+								if (isCivic((CivicTypes)iJ) &&
+									  GET_PLAYER((PlayerTypes)iI).isCivic((CivicTypes)iJ))
+								{
+									AI_changeFavoriteCivicCounter(((PlayerTypes)iI), 1);
+								}
+								else
+								{
+									if (AI_getFavoriteCivicCounter((PlayerTypes)iI) > 0)
+									{
+										AI_changeFavoriteCivicCounter(((PlayerTypes)iI), -1);
+									}
+								}
 							}
 						}
 					}
+					// < Multiple Favorite Civics End   >
 
 					iBonusImports = getNumTradeBonusImports((PlayerTypes)iI);
 
@@ -16856,29 +17041,37 @@ void CvPlayerAI::AI_doDiplo()
 
 									if (GET_PLAYER((PlayerTypes)iI).isHuman() && (GET_TEAM(getTeam()).getLeaderID() == getID()) && !GET_TEAM(getTeam()).isVassal(GET_PLAYER((PlayerTypes)iI).getTeam()))
 									{
-										eFavoriteCivic = ((CivicTypes)(GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic()));
-
-										if (eFavoriteCivic != NO_CIVIC)
+										// < Multiple Favorite Civics Start >
+										for(int iK = 0; iK < GC.getNumCivicInfos() ; iK++)
 										{
-											if (isCivic(eFavoriteCivic))
+											if(GC.getLeaderHeadInfo(getPersonalityType()).hasFavoriteCivic(iK))
 											{
-												if (GET_PLAYER((PlayerTypes)iI).canDoCivics(eFavoriteCivic) && !(GET_PLAYER((PlayerTypes)iI).isCivic(eFavoriteCivic)))
+												eFavoriteCivic = (CivicTypes)iK;
+
+												if (eFavoriteCivic != NO_CIVIC)
 												{
-													if (GET_PLAYER((PlayerTypes)iI).canRevolution(NULL))
+													if (isCivic(eFavoriteCivic))
 													{
-														if (AI_getContactTimer(((PlayerTypes)iI), CONTACT_CIVIC_PRESSURE) == 0)
+														if (GET_PLAYER((PlayerTypes)iI).canDoCivics(eFavoriteCivic) && !(GET_PLAYER((PlayerTypes)iI).isCivic(eFavoriteCivic)))
 														{
-															if (GC.getGameINLINE().getSorenRandNum(GC.getLeaderHeadInfo(getPersonalityType()).getContactRand(CONTACT_CIVIC_PRESSURE), "AI Diplo Civic Pressure") == 0)
+															if (GET_PLAYER((PlayerTypes)iI).canRevolution(NULL))
 															{
-																if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+																if (AI_getContactTimer(((PlayerTypes)iI), CONTACT_CIVIC_PRESSURE) == 0)
 																{
-																	AI_changeContactTimer(((PlayerTypes)iI), CONTACT_CIVIC_PRESSURE, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_CIVIC_PRESSURE));
-																	pDiplo = new CvDiploParameters(getID());
-																	FAssertMsg(pDiplo != NULL, "pDiplo must be valid");
-																	pDiplo->setDiploComment((DiploCommentTypes)GC.getInfoTypeForString("AI_DIPLOCOMMENT_CIVIC_PRESSURE"), GC.getCivicInfo(eFavoriteCivic).getTextKeyWide());
-																	pDiplo->setAIContact(true);
-																	gDLL->beginDiplomacy(pDiplo, (PlayerTypes)iI);
-																	abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+																	if (GC.getGameINLINE().getSorenRandNum(GC.getLeaderHeadInfo(getPersonalityType()).getContactRand(CONTACT_CIVIC_PRESSURE), "AI Diplo Civic Pressure") == 0)
+																	{
+																		if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+																		{
+																			AI_changeContactTimer(((PlayerTypes)iI), CONTACT_CIVIC_PRESSURE, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_CIVIC_PRESSURE));
+																			pDiplo = new CvDiploParameters(getID());
+																			FAssertMsg(pDiplo != NULL, "pDiplo must be valid");
+																			pDiplo->setDiploComment((DiploCommentTypes)GC.getInfoTypeForString("AI_DIPLOCOMMENT_CIVIC_PRESSURE"), GC.getCivicInfo(eFavoriteCivic).getTextKeyWide());
+																			pDiplo->setAIContact(true);
+																			gDLL->beginDiplomacy(pDiplo, (PlayerTypes)iI);
+																			abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+																			break;
+																		}
+																	}
 																}
 															}
 														}
@@ -16886,6 +17079,7 @@ void CvPlayerAI::AI_doDiplo()
 												}
 											}
 										}
+										// < Multiple Favorite Civics End   >
 									}
 
 									if (GET_PLAYER((PlayerTypes)iI).isHuman() && (GET_TEAM(getTeam()).getLeaderID() == getID()))
@@ -20148,11 +20342,19 @@ void CvPlayerAI::AI_updateStrategyHash()
                 iMissionary += AI_getFlavorValue(FLAVOR_CULTURE) * 4; // up to 40
                 iMissionary += AI_getFlavorValue(FLAVOR_RELIGION) * 6; // up to 60
                 
-                CivicTypes eCivic = (CivicTypes)GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic();
-                if ((eCivic != NO_CIVIC) && (GC.getCivicInfo(eCivic).isNoNonStateReligionSpread()))
-                {
-                	iMissionary += 20;
-                }
+				// < Multiple Favorite Civics Start >
+				for(iI = 0; iI < GC.getNumCivicInfos(); iI++)
+				{
+					if(GC.getLeaderHeadInfo(getPersonalityType()).hasFavoriteCivic(iI))
+					{
+						CivicTypes eCivic = (CivicTypes)iI;
+						if (GC.getCivicInfo(eCivic).isNoNonStateReligionSpread())
+						{
+                			iMissionary += 20;
+						}
+					}
+				}
+				// < Multiple Favorite Civics End   >
                 
                 iMissionary += (iHolyCityCount - 1) * 5;
                 
@@ -21630,7 +21832,7 @@ int CvPlayerAI::AI_getTotalFloatingDefendersNeeded(CvArea* pArea) const
 	int iCurrentEra = getCurrentEra();
 	int iAreaCities = pArea->getCitiesPerPlayer(getID());
 	
-	iCurrentEra = std::max(0, iCurrentEra - GC.getGame().getStartEra() / 2);
+	iCurrentEra = std::max(0, (iCurrentEra - GC.getGame().getStartEra() + 1)/ 2); // FFP AImod : round up (new +1 before /2)
 	
 	/* original bts code
 	iDefenders = 1 + ((iCurrentEra + ((GC.getGameINLINE().getMaxCityElimination() > 0) ? 3 : 2)) * iAreaCities);
