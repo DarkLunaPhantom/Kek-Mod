@@ -2148,14 +2148,19 @@ bool CvTeam::isFullMember(VoteSourceTypes eVoteSource) const
 		CvPlayer& kLoopPlayer = GET_PLAYER((PlayerTypes)iI);
 		if (kLoopPlayer.getTeam() == getID())
 		{
-			if (!kLoopPlayer.isFullMember(eVoteSource))
+	// DarkLunaPhantom - Team is now a full member if at least one its players is a full member instead of requiring all its players to be full members.
+			//if (!kLoopPlayer.isFullMember(eVoteSource))
+			if (kLoopPlayer.isFullMember(eVoteSource))
 			{
-				return false;
+				//return false;
+				return true;
 			}
 		}
 	}
 
-	return true;
+	//return true;
+	return false;
+	// DarkLunaPhantom end
 }
 
 /************************************************************************************************/
