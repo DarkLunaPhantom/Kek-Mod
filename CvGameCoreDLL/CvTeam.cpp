@@ -609,6 +609,29 @@ void CvTeam::addTeam(TeamTypes eTeam)
 		}
 	}
 
+	// DarkLunaPhantom - AP resident and UN secretary general teams need to be updated if that team will not be used anymore.
+	for (int iI = 0; iI < GC.getNumVoteSourceInfos(); iI++)
+	{
+		if (GC.getGameINLINE().canHaveSecretaryGeneral((VoteSourceTypes)iI) && GC.getGameINLINE().getSecretaryGeneral((VoteSourceTypes)iI) == eTeam)
+		{
+			for (int iJ = 0; iJ < GC.getNumVoteInfos(); iJ++)
+			{
+				if (GC.getVoteInfo((VoteTypes)iJ).isVoteSourceType((VoteSourceTypes)iI) && GC.getVoteInfo((VoteTypes)iJ).isSecretaryGeneral())
+				{
+					VoteTriggeredData kData;
+					kData.iId = FFreeList::INVALID_INDEX;
+					kData.eVoteSource = (VoteSourceTypes)iI;
+					kData.kVoteOption.eVote = (VoteTypes)iJ;
+					kData.kVoteOption.iCityId = -1;
+					kData.kVoteOption.szText.clear();
+					kData.kVoteOption.ePlayer = NO_PLAYER;
+					GC.getGameINLINE().setVoteOutcome(kData, (PlayerVoteTypes)getID());
+				}
+			}
+		}
+	}
+	// DarkLunaPhantom end
+
 	// K-Mod. Adjust the progress of unfinished research so that it is proportionally the same as it was before the merge.
 	{
 		// cf. CvTeam::getResearchCost
