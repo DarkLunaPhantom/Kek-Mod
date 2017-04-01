@@ -1479,7 +1479,8 @@ bool CvPlot::canHavePotentialIrrigation() const
 	{
 		if (GC.getImprovementInfo((ImprovementTypes)iI).isCarriesIrrigation())
 		{
-			if (canHaveImprovement(((ImprovementTypes)iI), NO_TEAM, true))
+			//if (canHaveImprovement(((ImprovementTypes)iI), NO_TEAM, true))
+			if (canHaveImprovement(((ImprovementTypes)iI), NO_TEAM, true, NO_BUILD, true)) // DarkLunaPhantom
 			{
 				return true;
 			}
@@ -2213,7 +2214,8 @@ bool CvPlot::canHaveBonus(BonusTypes eBonus, bool bIgnoreLatitude) const
 }
 
 
-bool CvPlot::canHaveImprovement(ImprovementTypes eImprovement, TeamTypes eTeam, bool bPotential) const
+//bool CvPlot::canHaveImprovement(ImprovementTypes eImprovement, TeamTypes eTeam, bool bPotential) const
+bool CvPlot::canHaveImprovement(ImprovementTypes eImprovement, TeamTypes eTeam, bool bPotential, BuildTypes eBuild, bool bAnyBuild) const // DarkLunaPhantom
 {
 	CvPlot* pLoopPlot;
 	bool bValid;
@@ -2230,6 +2232,9 @@ bool CvPlot::canHaveImprovement(ImprovementTypes eImprovement, TeamTypes eTeam, 
 ** K-Mod end
 */
 	FAssertMsg(getTerrainType() != NO_TERRAIN, "TerrainType is not assigned a valid value");
+	// DarkLunaPhantom
+	FAssertMsg(!bAnyBuild || eBuild == NO_BUILD, "expected: if bAnyBuild is true then eBuild is NO_BUILD");
+	FAssertMsg(eBuild == NO_BUILD || GC.getBuildInfo(eBuild).getImprovement() == eImprovement, "expected that eBuild matches eImprovement");
 
 	bValid = false;
 
@@ -2333,13 +2338,72 @@ bool CvPlot::canHaveImprovement(ImprovementTypes eImprovement, TeamTypes eTeam, 
 		}
 	}
 
-	for (iI = 0; iI < NUM_YIELD_TYPES; ++iI)
+	// DarkLunaPhantom begin - Sometimes the game thinks that an improvement cannot be built when it can. E.g. plains jungle yields 0 food so farm cannot be built
+	// as it requires 1 food, but farm can be built there by choping the jungle as the underlying plains terrain yields 1 food. My fix for fallout feature introduced
+	// many more such situations. Hopefully now the code takes negative feature yields into account properly.
+	/*for (iI = 0; iI < NUM_YIELD_TYPES; ++iI)
 	{
 		if (calculateNatureYield(((YieldTypes)iI), eTeam) < GC.getImprovementInfo(eImprovement).getPrereqNatureYield(iI))
 		{
 			return false;
 		}
+	}*/
+	
+	bool bFound = false;
+	bool bBuildable = false;
+	
+	if (eBuild == NO_BUILD && !bAnyBuild)
+	{
+		for (iI = 0; iI < NUM_YIELD_TYPES; ++iI)
+		{
+			if (calculateNatureYield(((YieldTypes)iI), eTeam) < GC.getImprovementInfo(eImprovement).getPrereqNatureYield(iI))
+			{
+				return false;
+			}
+		}
 	}
+	else if (eBuild != NO_BUILD)
+	{
+		for (iI = 0; iI < NUM_YIELD_TYPES; ++iI)
+		{
+			if (calculateNatureYield(((YieldTypes)iI), eTeam, GC.getBuildInfo(eBuild).isFeatureRemove(getFeatureType())) < GC.getImprovementInfo(eImprovement).getPrereqNatureYield(iI))
+			{
+				return false;
+			}
+		}
+	}
+	else
+	{
+		for (int i = 0; i < GC.getNumBuildInfos(); ++i)
+		{
+			CvBuildInfo& kBuild = GC.getBuildInfo((BuildTypes)i);
+			
+			if (kBuild.getImprovement() == eImprovement)
+			{
+				bBuildable = true;
+				bValid = true;
+				for (iI = 0; iI < NUM_YIELD_TYPES; ++iI)
+				{
+					if (calculateNatureYield(((YieldTypes)iI), eTeam, kBuild.isFeatureRemove(getFeatureType())) < GC.getImprovementInfo(eImprovement).getPrereqNatureYield(iI))
+					{
+						bValid = false;
+						break;
+					}
+				}
+				if (bValid)
+				{
+					bFound = true;
+					break;
+				}
+			}
+		}
+		
+		if (bBuildable && !bFound)
+		{
+			return false;
+		}
+	}
+	// DarkLunaPhantom end
 
 	if ((getTeam() == NO_TEAM) || !(GET_TEAM(getTeam()).isIgnoreIrrigation()))
 	{
@@ -2390,7 +2454,8 @@ bool CvPlot::canBuild(BuildTypes eBuild, PlayerTypes ePlayer, bool bTestVisible)
 
 	if (eImprovement != NO_IMPROVEMENT)
 	{
-		if (!canHaveImprovement(eImprovement, GET_PLAYER(ePlayer).getTeam(), bTestVisible))
+		//if (!canHaveImprovement(eImprovement, GET_PLAYER(ePlayer).getTeam(), bTestVisible))
+		if (!canHaveImprovement(eImprovement, GET_PLAYER(ePlayer).getTeam(), bTestVisible, eBuild)) // DarkLunaPhantom
 		{
 			return false;
 		}
@@ -9927,7 +9992,8 @@ bool CvPlot::canApplyEvent(EventTypes eEvent) const
 	{
 		if (NO_IMPROVEMENT != kEvent.getImprovement())
 		{
-			if (!canHaveImprovement((ImprovementTypes)kEvent.getImprovement(), getTeam()))
+			//if (!canHaveImprovement((ImprovementTypes)kEvent.getImprovement(), getTeam()))
+			if (!canHaveImprovement((ImprovementTypes)kEvent.getImprovement(), getTeam(), false, NO_BUILD, true)) // DarkLunaPhantom
 			{
 				return false;
 			}

@@ -16859,7 +16859,8 @@ int CvPlayer::getAdvancedStartImprovementCost(ImprovementTypes eImprovement, boo
 		if (bAdd)
 		{
 			// Valid Plot
-			if (!pPlot->canHaveImprovement(eImprovement, getTeam(), false))
+			//if (!pPlot->canHaveImprovement(eImprovement, getTeam(), false))
+			if (!pPlot->canHaveImprovement(eImprovement, getTeam(), false, NO_BUILD, true)) // DarkLunaPhantom
 			{
 				return -1;
 			}

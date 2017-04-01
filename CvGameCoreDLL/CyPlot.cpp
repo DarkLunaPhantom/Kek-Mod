@@ -163,9 +163,12 @@ bool CyPlot::canHaveBonus(int /*BonusTypes*/ eBonus, bool bIgnoreLatitude)
 	return m_pPlot ? m_pPlot->canHaveBonus((BonusTypes)eBonus, bIgnoreLatitude) : false;
 }
 
-bool CyPlot::canHaveImprovement(int /* ImprovementTypes */ eImprovement, int /*TeamTypes*/ eTeam, bool bPotential)
+// DarkLunaPhantom
+//bool CyPlot::canHaveImprovement(int /* ImprovementTypes */ eImprovement, int /*TeamTypes*/ eTeam, bool bPotential)
+bool CyPlot::canHaveImprovement(int /* ImprovementTypes */ eImprovement, int /*TeamTypes*/ eTeam, bool bPotential, int /*BuilTypes*/ eBuild, bool bAnyBuild)
 {
-	return m_pPlot ? m_pPlot->canHaveImprovement(((ImprovementTypes)eImprovement), ((TeamTypes)eTeam), bPotential) : false;
+	//return m_pPlot ? m_pPlot->canHaveImprovement(((ImprovementTypes)eImprovement), ((TeamTypes)eTeam), bPotential) : false;
+	return m_pPlot ? m_pPlot->canHaveImprovement(((ImprovementTypes)eImprovement), ((TeamTypes)eTeam), bPotential, ((BuildTypes)eBuild), bAnyBuild) : false;
 }
 
 bool CyPlot::canBuild(int /*BuildTypes*/ eBuild, int /*PlayerTypes*/ ePlayer, bool bTestVisible)

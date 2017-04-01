@@ -181,7 +181,8 @@ bool CvMapGenerator::canPlaceGoodyAt(ImprovementTypes eImprovement, int iX, int 
 
 	pPlot = GC.getMapINLINE().plotINLINE(iX, iY);
 
-	if (!(pPlot->canHaveImprovement(eImprovement, NO_TEAM))) 
+	//if (!(pPlot->canHaveImprovement(eImprovement, NO_TEAM))) 
+	if (!(pPlot->canHaveImprovement(eImprovement, NO_TEAM, false, NO_BUILD, true))) // DarkLunaPhantom
 	{
 		return false;
 	}
