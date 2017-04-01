@@ -3220,6 +3220,7 @@ bool CvUnit::canGift(bool bTestVisible, bool bTestTransport)
 	CvUnit* pTransport = getTransportUnit();
 	std::vector<CvUnit*> aCargoUnits;
 	getCargoUnits(aCargoUnits);
+	CvUnitInfo& kUnit = GC.getUnitInfo(getUnitType()); // DarkLunaPhantom
 
 	if (!(pPlot->isOwned()))
 	{
@@ -3256,8 +3257,6 @@ bool CvUnit::canGift(bool bTestVisible, bool bTestTransport)
 	
 	// DarkLunaPhantom begin - Disabled gifting foreign religion missionaries to theocracies (actually whenever non-state religion
 	// cannot spread to receiving player's cities) to stop exploit for religion spread.
-	// Also disabled gifting transports if some cargo unit cannot be gifted. (It should work in mods where cargo can have cargo.)
-	// Maybe all these things should be move somewhere where a message can be displayed explaining why these units cannot be gifted.
 	if(GET_PLAYER(pPlot->getOwnerINLINE()).isNoNonStateReligionSpread())
 	{
 		for (int iReligion = 0; iReligion < GC.getNumReligionInfos(); ++iReligion)
@@ -3269,20 +3268,71 @@ bool CvUnit::canGift(bool bTestVisible, bool bTestTransport)
 			}
 	}
 
-	// DarkLunaPhantom - This was supposed to stop the player from providing units to third parties to fight against rivals with whom
-	// the player has unbreakable (permanent or temporary) peace treaty, but I decided against it, for now. Partly because it doesn't
-	// work right and partly because this makes forced peace (from AP/UN) too powerful.
-	/*for (int iTeam = 0; iTeam < MAX_CIV_TEAMS; ++iTeam)
+	// DarkLunaPhantom - Stops the player from providing units to third parties to fight against rivals with whom the player has
+	// an unbreakable (permanent or temporary) peace treaty.
+	for (int iTeam = 0; iTeam < MAX_CIV_TEAMS; ++iTeam)
 		{
-			if(isCombat() && GET_TEAM(pPlot->getTeam()).isAtWar((TeamTypes)iTeam) && !GET_TEAM(getTeam()).isAtWar((TeamTypes)iTeam) && !GET_TEAM(getTeam()).canDeclareWar((TeamTypes)iTeam))
+			if (canCombat() && GET_TEAM(pPlot->getTeam()).isAtWar((TeamTypes)iTeam) && !GET_TEAM(getTeam()).isAtWar((TeamTypes)iTeam) && !GET_TEAM(getTeam()).canDeclareWar((TeamTypes)iTeam))
 			{
 				return false;
 			}
-		}*/
-		
+		}
+
+	// DarkLunaPhantom - Cannot gift unit if the receiving player doesn't have the required technologies.
+	if (!(GET_TEAM(pPlot->getTeam()).isHasTech((TechTypes)(kUnit.getPrereqAndTech()))))
+	{
+		return false;
+	}
+	
+	for (int i = 0; i < GC.getNUM_UNIT_AND_TECH_PREREQS(); ++i)
+	{
+		if (kUnit.getPrereqAndTechs(i) != NO_TECH)
+		{
+			if (!(GET_TEAM(pPlot->getTeam()).isHasTech((TechTypes)(kUnit.getPrereqAndTechs(i)))))
+			{
+				return false;
+			}
+		}
+	}
+	
+	if (NO_BONUS != kUnit.getPrereqAndBonus())
+	{
+		if (!GET_TEAM(pPlot->getTeam()).isHasTech((TechTypes)GC.getBonusInfo((BonusTypes)kUnit.getPrereqAndBonus()).getTechCityTrade()))
+		{
+			return false;
+		}
+	}
+	
+	bool bFound = false;
+	bool bRequires = false;
+	for (int i = 0; i < GC.getNUM_UNIT_PREREQ_OR_BONUSES(); ++i)
+	{
+		if (NO_BONUS != kUnit.getPrereqOrBonuses(i))
+		{
+			TechTypes eTech = (TechTypes)GC.getBonusInfo((BonusTypes)kUnit.getPrereqOrBonuses(i)).getTechCityTrade();
+			if (NO_TECH != eTech)
+			{
+				bRequires = true;
+				
+				if (GET_TEAM(pPlot->getTeam()).isHasTech(eTech))
+				{
+					bFound = true;
+					break;
+				}
+			}
+		}
+	}
+	
+	if (bRequires && !bFound)
+	{
+		return false;
+	}
+
+	// DarkLunaPhantom - Disabled gifting transports if some cargo unit cannot be gifted. (It should work in mods where cargo can have cargo.)
+	// Maybe all these things should be move somewhere where a message can be displayed explaining why these units cannot be gifted.
 	for (uint i = 0; i < aCargoUnits.size(); ++i)
 	{
-		if(!aCargoUnits[i]->canGift(false, false))
+		if (!aCargoUnits[i]->canGift(false, false))
 		{
 			return false;
 		}
@@ -3352,7 +3402,9 @@ void CvUnit::gift(bool bTestTransport)
 		kRecievingPlayer.AI_changeMemoryCount(eOwner, MEMORY_GIVE_HELP, 1);
 	}
 	// Note: I'm not currently considering special units with < 0 production cost.
-	if (pGiftUnit->isCombat())
+	// DarkLunaPhantom - isCombat() checks whether the unit is *currently* in combat, not whether it is a combat unit.
+	//if (pGiftUnit->isCombat())
+	if (pGiftUnit->canCombat())
 	{
 		int iEffectiveWarRating = plot()->area()->getAreaAIType(kRecievingPlayer.getTeam()) != AREAAI_NEUTRAL
 			? GET_TEAM(kRecievingPlayer.getTeam()).AI_getWarSuccessRating()
@@ -8731,6 +8783,13 @@ bool CvUnit::canSiege(TeamTypes eTeam) const
 
 	return true;
 }
+
+// DarkLunaPhantom - Added function for checking whether a unit is a combat unit.
+bool CvUnit::canCombat() const
+{
+	return (baseCombatStr() > 0 || airBaseCombatStr() > 0 || nukeRange() != -1);
+}
+// DarkLunaPhantom end
 
 
 int CvUnit::airBaseCombatStr() const

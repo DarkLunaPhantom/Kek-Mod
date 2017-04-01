@@ -339,6 +339,7 @@ public:
 	bool canAttack(const CvUnit& defender) const;
 	bool canDefend(const CvPlot* pPlot = NULL) const;																	// Exposed to Python
 	bool canSiege(TeamTypes eTeam) const;																							// Exposed to Python
+	bool canCombat() const; // DarkLunaPhantom
 
 	int airBaseCombatStr() const;																						// Exposed to Python
 	int airMaxCombatStr(const CvUnit* pOther) const;																						// Exposed to Python
