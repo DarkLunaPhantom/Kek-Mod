@@ -778,8 +778,6 @@ class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
 		self.ltPlayerMet = [False] * gc.getMAX_PLAYERS()
 
 		for iLoopPlayer in range(gc.getMAX_PLAYERS()):
-			if (self.bRestrictLeaders and not(iLoopPlayer in self.listSelectedLeaders)):
-						continue
 			if (gc.getPlayer(iLoopPlayer).isAlive()
 			and (gc.getTeam(gc.getPlayer(iLoopPlayer).getTeam()).isHasMet(gc.getPlayer(self.iActiveLeader).getTeam())
 			or gc.getGame().isDebugMode())
@@ -790,8 +788,6 @@ class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
 				self.ltPlayerMet [iLoopPlayer] = True
 
 				for nHost in range(gc.getMAX_PLAYERS()):
-					if (self.bRestrictLeaders and not(nHost in self.listSelectedLeaders)):
-						continue
 					if (gc.getPlayer(nHost).isAlive()
 					and nHost != self.iActiveLeader
 					and (gc.getTeam(gc.getPlayer(nHost).getTeam()).isHasMet(gc.getPlayer(self.iActiveLeader).getTeam())
@@ -859,6 +855,8 @@ class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
 
 			nCount = 1
 			for j in range (gc.getMAX_PLAYERS()):
+				if (self.bRestrictLeaders and not(j in self.listSelectedLeaders)):
+					continue
 				if self.ltPlayerMet[j]:
 					if j != self.iActiveLeader:
 						szName = self.getNextWidgetName()
