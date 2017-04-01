@@ -9588,12 +9588,41 @@ VoteTriggeredData* CvGame::addVoteTriggered(VoteSourceTypes eVoteSource, const V
 			{
 				if (kPlayer.isHuman())
 				{
-					CvPopupInfo* pInfo = new CvPopupInfo(BUTTONPOPUP_DIPLOVOTE);
-					if (NULL != pInfo)
+					// DarkLunaPhantom - Human vassals are forced to vote for their master in the same manner as AI vassals are.
+					bool bForced = false;
+					
+					if (GC.getGameINLINE().isTeamVote(kOptionData.eVote))
 					{
-						pInfo->setData1(pData->getID());
-						gDLL->getInterfaceIFace()->addPopup(pInfo, (PlayerTypes)iI);
+						for (int iJ = 0; iJ < MAX_TEAMS; iJ++)
+						{
+							if (GET_TEAM((TeamTypes)iJ).isAlive())
+							{
+								if (GC.getGameINLINE().isTeamVoteEligible((TeamTypes)iJ, eVoteSource))
+								{
+									if (GET_TEAM(kPlayer.getTeam()).isVassal((TeamTypes)iJ))
+									{
+										if (!GC.getGameINLINE().isTeamVoteEligible(kPlayer.getTeam(), eVoteSource))
+										{
+											castVote(((PlayerTypes)iI), pData->getID(), GET_PLAYER((PlayerTypes)iI).AI_diploVote(kOptionData, eVoteSource, false));
+											bForced = true;
+											break;
+										}
+									}
+								}
+							}
+						}
 					}
+					
+					if (!bForced)
+					{
+						CvPopupInfo* pInfo = new CvPopupInfo(BUTTONPOPUP_DIPLOVOTE);
+						if (NULL != pInfo)
+						{
+							pInfo->setData1(pData->getID());
+							gDLL->getInterfaceIFace()->addPopup(pInfo, (PlayerTypes)iI);
+						}
+					}
+					// DarkLunaPhantom - end
 				}
 				else
 				{
