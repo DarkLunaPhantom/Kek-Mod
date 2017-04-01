@@ -6828,6 +6828,12 @@ void CvCityAI::AI_getYieldMultipliers(int &iFoodMultiplier, int &iProductionMult
 	{
 		iFoodMultiplier = 10000 / (200 - iFoodMultiplier);
 	}
+	
+	// DarkLunaPhantom - Commerce is useless to barbarians and they tend to build a lot of commerce improvements because they're formally always in the negative with their income.
+	if (GET_PLAYER(getOwnerINLINE()).isBarbarian())
+	{
+		iCommerceMultiplier = 0;
+	}
 }
 
 int CvCityAI::AI_getImprovementValue(CvPlot* pPlot, ImprovementTypes eImprovement, int iFoodPriority, int iProductionPriority, int iCommercePriority, int iDesiredFoodChange, int iClearFeatureValue, bool bEmphasizeIrrigation, BuildTypes* peBestBuild) const

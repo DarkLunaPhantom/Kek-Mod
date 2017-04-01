@@ -12800,7 +12800,9 @@ int CvPlayer::getHurryCount(HurryTypes eIndex) const
 
 bool CvPlayer::canHurry(HurryTypes eIndex) const
 {
-	return (getHurryCount(eIndex) > 0);
+	// DarkLunaPhantom - Enabled hurrying production for barbarians. Although I don't think that they really use it.
+	//return (getHurryCount(eIndex) > 0)
+	return (getHurryCount(eIndex) > 0 || isBarbarian());
 }
 
 
