@@ -7052,11 +7052,15 @@ void CvGame::createBarbarianUnits()
 
 									if (bValid)
 									{
-										if (pLoopArea->isWater() && kUnit.getDomainType() != DOMAIN_SEA)
+										// DarkLunaPhantom begin - Unit must have appropriate AI type.
+										//if (pLoopArea->isWater() && kUnit.getDomainType() != DOMAIN_SEA)
+										if (pLoopArea->isWater() && (kUnit.getDomainType() != DOMAIN_SEA || (!kUnit.getUnitAIType(UNITAI_ATTACK_SEA) && !kUnit.getUnitAIType(UNITAI_ASSAULT_SEA) && !kUnit.getUnitAIType(UNITAI_PIRATE_SEA))))
 										{
 											bValid = false;
 										}
-										else if (!pLoopArea->isWater() && kUnit.getDomainType() != DOMAIN_LAND)
+										//else if (!pLoopArea->isWater() && kUnit.getDomainType() != DOMAIN_LAND)
+										else if (!pLoopArea->isWater() && (kUnit.getDomainType() != DOMAIN_LAND || !kUnit.getUnitAIType(UNITAI_ATTACK)))
+										// DarkLunaPhantom end
 										{
 											bValid = false;
 										}
