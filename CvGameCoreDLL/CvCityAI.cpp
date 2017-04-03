@@ -7710,10 +7710,11 @@ void CvCityAI::AI_doHurry(bool bForce)
 
 	const CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
 	
-	if (kOwner.isBarbarian())
+	// DarkLunaPhantom - Enabled hurrying for barbarians.
+	/*if (kOwner.isBarbarian())
 	{
 		return;
-	}
+	}*/
 
 	if (getProduction() == 0 && !bForce)
 	{
@@ -11568,6 +11569,12 @@ void CvCityAI::AI_updateSpecialYieldMultiplier()
 			m_aiSpecialYieldMultiplier[YIELD_PRODUCTION] /= 120;
 		}
 		m_aiSpecialYieldMultiplier[YIELD_PRODUCTION] -= 100;
+	}
+	
+	// DarkLunaPhantom - Commerce is useless to barbarians and they tend to work commerce-heavy plots because they're always in the negative with their income.
+	if (GET_PLAYER(getOwnerINLINE()).isBarbarian())
+	{
+		m_aiSpecialYieldMultiplier[YIELD_COMMERCE] = -100;
 	}
 }
 
