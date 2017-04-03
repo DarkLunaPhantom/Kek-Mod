@@ -15820,7 +15820,7 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 				{
 					CvUnit* pUnit = ::getUnit(pUnitNode->m_data);
 
-					iCost = getAdvancedStartUnitCost(pUnit->getUnitType(), false);
+					iCost = getAdvancedStartUnitCost(pUnit->getUnitType(), false, pPlot); // DarkLunaPhantom - pPlot was missing
 					FAssertMsg(iCost != -1, "If this is -1 then that means it's going to try to delete a unit which shouldn't exist");
 					pUnit->kill(false);
 					changeAdvancedStartPoints(iCost);
