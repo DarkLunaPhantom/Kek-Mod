@@ -2366,7 +2366,7 @@ bool CvPlot::canHaveImprovement(ImprovementTypes eImprovement, TeamTypes eTeam, 
 	{
 		for (iI = 0; iI < NUM_YIELD_TYPES; ++iI)
 		{
-			if (calculateNatureYield(((YieldTypes)iI), eTeam, GC.getBuildInfo(eBuild).isFeatureRemove(getFeatureType())) < GC.getImprovementInfo(eImprovement).getPrereqNatureYield(iI))
+			if (calculateNatureYield(((YieldTypes)iI), eTeam, getFeatureType() == NO_FEATURE || GC.getBuildInfo(eBuild).isFeatureRemove(getFeatureType())) < GC.getImprovementInfo(eImprovement).getPrereqNatureYield(iI))
 			{
 				return false;
 			}
@@ -2384,7 +2384,7 @@ bool CvPlot::canHaveImprovement(ImprovementTypes eImprovement, TeamTypes eTeam, 
 				bValid = true;
 				for (iI = 0; iI < NUM_YIELD_TYPES; ++iI)
 				{
-					if (calculateNatureYield(((YieldTypes)iI), eTeam, kBuild.isFeatureRemove(getFeatureType())) < GC.getImprovementInfo(eImprovement).getPrereqNatureYield(iI))
+					if (calculateNatureYield(((YieldTypes)iI), eTeam, getFeatureType() == NO_FEATURE || kBuild.isFeatureRemove(getFeatureType())) < GC.getImprovementInfo(eImprovement).getPrereqNatureYield(iI))
 					{
 						bValid = false;
 						break;
