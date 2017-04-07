@@ -11304,6 +11304,34 @@ void CvPlayer::setTurnActive(bool bNewValue, bool bDoTurn)
 					}
 				}
 			}
+			// DarkLunaPhantom - Force AI to play their advanced start during turn 0 in advanced start simultaneous turn game to fix year founded display of their cities.
+			// Previously it showed 3960BC when it was supposed to be 4000BC.
+			else
+			{
+				if (GC.getGameINLINE().getElapsedGameTurns() == 0 && GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_START) && isHuman() && !GC.getGameINLINE().isInAdvancedStart())
+				{
+					int aiShuffle[MAX_PLAYERS];
+
+					shuffleArray(aiShuffle, MAX_PLAYERS, GC.getGameINLINE().getSorenRand());
+					std::set<TeamTypes> active_teams; // K-Mod.
+
+					for (int iI = 0; iI < MAX_PLAYERS; iI++)
+					{
+						PlayerTypes eLoopPlayer = (PlayerTypes)aiShuffle[iI];
+
+						CvPlayer& kLoopPlayer = GET_PLAYER(eLoopPlayer);
+						if (kLoopPlayer.isAlive() && !kLoopPlayer.isHuman())
+						{
+							// K-Mod. call CvTeam::doTurn when the first player from each team is activated.
+							if (active_teams.insert(kLoopPlayer.getTeam()).second && !GET_TEAM(kLoopPlayer.getTeam()).isHuman())
+							GET_TEAM(kLoopPlayer.getTeam()).doTurn();
+							// K-Mod end
+							kLoopPlayer.setTurnActive(true);
+						}
+					}
+				}
+			}
+			// DarkLunaPhantom end
 		}
 	}
 
