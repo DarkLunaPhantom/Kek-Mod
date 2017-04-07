@@ -9764,6 +9764,12 @@ int CvCityAI::AI_jobChangeValue(std::pair<bool, int> new_job, std::pair<bool, in
 
 			iGPPValue /= (1 + iEmphasisCount);
 
+			// DarkLunaPhantom - Barbarians shouldn't value GPP.
+			if (GET_PLAYER(getOwnerINLINE()).isBarbarian())
+			{
+				iGPPValue = 0;
+			}
+			
 			iTotalValue += iGPPValue;
 
 			// Evaluate military experience from specialists
