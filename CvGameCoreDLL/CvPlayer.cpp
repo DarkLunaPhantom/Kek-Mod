@@ -11308,7 +11308,7 @@ void CvPlayer::setTurnActive(bool bNewValue, bool bDoTurn)
 			// Previously it showed 3960BC when it was supposed to be 4000BC.
 			else
 			{
-				if (GC.getGameINLINE().getElapsedGameTurns() == 0 && GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_START) && isHuman() && !GC.getGameINLINE().isInAdvancedStart())
+				if (GC.getGameINLINE().getElapsedGameTurns() == 0 && GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_START) && !GC.getGameINLINE().isInAdvancedStart())
 				{
 					int aiShuffle[MAX_PLAYERS];
 
@@ -11320,11 +11320,12 @@ void CvPlayer::setTurnActive(bool bNewValue, bool bDoTurn)
 						PlayerTypes eLoopPlayer = (PlayerTypes)aiShuffle[iI];
 
 						CvPlayer& kLoopPlayer = GET_PLAYER(eLoopPlayer);
-						if (kLoopPlayer.isAlive() && !kLoopPlayer.isHuman())
+						if (kLoopPlayer.isAlive() && kLoopPlayer.getAdvancedStartPoints() >= 0)
 						{
+							// DarkLunaPhantom - Disabled this because it's not necessary and it's complicated to do it right.
 							// K-Mod. call CvTeam::doTurn when the first player from each team is activated.
-							if (active_teams.insert(kLoopPlayer.getTeam()).second && !GET_TEAM(kLoopPlayer.getTeam()).isHuman())
-							GET_TEAM(kLoopPlayer.getTeam()).doTurn();
+							//if (active_teams.insert(kLoopPlayer.getTeam()).second && !GET_TEAM(kLoopPlayer.getTeam()).isHuman())
+							//GET_TEAM(kLoopPlayer.getTeam()).doTurn();
 							// K-Mod end
 							kLoopPlayer.setTurnActive(true);
 						}
