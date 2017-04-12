@@ -138,6 +138,7 @@ public:
 	void doTurnUnits();
 
 	void verifyCivics();
+	void verifyStateReligion(); // DarkLunaPhantom
 
 	void updatePlotGroups();
 

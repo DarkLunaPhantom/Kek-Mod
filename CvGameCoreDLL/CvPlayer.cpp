@@ -3467,6 +3467,7 @@ void CvPlayer::doTurn()
 	}
 
 	verifyCivics();
+	verifyStateReligion(); // DarkLunaPhantom
 
 	updateTradeRoutes();
 
@@ -3603,6 +3604,19 @@ void CvPlayer::verifyCivics()
 					}
 				}
 			}
+		}
+	}
+}
+
+
+// DarkLunaPhantom
+void CvPlayer::verifyStateReligion()
+{
+	if (!isAnarchy())
+	{
+		if (!canDoReligion(getStateReligion()))
+		{
+			setLastStateReligion(NO_RELIGION);
 		}
 	}
 }
