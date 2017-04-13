@@ -175,6 +175,11 @@ public:
 	bool isDefending();
 	bool isCombat();
 
+//Added in Final Frontier: TC01
+	bool isStarbase();
+	bool isOtherStation();
+//End of Final Frontier
+
 	int maxHitPoints();
 	int currHitPoints();
 	bool isHurt();
@@ -245,8 +250,15 @@ public:
 	int terrainDefenseModifier(int /*TerrainTypes*/ eTerrain);
 	int featureAttackModifier(int /*FeatureTypes*/ eFeature);
 	int featureDefenseModifier(int /*FeatureTypes*/ eFeature);
+	int featureDamageModifier(int /*FeatureTypes*/ eFeature); // FFP
 	int unitClassAttackModifier(int /*UnitClassTypes*/ eUnitClass);
 	int unitClassDefenseModifier(int /*UnitClassTypes*/ eUnitClass);
+
+	// < Unit Combat Attack Defense Mod Start >
+	int unitCombatAttackModifier(int /*UnitCombatTypes*/ eUnitCombat);
+	int unitCombatDefenseModifier(int /*UnitCombatTypes*/ eUnitCombat);
+	// < Unit Combat Attack Defense Mod End   >
+
 	int unitCombatModifier(int /*UnitCombatTypes*/ eUnitCombat);
 	int domainModifier(int /*DomainTypes*/ eDomain);
 
@@ -382,6 +394,7 @@ public:
 	int getExtraTerrainDefensePercent(int /*TerrainTypes*/ eIndex);
 	int getExtraFeatureAttackPercent(int /*FeatureTypes*/ eIndex);
 	int getExtraFeatureDefensePercent(int /*FeatureTypes*/ eIndex);
+	int getExtraFeatureDamagePercent(int /*FeatureTypes*/ eIndex); // FFP
 	int getExtraUnitCombatModifier(int /*UnitCombatTypes*/ eIndex);
 
 	bool canAcquirePromotion(int /*PromotionTypes*/ ePromotion);
@@ -395,6 +408,8 @@ public:
 
 	const CvArtInfoUnit* getArtInfo(int i, EraTypes eEra) const;
 	std::string getButton() const;
+
+	std::string getMovementSound() const;		//Added in Final Frontier: TC02
 
 	// Python Helper Functions
 
