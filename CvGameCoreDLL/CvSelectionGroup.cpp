@@ -195,7 +195,13 @@ void CvSelectionGroup::doTurn()
 		//		or on sentry and there is danger
 		if (eActivityType == ACTIVITY_HOLD ||
 			(eActivityType == ACTIVITY_HEAL && (AI_isControlled() || !bHurt)) ||
-			(eActivityType == ACTIVITY_SENTRY && sentryAlert()))
+//Added in Final Frontier Plus: TC01
+			// +jlc: code for new sentry orders 
+			// ((eActivityType == ACTIVITY_SENTRY) && (sentryAlert())))
+			((eActivityType == ACTIVITY_SENTRY) && (sentryAlert())) ||
+			((eActivityType == ACTIVITY_SENTRY_WHILE_HEAL) && (sentryAlert() || (AI_isControlled() || !bHurt))))
+			// -jlc
+//End of Final Frontier Plus
 		{
 			setActivityType(ACTIVITY_AWAKE);
 		}
@@ -631,6 +637,7 @@ CvPlot* CvSelectionGroup::lastMissionPlot()
 		case MISSION_SEAPATROL:
 		case MISSION_HEAL:
 		case MISSION_SENTRY:
+		case MISSION_SENTRY_WHILE_HEAL:			//Added in Final Frontier Plus: TC01 (source: Pep's Unit Orders)
 		case MISSION_AIRLIFT:
 		case MISSION_NUKE:
 		case MISSION_RECON:
@@ -808,6 +815,14 @@ void CvSelectionGroup::startMission()
 			bNotify = true;
 			bDelete = true;
 			break;
+			
+//Added in Final Frontier Plus: TC01 (source: Pep's Unit Orders)
+		case MISSION_SENTRY_WHILE_HEAL:
+			setActivityType(ACTIVITY_SENTRY_WHILE_HEAL);
+			bNotify = true;
+			bDelete = true;
+			break;
+//End of Final Frontier Plus
 
 		case MISSION_AIRLIFT:
 		case MISSION_NUKE:
@@ -957,6 +972,7 @@ void CvSelectionGroup::startMission()
 				case MISSION_SEAPATROL:
 				case MISSION_HEAL:
 				case MISSION_SENTRY:
+				case MISSION_SENTRY_WHILE_HEAL:			//Added in Final Frontier Plus: TC01 (source: Pep's Unit Orders)
 				case MISSION_PILLAGE:
 				case MISSION_BUILD:
 					pUnitNode = 0; // K-Mod. Nothing to do, so we might as well abort the unit loop.
@@ -1418,6 +1434,7 @@ bool CvSelectionGroup::continueMission_bulk(int iSteps)
 				case MISSION_SEAPATROL:
 				case MISSION_HEAL:
 				case MISSION_SENTRY:
+				case MISSION_SENTRY_WHILE_HEAL:			//Added in Final Frontier Plus: TC01 (source: Pep's Unit Orders)
 					FAssert(false);
 					break;
 
@@ -1505,6 +1522,7 @@ bool CvSelectionGroup::continueMission_bulk(int iSteps)
 			case MISSION_SEAPATROL:
 			case MISSION_HEAL:
 			case MISSION_SENTRY:
+			case MISSION_SENTRY_WHILE_HEAL:			//Added in Final Frontier Plus: TC01 (source: Pep's Unit Orders)
 				FAssert(false);
 				break;
 
@@ -2194,6 +2212,7 @@ bool CvSelectionGroup::isWaiting() const
 		      (getActivityType() == ACTIVITY_SLEEP) ||
 					(getActivityType() == ACTIVITY_HEAL) ||
 					(getActivityType() == ACTIVITY_SENTRY) ||
+					(getActivityType() == ACTIVITY_SENTRY_WHILE_HEAL) ||		//Added in Fnial Frontier Plus: TC01 (source: Pep's Unit Orders)
 					(getActivityType() == ACTIVITY_PATROL) ||
 					(getActivityType() == ACTIVITY_PLUNDER) ||
 					(getActivityType() == ACTIVITY_INTERCEPT)); */
@@ -3872,6 +3891,15 @@ bool CvSelectionGroup::canDoMission(int iMission, int iData1, int iData2, CvPlot
 			if (pLoopUnit->canSentry(pPlot))
 				return true;
 			break;
+			
+//Added in Final Frontier Plus: TC01 (source: Pep's Unit Orders)
+		case MISSION_SENTRY_WHILE_HEAL:
+			if ((pLoopUnit->canSentry(pPlot)) && (pLoopUnit->canHeal(pPlot)))
+			{
+				return true;
+			}
+			break;
+//End of Final Frontier Plus
 
 		case MISSION_AIRLIFT:
 			if (pLoopUnit->canAirliftAt(pPlot, iData1, iData2) && (!bCheckMoves || pLoopUnit->canMove()))
