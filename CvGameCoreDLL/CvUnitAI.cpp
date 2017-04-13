@@ -2576,7 +2576,11 @@ void CvUnitAI::AI_attackMove()
 			{
 				if (area()->getNumUnrevealedTiles(getTeam()) > 0)
 				{
-					if (kOwner.AI_areaMissionAIs(area(), MISSIONAI_EXPLORE, getGroup()) < (kOwner.AI_neededExplorers(area()) + 1))
+/** FFP AI mod : too many attack units out exploring - start
+ **		This was pushing the number up to 1 more than the AI_neededExplorers function said was needed
+ **		so remove the "+ 1" **/
+					if (kOwner.AI_areaMissionAIs(area(), MISSIONAI_EXPLORE, getGroup()) < (kOwner.AI_neededExplorers(area())/* + 1*/))
+/** FFP AI mod : too many attack units out exploring - end **/
 					{
 						if (AI_exploreRange(3))
 						{
@@ -2654,6 +2658,13 @@ void CvUnitAI::AI_attackMove()
 		if (AI_handleStranded())
 			return;
 		// K-Mod end
+		
+/** FFP AImod : group with carrier if nothing else going on - start **/
+		if (AI_group(UNITAI_CARRIER_SEA, /*iMaxGroup*/ 4, /*iMaxOwnUnitAI*/ 2, -1, true, false, false, /*iMaxPath*/ 5))
+		{
+			return;
+		}
+/** FFP AImod : group with carrier if nothing else going on - end **/
 
 		/* if( !bDanger && !isHuman() && plot()->isCoastalLand() && kOwner.AI_unitTargetMissionAIs(this, MISSIONAI_PICKUP) > 0 )
 		{
@@ -2676,6 +2687,21 @@ void CvUnitAI::AI_attackMove()
 		{
 			return;
 		}
+		
+/** FFP AImod: units doing nothing should return to a city - start
+ **		Attack units are sometimes left sitting outside their borders for no good reason.
+ **		These are typically units that were hijacked into the explore mission AI who have reached
+ **		their destination. So this code has been added to eventually have them return to a city
+ **		if they are not doing anything. **/
+
+		if ((plot()->getOwnerINLINE() != getOwnerINLINE()) && (GC.getGameINLINE().getSorenRandNum(5, "FFP units go home") == 0))
+		{
+			if (AI_guardCity(false, true, 33))
+			{
+				return;
+			}
+		}
+/** FFP AImod: units doing nothing should return to a city - end **/
 	}
 
 	getGroup()->pushMission(MISSION_SKIP);
@@ -4325,6 +4351,13 @@ void CvUnitAI::AI_counterMove()
 	{
 		return;
 	}
+	
+/** FFP AImod : group with carrier if nothing else going on - start **/
+	if (AI_group(UNITAI_CARRIER_SEA, /*iMaxGroup*/ 4, /*iMaxOwnUnitAI*/ 2, -1, true, false, false, /*iMaxPath*/ 5))
+	{
+		return;
+	}
+/** FFP AImod : group with carrier if nothing else going on - end **/
 
 	if (AI_retreatToCity())
 	{
@@ -8902,7 +8935,12 @@ void CvUnitAI::AI_carrierSeaMove()
 		return;
 	}
 
+/** FFP AI mod : change carrier group composition check - start
+ **	original code:
 	if (getGroup()->countNumUnitAIType(UNITAI_ATTACK_SEA) + getGroup()->countNumUnitAIType(UNITAI_ESCORT_SEA) == 0)
+ ** new code: **/
+	if (getGroup()->countNumUnitAIType(UNITAI_ATTACK) + getGroup()->countNumUnitAIType(UNITAI_COUNTER) == 0)
+/** FFP AI mod : change carrier group composition check - end **/
 	{
 		if (plot()->isCity() && plot()->getOwnerINLINE() == getOwnerINLINE())
 		{
@@ -8922,10 +8960,15 @@ void CvUnitAI::AI_carrierSeaMove()
 			return;
 		}
 
+/** FFP AI mod : skip carrier blockade check - start
+ **		(currently) a blockade is a sea type thing that is irrelevant to FFP
+ **		therefore don't spend all taht time looping over all plots and such...
+ **		snip: 
 		if (AI_blockade())
 		{
 			return;
 		}
+ ** FFP AI mod : skip carrier blockade check - end **/
 
 		if (AI_shadow(UNITAI_ASSAULT_SEA))
 		{
@@ -9725,8 +9768,26 @@ void CvUnitAI::AI_missileAirMove()
 			return;
 		}
 		
-		getGroup()->pushMission(MISSION_SKIP);
-		return;
+/** FFP AImod: rebase missiles off starbases sometimes - start 
+ **		starbases are now using UNITAI_CARRIER_SEA, so that is how we know
+ **		that it is on a starbase **/
+		//getGroup()->pushMission(MISSION_SKIP);
+		//return;
+		if (getTransportUnit()->AI_getUnitAIType() == UNITAI_CARRIER_SEA)
+		{ 
+			iRand = GC.getGameINLINE().getSorenRandNum(5, "AI Air Missile move off starbases");
+			if (iRand != 0)
+			{
+				getGroup()->pushMission(MISSION_SKIP);
+				return;
+			}
+		}
+		else
+		{
+			getGroup()->pushMission(MISSION_SKIP);
+			return;
+		}
+/** FFP AImod: rebase missiles off starbases sometimes - end **/
 	}
 	
 	if (AI_airStrike())
@@ -9748,6 +9809,45 @@ void CvUnitAI::AI_missileAirMove()
 	{
 		return;
 	}
+	
+/** FFP AImod - start
+/**		load missiles onto units with more unit AI types	
+/** new code: **/
+	if (AI_missileLoad(UNITAI_ATTACK_CITY)) // as many as it can hold
+	{
+		return;
+	}
+
+	if (AI_missileLoad(UNITAI_ATTACK, 1))
+	{
+		return;
+	}
+
+	if (AI_missileLoad(UNITAI_COLLATERAL, 1))
+	{
+		return;
+	}
+
+	if (AI_missileLoad(UNITAI_PILLAGE, 1))
+	{
+		return;
+	}
+
+	if (AI_missileLoad(UNITAI_COUNTER, 1))
+	{
+		return;
+	}
+	
+	if (AI_missileLoad(UNITAI_EXPLORE, 1))
+	{
+		return;
+	}
+	
+	if (AI_missileLoad(UNITAI_RESERVE, 1))
+	{
+		return;
+	}
+/** FFP AImod - end **/
 
 	/* if (AI_airBombDefenses())
 	{
@@ -10800,6 +10900,36 @@ bool CvUnitAI::AI_omniGroup(UnitAITypes eUnitAI, int iMaxGroup, int iMaxOwnUnitA
 	if (!AI_canGroupWithAIType(eUnitAI))
 		return false;
 
+/** FFP AImod : don't let units that can't move due to terrain issues join groups - start
+ **		This is mostly for the B5 mod's planetary defense troops which are prevented from
+ **		wandering around space by making the unit unable to move onto the space terrain
+ **		via a TerrainImpassable of TERRAIN_TUNDRA. The AI loves to group these troops,
+ **		with their city defense unit AI type, with settlers... Oops.
+ **	Note that there are some standard checks that are bsing skipped due to the nature of the FFP map
+ ** (it is all one land area).
+ **/
+	int iI;
+	CvPlot* pLoopPlot;
+	bool bContinue = false;
+	for (iI = 0; iI < NUM_DIRECTION_TYPES; iI++)
+	{
+		pLoopPlot = plotDirection(getX_INLINE(), getY_INLINE(), ((DirectionTypes)iI));
+
+		if (pLoopPlot != NULL)
+		{
+			if (canMoveInto(pLoopPlot))
+			{	// Just one adjacent plot we can enter is good enough to pass this test.
+				bContinue = true;
+				break;
+			}
+		}
+	}
+	if (!bContinue)
+	{
+		return false;
+	}
+/** FFP AImod : don't let units that can't move due to terrain issues join groups - end **/
+	
 	if (getDomainType() == DOMAIN_LAND && !canMoveAllTerrain())
 	{
 		if (area()->getNumAIUnits(getOwnerINLINE(), eUnitAI) == 0)
@@ -12466,7 +12596,14 @@ bool CvUnitAI::AI_heal(int iDamagePercent, int iMaxPath)
 	{
 	    if (getDamage() > 0)
         {
-        	
+		// DarkLunaPhantom - Merged with K-Mod changes.
+/** FFP AImod: let the poor lone units heal (sometimes) - start
+ **	The original code only allows a lone unit to heal if it is in a city or can heal in 1 turn
+ **	this is why all those dumb explorering units wander through damaging features and then never
+ ** stop to heal once they are out.
+ ** Ideally the new code would take into account nearby danger and check the surrounding plots for
+ ** defensive bonuses to pick a spot to heal, but it doesn't.
+ ** original code:
             if (plot()->isCity() || (healTurns(plot()) == 1))
             {
                 if (!(isAlwaysHeal()))
@@ -12475,6 +12612,33 @@ bool CvUnitAI::AI_heal(int iDamagePercent, int iMaxPath)
                     return true;
                 }
             }
+ ** end original code, start new code **/
+			if (!isAlwaysHeal())
+            {
+				if (plot()->isCity())
+                { // if we are in a city already: heal
+                    getGroup()->pushMission(MISSION_HEAL, -1, -1, 0, false, false, MISSIONAI_HEAL);;
+                    return true;
+				}
+				else if (healTurns(plot()) > 1)
+				{
+					if (AI_moveIntoCity(1))
+					{ // if we are very near a friendly city: move there (done in the above call) - next turn(ish) we will be in a city and therefore heal				
+						return true;
+					}
+					else if (GC.getGameINLINE().getSorenRandNum(4, "AI lone unit heal") == 0)
+					{ // 1 in 4 chance regardless of how long it will take: heal
+						getGroup()->pushMission(MISSION_HEAL, -1, -1, 0, false, false, MISSIONAI_HEAL);;
+						return true;
+					}
+				}
+				else
+				{ // not in a city and not more than 1 turn to heal (therefore 1 turn to heal)
+                    getGroup()->pushMission(MISSION_HEAL, -1, -1, 0, false, false, MISSIONAI_HEAL);;
+                    return true;
+				}
+			}
+/** FFP AImod: let the poor lone units heal (sometimes) - end **/
         }
         return false;
 	}
@@ -21732,7 +21896,18 @@ bool CvUnitAI::AI_airStrike(int iThreshold)
 
 	int iSearchRange = airRange();
 
+	// DarkLunaPhantom - Merged with K-Mod changes.
+/** FFP AImod - start
+/**		The missiles are pretty weak in FFP so the AI rarely uses them.
+/**		- Adjust the minimum target value down:
+/**			slightly if the free missiles from starabses option is off
+/**			signifcantly if that option is on as some of them are free
+/** original code:
 	int iBestValue = iThreshold + isSuicide() && m_pUnitInfo->getProductionCost() > 0 ? m_pUnitInfo->getProductionCost() * 5 / 6 : 0;
+/** new code: **/
+	int iValue = GC.getGameINLINE().isOption(GAMEOPTION_NO_STARBASE_MISSILES) ? 7 : 10; // using iValue for my own purposes here
+	int iBestValue = iThreshold + isSuicide() && m_pUnitInfo->getProductionCost() > 0 ? m_pUnitInfo->getProductionCost() * 5 / iValue : 0;
+/** FFP AImod - end **/
 	CvPlot* pBestPlot = NULL;
 	bool bBombard = false; // K-Mod. bombard (city / improvement), rather than air strike (damage)
 
@@ -24916,6 +25091,13 @@ bool CvUnitAI::AI_allowGroup(const CvUnit* pUnit, UnitAITypes eUnitAI) const
 	{
 		return false;
 	}
+	
+/** FFP AImod : do not allow units to group with a unit that is DOMAIN_IMMOBILE - start **/
+	if (pUnit->getDomainType() == DOMAIN_IMMOBILE)
+	{
+		return false;
+	}
+/** FFP AImod : do not allow units to group with a unit that is DOMAIN_IMMOBILE - end **/
 
 	if (!pUnit->isGroupHead())
 	{
