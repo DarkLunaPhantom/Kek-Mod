@@ -481,6 +481,12 @@ public:
 
 	std::string getScriptData() const;
 	void setScriptData(std::string szNewValue);
+	
+//Added in Final Frontier: TC01
+	int getFoodOverride() const;
+	int getProductionOverride() const;
+	int getGoldOverride() const;
+//End of Final Frontier
 
 private:
 	CvCity* m_pCity;

@@ -2280,3 +2280,20 @@ void CyCity::liberate(bool bConquest)
 		m_pCity->liberate(bConquest);
 	}
 }
+
+//Added in Final Frontier: TC01
+int CyCity::getFoodOverride() const
+{
+	return m_pCity ? m_pCity->getFoodOverride() : 0;
+}
+
+int CyCity::getProductionOverride() const
+{
+	return m_pCity ? m_pCity->getProductionOverride() : 0;
+}
+
+int CyCity::getGoldOverride() const
+{
+	return m_pCity ? m_pCity->getGoldOverride() : 0;
+}
+//End of Final Frontier
