@@ -164,6 +164,12 @@ void CyStructsPythonInterface1()
 		.def_readwrite("iCityBarbarianDefenseModifier", &CombatDetails::iCityBarbarianDefenseModifier)
 		.def_readwrite("iClassDefenseModifier", &CombatDetails::iClassDefenseModifier)
 		.def_readwrite("iClassAttackModifier", &CombatDetails::iClassAttackModifier)
+
+		// < Unit Combat Attack Defense Mod Start >
+		.def_readwrite("iCombatDefenseModifier", &CombatDetails::iCombatDefenseModifier)
+		.def_readwrite("iCombatAttackModifier", &CombatDetails::iCombatAttackModifier)
+		// < Unit Combat Attack Defense Mod End   >
+
 		.def_readwrite("iCombatModifierT", &CombatDetails::iCombatModifierT)
 		.def_readwrite("iCombatModifierA", &CombatDetails::iCombatModifierA)
 		.def_readwrite("iDomainModifierA", &CombatDetails::iDomainModifierA)
