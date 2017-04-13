@@ -640,6 +640,18 @@ bool CyUnit::isCombat()
 	return m_pUnit ? m_pUnit->isCombat() : false;
 }
 
+//Added in Final Frontier SDK: TC01
+bool CyUnit::isStarbase()
+{
+	return m_pUnit ? m_pUnit->isStarbase() : false;
+}
+
+bool CyUnit::isOtherStation()
+{
+	return m_pUnit ? m_pUnit->isOtherStation() : false;
+}
+//End of Final Frontier SDK
+
 int CyUnit::maxHitPoints()
 {
 	return m_pUnit ? m_pUnit->maxHitPoints() : -1;
@@ -968,6 +980,13 @@ int CyUnit::featureDefenseModifier(int /*FeatureTypes*/ eFeature)
 	return m_pUnit ? m_pUnit->featureDefenseModifier((FeatureTypes) eFeature) : -1;
 }
 
+// FFP - Feature damage modifier - start
+int CyUnit::featureDamageModifier(int /*FeatureTypes*/ eFeature)
+{
+	return m_pUnit ? m_pUnit->featureDamageModifier((FeatureTypes) eFeature) : -1;
+}
+// FFP - Feature damage modifier - end
+
 int CyUnit::unitClassAttackModifier(int /*UnitClassTypes*/ eUnitClass)
 {
 	return m_pUnit ? m_pUnit->unitClassAttackModifier((UnitClassTypes) eUnitClass) : -1;
@@ -977,6 +996,18 @@ int CyUnit::unitClassDefenseModifier(int /*UnitClassTypes*/ eUnitClass)
 {
 	return m_pUnit ? m_pUnit->unitClassDefenseModifier((UnitClassTypes) eUnitClass) : -1;
 }
+
+// < Unit Combat Attack Defense Mod Start >
+int CyUnit::unitCombatAttackModifier(int /*UnitCombatTypes*/ eUnitCombat)
+{
+	return m_pUnit ? m_pUnit->unitCombatAttackModifier((UnitCombatTypes) eUnitCombat) : -1;
+}
+
+int CyUnit::unitCombatDefenseModifier(int /*UnitCombatTypes*/ eUnitCombat)
+{
+	return m_pUnit ? m_pUnit->unitCombatDefenseModifier((UnitCombatTypes) eUnitCombat) : -1;
+}
+// < Unit Combat Attack Defense Mod End   >
 
 int CyUnit::unitCombatModifier(int /*UnitCombatTypes*/ eUnitCombat)
 {
@@ -1591,6 +1622,13 @@ int CyUnit::getExtraFeatureDefensePercent(int /*FeatureTypes*/ eIndex)
 	return m_pUnit ? m_pUnit->getExtraFeatureDefensePercent((FeatureTypes) eIndex) : -1;
 }
 
+// FFP - Feature damage modifier - start
+int CyUnit::getExtraFeatureDamagePercent(int /*FeatureTypes*/ eIndex)
+{
+	return m_pUnit ? m_pUnit->getExtraFeatureDamagePercent((FeatureTypes) eIndex) : -1;
+}
+// FFP - Feature damage modifier - end
+
 int CyUnit::getExtraUnitCombatModifier(int /*UnitCombatTypes*/ eIndex)
 {
 	return m_pUnit ? m_pUnit->getExtraUnitCombatModifier((UnitCombatTypes) eIndex) : -1;
@@ -1674,3 +1712,10 @@ std::string CyUnit::getButton() const
 {
 	return m_pUnit ? m_pUnit->getButton() : "";
 }
+
+//Added in Final Frontier: TC01
+std::string CyUnit::getMovementSound() const
+{
+	return m_pUnit ? m_pUnit->getMovementSound() : "";
+}
+//End of Final Frontier
