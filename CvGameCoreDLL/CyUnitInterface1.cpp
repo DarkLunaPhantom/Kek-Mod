@@ -235,8 +235,17 @@ void CyUnitPythonInterface1(python::class_<CyUnit>& x)
 		.def("terrainDefenseModifier", &CyUnit::terrainDefenseModifier, "int (int /*TerrainTypes*/ eTerrain)")
 		.def("featureAttackModifier", &CyUnit::featureAttackModifier, "int (int /*FeatureTypes*/ eFeature)")
 		.def("featureDefenseModifier", &CyUnit::featureDefenseModifier, "int (int /*FeatureTypes*/ eFeature)")
+		// FFP - Feature damage modifier - start
+		.def("featureDamageModifier", &CyUnit::featureDamageModifier, "int (int /*FeatureTypes*/ eFeature)")
+		// FFP - Feature damage modifier - end
 		.def("unitClassAttackModifier", &CyUnit::unitClassAttackModifier, "int (int /*UnitClassTypes*/ eUnitClass)")
 		.def("unitClassDefenseModifier", &CyUnit::unitClassDefenseModifier, "int (int /*UnitClassTypes*/ eUnitClass)")
+
+		// < Unit Combat Attack Defense Mod Start >
+		.def("unitCombatAttackModifier", &CyUnit::unitCombatAttackModifier, "int (int /*UnitCombatTypes*/ eUnitCombat)")
+		.def("unitCombatDefenseModifier", &CyUnit::unitCombatDefenseModifier, "int (int /*UnitCombatTypes*/ eUnitCombat)")
+		// < Unit Combat Attack Defense Mod End   >
+
 		.def("unitCombatModifier", &CyUnit::unitCombatModifier, "int (int /*UnitCombatTypes*/ eUnitCombat)")
 		.def("domainModifier", &CyUnit::domainModifier, "int (int /*DomainTypes*/ eDomain)") 
 
@@ -372,6 +381,9 @@ void CyUnitPythonInterface1(python::class_<CyUnit>& x)
 		.def("getExtraTerrainDefensePercent", &CyUnit::getExtraTerrainDefensePercent, "int ()")
 		.def("getExtraFeatureAttackPercent", &CyUnit::getExtraFeatureAttackPercent, "int ()")
 		.def("getExtraFeatureDefensePercent", &CyUnit::getExtraFeatureDefensePercent, "int ()")
+		// FFP - Feature damage modifier - start
+		.def("getExtraFeatureDamagePercent", &CyUnit::getExtraFeatureDamagePercent, "int (int /*FeatureTypes*/ eFeature)")
+		// FFP - Feature damage modifier - end
 		.def("getExtraUnitCombatModifier", &CyUnit::getExtraUnitCombatModifier, "int ()")
 
 		.def("canAcquirePromotion", &CyUnit::canAcquirePromotion, "bool (int /*PromotionTypes*/ ePromotion)")
@@ -384,6 +396,11 @@ void CyUnitPythonInterface1(python::class_<CyUnit>& x)
 		.def("getUnitAIType", &CyUnit::getUnitAIType, "int UnitAIType () - returns the int value of the UnitAIType")
 		.def("setUnitAIType", &CyUnit::setUnitAIType, "void UnitAIType (int iUnitAIType) - sets the unit's UnitAIType")
 
+//Added in Final Frontier: TC01
+		.def("isStarbase", &CyUnit::isStarbase, "bool ()")
+		.def("isOtherStation", &CyUnit::isOtherStation, "bool ()")
+//End of Final Frontier
+
 		// Python Helper Functions
 		.def("centerCamera", &CyUnit::centerCamera, "void () - Centers the Camera on the unit")
 		.def("attackForDamage", &CyUnit::attackForDamage, "void attackForDamage(CyUnit *defender, int attakerDamageChange, int defenderDamageChange)")
@@ -391,5 +408,7 @@ void CyUnitPythonInterface1(python::class_<CyUnit>& x)
 
 		.def("getArtInfo", &CyUnit::getArtInfo,  python::return_value_policy<python::reference_existing_object>(), "CvArtInfoUnit* (int i, eEra)")
 		.def("getButton", &CyUnit::getButton, "std::string ()")
+
+		.def("getMovementSound", &CyUnit::getMovementSound, "std::string ()")		//Added in Final Frontier: TC01
 		;
 }
