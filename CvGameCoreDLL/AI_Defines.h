@@ -9,7 +9,7 @@
 /* 																			    */
 /********************************************************************************/
 // Could increase this value now that player closness is fixed
-#define DEFAULT_PLAYER_CLOSENESS 7
+#define DEFAULT_PLAYER_CLOSENESS 8 // DarkLunaPhantom - Increased by 1 from 7 to 8 to imitate previous FFP AI Mod change.
 
 #define AI_DAGGER_THRESHOLD			100  //higher is a lower chance
 
