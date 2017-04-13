@@ -470,5 +470,11 @@ void CyCityPythonInterface1(python::class_<CyCity>& x)
 
 		.def("getLiberationPlayer", &CyCity::getLiberationPlayer, "int ()")
 		.def("liberate", &CyCity::liberate, "void ()")
+		
+//Added in Final Frontier: TC01
+		.def("getFoodOverride", &CyCity::getFoodOverride, "int ()")
+		.def("getProductionOverride", &CyCity::getProductionOverride, "int ()")
+		.def("getGoldOverride", &CyCity::getGoldOverride, "int ()")
+//End of Final Frontier
 		;
 }
