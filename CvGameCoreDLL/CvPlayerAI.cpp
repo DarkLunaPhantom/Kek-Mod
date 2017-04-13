@@ -6032,7 +6032,6 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 					if (kLoopPlayer.getTeam() != getTeam() && kLoopPlayer.isAlive())
 					{
 						iTotalPlayers++; // count players even if we haven't met them. (we know they're out there...)
-						// DarkLunaPhantom - Here AI knows who can research what even when it shouldn't (before tech trading tech etc.)?
 						if (kTeam.isHasMet(kLoopPlayer.getTeam()) && (iPathLength <= 1 != kLoopPlayer.canResearch(eTech)))
 						{
 							iCount++; // if path is <= 1, count civs who can't research it. if path > 1, count civs who can research it.
@@ -6137,8 +6136,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 							iReligionValue += 84;
 					}
 
-					// DarkLunaPhantom - 4 here denotes number of non-early religions?
-					if (iAvailableReligions <= 4 || AI_getFlavorValue(FLAVOR_RELIGION) > 0)
+					if (iAvailableReligions <= 4 || AI_getFlavorValue(FLAVOR_RELIGION) > 0) // DarkLunaPhantom - I guess that 4 here denotes the number of non-early religions. This is often different in mods.
 					{
 						iReligionValue *= 2;
 						iReligionValue += 56 + std::max(0, 6 - iAvailableReligions)*28;
