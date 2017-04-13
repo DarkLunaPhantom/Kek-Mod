@@ -48,6 +48,7 @@ void CyInfoPythonInterface2()
 
 		.def("isAIPlayable", &CvCivilizationInfo::isAIPlayable, "bool ()")
 		.def("isPlayable", &CvCivilizationInfo::isPlayable, "bool ()")
+		.def("isAlien", &CvCivilizationInfo::isAlien, "bool ()")		//Added in Final Frontier SDK: TC01
 
 		.def("getShortDescription", &CvCivilizationInfo::pyGetShortDescription, "wstring ()")
 		.def("getShortDescriptionKey", &CvCivilizationInfo::pyGetShortDescriptionKey, "wstring ()")
@@ -210,6 +211,7 @@ void CyInfoPythonInterface2()
 		.def("getMissionType", &CvBuildInfo::getMissionType, "int ()")
 
 		.def("isKill", &CvBuildInfo::isKill, "bool ()")
+		.def("isStarbase", &CvBuildInfo::isStarbase, "bool()")		//Added in Final Frontier SDK: TC01
 
 		// Arrays
 
@@ -234,9 +236,14 @@ void CyInfoPythonInterface2()
 		.def("getMinBarbarians", &CvGoodyInfo::getMinBarbarians, "int ()")
 		.def("getUnitClassType", &CvGoodyInfo::getUnitClassType, "int ()")
 		.def("getBarbarianUnitClass", &CvGoodyInfo::getBarbarianUnitClass, "int ()")
+		.def("getRequiredImprovement", &CvGoodyInfo::getRequiredImprovement, "int ()")		//Added in Final Frontier Plus: TC01
 
 		.def("isTech", &CvGoodyInfo::isTech, "bool ()")
 		.def("isBad", &CvGoodyInfo::isBad, "bool ()")
+//Added in Final Frontier Plus: TC01
+		.def("isDamageUnit", &CvGoodyInfo::isDamageUnit, "bool ()")
+		.def("isNewCiv", &CvGoodyInfo::isNewCiv, "bool ()")
+//End of Final Frontier Plus
 
 		.def("getSound", &CvGoodyInfo::getSound, "string ()")
 		;
@@ -288,6 +295,7 @@ void CyInfoPythonInterface2()
 		.def("getPillageGold", &CvImprovementInfo::getPillageGold, "int ()")
 		.def("getImprovementPillage", &CvImprovementInfo::getImprovementPillage, "int ()")
 		.def("getImprovementUpgrade", &CvImprovementInfo::getImprovementUpgrade, "int ()")
+		.def("getUnitClassBuilt", &CvImprovementInfo::getUnitClassBuilt, "int ()")		//Added in Final Frontier SDK: TC01
 
 		.def("isActsAsCity", &CvImprovementInfo::isActsAsCity, "bool ()")
 		.def("isHillsMakesValid", &CvImprovementInfo::isHillsMakesValid, "bool ()")
@@ -389,6 +397,8 @@ void CyInfoPythonInterface2()
 		.def("getAdvancedStartRemoveCost", &CvFeatureInfo::getAdvancedStartRemoveCost, "int ()")
 		.def("getTurnDamage", &CvFeatureInfo::getTurnDamage, "int ()")
 		.def("getWarmingDefense", &CvFeatureInfo::getWarmingDefense, "int ()") //GWMod new XML field M.A.
+		.def("getExtraMovePathCost", &CvFeatureInfo::getExtraMovePathCost, "int ()") // FFP
+
 		
 		.def("isNoCoast", &CvFeatureInfo::isNoCoast, "bool ()")
 		.def("isNoRiver", &CvFeatureInfo::isNoRiver, "bool ()")
@@ -401,6 +411,13 @@ void CyInfoPythonInterface2()
 		.def("isNoImprovement", &CvFeatureInfo::isNoImprovement, "bool ()")
 		.def("isVisibleAlways", &CvFeatureInfo::isVisibleAlways, "bool ()")
 		.def("isNukeImmune", &CvFeatureInfo::isNukeImmune, "bool ()")
+		.def("isNoBarbarianSpawn", &CvFeatureInfo::isNoBarbarianSpawn, "bool ()")	//Added in Final Frontier SDK: TC01
+//Start: FeatureEffects - Kaspar
+		.def("getGravityFieldForce", &CvFeatureInfo::getGravityFieldForce, "int ()")
+		.def("getBlackHoleInArea", &CvFeatureInfo::getBlackHoleInArea, "int ()")
+		.def("getBlackHoleFeatureType", &CvFeatureInfo::getBlackHoleFeatureType, "int ()")
+		.def("getTargetWormholeType", &CvFeatureInfo::getTargetWormholeType, "int ()")
+//End
 
 		// Arrays
 
