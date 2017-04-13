@@ -39,6 +39,7 @@ void CyInfoPythonInterface3()
 		.def("isFound", &CvTerrainInfo::isFound, "bool ()")
 		.def("isFoundCoast", &CvTerrainInfo::isFoundCoast, "bool ()")
 		.def("isFoundFreshWater", &CvTerrainInfo::isFoundFreshWater, "bool ()")
+		.def("isFoundFeature", &CvTerrainInfo::isFoundFeature, "bool ()")		//Added in Final Frontier SDK: TC01
 
 		// Arrays
 
@@ -138,7 +139,9 @@ void CyInfoPythonInterface3()
 		.def("getDefensivePactRefuseAttitudeThreshold", &CvLeaderHeadInfo::getDefensivePactRefuseAttitudeThreshold, "int ()")
 		.def("getPermanentAllianceRefuseAttitudeThreshold", &CvLeaderHeadInfo::getPermanentAllianceRefuseAttitudeThreshold, "int ()")
 		.def("getVassalRefuseAttitudeThreshold", &CvLeaderHeadInfo::getVassalRefuseAttitudeThreshold, "int ()")
-		.def("getFavoriteCivic", &CvLeaderHeadInfo::getFavoriteCivic, "int ()")
+		// < Multiple Favorite Civics Start >
+		//.def("getFavoriteCivic", &CvLeaderHeadInfo::getFavoriteCivic, "int ()")
+		// < Multiple Favorite Civics End   >
 		.def("getFavoriteReligion", &CvLeaderHeadInfo::getFavoriteReligion, "int ()")
 		.def("getVassalPowerModifier", &CvLeaderHeadInfo::getVassalPowerModifier, "int ()")
 		.def("getFreedomAppreciation", &CvLeaderHeadInfo::getFreedomAppreciation, "int ()")
@@ -147,6 +150,11 @@ void CyInfoPythonInterface3()
 
 		// Arrays
 
+		// < Multiple Favorite Civics Start >
+		.def("isHasFavoriteCivic", &CvLeaderHeadInfo::isHasFavoriteCivic, "bool ()")
+		.def("hasFavoriteCivic", &CvLeaderHeadInfo::hasFavoriteCivic, "bool (int i)")
+		.def("setFavoriteCivic", &CvLeaderHeadInfo::setFavoriteCivic, "void (int i, bool b)")
+		// < Multiple Favorite Civics End   >
 		.def("hasTrait", &CvLeaderHeadInfo::hasTrait, "bool (int i)")
 
 		.def("getFlavorValue", &CvLeaderHeadInfo::getFlavorValue, "int (int i)")
@@ -294,6 +302,14 @@ void CyInfoPythonInterface3()
 		.def("getTradeYieldModifier", &CvTraitInfo::getTradeYieldModifier, "int (int i)")
 		.def("getCommerceChange", &CvTraitInfo::getCommerceChange, "int (int i)")
 		.def("getCommerceModifier", &CvTraitInfo::getCommerceModifier, "int (int i)")
+//Added in Final Frontier SDK: TC01
+		.def("getFreePopulation", &CvTraitInfo::getFreePopulation, "int ()")
+		.def("getFreeTradeRoutes", &CvTraitInfo::getNumBonusTradeRoutes, "int ()")
+		.def("getStartingGoldMultiplier", &CvTraitInfo::getStartingGoldMultiplier, "int ()")
+		.def("getFreePlanetBuildingClass", &CvTraitInfo::getFreePlanetBuildingClass, "int ()")
+		.def("getYieldChanges", &CvTraitInfo::getYieldChanges, "int (int i)")
+		.def("getTradeRouteYieldChanges", &CvTraitInfo::getTradeRouteYieldChanges, "int (int i)")
+//End of Final Frontier SDK
 
 		.def("isFreePromotion", &CvTraitInfo::isFreePromotion, "int (int i)")
 		;
