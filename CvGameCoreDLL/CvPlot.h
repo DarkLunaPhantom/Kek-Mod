@@ -222,6 +222,7 @@ public:
 	bool isValidDomainForLocation(const CvUnit& unit) const;																					// Exposed to Python
 	bool isValidDomainForAction(const CvUnit& unit) const;																						// Exposed to Python
 	bool isImpassable() const;																															// Exposed to Python
+	bool canBarbSpawn() const;		//Added in Final Frontier SDK: TC01
 
 	DllExport int getX() const;																																				// Exposed to Python
 #ifdef _USRDLL

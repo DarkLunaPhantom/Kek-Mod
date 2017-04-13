@@ -2447,6 +2447,35 @@ bool CvPlot::canBuild(BuildTypes eBuild, PlayerTypes ePlayer, bool bTestVisible)
 	{
 		return false;
 	}
+	
+//Added in Final Frontier SDK: TC01
+//	If we're building a starbase, check if other starbases or other constructors building a starbase are on the plot
+//	Allows the canBuild callback in CvGameUtils.py to be disabled
+	CvUnit * pPlotUnit;
+	int iNumStarbases = 0;
+	if (GC.getBuildInfo(eBuild).isStarbase())
+	{
+		for (int iUnit = 0; iUnit < getNumUnits(); iUnit++)
+		{
+			pPlotUnit = getUnitByIndex(iUnit);
+			if (pPlotUnit->isStarbase())
+			{
+				return false;
+			}
+			if (pPlotUnit->getBuildType() != NO_BUILD)
+			{
+				if (GC.getBuildInfo(pPlotUnit->getBuildType()).isStarbase())
+				{
+					iNumStarbases += 1;
+				}
+			}
+		}
+		if (iNumStarbases > 1)
+		{
+			return false;
+		}
+	}
+//End of Final Frontier SDK
 
 	bValid = false;
 
@@ -2938,7 +2967,20 @@ int CvPlot::movementCost(const CvUnit* pUnit, const CvPlot* pFromPlot) const
 
 int CvPlot::getExtraMovePathCost() const
 {
+//Added in Final Frontier SDK: TC01
+//	Allow XML tag iMovePathExtraCost to influence this
+//	This may mess up other stuff, as I'm not entirely sure how the game stores this data
+/*Old code:
 	return GC.getGameINLINE().getPlotExtraCost(getX_INLINE(), getY_INLINE());
+New Code:*/
+	int iExtraCost = GC.getGameINLINE().getPlotExtraCost(getX_INLINE(), getY_INLINE());
+	FeatureTypes eFeature = getFeatureType();
+	if (eFeature != NO_FEATURE)
+	{
+		iExtraCost += GC.getFeatureInfo(eFeature).getExtraMovePathCost();
+	}
+	return iExtraCost;
+//End of Final Frontier SDK
 }
 
 
@@ -10547,3 +10589,20 @@ bool CvPlot::hasDefender(bool bCheckCanAttack, PlayerTypes eOwner, PlayerTypes e
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
+
+//Added in Final Frontier SDK: TC01
+//	Checks if a plot is a valid plot to spawn barbarians on
+bool CvPlot::canBarbSpawn() const
+{
+	bool bValid = true;
+	if (getFeatureType() != NO_FEATURE)
+	{
+		if (GC.getFeatureInfo(getFeatureType()).isNoBarbarianSpawn())
+		{
+			bValid = false;
+		}
+	}
+	
+	return bValid;
+}
+//End of Final Frontier SDK
