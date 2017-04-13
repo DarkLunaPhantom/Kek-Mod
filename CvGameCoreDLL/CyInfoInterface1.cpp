@@ -150,6 +150,9 @@ void CyInfoPythonInterface1()
 		.def("isAlwaysHeal", &CvPromotionInfo::isAlwaysHeal, "bool ()")
 		.def("isHillsDoubleMove", &CvPromotionInfo::isHillsDoubleMove, "bool ()")
 		.def("isImmuneToFirstStrikes", &CvPromotionInfo::isImmuneToFirstStrikes, "bool ()")
+// FFP - Move on impassable - start
+		.def("isCanMoveImpassable", &CvPromotionInfo::isCanMoveImpassable, "bool ()")
+// FFP - Move on impassable - end
 
 		.def("getSound", &CvPromotionInfo::getSound, "string ()")
 
@@ -161,6 +164,9 @@ void CyInfoPythonInterface1()
 		.def("getFeatureDefensePercent", &CvPromotionInfo::getFeatureDefensePercent, "int (int i)")
 		.def("getUnitCombatModifierPercent", &CvPromotionInfo::getUnitCombatModifierPercent, "int (int i)")
 		.def("getDomainModifierPercent", &CvPromotionInfo::getDomainModifierPercent, "int (int i)")
+// FFP - Feature damage modifier - start
+		.def("getFeatureDamageModifierPercent", &CvPromotionInfo::getFeatureDamageModifierPercent, "int (int i)")
+// FFP - Feature damage modifier - end
 
 		.def("getTerrainDoubleMove", &CvPromotionInfo::getTerrainDoubleMove, "bool (int i)")
 		.def("getFeatureDoubleMove", &CvPromotionInfo::getFeatureDoubleMove, "bool (int i)")
@@ -270,6 +276,12 @@ void CyInfoPythonInterface1()
 		.def("getRangedWaveSize", &CvUnitInfo::getRangedWaveSize, "int ()")
 		.def("getNumUnitNames", &CvUnitInfo::getNumUnitNames, "int ()")
 		.def("getCommandType", &CvUnitInfo::getCommandType, "int ()")
+//Added in Final Frontier SDK: TC01
+		.def("getCultureRange", &CvUnitInfo::getCultureRange, "int ()")
+		.def("getMaxBarbarianSpawnEra", &CvUnitInfo::getMaxBarbarianSpawnEra, "int ()")
+		.def("getMinBarbarianSpawnEra", &CvUnitInfo::getMinBarbarianSpawnEra, "int ()")
+		.def("getUpgradePriceOverride", &CvUnitInfo::getUpgradePriceOverride, "int ()")
+//End of Final Frontier
 
 		.def("isAnimal", &CvUnitInfo::isAnimal, "bool ()")
 		.def("isFoodProduction", &CvUnitInfo::isFoodProduction, "bool ()")
@@ -315,9 +327,19 @@ void CyInfoPythonInterface1()
 		.def("isLineOfSight", &CvUnitInfo::isLineOfSight, "bool ()")
 		.def("isHiddenNationality", &CvUnitInfo::isHiddenNationality, "bool ()")
 		.def("isAlwaysHostile", &CvUnitInfo::isAlwaysHostile, "bool ()")
+//Added in Final Frontier SDK: TC01
+		.def("isStarbase", &CvUnitInfo::isStarbase, "bool ()")
+		.def("isDelta", &CvUnitInfo::isDelta, "bool ()")
+		.def("isOmega", &CvUnitInfo::isOmega, "bool ()")
+		.def("isOtherStation", &CvUnitInfo::isOtherStation, "bool ()")
+		.def("isMissile", &CvUnitInfo::isMissile, "bool ()")
+		.def("isTroopTransport", &CvUnitInfo::isTroopTransport, "bool ()")
+//End of Final Frontier
 
 		.def("getUnitMaxSpeed", &CvUnitInfo::getUnitMaxSpeed, "float ()")
 		.def("getUnitPadTime", &CvUnitInfo::getUnitPadTime, "float ()")
+
+		.def("getMovementSound", &CvUnitInfo::getMovementSound, "string ()")		//Added in Final Frontier SDK: TC01
 
 		// Arrays
 
@@ -329,8 +351,17 @@ void CyInfoPythonInterface1()
 		.def("getTerrainDefenseModifier", &CvUnitInfo::getTerrainDefenseModifier, "int (int i)")
 		.def("getFeatureAttackModifier", &CvUnitInfo::getFeatureAttackModifier, "int (int i)")
 		.def("getFeatureDefenseModifier", &CvUnitInfo::getFeatureDefenseModifier, "int (int i)")
+// FFP - Feature damage modifier - start		
+		.def("getFeatureDamageModifier", &CvUnitInfo::getFeatureDamageModifier, "int (int i)")
+// FFP - Feature damage modifier - end
 		.def("getUnitClassAttackModifier", &CvUnitInfo::getUnitClassAttackModifier, "int (int i)")
 		.def("getUnitClassDefenseModifier", &CvUnitInfo::getUnitClassDefenseModifier, "int (int i)")
+
+		// < Unit Combat Attack Defense Mod Start >
+		.def("getUnitCombatAttackModifier", &CvUnitInfo::getUnitCombatAttackModifier, "int (int i)")
+		.def("getUnitCombatDefenseModifier", &CvUnitInfo::getUnitCombatDefenseModifier, "int (int i)")
+		// < Unit Combat Attack Defense Mod End   >
+
 		.def("getUnitCombatModifier", &CvUnitInfo::getUnitCombatModifier, "int (int i)")
 		.def("getDomainModifier", &CvUnitInfo::getDomainModifier, "int (int i)")
 		.def("getBonusProductionModifier", &CvUnitInfo::getBonusProductionModifier, "int (int i)")
@@ -418,6 +449,7 @@ void CyInfoPythonInterface1()
 		.def("getStateReligionBuildingProductionModifier", &CvCivicInfo::getStateReligionBuildingProductionModifier, "int ()")
 		.def("getStateReligionFreeExperience", &CvCivicInfo::getStateReligionFreeExperience, "int ()")
 		.def("getExpInBorderModifier", &CvCivicInfo::getExpInBorderModifier, "bool ()")
+		.def("getPlanetPopCapIncrease", &CvCivicInfo::getPlanetPopCapIncrease, "int ()")		//Added in Final Frontier: TC01
 
 		.def("isMilitaryFoodProduction", &CvCivicInfo::isMilitaryFoodProduction, "bool ()")
 		//.def("isNoUnhealthyPopulation", &CvCivicInfo::isNoUnhealthyPopulation, "bool ()")
@@ -442,6 +474,8 @@ void CyInfoPythonInterface1()
 		.def("getBuildingHappinessChanges", &CvCivicInfo::getBuildingHappinessChanges, "int (int i)")
 		.def("getBuildingHealthChanges", &CvCivicInfo::getBuildingHealthChanges, "int (int i)")
 		.def("getFeatureHappinessChanges", &CvCivicInfo::getFeatureHappinessChanges, "int (int i)")
+		.def("getUnitCombatCostMods", &CvCivicInfo::getUnitCombatCostMods, "int (int i)")		//Added in Final Frontier SDK: TC01
+		.def("getPlanetYieldChanges", &CvCivicInfo::getPlanetYieldChanges, "int (int i)")		//Added in Final Frontier SDK: TC01
 
 		.def("isHurry", &CvCivicInfo::isHurry, "bool (int i)")
 		.def("isSpecialBuildingNotRequired", &CvCivicInfo::isSpecialBuildingNotRequired, "bool (int i)")
@@ -546,6 +580,11 @@ void CyInfoPythonInterface1()
 		.def("getEspionageDefenseModifier", &CvBuildingInfo::getEspionageDefenseModifier, "int ()")
 		.def("getMissionType", &CvBuildingInfo::getMissionType, "int ()")
 		.def("getVoteSourceType", &CvBuildingInfo::getVoteSourceType, "int ()")
+//Added in Final Frontier SDK: TC01
+		.def("getCostModIncrease", &CvBuildingInfo::getCostModIncrease, "int ()")
+		.def("getPlanetPopCapIncrease", &CvBuildingInfo::getPlanetPopCapIncrease, "int ()")
+		.def("getSingleRingBuildingLocation", &CvBuildingInfo::getSingleRingBuildingLocation, "int ()")
+//End of Final Frontier SDK
 
 		.def("isTeamShare", &CvBuildingInfo::isTeamShare, "bool ()")
 		.def("isWater", &CvBuildingInfo::isWater, "bool ()")
@@ -569,6 +608,11 @@ void CyInfoPythonInterface1()
 		.def("isCenterInCity", &CvBuildingInfo::isCenterInCity, "bool ()")
 		.def("isStateReligion", &CvBuildingInfo::isStateReligion, "bool ()")
 		.def("isAllowsNukes", &CvBuildingInfo::isAllowsNukes, "bool ()")
+//Added in Final Frontier SDK: TC01
+		.def("isOnePerSystem", &CvBuildingInfo::isOnePerSystem, "bool ()")
+		.def("isMoon", &CvBuildingInfo::isMoon, "bool ()")
+		.def("isRings", &CvBuildingInfo::isRings, "bool ()")
+//End of Final Frontier SDK
 
 		.def("getConstructSound", &CvBuildingInfo::getConstructSound, "string ()")
 		.def("getHotKey", &CvBuildingInfo::getHotKey, "string ()")
@@ -576,6 +620,7 @@ void CyInfoPythonInterface1()
 		.def("getArtDefineTag", &CvBuildingInfo::getArtDefineTag, "string ()")
 		.def("getMovie", &CvBuildingInfo::getMovie, "string ()")
 		.def("getMovieDefineTag", &CvBuildingInfo::getMovieDefineTag, "string ()")
+		.def("getSystemArtTag", &CvBuildingInfo::getSystemArtTag, "string ()")		//Added in Final Frontier SDK: TC01
 
 
 		// Arrays
@@ -611,13 +656,16 @@ void CyInfoPythonInterface1()
 		.def("getPrereqNumOfBuildingClass", &CvBuildingInfo::getPrereqNumOfBuildingClass, "int (int i)")
 		.def("getFlavorValue", &CvBuildingInfo::getFlavorValue, "int (int i)")
 		.def("getImprovementFreeSpecialist", &CvBuildingInfo::getImprovementFreeSpecialist, "int (int i)")
+		.def("getPlanetYieldChanges", &CvBuildingInfo::getPlanetYieldChanges, "int (int i)")		//Added in Final Frontier SDK: TC01
 
 		.def("isCommerceFlexible", &CvBuildingInfo::isCommerceFlexible, "bool (int i)")
 		.def("isCommerceChangeOriginalOwner", &CvBuildingInfo::isCommerceChangeOriginalOwner, "bool (int i)")
 		.def("isBuildingClassNeededInCity", &CvBuildingInfo::isBuildingClassNeededInCity, "bool (int i)")
+		.def("isBuildingClassNeededOnPlanet", &CvBuildingInfo::isBuildingClassNeededOnPlanet, "bool (int i)")	//Added in Final Frontier SDK: TC01
 
 		.def("getSpecialistYieldChange", &CvBuildingInfo::getSpecialistYieldChange, "int (int i, int j)")
 		.def("getBonusYieldModifier", &CvBuildingInfo::getBonusYieldModifier, "int (int i, int j)")
+		.def("getTraitPlanetYieldChange", &CvBuildingInfo::getTraitPlanetYieldChange, "int (int i, int j)")		//Added in Final Frontier SDK: TC01
 
 		.def("getArtInfo", &CvBuildingInfo::getArtInfo,  python::return_value_policy<python::reference_existing_object>())
 		;
