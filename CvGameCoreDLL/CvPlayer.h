@@ -1142,6 +1142,11 @@ public:
 	virtual int AI_maxGoldPerTurnTrade(PlayerTypes ePlayer) const = 0;
 	virtual int AI_maxGoldTrade(PlayerTypes ePlayer) const = 0;
 
+//Added in Final Frontier SDK: TC01
+	bool goodyCanSpawnCiv(CivilizationTypes eCiv) const;
+	int goodyGetLeaderForCiv(CivilizationTypes eCiv) const;
+//End of Final Frontier SDK
+
 protected:
 
 	int m_iStartingX;

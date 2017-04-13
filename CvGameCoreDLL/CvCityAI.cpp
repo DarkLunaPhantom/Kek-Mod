@@ -2222,8 +2222,8 @@ void CvCityAI::AI_chooseProduction()
 			// No fix is necessary for UNITAI_CARRIER_AIR in K-Mod and I separately adjusted for UNITAI_MISSILE_AIR. (UNIT_MISSILE_CARRIER_SEA wasn't included in original FFP fix.)
 			// Numbers I used might be nonsense, but I tried to adapt the ones from original FFP code for UNITAI_CARRIER_SEA.
 			// FFP AImod : former water only unit AI adjustment - start
-			invaderTypes.push_back(std::make_pair(UNITAI_CARRIER_SEA, 35);
-			invaderTypes.push_back(std::make_pair(UNITAI_MISSILE_CARRIER_SEA, 15);
+			invaderTypes.push_back(std::make_pair(UNITAI_CARRIER_SEA, 35));
+			invaderTypes.push_back(std::make_pair(UNITAI_MISSILE_CARRIER_SEA, 15));
 			// FFP AImod : former water only unit AI adjustment - end
 			//if (!bAssault)
 			if (!bAssault && !bCrushStrategy) // K-Mod // DarkLunaPhantom - bAssault is always false here?
@@ -4316,7 +4316,7 @@ int CvCityAI::AI_buildingValue(BuildingTypes eBuilding, int iFocusFlags, int iTh
 			
 /** FFP AI mod : give value to iPlanetPopCapIncrease - start 
  **		This value is just a guess. Anything should help, though. **/
-			iValue += (kBuilding.getPlanetPopCapIncrease() * (iAngryPopulation > 0 ? 4 : 15));
+			iValue += (kBuilding.getPlanetPopCapIncrease() * (angryPopulation() > 0 ? 4 : 15));
 /** FFP AI mod : give value to iPlanetPopCapIncrease - end **/
 
 			// iValue += (kBuilding.getFreeTechs() * 80);
@@ -4771,7 +4771,7 @@ int CvCityAI::AI_buildingValue(BuildingTypes eBuilding, int iFocusFlags, int iTh
  **		that threshold for the basic Nutrition Facility it will almost certainly try to build way more
  **		of these than it should. (It would hit that every time until the build time goes over 60 turns!) **/
 				iValue += kBuilding.getPlanetYieldChanges(YIELD_FOOD) * 9;
-				for (iJ = 0; iJ < GC.getNumTraitInfos(); iJ++)
+				for (int iJ = 0; iJ < GC.getNumTraitInfos(); iJ++)
 				{
 					if (hasTrait((TraitTypes)iJ))
 					{
@@ -4814,7 +4814,7 @@ int CvCityAI::AI_buildingValue(BuildingTypes eBuilding, int iFocusFlags, int iTh
 /** FFP AI mod : give value to PlanetYieldChanges and TraitPlanetYieldChanges - start 3
  **		These specific values are just a guess. Anything should help, though. **/
 				iValue += kBuilding.getPlanetYieldChanges(YIELD_PRODUCTION) * 10;
-				for (iJ = 0; iJ < GC.getNumTraitInfos(); iJ++)
+				for (int iJ = 0; iJ < GC.getNumTraitInfos(); iJ++)
 				{
 					if (hasTrait((TraitTypes)iJ))
 					{
@@ -4852,7 +4852,7 @@ int CvCityAI::AI_buildingValue(BuildingTypes eBuilding, int iFocusFlags, int iTh
 /** FFP AI mod : give value to PlanetYieldChanges and TraitPlanetYieldChanges - start 4
  **		These specific values are just a guess. Anything should help, though. **/
 				iTempValue = kBuilding.getPlanetYieldChanges(YIELD_COMMERCE) * 12 * kOwner.getCommercePercent(COMMERCE_GOLD) / 100;
-				for (iJ = 0; iJ < GC.getNumTraitInfos(); iJ++)
+				for (int iJ = 0; iJ < GC.getNumTraitInfos(); iJ++)
 				{
 					if (hasTrait((TraitTypes)iJ))
 					{

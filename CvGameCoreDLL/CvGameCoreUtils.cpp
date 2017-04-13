@@ -1762,10 +1762,11 @@ int pathCost(FAStarNode* parent, FAStarNode* node, int data, const void* pointer
 		// Damage caused by features (for mods)
 		if (0 != GC.getPATH_DAMAGE_WEIGHT())
 		{
-			if (pToPlot->getFeatureType() != NO_FEATURE)
+			// DarkLunaPhantom - This code won't work because it is out of the unit loop. I've adjusted the code to new function structure further down.
+			/*if (pToPlot->getFeatureType() != NO_FEATURE)
 			{
 				iWorstCost += (GC.getPATH_DAMAGE_WEIGHT() * std::max(0, GC.getFeatureInfo(pToPlot->getFeatureType()).getTurnDamage() + pLoopUnit->featureDamageModifier(pToPlot->getFeatureType()))) / GC.getMAX_HIT_POINTS(); // FFP - Feature damage modifier
-			}
+			}*/
 
 			if (pToPlot->getExtraMovePathCost() > 0)
 			{
@@ -1781,6 +1782,10 @@ int pathCost(FAStarNode* parent, FAStarNode* node, int data, const void* pointer
 		int iAttackWeight = 0;
 		int iAttackCount = 0;
 		int iEnemies = pToPlot->getNumVisibleEnemyDefenders(pSelectionGroup->getHeadUnit());
+		int iFeatureCost = 0; // DarkLunaPhantom
+		FeatureTypes eFeature = pToPlot->getFeatureType(); // DarkLunaPhantom
+		int iFeatureDamage = eFeature != NO_FEATURE ? GC.getFeatureInfo(eFeature).getTurnDamage() : 0; // DarkLunaPhantom
+		
 
 		while (pUnitNode != NULL)
 		{
@@ -1831,6 +1836,13 @@ int pathCost(FAStarNode* parent, FAStarNode* node, int data, const void* pointer
 					else if (pLoopUnit->canAttack()) // parent->m_iKnownCost == 0 && !(iFlags & MOVE_HAS_STEPPED) && !pSelectionGroup->AI_isControlled()
 						return PATH_STEP_WEIGHT; // DONE!
 				}
+				
+				// DarkLunaPhantom begin - New feature damage modifier calculation, part 1.
+				if (eFeature != NO_FEATURE)
+				{
+					iFeatureCost += std::max(0, iFeatureDamage + pLoopUnit->featureDamageModifier(eFeature));
+				}
+				// DarkLunaPhantom end
 			}
 		}
 		//
@@ -1847,6 +1859,7 @@ int pathCost(FAStarNode* parent, FAStarNode* node, int data, const void* pointer
 		iWorstCost += PATH_DEFENSE_WEIGHT * std::max(0, (iDefenceCount*200 - iDefenceMod) / std::max(1, iDefenceCount));
 		iWorstCost += PATH_DEFENSE_WEIGHT * std::max(0, (iAttackCount*200 - iFromDefenceMod) / std::max(1, iAttackCount));
 		iWorstCost += std::max(0, iAttackWeight) / std::max(1, iAttackCount);
+		iWorstCost += GC.getPATH_DAMAGE_WEIGHT() * std::max(0, iFeatureCost / (GC.getMAX_HIT_POINTS() * std::max(1, iDefenceCount))); // DarkLunaPhantom - New feature damage modifier calculation, part 2.
 		// if we're in enemy territory, consider the sum of our defensive bonuses as well as the average
 		if (pToPlot->isOwned() && atWar(pToPlot->getTeam(), eTeam))
 		{

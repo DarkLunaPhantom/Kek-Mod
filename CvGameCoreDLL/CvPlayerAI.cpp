@@ -14585,6 +14585,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 //Added in Final Frontier SDK: TC01
 //	Causes the AI to value civics based on their unit combat cost mods.
 //	Causes the AI to value civics that increase planet yields.
+	int iTempValue;
 	for (iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
 	{
 		int iUnitCombatCostMod = kCivic.getUnitCombatCostMods(iI);
