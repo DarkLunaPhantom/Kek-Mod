@@ -52,6 +52,7 @@ CvUnit::CvUnit()
 	m_paiExtraTerrainDefensePercent = NULL;
 	m_paiExtraFeatureAttackPercent = NULL;
 	m_paiExtraFeatureDefensePercent = NULL;
+	m_paiExtraFeatureDamagePercent = NULL;	// FFP - Feature damage modifier
 	m_paiExtraUnitCombatModifier = NULL;
 
 	CvDLLEntity::createUnitEntity(this);		// create and attach entity to unit
@@ -272,6 +273,7 @@ void CvUnit::uninit()
 	SAFE_DELETE_ARRAY(m_paiExtraTerrainDefensePercent);
 	SAFE_DELETE_ARRAY(m_paiExtraFeatureAttackPercent);
 	SAFE_DELETE_ARRAY(m_paiExtraFeatureDefensePercent);
+	SAFE_DELETE_ARRAY(m_paiExtraFeatureDamagePercent);	// FFP - Feature damage modifier
 	SAFE_DELETE_ARRAY(m_paiExtraUnitCombatModifier);
 }
 
@@ -312,6 +314,7 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iAlwaysHealCount = 0;
 	m_iHillsDoubleMoveCount = 0;
 	m_iImmuneToFirstStrikesCount = 0;
+	m_iCanMoveImpassableCount = 0; 	// FFP - Move on impassable
 	m_iExtraVisibilityRange = 0;
 	m_iExtraMoves = 0;
 	m_iExtraMoveDiscount = 0;
@@ -394,11 +397,13 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 		m_paiFeatureDoubleMoveCount = new int[GC.getNumFeatureInfos()];
 		m_paiExtraFeatureDefensePercent = new int[GC.getNumFeatureInfos()];
 		m_paiExtraFeatureAttackPercent = new int[GC.getNumFeatureInfos()];
+		m_paiExtraFeatureDamagePercent = new int[GC.getNumFeatureInfos()];	// FFP - Feature damage modifier
 		for (iI = 0; iI < GC.getNumFeatureInfos(); iI++)
 		{
 			m_paiFeatureDoubleMoveCount[iI] = 0;
 			m_paiExtraFeatureAttackPercent[iI] = 0;
 			m_paiExtraFeatureDefensePercent[iI] = 0;
+			m_paiExtraFeatureDamagePercent[iI] = 0;	// FFP - Feature damage modifier
 		}
 
 		FAssertMsg((0 < GC.getNumUnitCombatInfos()), "GC.getNumUnitCombatInfos() is not greater than zero but an array is being allocated in CvUnit::reset");
@@ -708,16 +713,44 @@ void CvUnit::doTurn()
 			}
 		}
 	}
+	
+//	Added in Final Frontier SDK: TC01, code by Kiwikaz
+//Start: FeatureEffects - Kaspar (Kiwikaz)
+	FeatureTypes eFeature = plot()->getFeatureType();
+	if (eFeature != NO_FEATURE)
+	{
+		if (!isCargo())
+		{
+			if (GC.getFeatureInfo(eFeature).getGravityFieldForce() > 0)
+			{
+				doGravityField();
+			}
+			if (GC.getGameINLINE().isOption(GAMEOPTION_DELAYED_WORMHOLES))		//New gameoption, only run if on
+			{
+				if (GC.getFeatureInfo(eFeature).getTargetWormholeType() != NO_FEATURE) 
+				{
+					doWormhole();
+				}
+			}
+		}
+	}
 
 	if (baseCombatStr() > 0)
 	{
-		FeatureTypes eFeature = plot()->getFeatureType();
+		/*FeatureTypes*/ eFeature = plot()->getFeatureType();
+//End
 		if (NO_FEATURE != eFeature)
 		{
-			if (0 != GC.getFeatureInfo(eFeature).getTurnDamage())
+//Start: FeatureEffects - Kaspar
+			/*if (0 != GC.getFeatureInfo(eFeature).getTurnDamage())
 			{
 				changeDamage(GC.getFeatureInfo(eFeature).getTurnDamage(), NO_PLAYER);
+			}*/
+			if (0 != std::max(0, GC.getFeatureInfo(eFeature).getTurnDamage() + featureDamageModifier(eFeature)))
+			{
+				doFeatureDamage();
 			}
+//End
 		}
 	}
 
@@ -1171,6 +1204,7 @@ void CvUnit::resolveCombat(CvUnit* pDefender, CvPlot* pPlot, bool bVisible)
 		{
 			if (getCombatFirstStrikes() == 0)
 			{
+				//attacker trying to withdraw:
 				if (getDamage() + iAttackerDamage >= maxHitPoints() && GC.getGameINLINE().getSorenRandNum(100, "Withdrawal") < withdrawalProbability())
 				{
 					flankingStrikeCombat(pPlot, iAttackerStrength, iAttackerFirepower, iAttackerKillOdds, iDefenderDamage, pDefender);
@@ -1210,10 +1244,12 @@ void CvUnit::resolveCombat(CvUnit* pDefender, CvPlot* pPlot, bool bVisible)
 				combat_log.push_back(0);
 			// K-Mod end
 		}
+		//defender lost a round:
 		else
 		{
 			if (pDefender->getCombatFirstStrikes() == 0)
 			{
+				//combat limit:
 				if (std::min(GC.getMAX_HIT_POINTS(), pDefender->getDamage() + iDefenderDamage) > combatLimit())
 				{
 					changeExperience(GC.getDefineINT("EXPERIENCE_FROM_WITHDRAWL"), pDefender->maxXPValue(), true, pPlot->getOwnerINLINE() == getOwnerINLINE(), !pDefender->isBarbarian());
@@ -1710,7 +1746,13 @@ bool CvUnit::isActionRecommended(int iAction)
 		}
 	}
 
-	if (GC.getActionInfo(iAction).getMissionType() == MISSION_HEAL)
+//Added in Final Frontier Plus: TC01 (source: Pep's Unit Orders)
+	// +jlc: code for new sentry orders
+	// added MISSION_SENTRY_WHILE_HEAL button glow it the unit is wounded
+	// if (GC.getActionInfo(iAction).getMissionType() == MISSION_HEAL)
+	if ((GC.getActionInfo(iAction).getMissionType() == MISSION_HEAL) || (GC.getActionInfo(iAction).getMissionType() == MISSION_SENTRY_WHILE_HEAL))
+	// -jlc
+//End of Final Frontier Plus
 	{
 		if (isHurt())
 		{
@@ -3005,6 +3047,24 @@ void CvUnit::move(CvPlot* pPlot, bool bShow)
 			}
 		}
 	}
+	
+//Added in Final Frontier Plus: TC01
+//	Do wormholes if valid and if delayed wormholes is off
+	if (featureType != NO_FEATURE)
+	{
+		if (GC.getFeatureInfo(featureType).getTargetWormholeType() != NO_FEATURE) 
+		{
+			if (!GC.getGameINLINE().isOption(GAMEOPTION_DELAYED_WORMHOLES))		//New gameoption, only run if on
+			{
+				doWormhole();
+			}
+			else
+			{
+				finishMoves();
+			}
+		}
+	}
+//End of Final Frontier Plus
 
 	CvEventReporter::getInstance().unitMove(pPlot, this, pOldPlot);
 }
@@ -7081,6 +7141,69 @@ bool CvUnit::build(BuildTypes eBuild)
 
 	if (bFinished)
 	{
+//Added in Final Frontier SDK: TC01
+//	Creates a specified unit in the improvement infos on the plot
+//	Eliminates "Starbase glitch" in the python for building improvements
+//	Also add culture around starbase, loops it around edges of map if the map is wrapped
+		ImprovementTypes eImprovement;
+		UnitClassTypes eUnitClass;
+		UnitTypes eUnit;
+		int iCultureX, iCultureY, iDX, iDY, iCultureRange;
+		if (GC.getBuildInfo(eBuild).getImprovement() != NO_IMPROVEMENT)
+		{
+			eImprovement = ((ImprovementTypes)(GC.getBuildInfo(eBuild).getImprovement()));
+			eUnitClass = ((UnitClassTypes)(GC.getImprovementInfo(eImprovement).getUnitClassBuilt()));
+			if  (eUnitClass != NO_UNITCLASS)
+			{
+				plot()->setImprovementType((ImprovementTypes)-1);
+				eUnit = ((UnitTypes)(GC.getUnitClassInfo(eUnitClass).getDefaultUnitIndex()));
+				if (eUnit != NO_UNIT)
+				{
+					CvUnit * pNewUnit = GET_PLAYER(getOwnerINLINE()).initUnit(eUnit, getX_INLINE(), getY_INLINE()); // FFP AImod : removed unit AI specification so it will use default from unitinfo XML
+					iCultureRange = (GC.getUnitInfo(eUnit).getCultureRange());
+					for (iCultureX = -iCultureRange; iCultureX <= iCultureRange; iCultureX++)
+					{
+						for (iCultureY = -iCultureRange; iCultureY <= iCultureRange; iCultureY++)
+						{
+							iDX = iCultureX;
+							iDY = iCultureY;
+							if (GC.getMap().isWrapX())
+							{
+								if (iDX < 0)
+								{
+									iDX = GC.getMap().getGridWidth() + iDX;
+								}
+							}
+							if (GC.getMap().isWrapY())
+							{
+								if (iDY < 0)
+								{
+									iDY = GC.getMap().getGridHeight() + iDY;
+								}
+							}
+							CvPlot * pCulturePlot = plotXY(getX_INLINE(), getY_INLINE(), iCultureX, iCultureY);
+							if (NULL != pCulturePlot)
+							{
+								if (pCulturePlot->getOwner() == NO_PLAYER)
+								{
+									pCulturePlot->setOwner(getOwner(), false, true);
+								}
+							}
+						}
+					}
+					/** FFP AImod: readjust target gold accumulation - start 
+					 **		In the Python starbase building code when the time comes to build a starbase
+					 **		it will set the extraGoldTarget to a flat 250 if the AI currently does not
+					 **		have enough money on hand to do the build. It never adjusts it to anything else.
+					 **		This might be a tad excessive and slightly harmful to the AI's economy. 
+					 **		Therefore, adjust it down to 80% of whatever it currently is every time we finish
+					 **		building somethign like this. **/
+					GET_PLAYER(getOwnerINLINE()).AI_setExtraGoldTarget((GET_PLAYER(getOwnerINLINE()).AI_getExtraGoldTarget() * 80) / 100);
+					/** FFP AImod: readust target gold accumulation - end **/
+				}
+			}
+		}
+//End of Final Frontier SDK
 		if (GC.getBuildInfo(eBuild).isKill())
 		{
 			kill(true);
@@ -7374,6 +7497,20 @@ int CvUnit::upgradePrice(UnitTypes eUnit) const
 	{
 		return 0;
 	}
+	
+//Added in Final Frontier: TC01
+//	Hardcode upgrade price in XML files as opposed to Python files
+//	if an alpha unit tries upgrading to an omega unit, double the override
+	int iUpgradeOverride = GC.getUnitInfo(getUnitType()).getUpgradePriceOverride();
+	if (iUpgradeOverride > 0)
+	{
+		if (GC.getUnitInfo(eUnit).isOmega() && !(GC.getUnitInfo(getUnitType()).isDelta()))
+		{
+			iUpgradeOverride *= 2;
+		}
+		return iUpgradeOverride;
+	}
+//End of FInal Frontier
 
 	iPrice = GC.getDefineINT("BASE_UNIT_UPGRADE_COST");
 
@@ -7389,6 +7526,14 @@ int CvUnit::upgradePrice(UnitTypes eUnit) const
 	}
 
 	iPrice -= (iPrice * getUpgradeDiscount()) / 100;
+	
+//Added in Final Frontier: TC01
+//	If an alpha unit tries upgrading to an omega unit, double the price
+	if (GC.getUnitInfo(eUnit).isOmega() && !(GC.getUnitInfo(getUnitType()).isDelta()))
+	{
+		iPrice *= 2;
+	}
+//End of Final Frontier
 
 	return iPrice;
 }
@@ -7465,6 +7610,35 @@ bool CvUnit::isReadyForUpgrade() const
 	CLLNode<IDInfo>* pUnitNode; // DarkLunaPhantom
 	CvPlot* pLoopPlot; // DarkLunaPhantom
 	CvUnit* pLoopUnit; // DarkLunaPhantom
+	
+/********************************************************************************/
+//Added in Final Frontier: TC01
+//	Implementation of the EXE hardcoded Python callback "canUpgradeAnywhere"
+//	Essentially, lets starbases upgrade anywhere
+//	Code originally from RevDCM, with modifications (and permission!)
+/*	Old Code:
+	if (!canMove())
+	{
+		return false;
+	}
+New Code:*/
+
+	if (!isStarbase())
+	{
+		if (!canMove())
+		{
+			return false;
+		}
+	}
+
+	if (!isStarbase())
+	{
+		if (plot()->getTeam() != getTeam())
+		{
+			return false;
+		}
+	}
+/********************************************************************************/
 
 	if (!canMove())
 	{
@@ -7968,6 +8142,7 @@ BuildTypes CvUnit::getBuildType() const
 		case MISSION_SEAPATROL:
 		case MISSION_HEAL:
 		case MISSION_SENTRY:
+		case MISSION_SENTRY_WHILE_HEAL:		//Added in Final Frontier Plus: TC01 (source: Pep's Unit Orders)
 		case MISSION_AIRLIFT:
 		case MISSION_NUKE:
 		case MISSION_RECON:
@@ -8056,6 +8231,16 @@ bool CvUnit::isOnlyDefensive() const
 
 bool CvUnit::isNoCapture() const
 {
+	// Added in Final Frontier Plus: TC01
+	// Troop transports - IF the troop transports gameoption is enabled, return true for bTroopTransport units too
+		if (GC.getGame().isOption(GAMEOPTION_TROOP_TRANSPORTS))
+		{
+			if (!m_pUnitInfo->isTroopTransport())
+			{
+				return true;
+			}
+		}
+	// End of Final Frontier Plus
 	return m_pUnitInfo->isNoCapture();
 }
 
@@ -8241,6 +8426,13 @@ int CvUnit::maxCombatStr(const CvPlot* pPlot, const CvUnit* pAttacker, CombatDet
 		pCombatDetails->iCityBarbarianDefenseModifier = 0;
 		pCombatDetails->iClassDefenseModifier = 0;
 		pCombatDetails->iClassAttackModifier = 0;
+		
+		// < Unit Combat Attack Defense Mod Start >
+		pCombatDetails->iCombatDefenseModifier = 0;
+		pCombatDetails->iCombatAttackModifier = 0;
+		// < Unit Combat Attack Defense Mod End   >
+
+		
 		pCombatDetails->iCombatModifierA = 0;
 		pCombatDetails->iCombatModifierT = 0;
 		pCombatDetails->iDomainModifierA = 0;
@@ -8441,7 +8633,11 @@ int CvUnit::maxCombatStr(const CvPlot* pPlot, const CvUnit* pAttacker, CombatDet
 				pCombatDetails->iFeatureDefenseModifier = iExtraModifier;
 			}
 		}
-		else
+// FFP terrain defense modifier change start
+//	change: always apply both feature and terrain defense modifiers
+// original code removed:
+//		else
+// FFP terrain defense modifier change end
 		{
 			iExtraModifier = terrainDefenseModifier(pPlot->getTerrainType());
 			iModifier += iExtraModifier;
@@ -8530,6 +8726,28 @@ int CvUnit::maxCombatStr(const CvPlot* pPlot, const CvUnit* pAttacker, CombatDet
 			{
 				pCombatDetails->iClassAttackModifier = iExtraModifier;
 			}
+			
+			// < Unit Combat Attack Defense Mod Start >
+			if (pAttacker->getUnitCombatType() != NO_UNITCOMBAT) // Bugfix
+			{
+				iExtraModifier = unitCombatDefenseModifier(pAttacker->getUnitCombatType());
+				iTempModifier += iExtraModifier;
+				if (pCombatDetails != NULL)
+				{
+					pCombatDetails->iCombatDefenseModifier = iExtraModifier;
+				}
+			}
+
+			if (getUnitCombatType() != NO_UNITCOMBAT) // Bugfix
+			{
+				iExtraModifier = -pAttacker->unitCombatAttackModifier(getUnitCombatType());
+				iTempModifier += iExtraModifier;
+				if (pCombatDetails != NULL)
+				{
+					pCombatDetails->iCombatAttackModifier = iExtraModifier;
+				}
+			}
+			// < Unit Combat Attack Defense Mod End   >
 
 			if (pAttacker->getUnitCombatType() != NO_UNITCOMBAT)
 			{
@@ -8879,7 +9097,18 @@ float CvUnit::airCurrCombatStrFloat(const CvUnit* pOther) const
 
 int CvUnit::combatLimit() const
 {
-	return m_pUnitInfo->getCombatLimit();
+//Changed in Final Frontier Plus by TC01
+	//return m_pUnitInfo->getCombatLimit();
+	int iModdedCombatLimit = m_pUnitInfo->getCombatLimit();
+//	if (GC.getGame().isOption(GAMEOPTION_NO_PIRATE_EXP_CAP))
+//	{
+//		if (getOwner() == GC.getBARBARIAN_PLAYER())
+//		{
+//			iModdedCombatLimit = -1;
+//		}
+//	}
+	return iModdedCombatLimit;
+//End of FF+
 }
 
 
@@ -9199,6 +9428,14 @@ int CvUnit::maxXPValue() const
 	if (isBarbarian())
 	{
 		iMaxValue = std::min(iMaxValue, GC.getDefineINT("BARBARIAN_MAX_XP_VALUE"));
+//Added in Final Frontier Plus: TC01
+//Set max barb XP cap to -1 (i.e. nothing) if the No Pirate XP Cap option is on
+// (Also raised cap to 50 for base game anyway)
+		if (GC.getGame().isOption(GAMEOPTION_NO_PIRATE_EXP_CAP))
+		{
+			iMaxValue = -1;
+		}
+//End of Final Frontier Plus
 	}
 
 	return iMaxValue;
@@ -9264,7 +9501,8 @@ bool CvUnit::ignoreBuildingDefense() const
 
 bool CvUnit::canMoveImpassable() const
 {
-	return m_pUnitInfo->isCanMoveImpassable();
+	//return m_pUnitInfo->isCanMoveImpassable();
+	return (m_pUnitInfo->isCanMoveImpassable() || (getCanMoveImpassableCount() > 0));	// FFP - Move on impassable
 }
 
 bool CvUnit::canMoveAllTerrain() const
@@ -9441,6 +9679,15 @@ int CvUnit::featureDefenseModifier(FeatureTypes eFeature) const
 	return (m_pUnitInfo->getFeatureDefenseModifier(eFeature) + getExtraFeatureDefensePercent(eFeature));
 }
 
+// FFP - Feature damage modifier - start
+int CvUnit::featureDamageModifier(FeatureTypes eFeature) const
+{
+	FAssertMsg(eFeature >= 0, "eFeature is expected to be non-negative (invalid Index)");
+	FAssertMsg(eFeature < GC.getNumFeatureInfos(), "eFeature is expected to be within maximum bounds (invalid Index)");
+	return (m_pUnitInfo->getFeatureDamageModifier(eFeature) + getExtraFeatureDamagePercent(eFeature));
+}
+// FFP - Feature damage modifier - end
+
 int CvUnit::unitClassAttackModifier(UnitClassTypes eUnitClass) const
 {
 	FAssertMsg(eUnitClass >= 0, "eUnitClass is expected to be non-negative (invalid Index)");
@@ -9456,6 +9703,21 @@ int CvUnit::unitClassDefenseModifier(UnitClassTypes eUnitClass) const
 	return m_pUnitInfo->getUnitClassDefenseModifier(eUnitClass);
 }
 
+// < Unit Combat Attack Defense Mod Start >
+int CvUnit::unitCombatAttackModifier(UnitCombatTypes eUnitCombat) const
+{
+	FAssertMsg(eUnitCombat >= 0, "eUnitCombat is expected to be non-negative (invalid Index)");
+	FAssertMsg(eUnitCombat < GC.getNumUnitCombatInfos(), "eUnitCombat is expected to be within maximum bounds (invalid Index)");
+	return m_pUnitInfo->getUnitCombatAttackModifier(eUnitCombat);
+}
+
+int CvUnit::unitCombatDefenseModifier(UnitCombatTypes eUnitCombat) const
+{
+	FAssertMsg(eUnitCombat >= 0, "eUnitCombat is expected to be non-negative (invalid Index)");
+	FAssertMsg(eUnitCombat < GC.getNumUnitCombatInfos(), "eUnitCombat is expected to be within maximum bounds (invalid Index)");
+	return m_pUnitInfo->getUnitCombatDefenseModifier(eUnitCombat);
+}
+// < Unit Combat Attack Defense Mod End   >
 
 int CvUnit::unitCombatModifier(UnitCombatTypes eUnitCombat) const
 {
@@ -10878,6 +11140,18 @@ void CvUnit::changeImmuneToFirstStrikesCount(int iChange)
 	FAssert(getImmuneToFirstStrikesCount() >= 0);
 }
 
+// FFP - Move on impassable - start
+int CvUnit::getCanMoveImpassableCount() const
+{
+	return m_iCanMoveImpassableCount;
+}
+
+void CvUnit::changeCanMoveImpassableCount(int iChange)
+{
+	m_iCanMoveImpassableCount += iChange;
+	FAssert(getCanMoveImpassableCount() >= 0);
+}
+// FFP - Move on impassable - end
 
 int CvUnit::getExtraVisibilityRange() const																	
 {
@@ -11933,6 +12207,29 @@ void CvUnit::changeExtraFeatureDefensePercent(FeatureTypes eIndex, int iChange)
 	}
 }
 
+// FFP - Feature damage modifier  - start
+int CvUnit::getExtraFeatureDamagePercent(FeatureTypes eIndex) const
+{
+	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	FAssertMsg(eIndex < GC.getNumFeatureInfos(), "eIndex is expected to be within maximum bounds (invalid Index)");
+	return m_paiExtraFeatureDamagePercent[eIndex];
+}
+
+
+void CvUnit::changeExtraFeatureDamagePercent(FeatureTypes eIndex, int iChange)
+{
+	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	FAssertMsg(eIndex < GC.getNumFeatureInfos(), "eIndex is expected to be within maximum bounds (invalid Index)");
+
+	if (iChange != 0)
+	{
+		m_paiExtraFeatureDamagePercent[eIndex] += iChange;
+
+		setInfoBarDirty(true);
+	}
+}
+// FFP - Feature damage modifier - end
+
 int CvUnit::getExtraUnitCombatModifier(UnitCombatTypes eIndex) const
 {
 	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
@@ -12100,6 +12397,7 @@ void CvUnit::setHasPromotion(PromotionTypes eIndex, bool bNewValue)
 		changeAlwaysHealCount((GC.getPromotionInfo(eIndex).isAlwaysHeal()) ? iChange : 0);
 		changeHillsDoubleMoveCount((GC.getPromotionInfo(eIndex).isHillsDoubleMove()) ? iChange : 0);
 		changeImmuneToFirstStrikesCount((GC.getPromotionInfo(eIndex).isImmuneToFirstStrikes()) ? iChange : 0);
+		changeCanMoveImpassableCount((GC.getPromotionInfo(eIndex).isCanMoveImpassable()) ? iChange : 0);	// FFP - Move on impassable
 
 		changeExtraVisibilityRange(GC.getPromotionInfo(eIndex).getVisibilityChange() * iChange);
 		changeExtraMoves(GC.getPromotionInfo(eIndex).getMovesChange() * iChange);
@@ -12142,6 +12440,7 @@ void CvUnit::setHasPromotion(PromotionTypes eIndex, bool bNewValue)
 			changeExtraFeatureAttackPercent(((FeatureTypes)iI), (GC.getPromotionInfo(eIndex).getFeatureAttackPercent(iI) * iChange));
 			changeExtraFeatureDefensePercent(((FeatureTypes)iI), (GC.getPromotionInfo(eIndex).getFeatureDefensePercent(iI) * iChange));
 			changeFeatureDoubleMoveCount(((FeatureTypes)iI), ((GC.getPromotionInfo(eIndex).getFeatureDoubleMove(iI)) ? iChange : 0));
+			changeExtraFeatureDamagePercent(((FeatureTypes)iI), (GC.getPromotionInfo(eIndex).getFeatureDamageModifierPercent(iI) * iChange)); // FFP - Feature damage modifier
 		}
 
 		for (iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
@@ -12253,6 +12552,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 	pStream->Read(&m_iAlwaysHealCount);
 	pStream->Read(&m_iHillsDoubleMoveCount);
 	pStream->Read(&m_iImmuneToFirstStrikesCount);
+	pStream->Read(&m_iCanMoveImpassableCount); 	// FFP - Move on impassable
 	pStream->Read(&m_iExtraVisibilityRange);
 	pStream->Read(&m_iExtraMoves);
 	pStream->Read(&m_iExtraMoveDiscount);
@@ -12321,6 +12621,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 	pStream->Read(GC.getNumTerrainInfos(), m_paiExtraTerrainDefensePercent);
 	pStream->Read(GC.getNumFeatureInfos(), m_paiExtraFeatureAttackPercent);
 	pStream->Read(GC.getNumFeatureInfos(), m_paiExtraFeatureDefensePercent);
+	pStream->Read(GC.getNumFeatureInfos(), m_paiExtraFeatureDamagePercent);	// FFP - Feature damage modifier
 	pStream->Read(GC.getNumUnitCombatInfos(), m_paiExtraUnitCombatModifier);
 }
 
@@ -12357,6 +12658,7 @@ void CvUnit::write(FDataStreamBase* pStream)
 	pStream->Write(m_iAlwaysHealCount);
 	pStream->Write(m_iHillsDoubleMoveCount);
 	pStream->Write(m_iImmuneToFirstStrikesCount);
+	pStream->Write(m_iCanMoveImpassableCount);	// FFP - Move on impassable
 	pStream->Write(m_iExtraVisibilityRange);
 	pStream->Write(m_iExtraMoves);
 	pStream->Write(m_iExtraMoveDiscount);
@@ -12420,6 +12722,7 @@ void CvUnit::write(FDataStreamBase* pStream)
 	pStream->Write(GC.getNumTerrainInfos(), m_paiExtraTerrainDefensePercent);
 	pStream->Write(GC.getNumFeatureInfos(), m_paiExtraFeatureAttackPercent);
 	pStream->Write(GC.getNumFeatureInfos(), m_paiExtraFeatureDefensePercent);
+	pStream->Write(GC.getNumFeatureInfos(), m_paiExtraFeatureDamagePercent);	// FFP - Feature damage modifier
 	pStream->Write(GC.getNumUnitCombatInfos(), m_paiExtraUnitCombatModifier);
 }
 
@@ -13416,6 +13719,13 @@ const TCHAR* CvUnit::getButton() const
 	return m_pUnitInfo->getButton();
 }
 
+//Added in Final Frontier: TC01
+const TCHAR* CvUnit::getMovementSound() const
+{
+	return GC.getUnitInfo(getUnitType()).getMovementSound();
+}
+//End of Final Frontier
+
 int CvUnit::getGroupSize() const
 {
 	return m_pUnitInfo->getGroupSize();
@@ -13500,6 +13810,18 @@ bool CvUnit::verifyStackValid()
 
 	return true;
 }
+
+//Added in Final Frontier SDK: TC01
+bool CvUnit::isStarbase() const
+{
+	return GC.getUnitInfo(getUnitType()).isStarbase();
+}
+
+bool CvUnit::isOtherStation() const
+{
+	return GC.getUnitInfo(getUnitType()).isOtherStation();
+}
+//End of Final Frontier SDK: TC01
 
 
 // Private Functions...
@@ -13618,6 +13940,195 @@ int CvUnit::getSelectionSoundScript() const
 	}
 	return iScriptId;
 }
+
+//	Added in Final Frontier SDK: TC01
+//	Code from Kiwikaz to handle terrain effects
+//Start: FeatureEffect - Kaspar (Kiwikaz)
+void CvUnit::doGravityField()
+{
+	FeatureTypes eFeature = plot()->getFeatureType();
+	FeatureTypes eBlackHole = NO_FEATURE;
+	bool bFound = false;
+	int iX = getX_INLINE();
+	int iY = getY_INLINE();
+	int iFeatureX, iFeatureY, iXChange = 0, iYChange = 0;
+
+	if (GC.getFeatureInfo(eFeature).getBlackHoleFeatureType() != NO_FEATURE)
+	{
+		//Search for BlackHole in area of iArea 
+		int iArea = GC.getFeatureInfo(eFeature).getBlackHoleInArea();
+		if (iArea > 0)
+		{
+			for (int iI = (iArea * -1); iI < (iArea + 1) && !bFound; iI++)
+			{
+				for (int iJ = (iArea * -1); iJ < (iArea + 1) && !bFound; iJ++)
+				{
+					//Exclude the corners
+					int iExcludeCorners = abs(iI) + abs(iJ);
+					if (iExcludeCorners > iArea +1)
+					{
+						continue;
+					}
+
+					iFeatureX =  iX + iI;
+					iFeatureY = iY + iJ;
+					if (GC.getMap().plotINLINE(iFeatureX, iFeatureY) != NULL)
+					{
+						eBlackHole = GC.getMap().plotINLINE(iFeatureX, iFeatureY)->getFeatureType(); 
+
+						if (eBlackHole != NO_FEATURE)
+						{
+							if (eBlackHole == GC.getFeatureInfo(eFeature).getBlackHoleFeatureType())
+							{
+								bFound = true;
+							}
+						}
+					}
+				}	
+			}
+		}
+	}
+	//Choose a random plot if we didn't find it
+	if (!bFound)
+	{
+		iFeatureX = GC.getGame().getSorenRandNum(GC.getMapINLINE().getGridWidthINLINE(),"Choose random X for Black Hole");
+		iFeatureY = GC.getGame().getSorenRandNum(GC.getMapINLINE().getGridHeightINLINE(),"Choose random Y for Black Hole");
+	}
+	//How many plots we have to move
+	int iForce = GC.getFeatureInfo(eFeature).getGravityFieldForce();
+	int iK = 0;
+	while (iK < iForce)
+	{
+		if (iFeatureX > iX + iXChange)
+					iXChange += 1;
+		else if (iFeatureX < iX + iXChange)
+								iXChange -= 1;
+		if (iFeatureY > iY + iYChange)
+								iYChange += 1;
+		else if (iFeatureY < iY+ iYChange)
+								iYChange -= 1;
+		iK++;
+	}	
+	//Can unit move to the plot? - if not then try to move left or right (from target polt)
+	bool bValid = false;
+	int iPass = 0;
+	while(!bValid && iPass < iForce+1)
+	{
+		CvPlot* pTargetPlot = GC.getMapINLINE().plotINLINE(iX + iXChange,iY + iYChange);
+		if (canMoveInto(pTargetPlot))
+		{
+			bValid = true;
+		}
+		else
+		{
+			if (iPass == 0 || iPass > 1)
+			{
+				if ((iXChange == 0 || iYChange == 0) && iPass == 0)
+				{
+					iXChange > iYChange ? iYChange += 1 : iXChange += 1;
+				}
+				else
+				{
+					if (iXChange > 0)
+					{
+						iXChange -= 1;
+					}
+					else
+					{
+						iXChange += 1;
+					}
+				}	
+			}
+			if (iPass > 0)
+			{
+				if ((iXChange == 0 || iXChange == 0) && iPass == 1)
+				{
+					iXChange > iYChange ? iYChange -= 1 : iXChange -= 1;
+				}
+				else
+				{
+					if (iYChange > 0)
+					{
+						iYChange -= 1;
+					}
+					else
+					{
+						iYChange += 1;
+					}
+				}
+			}
+		}
+		iPass++;
+
+	}
+	if (bValid)
+	{
+		setXY(iX + iXChange, iY + iYChange, true,true,false,false);
+		CvWString szText = gDLL->getText("TXT_KEY_FF_TERRAIN_UNIT_GRAV_FIELD", getName().GetCString(), GC.getFeatureInfo(eFeature).getText());
+		gDLL->getInterfaceIFace()->addMessage(getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szText, "AS2D_AIR_ATTACKED", MESSAGE_TYPE_MINOR_EVENT, getButton(),(ColorTypes)GC.getInfoTypeForString("COLOR_RED"), iX + iXChange, iY + iYChange, true, true);
+	}
+}
+
+// As written, doWormhole selects the first wormhole it finds on the map.
+// FIXME: rewrite this to build a list of random wormholes and choose one.
+// That way we'd have support for more complicated gate structures.
+void CvUnit::doWormhole()
+{
+	int iX = plot()->getX();
+	int iY = plot()->getY();
+	int iNumPlots = GC.getMap().numPlots();
+	for (int iI = 0; iI < iNumPlots; iI++)
+	{
+		CvPlot* pPlot = GC.getMap().plotByIndex(iI);
+		if (pPlot != NULL)
+		{
+			if (pPlot->getFeatureType() != NO_FEATURE)
+			{
+				if (pPlot->getFeatureType() == GC.getFeatureInfo(plot()->getFeatureType()).getTargetWormholeType())
+				{
+					if (!(pPlot->getX() == iX && pPlot->getY() == iY))
+					{
+						int WormholeX = pPlot->getX();
+						int WormholeY = pPlot->getY();
+						setXY(WormholeX, WormholeY, true, true, false, false);
+						CvWString szText = gDLL->getText("TXT_KEY_WORMHOLE_CROSSING", getName().GetCString(), GC.getFeatureInfo(pPlot->getFeatureType()).getText());
+						gDLL->getInterfaceIFace()->addMessage(getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szText, "AS2D_AIR_ATTACKED", MESSAGE_TYPE_MINOR_EVENT, getButton(),(ColorTypes)GC.getInfoTypeForString("COLOR_GREEN"), getX(), getY(), true, true);
+						finishMoves();
+					}
+				}
+			}
+		}
+	}
+}
+
+void CvUnit::doFeatureDamage()
+{
+	FeatureTypes eFeature = plot()->getFeatureType();
+/* FFP - Feature damage modifier - start
+**	Adjust damage for unit's feature damage modifier. Currently this is not allowed to heal a unit.
+** original: 
+	changeDamage(GC.getFeatureInfo(eFeature).getTurnDamage(), NO_PLAYER);
+/* new: */
+	int iDamage = 0;
+
+	iDamage = std::max(0, GC.getFeatureInfo(eFeature).getTurnDamage() + featureDamageModifier(eFeature));
+
+	changeDamage(iDamage, NO_PLAYER);
+// FFP - Feature damage modifier - end
+
+	CvWString szText = gDLL->getText("TXT_KEY_FF_TERRAIN_UNIT_DAMAGED",getName().GetCString(),GC.getFeatureInfo(eFeature).getText());
+	if(isDead())
+	{
+		szText = gDLL->getText("TXT_KEY_FF_TERRAIN_UNIT_LOST",getName().GetCString(),GC.getFeatureInfo(eFeature).getText());
+	}
+	gDLL->getInterfaceIFace()->addMessage(getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szText, "AS2D_AIR_ATTACKED", MESSAGE_TYPE_MINOR_EVENT, getButton(),(ColorTypes)GC.getInfoTypeForString("COLOR_RED"), getX_INLINE(), getY_INLINE(), true, true);
+	EffectTypes eEffect = (EffectTypes)GC.getInfoTypeForString(GC.getFeatureInfo(eFeature).getEffectType());
+	if (eEffect != NO_EFFECT)
+	{
+		gDLL->getEngineIFace()->TriggerEffect(eEffect,plot()->getPoint());
+	}
+}
+//End: FeatureEffects
 
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      02/21/10                                jdog5000      */

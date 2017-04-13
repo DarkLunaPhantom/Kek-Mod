@@ -44,6 +44,12 @@ struct DllExport CombatDetails					// Exposed to Python
 	int iCityBarbarianDefenseModifier;
 	int iClassDefenseModifier;
 	int iClassAttackModifier;
+
+	// < Unit Combat Attack Defense Mod Start >
+	int iCombatDefenseModifier;
+	int iCombatAttackModifier;
+	// < Unit Combat Attack Defense Mod End   >
+	
 	int iCombatModifierT;
 	int iCombatModifierA;
 	int iDomainModifierA;
@@ -400,8 +406,13 @@ public:
 	int terrainDefenseModifier(TerrainTypes eTerrain) const;								// Exposed to Python
 	int featureAttackModifier(FeatureTypes eFeature) const;								// Exposed to Python
 	int featureDefenseModifier(FeatureTypes eFeature) const;								// Exposed to Python
+	int featureDamageModifier(FeatureTypes eFeature) const;	// FFP - Feature damage modifier ; Exposed to Python
 	int unitClassAttackModifier(UnitClassTypes eUnitClass) const;						// Exposed to Python
 	int unitClassDefenseModifier(UnitClassTypes eUnitClass) const;					// Exposed to Python
+	// < Unit Combat Attack Defense Mod Start >
+	int unitCombatAttackModifier(UnitCombatTypes eUnitCombat) const;						// Exposed to Python
+	int unitCombatDefenseModifier(UnitCombatTypes eUnitCombat) const;					// Exposed to Python
+	// < Unit Combat Attack Defense Mod End   >
 	int unitCombatModifier(UnitCombatTypes eUnitCombat) const;							// Exposed to Python
 	int domainModifier(DomainTypes eDomain) const;													// Exposed to Python
 
@@ -530,6 +541,12 @@ public:
 	int getImmuneToFirstStrikesCount() const;																									
 	void changeImmuneToFirstStrikesCount(int iChange);																				
 																																														
+	
+// FFP - Move on impassable - start
+	int getCanMoveImpassableCount() const;
+	void changeCanMoveImpassableCount(int iChange);																				
+// FFP - Move on impassable - end
+	
 	int getExtraVisibilityRange() const;																						// Exposed to Python					
 	void changeExtraVisibilityRange(int iChange);
 
@@ -699,6 +716,11 @@ public:
 	void changeExtraFeatureAttackPercent(FeatureTypes eIndex, int iChange);
 	int getExtraFeatureDefensePercent(FeatureTypes eIndex) const;														// Exposed to Python
 	void changeExtraFeatureDefensePercent(FeatureTypes eIndex, int iChange);
+	
+// FFP - Feature damage modifier - start
+	int getExtraFeatureDamagePercent(FeatureTypes eIndex) const;														// FFP; Exposed to Python
+	void changeExtraFeatureDamagePercent(FeatureTypes eIndex, int iChange);
+// FFP - Feature damage modifier - end
 
 	int getExtraUnitCombatModifier(UnitCombatTypes eIndex) const;														// Exposed to Python
 	void changeExtraUnitCombatModifier(UnitCombatTypes eIndex, int iChange);
@@ -734,6 +756,10 @@ public:
 	bool willRevealByMove(const CvPlot* pPlot) const;
 
 	bool isAlwaysHostile(const CvPlot* pPlot) const;
+//Added in Final Frontier: TC01
+	bool isStarbase() const;
+	bool isOtherStation() const;
+//End of Final Frontier
 
 	bool verifyStackValid();
 
@@ -760,6 +786,8 @@ public:
 
 	void read(FDataStreamBase* pStream);
 	void write(FDataStreamBase* pStream);
+	
+	const TCHAR* getMovementSound() const;			//Added in Final Frontier: TC01
 
 	virtual void AI_init(UnitAITypes eUnitAI) = 0;
 	virtual void AI_uninit() = 0;
@@ -818,6 +846,7 @@ protected:
 	int m_iAlwaysHealCount;
 	int m_iHillsDoubleMoveCount;
 	int m_iImmuneToFirstStrikesCount;
+	int m_iCanMoveImpassableCount;	// FFP - Move on impassable
 	int m_iExtraVisibilityRange;
 	int m_iExtraMoves;
 	int m_iExtraMoveDiscount;
@@ -880,6 +909,7 @@ protected:
 	int* m_paiExtraTerrainDefensePercent;
 	int* m_paiExtraFeatureAttackPercent;
 	int* m_paiExtraFeatureDefensePercent;
+	int* m_paiExtraFeatureDamagePercent;	// FFP - Feature damage modifier
 	int* m_paiExtraUnitCombatModifier;
 
 	bool canAdvance(const CvPlot* pPlot, int iThreshold) const;
@@ -905,6 +935,12 @@ protected:
 	void resolveCombat(CvUnit* pDefender, CvPlot* pPlot, bool bVisible); // K-Mod
 	void resolveAirCombat(CvUnit* pInterceptor, CvPlot* pPlot, CvAirMissionDefinition& kBattle);
 	void checkRemoveSelectionAfterAttack();
+	
+//Added in Final Frontier Plus: TC01
+	void doGravityField();
+	void doWormhole();
+	void doFeatureDamage();
+//End of Final Frontier SDK
 
 // Lead From Behind by UncutDragon. Edited for K-Mod
 public:
