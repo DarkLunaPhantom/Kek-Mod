@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Sid Meier's Civilization 4 -->
+<!-- Copyright Firaxis Games 2005 -->
+<!-- Created with TC01's XML Text Editor -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_WORMHOLE_CROSSING</Tag>
+		<English>Your %s1 has passed through a Wormhole! (the %s2)</English>
+		<French>Your %s1 has passed through a Wormhole! (the %s2)</French>
+		<German>Your %s1 has passed through a Wormhole! (the %s2)</German>
+		<Italian>Your %s1 has passed through a Wormhole! (the %s2)</Italian>
+		<Spanish>Your %s1 has passed through a Wormhole! (the %s2)</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_FEATURE_WORMHOLE</Tag>
+		<English>Blue Wormhole</English>
+		<French>Blue Wormhole</French>
+		<German>Blue Wormhole</German>
+		<Italian>Blue Wormhole</Italian>
+		<Spanish>Blue Wormhole</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_FEATURE_WORMHOLE_PEDIA</Tag>
+		<English>[H1]Wormholes[\H1][PARAGRAPH:2][COLOR_HIGHLIGHT_TEXT]Wormholes[COLOR_REVERT] allow passage between two points on the map. The wormhole feature only appears on the Wormholes mapscript, and only two of each color will ever appear. They will only appear while playing the Wormholes or WormholesSpiralGalaxy Mapscript, or a scenario including them. You may encounter wormholes in three colors, Blue, Red, and White (called "Purple" by the mapscripts). Each color of wormhole links to another wormhole of the same color. When your unit enters a wormhole, it will pass through to the other point on the map. Don't add a third Wormhole of any color in Worldbuilder![PARAGRAPH:2]Wormholes resemble Black Holes, however there are subtle differences between the two space anomalies. Blue wormholes are nearly identical- the other two colors are more obvious. Wormholes can be labeled, if that option is enabled by the two Wormhole mapscripts, to help with this.</English>
+		<French>[H1]Wormholes[\H1][PARAGRAPH:2][COLOR_HIGHLIGHT_TEXT]Wormholes[COLOR_REVERT] allow passage between two points on the map. The wormhole feature only appears on the Wormholes mapscript, and only two of each color will ever appear. They will only appear while playing the Wormholes or WormholesSpiralGalaxy Mapscript, or a scenario including them. You may encounter wormholes in three colors, Blue, Red, and White (called "Purple" by the mapscripts). Each color of wormhole links to another wormhole of the same color. When your unit enters a wormhole, it will pass through to the other point on the map. Don't add a third Wormhole of any color in Worldbuilder![PARAGRAPH:2]Wormholes resemble Black Holes, however there are subtle differences between the two space anomalies. Blue wormholes are nearly identical- the other two colors are more obvious. Wormholes can be labeled, if that option is enabled by the two Wormhole mapscripts, to help with this.</French>
+		<German>[H1]Wormholes[\H1][PARAGRAPH:2][COLOR_HIGHLIGHT_TEXT]Wormholes[COLOR_REVERT] allow passage between two points on the map. The wormhole feature only appears on the Wormholes mapscript, and only two of each color will ever appear. They will only appear while playing the Wormholes or WormholesSpiralGalaxy Mapscript, or a scenario including them. You may encounter wormholes in three colors, Blue, Red, and White (called "Purple" by the mapscripts). Each color of wormhole links to another wormhole of the same color. When your unit enters a wormhole, it will pass through to the other point on the map. Don't add a third Wormhole of any color in Worldbuilder![PARAGRAPH:2]Wormholes resemble Black Holes, however there are subtle differences between the two space anomalies. Blue wormholes are nearly identical- the other two colors are more obvious. Wormholes can be labeled, if that option is enabled by the two Wormhole mapscripts, to help with this.</German>
+		<Italian>[H1]Wormholes[\H1][PARAGRAPH:2][COLOR_HIGHLIGHT_TEXT]Wormholes[COLOR_REVERT] allow passage between two points on the map. The wormhole feature only appears on the Wormholes mapscript, and only two of each color will ever appear. They will only appear while playing the Wormholes or WormholesSpiralGalaxy Mapscript, or a scenario including them. You may encounter wormholes in three colors, Blue, Red, and White (called "Purple" by the mapscripts). Each color of wormhole links to another wormhole of the same color. When your unit enters a wormhole, it will pass through to the other point on the map. Don't add a third Wormhole of any color in Worldbuilder![PARAGRAPH:2]Wormholes resemble Black Holes, however there are subtle differences between the two space anomalies. Blue wormholes are nearly identical- the other two colors are more obvious. Wormholes can be labeled, if that option is enabled by the two Wormhole mapscripts, to help with this.</Italian>
+		<Spanish>[H1]Wormholes[\H1][PARAGRAPH:2][COLOR_HIGHLIGHT_TEXT]Wormholes[COLOR_REVERT] allow passage between two points on the map. The wormhole feature only appears on the Wormholes mapscript, and only two of each color will ever appear. They will only appear while playing the Wormholes or WormholesSpiralGalaxy Mapscript, or a scenario including them. You may encounter wormholes in three colors, Blue, Red, and White (called "Purple" by the mapscripts). Each color of wormhole links to another wormhole of the same color. When your unit enters a wormhole, it will pass through to the other point on the map. Don't add a third Wormhole of any color in Worldbuilder![PARAGRAPH:2]Wormholes resemble Black Holes, however there are subtle differences between the two space anomalies. Blue wormholes are nearly identical- the other two colors are more obvious. Wormholes can be labeled, if that option is enabled by the two Wormhole mapscripts, to help with this.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_FEATURE_RED_WORMHOLE</Tag>
+		<English>Red Wormhole</English>
+		<French>Red Wormhole</French>
+		<German>Red Wormhole</German>
+		<Italian>Red Wormhole</Italian>
+		<Spanish>Red Wormhole</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_FF_CONCEPT_WORMHOLES</Tag>
+		<English>Wormholes</English>
+		<French>Wormholes</French>
+		<German>Wormholes</German>
+		<Italian>Wormholes</Italian>
+		<Spanish>Wormholes</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_ST_TUTORIAL_WORMHOLE_TITLE</Tag>
+		<English>You have discovered a Wormhole!</English>
+		<French>You have discovered a Wormhole!</French>
+		<German>You have discovered a Wormhole!</German>
+		<Italian>You have discovered a Wormhole!</Italian>
+		<Spanish>You have discovered a Wormhole!</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_ST_TUTORIAL_WORMHOLE</Tag>
+		<English>You have discovered a [COLOR_HIGHLIGHT_TEXT]Wormhole[COLOR_REVERT]. These features allow instantaneous travel between two points on the map. They will only appear while playing the Wormholes or WormholesSpiralGalaxy Mapscript. You may encounter wormholes in three colors, Blue, Red, and White (called "Purple" by the mapscripts). Each color of wormhole links to another wormhole of the same color.[PARAGRAPH:1]Wormholes resemble black holes. Wormholes may be marked by a landmark tag (if the mapscripts have been configured to do so). Travelling through a wormhole does not remove any additional movement points from the unit that passed through.</English>
+		<French>You have discovered a [COLOR_HIGHLIGHT_TEXT]Wormhole[COLOR_REVERT]. These features allow instantaneous travel between two points on the map. They will only appear while playing the Wormholes or WormholesSpiralGalaxy Mapscript. You may encounter wormholes in three colors, Blue, Red, and White (called "Purple" by the mapscripts). Each color of wormhole links to another wormhole of the same color.[PARAGRAPH:1]Wormholes resemble black holes. Wormholes may be marked by a landmark tag (if the mapscripts have been configured to do so). Travelling through a wormhole does not remove any additional movement points from the unit that passed through.</French>
+		<German>You have discovered a [COLOR_HIGHLIGHT_TEXT]Wormhole[COLOR_REVERT]. These features allow instantaneous travel between two points on the map. They will only appear while playing the Wormholes or WormholesSpiralGalaxy Mapscript. You may encounter wormholes in three colors, Blue, Red, and White (called "Purple" by the mapscripts). Each color of wormhole links to another wormhole of the same color.[PARAGRAPH:1]Wormholes resemble black holes. Wormholes may be marked by a landmark tag (if the mapscripts have been configured to do so). Travelling through a wormhole does not remove any additional movement points from the unit that passed through.</German>
+		<Italian>You have discovered a [COLOR_HIGHLIGHT_TEXT]Wormhole[COLOR_REVERT]. These features allow instantaneous travel between two points on the map. They will only appear while playing the Wormholes or WormholesSpiralGalaxy Mapscript. You may encounter wormholes in three colors, Blue, Red, and White (called "Purple" by the mapscripts). Each color of wormhole links to another wormhole of the same color.[PARAGRAPH:1]Wormholes resemble black holes. Wormholes may be marked by a landmark tag (if the mapscripts have been configured to do so). Travelling through a wormhole does not remove any additional movement points from the unit that passed through.</Italian>
+		<Spanish>You have discovered a [COLOR_HIGHLIGHT_TEXT]Wormhole[COLOR_REVERT]. These features allow instantaneous travel between two points on the map. They will only appear while playing the Wormholes or WormholesSpiralGalaxy Mapscript. You may encounter wormholes in three colors, Blue, Red, and White (called "Purple" by the mapscripts). Each color of wormhole links to another wormhole of the same color.[PARAGRAPH:1]Wormholes resemble black holes. Wormholes may be marked by a landmark tag (if the mapscripts have been configured to do so). Travelling through a wormhole does not remove any additional movement points from the unit that passed through.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_FEATURE_PURPLE_WORMHOLE</Tag>
+		<English>Purple Wormhole</English>
+		<French>Purple Wormhole</French>
+		<German>Purple Wormhole</German>
+		<Italian>Purple Wormhole</Italian>
+		<Spanish>Purple Wormhole</Spanish>
+	</TEXT>
+
+</Civ4GameText>

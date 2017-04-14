@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Sid Meier's Civilization 4 -->
+<!-- Copyright Firaxis Games 2005 -->
+<!-- Created with TC01's XML Text Editor 
+	(or at least copied from a file that claimed to be created with TC01's XML Text Editor, whatever that was. 
+	To add things here, take a look at Gameinfo/CIV4DiplomacyInfos.xml.-->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>AI_DIPLO_GREETINGS_FFP_ALVAREZ_ATT_FR_1</Tag>
+		<English>Ah, [CT_NAME], one of the few colonial administrators who are almost my equal. What can [OUR_CIV_SHORT] do for you today?</English>
+		<French>Ah, [CT_NAME], one of the few colonial administrators who are almost my equal. What can [OUR_CIV_SHORT] do for you today?</French>
+		<German>Ah, [CT_NAME], one of the few colonial administrators who are almost my equal. What can [OUR_CIV_SHORT] do for you today?</German>
+		<Italian>Ah, [CT_NAME], one of the few colonial administrators who are almost my equal. What can [OUR_CIV_SHORT] do for you today?</Italian>
+		<Spanish>Ah, [CT_NAME], one of the few colonial administrators who are almost my equal. What can [OUR_CIV_SHORT] do for you today?</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_GREETINGS_FFP_ALVAREZ_ATT_MAD_1</Tag>
+		<English>Make it quick, [CT_NAME]. Running a mighty interstellar empire is hard work... not that you would understand that, of course.</English>
+		<French>Make it quick, [CT_NAME]. Running a mighty interstellar empire is hard work... not that you would understand that, of course.</French>
+		<German>Make it quick, [CT_NAME]. Running a mighty interstellar empire is hard work... not that you would understand that, of course.</German>
+		<Italian>Make it quick, [CT_NAME]. Running a mighty interstellar empire is hard work... not that you would understand that, of course.</Italian>
+		<Spanish>Make it quick, [CT_NAME]. Running a mighty interstellar empire is hard work... not that you would understand that, of course.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_REFUSE_TO_TALK_FFP_ALVAREZ_1</Tag>
+		<English>[OUR_CT_NAME] does not negotiate with rebels.</English>
+		<French>[OUR_CT_NAME] does not negotiate with rebels.</French>
+		<German>[OUR_CT_NAME] does not negotiate with rebels.</German>
+		<Italian>[OUR_CT_NAME] does not negotiate with rebels.</Italian>
+		<Spanish>[OUR_CT_NAME] does not negotiate with rebels.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_DECLARE_WAR_FFP_ALVAREZ_1</Tag>
+		<English>The galaxy has suffered your insolence long enough, rebel scum!</English>
+		<French>The galaxy has suffered your insolence long enough, rebel scum!</French>
+		<German>The galaxy has suffered your insolence long enough, rebel scum!</German>
+		<Italian>The galaxy has suffered your insolence long enough, rebel scum!</Italian>
+		<Spanish>The galaxy has suffered your insolence long enough, rebel scum!</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_DECLARE_WAR_FFP_ALVAREZ_2</Tag>
+		<English>Nothing personal, [CT_NAME], but it is time to unify the colonies under their rightful leader: me.</English>
+		<French>Nothing personal, [CT_NAME], but it is time to unify the colonies under their rightful leader: me.</French>
+		<German>Nothing personal, [CT_NAME], but it is time to unify the colonies under their rightful leader: me.</German>
+		<Italian>Nothing personal, [CT_NAME], but it is time to unify the colonies under their rightful leader: me.</Italian>
+		<Spanish>Nothing personal, [CT_NAME], but it is time to unify the colonies under their rightful leader: me.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_GREETINGS_FFP_RICHARDS_ATT_FR_1</Tag>
+		<English>Always good talking to someone who understands the value of hard work. I'll be with you right away, [CT_NAME].</English>
+		<French>Always good talking to someone who understands the value of hard work. I'll be with you right away, [CT_NAME].</French>
+		<German>Always good talking to someone who understands the value of hard work. I'll be with you right away, [CT_NAME].</German>
+		<Italian>Always good talking to someone who understands the value of hard work. I'll be with you right away, [CT_NAME].</Italian>
+		<Spanish>Always good talking to someone who understands the value of hard work. I'll be with you right away, [CT_NAME].</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_GREETINGS_FFP_RICHARDS_ATT_MAD_1</Tag>
+		<English>This had better be important, I'm a very busy man.</English>
+		<French>This had better be important, I'm a very busy man.</French>
+		<German>This had better be important, I'm a very busy man.</German>
+		<Italian>This had better be important, I'm a very busy man.</Italian>
+		<Spanish>This had better be important, I'm a very busy man.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_REFUSE_TO_TALK_FFP_RICHARDS_1</Tag>
+		<English>I don't have time for some parasite like you.</English>
+		<French>I don't have time for some parasite like you.</French>
+		<German>I don't have time for some parasite like you.</German>
+		<Italian>I don't have time for some parasite like you.</Italian>
+		<Spanish>I don't have time for some parasite like you.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_GREETINGS_FFP_KOROVIN_ATT_FR_1</Tag>
+		<English>Well, if it isn't our favorite repeat customer! What business do you have with the [OUR_CIV_SHORT], [CT_NAME]?</English>
+		<French>Well, if it isn't our favorite repeat customer! What business do you have with the [OUR_CIV_SHORT], [CT_NAME]?</French>
+		<German>Well, if it isn't our favorite repeat customer! What business do you have with the [OUR_CIV_SHORT], [CT_NAME]?</German>
+		<Italian>Well, if it isn't our favorite repeat customer! What business do you have with the [OUR_CIV_SHORT], [CT_NAME]?</Italian>
+		<Spanish>Well, if it isn't our favorite repeat customer! What business do you have with the [OUR_CIV_SHORT], [CT_NAME]?</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_GREETINGS_FFP_KOROVIN_ATT_FR_2</Tag>
+		<English>Ah, [CT_NAME], how are you doing? Anything you want? Money, power, planets, I know a guy who knows a guy who can make your dreams come true.</English>
+		<French>Ah, [CT_NAME], how are you doing? Anything you want? Money, power, planets, I know a guy who knows a guy who can make your dreams come true.</French>
+		<German>Ah, [CT_NAME], how are you doing? Anything you want? Money, power, planets, I know a guy who knows a guy who can make your dreams come true.</German>
+		<Italian>Ah, [CT_NAME], how are you doing? Anything you want? Money, power, planets, I know a guy who knows a guy who can make your dreams come true.</Italian>
+		<Spanish>Ah, [CT_NAME], how are you doing? Anything you want? Money, power, planets, I know a guy who knows a guy who can make your dreams come true.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_GREETINGS_FFP_KOROVIN_ATT_MAD_1</Tag>
+		<English>Your brash mannerisms do not make you very welcome here, [CT_NAME]. State your business.</English>
+		<French>Your brash mannerisms do not make you very welcome here, [CT_NAME]. State your business.</French>
+		<German>Your brash mannerisms do not make you very welcome here, [CT_NAME]. State your business.</German>
+		<Italian>Your brash mannerisms do not make you very welcome here, [CT_NAME]. State your business.</Italian>
+		<Spanish>Your brash mannerisms do not make you very welcome here, [CT_NAME]. State your business.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_GREETINGS_FFP_KOROVIN_ATT_MAD_2</Tag>
+		<English>The [OUR_CIV_SHORT] is more powerful than you think, [CT_NAME]. Careful you don't suffer an "accident".</English>
+		<French>The [OUR_CIV_SHORT] is more powerful than you think, [CT_NAME]. Careful you don't suffer an "accident".</French>
+		<German>The [OUR_CIV_SHORT] is more powerful than you think, [CT_NAME]. Careful you don't suffer an "accident".</German>
+		<Italian>The [OUR_CIV_SHORT] is more powerful than you think, [CT_NAME]. Careful you don't suffer an "accident".</Italian>
+		<Spanish>The [OUR_CIV_SHORT] is more powerful than you think, [CT_NAME]. Careful you don't suffer an "accident".</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_REFUSE_TO_TALK_FFP_KOROVIN_1</Tag>
+		<English>Talk to the invisible hand of the market, [CT_NAME].</English>
+		<French>Talk to the invisible hand of the market, [CT_NAME].</French>
+		<German>Talk to the invisible hand of the market, [CT_NAME].</German>
+		<Italian>Talk to the invisible hand of the market, [CT_NAME].</Italian>
+		<Spanish>Talk to the invisible hand of the market, [CT_NAME].</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_DECLARE_WAR_FFP_KOROVIN_1</Tag>
+		<English>Don't take this personally, but it seems your colonies would be more profitable to us if they were under our direct control.</English>
+		<French>Don't take this personally, but it seems your colonies would be more profitable to us if they were under our direct control.</French>
+		<German>Don't take this personally, but it seems your colonies would be more profitable to us if they were under our direct control.</German>
+		<Italian>Don't take this personally, but it seems your colonies would be more profitable to us if they were under our direct control.</Italian>
+		<Spanish>Don't take this personally, but it seems your colonies would be more profitable to us if they were under our direct control.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_GREETINGS_FFP_PRITCHARD_ATT_FR_1</Tag>
+		<English>My trusted friend [CT_NAME], I would so love to offer you a cup of tea, but alas, we are separated by several hundred lightyears. Anyway, how may [OUR_CIV_SHORT] help you?</English>
+		<French>My trusted friend [CT_NAME], I would so love to offer you a cup of tea, but alas, we are separated by several hundred lightyears. Anyway, how may [OUR_CIV_SHORT] help you?</French>
+		<German>My trusted friend [CT_NAME], I would so love to offer you a cup of tea, but alas, we are separated by several hundred lightyears. Anyway, how may [OUR_CIV_SHORT] help you?</German>
+		<Italian>My trusted friend [CT_NAME], I would so love to offer you a cup of tea, but alas, we are separated by several hundred lightyears. Anyway, how may [OUR_CIV_SHORT] help you?</Italian>
+		<Spanish>My trusted friend [CT_NAME], I would so love to offer you a cup of tea, but alas, we are separated by several hundred lightyears. Anyway, how may [OUR_CIV_SHORT] help you?</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_GREETINGS_FFP_PRITCHARD_ATT_FR_2</Tag>
+		<English>The luxuries of [OUR_CIV_SHORT] await you. Come and relax in our resorts while we discuss interstellar politics.</English>
+		<French>The luxuries of [OUR_CIV_SHORT] await you. Come and relax in our resorts while we discuss interstellar politics.</French>
+		<German>The luxuries of [OUR_CIV_SHORT] await you. Come and relax in our resorts while we discuss interstellar politics.</German>
+		<Italian>The luxuries of [OUR_CIV_SHORT] await you. Come and relax in our resorts while we discuss interstellar politics.</Italian>
+		<Spanish>The luxuries of [OUR_CIV_SHORT] await you. Come and relax in our resorts while we discuss interstellar politics.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_GREETINGS_FFP_PRITCHARD_ATT_MAD_1</Tag>
+		<English>Your presence disturbs [OUR_CIV_SHORT], but perhaps you have something that will lighten my mood?</English>
+		<French>Your presence disturbs [OUR_CIV_SHORT], but perhaps you have something that will lighten my mood?</French>
+		<German>Your presence disturbs [OUR_CIV_SHORT], but perhaps you have something that will lighten my mood?</German>
+		<Italian>Your presence disturbs [OUR_CIV_SHORT], but perhaps you have something that will lighten my mood?</Italian>
+		<Spanish>Your presence disturbs [OUR_CIV_SHORT], but perhaps you have something that will lighten my mood?</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_GREETINGS_FFP_COLOMBO_ATT_MAD_1</Tag>
+		<English>Careful, [CT_NAME]. [OUR_CIV_SHORT] has warships within attack range of your colonies. Talk fast, before I decide to use them.</English>
+		<French>Careful, [CT_NAME]. [OUR_CIV_SHORT] has warships within attack range of your colonies. Talk fast, before I decide to use them.</French>
+		<German>Careful, [CT_NAME]. [OUR_CIV_SHORT] has warships within attack range of your colonies. Talk fast, before I decide to use them.</German>
+		<Italian>Careful, [CT_NAME]. [OUR_CIV_SHORT] has warships within attack range of your colonies. Talk fast, before I decide to use them.</Italian>
+		<Spanish>Careful, [CT_NAME]. [OUR_CIV_SHORT] has warships within attack range of your colonies. Talk fast, before I decide to use them.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_REFUSE_TO_TALK_FFP_COLOMBO_1</Tag>
+		<English>You're just not worth my time, [CT_NAME]. Come back when you have something of value.</English>
+		<French>You're just not worth my time, [CT_NAME]. Come back when you have something of value.</French>
+		<German>You're just not worth my time, [CT_NAME]. Come back when you have something of value.</German>
+		<Italian>You're just not worth my time, [CT_NAME]. Come back when you have something of value.</Italian>
+		<Spanish>You're just not worth my time, [CT_NAME]. Come back when you have something of value.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_DECLARE_WAR_FFP_COLOMBO_1</Tag>
+		<English>I think it's time to step up my game from entrepeneur to emperor, starting with your colonies.</English>
+		<French>I think it's time to step up my game from entrepeneur to emperor, starting with your colonies.</French>
+		<German>I think it's time to step up my game from entrepeneur to emperor, starting with your colonies.</German>
+		<Italian>I think it's time to step up my game from entrepeneur to emperor, starting with your colonies.</Italian>
+		<Spanish>I think it's time to step up my game from entrepeneur to emperor, starting with your colonies.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_GREETINGS_FFP_REUTHER_ATT_FR_1</Tag>
+		<English>Welcome! How can [OUR_CIV_SHORT] help you in the fight against tyranny and the remains of the old order?</English>
+		<French>Welcome! How can [OUR_CIV_SHORT] help you in the fight against tyranny and the remains of the old order?</French>
+		<German>Welcome! How can [OUR_CIV_SHORT] help you in the fight against tyranny and the remains of the old order?</German>
+		<Italian>Welcome! How can [OUR_CIV_SHORT] help you in the fight against tyranny and the remains of the old order?</Italian>
+		<Spanish>Welcome! How can [OUR_CIV_SHORT] help you in the fight against tyranny and the remains of the old order?</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_GREETINGS_FFP_REUTHER_ATT_FR_2</Tag>
+		<English>How can our two collectives cooperate today?</English>
+		<French>How can our two collectives cooperate today?</French>
+		<German>How can our two collectives cooperate today?</German>
+		<Italian>How can our two collectives cooperate today?</Italian>
+		<Spanish>How can our two collectives cooperate today?</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_GREETINGS_FFP_REUTHER_ATT_MAD_1</Tag>
+		<English>You've proven yourself nothing but a puppet of the old regime. What do you have to say for yourself, [CT_NAME]?</English>
+		<French>You've proven yourself nothing but a puppet of the old regime. What do you have to say for yourself, [CT_NAME]?</French>
+		<German>You've proven yourself nothing but a puppet of the old regime. What do you have to say for yourself, [CT_NAME]?</German>
+		<Italian>You've proven yourself nothing but a puppet of the old regime. What do you have to say for yourself, [CT_NAME]?</Italian>
+		<Spanish>You've proven yourself nothing but a puppet of the old regime. What do you have to say for yourself, [CT_NAME]?</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_REFUSE_TO_TALK_FFP_REUTHER_1</Tag>
+		<English>Your imperialist lies do not deceive me, [CT_NAME]! Begone!</English>
+		<French>Your imperialist lies do not deceive me, [CT_NAME]! Begone!</French>
+		<German>Your imperialist lies do not deceive me, [CT_NAME]! Begone!</German>
+		<Italian>Your imperialist lies do not deceive me, [CT_NAME]! Begone!</Italian>
+		<Spanish>Your imperialist lies do not deceive me, [CT_NAME]! Begone!</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_DECLARE_WAR_FFP_REUTHER_1</Tag>
+		<English>Sic semper tyrannis!</English>
+		<French>Sic semper tyrannis!</French>
+		<German>Sic semper tyrannis!</German>
+		<Italian>Sic semper tyrannis!</Italian>
+		<Spanish>Sic semper tyrannis!</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_GREETINGS_FFP_TIANQU_ATT_FR_1</Tag>
+		<English>Good day to you, [CT_NAME]. Let us compare the results of our research!</English>
+		<French>Good day to you, [CT_NAME]. Let us compare the results of our research!</French>
+		<German>Good day to you, [CT_NAME]. Let us compare the results of our research!</German>
+		<Italian>Good day to you, [CT_NAME]. Let us compare the results of our research!</Italian>
+		<Spanish>Good day to you, [CT_NAME]. Let us compare the results of our research!</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_GREETINGS_FFP_TIANQU_ATT_MAD_1</Tag>
+		<English>I'm in the middle of an important experiment, so make this quick.</English>
+		<French>I'm in the middle of an important experiment, so make this quick.</French>
+		<German>I'm in the middle of an important experiment, so make this quick.</German>
+		<Italian>I'm in the middle of an important experiment, so make this quick.</Italian>
+		<Spanish>I'm in the middle of an important experiment, so make this quick.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_GREETINGS_FFP_TIANQU_ATT_MAD_2</Tag>
+		<English>What makes you think you can just barge in and disturb my work? You had better have some important knowledge to share.</English>
+		<French>What makes you think you can just barge in and disturb my work? You had better have some important knowledge to share.</French>
+		<German>What makes you think you can just barge in and disturb my work? You had better have some important knowledge to share.</German>
+		<Italian>What makes you think you can just barge in and disturb my work? You had better have some important knowledge to share.</Italian>
+		<Spanish>What makes you think you can just barge in and disturb my work? You had better have some important knowledge to share.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_REFUSE_TO_TALK_TIANQU_1</Tag>
+		<English>I have lab rats with more interesting things to say than you.</English>
+		<French>I have lab rats with more interesting things to say than you.</French>
+		<German>I have lab rats with more interesting things to say than you.</German>
+		<Italian>I have lab rats with more interesting things to say than you.</Italian>
+		<Spanish>I have lab rats with more interesting things to say than you.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_DECLARE_WAR_TIANQU_1</Tag>
+		<English>The [OUR_CIV_SHORT] have developed some fascinating new weaponry. I'm so glad you've volunteered as a test subject, [CT_NAME].</English>
+		<French>The [OUR_CIV_SHORT] have developed some fascinating new weaponry. I'm so glad you've volunteered as a test subject, [CT_NAME].</French>
+		<German>The [OUR_CIV_SHORT] have developed some fascinating new weaponry. I'm so glad you've volunteered as a test subject, [CT_NAME].</German>
+		<Italian>The [OUR_CIV_SHORT] have developed some fascinating new weaponry. I'm so glad you've volunteered as a test subject, [CT_NAME].</Italian>
+		<Spanish>The [OUR_CIV_SHORT] have developed some fascinating new weaponry. I'm so glad you've volunteered as a test subject, [CT_NAME].</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_GREETINGS_FFP_TAKENO_ATT_FR_1</Tag>
+		<English>On the behalf of the proud people of [OUR_CIV_SHORT], welcome. What can we do for you?</English>
+		<French>On the behalf of the proud people of [OUR_CIV_SHORT], welcome. What can we do for you?</French>
+		<German>On the behalf of the proud people of [OUR_CIV_SHORT], welcome. What can we do for you?</German>
+		<Italian>On the behalf of the proud people of [OUR_CIV_SHORT], welcome. What can we do for you?</Italian>
+		<Spanish>On the behalf of the proud people of [OUR_CIV_SHORT], welcome. What can we do for you?</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_GREETINGS_FFP_TAKENO_ATT_MAD_1</Tag>
+		<English>Every second I spend talking to you is a second wasted, so please hurry up.</English>
+		<French>Every second I spend talking to you is a second wasted, so please hurry up.</French>
+		<German>Every second I spend talking to you is a second wasted, so please hurry up.</German>
+		<Italian>Every second I spend talking to you is a second wasted, so please hurry up.</Italian>
+		<Spanish>Every second I spend talking to you is a second wasted, so please hurry up.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_GREETINGS_FFP_TAKENO_ATT_MAD_2</Tag>
+		<English>Oh, it's you. Make it quick, I have a glorious nation to lead.</English>
+		<French>Oh, it's you. Make it quick, I have a glorious nation to lead.</French>
+		<German>Oh, it's you. Make it quick, I have a glorious nation to lead.</German>
+		<Italian>Oh, it's you. Make it quick, I have a glorious nation to lead.</Italian>
+		<Spanish>Oh, it's you. Make it quick, I have a glorious nation to lead.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_DECLARE_WAR_FFP_TAKENO_1</Tag>
+		<English>Your subversive influence can no longer be tolerated by the people of [OUR_CIV_SHORT].</English>
+		<French>Your subversive influence can no longer be tolerated by the people of [OUR_CIV_SHORT].</French>
+		<German>Your subversive influence can no longer be tolerated by the people of [OUR_CIV_SHORT].</German>
+		<Italian>Your subversive influence can no longer be tolerated by the people of [OUR_CIV_SHORT].</Italian>
+		<Spanish>Your subversive influence can no longer be tolerated by the people of [OUR_CIV_SHORT].</Spanish>
+	</TEXT>
+</Civ4GameText>

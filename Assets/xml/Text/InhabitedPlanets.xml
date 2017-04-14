@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Sid Meier's Civilization 4 -->
+<!-- Copyright Firaxis Games 2005 -->
+<!-- Created with TC01's XML Text Editor -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_ALIENS</Tag>
+		<English>Inhabited</English>
+		<French>Inhabited</French>
+		<German>Inhabited</German>
+		<Italian>Inhabited</Italian>
+		<Spanish>Inhabited</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GOODY_ALIEN_TECH</Tag>
+		<English>We have made first contact with an alien race! They have taught us the secrets of a new Technology!</English>
+		<French>We have made first contact with an alien race! They have taught us the secrets of a new Technology!</French>
+		<German>We have made first contact with an alien race! They have taught us the secrets of a new Technology!</German>
+		<Italian>We have made first contact with an alien race! They have taught us the secrets of a new Technology!</Italian>
+		<Spanish>We have made first contact with an alien race! They have taught us the secrets of a new Technology!</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GOODY_ALIEN_MAP</Tag>
+		<English>We have made first contact with an alien race! They have shared their star charts of nearby space with us!</English>
+		<French>We have made first contact with an alien race! They have shared their star charts of nearby space with us!</French>
+		<German>We have made first contact with an alien race! They have shared their star charts of nearby space with us!</German>
+		<Italian>We have made first contact with an alien race! They have shared their star charts of nearby space with us!</Italian>
+		<Spanish>We have made first contact with an alien race! They have shared their star charts of nearby space with us!</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GOODY_ALIEN_GOLD</Tag>
+		<English>We have made first contact with an alien race! They have given us valuable goods as tribute.</English>
+		<French>We have made first contact with an alien race! They have given us valuable goods as tribute.</French>
+		<German>We have made first contact with an alien race! They have given us valuable goods as tribute.</German>
+		<Italian>We have made first contact with an alien race! They have given us valuable goods as tribute.</Italian>
+		<Spanish>We have made first contact with an alien race! They have given us valuable goods as tribute.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GOODY_ALIEN_GIFT_CITY</Tag>
+		<English>We have made first contact with an alien race! They have agreed to join our empire!</English>
+		<French>We have made first contact with an alien race! They have agreed to join our empire!</French>
+		<German>We have made first contact with an alien race! They have agreed to join our empire!</German>
+		<Italian>We have made first contact with an alien race! They have agreed to join our empire!</Italian>
+		<Spanish>We have made first contact with an alien race! They have agreed to join our empire!</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GOODY_ALIEN_SHOT_DOWN</Tag>
+		<English>We have made first contact with an alien race! The contact went badly- they attempted to shoot down our ship with primitive weapons!</English>
+		<French>We have made first contact with an alien race! The contact went badly- they attempted to shoot down our ship with primitive weapons!</French>
+		<German>We have made first contact with an alien race! The contact went badly- they attempted to shoot down our ship with primitive weapons!</German>
+		<Italian>We have made first contact with an alien race! The contact went badly- they attempted to shoot down our ship with primitive weapons!</Italian>
+		<Spanish>We have made first contact with an alien race! The contact went badly- they attempted to shoot down our ship with primitive weapons!</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GOODY_ALIEN_NEWCIV</Tag>
+		<English>We have made first contact with an alien race! We have taught them the secrets of warp travel and they have become a new major power!</English>
+		<French>We have made first contact with an alien race! We have taught them the secrets of warp travel and they have become a new major power!</French>
+		<German>We have made first contact with an alien race! We have taught them the secrets of warp travel and they have become a new major power!</German>
+		<Italian>We have made first contact with an alien race! We have taught them the secrets of warp travel and they have become a new major power!</Italian>
+		<Spanish>We have made first contact with an alien race! We have taught them the secrets of warp travel and they have become a new major power!</Spanish>
+	</TEXT>
+
+</Civ4GameText>

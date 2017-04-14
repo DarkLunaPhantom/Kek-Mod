@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!--
+	Unit Naming
+	Options Game Text
+
+	FFP specific unit type values
+-->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_UNITNAMING__COMBAT_SQUADRON_TEXT</Tag>
+		<English>Naming Convention: Combat[SQUADRON]</English>
+		<French>Convention des Noms: Combat[SQUADRON]</French>
+		<German>Benennungsregel: Kampf[SQUADRON]</German>
+		<Italian>- per le Unità di Combattimento SQUADRON</Italian>
+		<Spanish>Naming Convention: Combat[SQUADRON]</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_UNITNAMING__COMBAT_SQUADRON_HOVER</Tag>
+		<English>Enter the user defined naming convention for combat units 'SQUADRON'.</English>
+		<French>Entrez la convention des noms pour les unités 'SQUADRON'.</French>
+		<German>Eingabe der benutzerdefinierten Benennungsregel für SQUADRON</German>
+		<Italian>Inserisci la tua convenzione di denominazione personalizzata per le Unità di Combattimento SQUADRON ('Combat[SQUADRON]').</Italian>
+		<Spanish>Enter the user defined naming convention for combat units 'SQUADRON'.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_UNITNAMING__COMBAT_LIGHT_SHIP_TEXT</Tag>
+		<English>Naming Convention: Combat[LIGHT_SHIP]</English>
+		<French>Convention des Noms: Combat[LIGHT_SHIP]</French>
+		<German>Benennungsregel: Kampf[LIGHT_SHIP]</German>
+		<Italian>- per le Unità di Combattimento a LIGHT_SHIP</Italian>
+		<Spanish>Naming Convention: Combat[LIGHT_SHIP]</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_UNITNAMING__COMBAT_LIGHT_SHIP_HOVER</Tag>
+		<English>Enter the user defined naming convention for combat units 'LIGHT_SHIP'.</English>
+		<French>Entrez la convention des noms pour les unités 'LIGHT_SHIP'.</French>
+		<German>Eingabe der benutzerdefinierten Benennungsregel für LIGHT_SHIP</German>
+		<Italian>Inserisci la tua convenzione di denominazione personalizzata per le Unità di Combattimento a LIGHT_SHIP ('Combat[LIGHT_SHIP]').</Italian>
+		<Spanish>Enter the user defined naming convention for combat units 'LIGHT_SHIP'.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_UNITNAMING__COMBAT_CAPITAL_SHIP_TEXT</Tag>
+		<English>Naming Convention: Combat[CAPITAL_SHIP]</English>
+		<French>Convention des Noms: Combat[CAPITAL_SHIP]</French>
+		<German>Benennungsregel: Kampf[CAPITAL_SHIP]</German>
+		<Italian>- per le Unità di Combattimento a CAPITAL_SHIP</Italian>
+		<Spanish>Naming Convention: Combat[CAPITAL_SHIP]</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_UNITNAMING__COMBAT_CAPITAL_SHIP_HOVER</Tag>
+		<English>Enter the user defined naming convention for combat units 'CAPITAL_SHIP'.</English>
+		<French>Entrez la convention des noms pour les unités 'CAPITAL_SHIP'.</French>
+		<German>Eingabe der benutzerdefinierten Benennungsregel für CAPITAL_SHIP</German>
+		<Italian>Inserisci la tua convenzione di denominazione personalizzata per le Unità di Combattimento a CAPITAL_SHIP ('Combat[CAPITAL_SHIP]').</Italian>
+		<Spanish>Enter the user defined naming convention for combat units 'CAPITAL_SHIP'.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_UNITNAMING__COMBAT_CARRIER_SHIP_TEXT</Tag>
+		<English>Naming Convention: Combat[CARRIER_SHIP]</English>
+		<French>Convention des Noms: Combat[CARRIER_SHIP]</French>
+		<German>Benennungsregel: Kampf[CARRIER_SHIP]</German>
+		<Italian>- per le Unità di Combattimento a CARRIER_SHIP</Italian>
+		<Spanish>Naming Convention: Combat[CARRIER_SHIP]</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_UNITNAMING__COMBAT_CARRIER_SHIP_HOVER</Tag>
+		<English>Enter the user defined naming convention for combat units 'CARRIER_SHIP'.</English>
+		<French>Entrez la convention des noms pour les unités 'CARRIER_SHIP'.</French>
+		<German>Eingabe der benutzerdefinierten Benennungsregel für CARRIER_SHIP</German>
+		<Italian>Inserisci la tua convenzione di denominazione personalizzata per le Unità di Combattimento a CARRIER_SHIP ('Combat[CARRIER_SHIP]').</Italian>
+		<Spanish>Enter the user defined naming convention for combat units 'CARRIER_SHIP'.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_UNITNAMING__COMBAT_STARBASE_TEXT</Tag>
+		<English>Naming Convention: Combat[STARBASE]</English>
+		<French>Convention des Noms: Combat[STARBASE]</French>
+		<German>Benennungsregel: Kampf[STARBASE]</German>
+		<Italian>- per le Unità di Combattimento a STARBASE</Italian>
+		<Spanish>Naming Convention: Combat[STARBASE]</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_UNITNAMING__COMBAT_STARBASE_HOVER</Tag>
+		<English>Enter the user defined naming convention for combat units 'STARBASE'.</English>
+		<French>Entrez la convention des noms pour les unités 'STARBASE'.</French>
+		<German>Eingabe der benutzerdefinierten Benennungsregel für STARBASE</German>
+		<Italian>Inserisci la tua convenzione di denominazione personalizzata per le Unità di Combattimento a STARBASE ('Combat[STARBASE]').</Italian>
+		<Spanish>Enter the user defined naming convention for combat units 'STARBASE'.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_UNITNAMING__COMBAT_MISSILE_TEXT</Tag>
+		<English>Naming Convention: Combat[MISSILE]</English>
+		<French>Convention des Noms: Combat[MISSILE]</French>
+		<German>Benennungsregel: Kampf[MISSILE]</German>
+		<Italian>- per le Unità di Combattimento a MISSILE</Italian>
+		<Spanish>Naming Convention: Combat[MISSILE]</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_UNITNAMING__COMBAT_MISSILE_HOVER</Tag>
+		<English>Enter the user defined naming convention for combat units 'MISSILE'.</English>
+		<French>Entrez la convention des noms pour les unités 'MISSILE'.</French>
+		<German>Eingabe der benutzerdefinierten Benennungsregel für MISSILE</German>
+		<Italian>Inserisci la tua convenzione di denominazione personalizzata per le Unità di Combattimento a MISSILE ('Combat[MISSILE]').</Italian>
+		<Spanish>Enter the user defined naming convention for combat units 'MISSILE'.</Spanish>
+	</TEXT>
+</Civ4GameText>

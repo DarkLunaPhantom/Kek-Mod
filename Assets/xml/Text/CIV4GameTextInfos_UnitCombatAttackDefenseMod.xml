@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by XMLSPY 2004 Professional Ed. Release 2, Installed Multi + SMP for 3 users (Firaxis Games) -->
+<!-- Sid Meier's Civilization 4 -->
+<!-- Copyright Firaxis Games 2005 -->
+<!-- -->
+<!-- Game Text Objects -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+
+  <TEXT>
+    <Tag>TXT_KEY_UNIT_ATTACK_MOD_VS_COMBAT</Tag>
+    <!-- %s2_Type = TXT_KEY_UNITCOMBAT_ -->
+    <English>[ICON_BULLET]%D1_Change%% Attack vs. [LINK=literal]%s2_Combat[\LINK]</English>
+    <French>[ICON_BULLET]%D1_Change%% en attaque contre [LINK=literal]%s2_Combat[\LINK]</French>
+    <German>[ICON_BULLET]%D1_Change%% Angriff gegen Einheit [LINK=literal]%s2_Combat[\LINK]</German>
+    <Italian>[ICON_BULLET]%D1_Change%% di attacco contro [LINK=literal]%s2:2_Combat[\LINK]</Italian>
+    <Spanish>[ICON_BULLET]%D1_Change%% al ataque contra [LINK=literal]%s2:2_Combat[\LINK]</Spanish>
+  </TEXT>
+  <TEXT>
+    <Tag>TXT_KEY_UNIT_DEFENSE_MOD_VS_COMBAT</Tag>
+    <!-- %s2_Type = TXT_KEY_UNIT_ -->
+    <English>[ICON_BULLET]%D1_Change%% Defense vs. [LINK=literal]%s2_Type[\LINK]</English>
+    <French>[ICON_BULLET]%D1_Change%% en d&#233;fense contre [LINK=literal]%s2_Combat[\LINK]</French>
+    <German>[ICON_BULLET]%D1_Change%% Verteidigung gegen [LINK=literal]%s2_Combat[\LINK]</German>
+    <Italian>[ICON_BULLET]%D1_Change%% quando difende contro [LINK=literal]%s2:2_Combat[\LINK]</Italian>
+    <Spanish>[ICON_BULLET]%D1_Change%% al defender contra [LINK=literal]%s2:2_Type[\LINK]</Spanish>
+  </TEXT>
+  <TEXT>
+    <Tag>TXT_KEY_COMBAT_MESSAGE_COMBAT_DEFENSE</Tag>
+    <English>(Combat Defense: %D1%%)</English>
+    <French>(D&#233;fense Combat : %D1%%)</French>
+    <German>(Verteidigung Kampf: %D1%%)</German>
+    <Italian>(Difesa Combattimento: %D1%%)</Italian>
+    <Spanish>(Combate de defensa: %D1%%)</Spanish>
+  </TEXT>
+  <TEXT>
+    <Tag>TXT_KEY_COMBAT_MESSAGE_COMBAT_ATTACK</Tag>
+    <English>(Combat Attack: %D1%%)</English>
+    <French>(Attaque Combat : %D1%%)</French>
+    <German>(Angriff Kampf: %D1%%)</German>
+    <Italian>(Attacco Combattimento: %D1%%)</Italian>
+    <Spanish>(Combate de ataque: %D1%%)</Spanish>
+  </TEXT>
+</Civ4GameText>

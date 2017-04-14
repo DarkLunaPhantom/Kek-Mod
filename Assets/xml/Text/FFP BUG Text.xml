@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!--
+    Additional text for FFP-BUG merger
+
+    This file is part of Civilization IV FFP Mod.
+-->
+<Civ4GameText xmlns="http://www.firaxis.com">
+    <TEXT>
+        <Tag>TXT_KEY_AUTOLOG_ALIEN_RESULT</Tag>
+        <English>Inhabited system results: %s1</English>
+        <French>Inhabited system results: %s1</French>
+        <German>Inhabited system results: %s1</German>
+        <Italian>Inhabited system results: %s1</Italian>
+        <Spanish>Inhabited system results: %s1</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_AUTOLOG_ALIEN_RESULT_GIFT_CITY</Tag>
+        <English>colony</English>
+        <French>colony</French>
+        <German>colony</German>
+        <Italian>colony</Italian>
+        <Spanish>colony</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_AUTOLOG_ALIEN_RESULT_SHOT_DOWN</Tag>
+        <English>shot down</English>
+        <French>shot down</French>
+        <German>shot down</German>
+        <Italian>shot down</Italian>
+        <Spanish>shot down</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_AUTOLOG_ALIEN_RESULT_NEWCIV</Tag>
+        <English>new civilization</English>
+        <French>new civilization</French>
+        <German>new civilization</German>
+        <Italian>new civilization</Italian>
+        <Spanish>new civilization</Spanish>
+    </TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_MINING_FACILITY_HELP_NEW</Tag>
+		<English>[ICON_BULLET]+1[ICON_PRODUCTION] for the Planet it's on (+2 for The Forge)</English>
+		<French>[ICON_BULLET]+1[ICON_PRODUCTION] sur la plan&#232;te (+2 sur The Forge)</French>
+		<German>[ICON_BULLET]+1[ICON_PRODUCTION] auf dem jeweiligen Planeten (+2 auf The Forge)</German>
+		<Italian>[ICON_BULLET]+1[ICON_PRODUCTION] sul pianeta su cui &#232; costruito (+2 sul The Forge)</Italian>
+		<Spanish>[ICON_BULLET]+1 [ICON_PRODUCTION] en el planeta que se construya (+2 en The Forge)</Spanish>
+	</TEXT>
+</Civ4GameText>

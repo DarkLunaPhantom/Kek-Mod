@@ -1,0 +1,1720 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Civ4GameText xmlns="http://www.firaxis.com">
+<!-- CP - fun with Google Translate... -->
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_OXFORD_UNIVERSITY</Tag>
+		<English>Institute for Advanced Research</English>
+		<French>
+			<Text>L’Institut de Recherches Avanc&#233;es s</Text>
+			<Gender>Female</Gender> <!-- Maybe -->
+			<Plural>1</Plural><!-- ? -->
+		</French>
+		<German>Institut für Spitzenforschung</German><!-- so says Google Translate -->
+		<Italian>
+			<Text>Istituto per la Ricerca Avanzata</Text><!-- so says Google Translate -->
+			<Gender>Male</Gender><!-- ? -->
+			<Plural>1</Plural><!-- ? -->
+		</Italian>
+		<Spanish>
+			<Text>Instituto de Investigaci&#243;n Avanzada</Text><!-- so says Google Translate -->
+			<Gender>Male</Gender><!-- ? -->
+			<Plural>1</Plural><!-- ? -->
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_WALL_STREET</Tag>
+		<English>Interstellar Exchange</English>
+		<French>
+			<Text>L'Interstellaire &#201;change</Text>
+			<Gender>Female</Gender> <!-- Maybe -->
+			<Plural>1</Plural><!-- ? -->
+		</French>
+		<German>Interstellaren B&#246;rse</German><!-- so says Google Translate, sorta -->
+		<Italian>
+			<Text>Interstellare Scambio</Text><!-- so says Google Translate -->
+			<Gender>Male</Gender><!-- ? -->
+			<Plural>1</Plural><!-- ? -->
+		</Italian>
+		<Spanish>
+			<Text>Interestelar Intercambio</Text><!-- so says Google Translate -->
+			<Gender>Male</Gender><!-- ? -->
+			<Plural>1</Plural><!-- ? -->
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_IRONWORKS</Tag>
+		<English>Industrial Complex</English>
+		<French>
+			<Text>Complexe Industriel</Text>
+			<Gender>Female</Gender> <!-- Maybe -->
+			<Plural>1</Plural><!-- ? -->
+		</French>
+		<German>Industrie-Komplex</German><!-- so says Google Translate -->
+		<Italian>
+			<Text>Complesso Industriale</Text><!-- so says Google Translate -->
+			<Gender>Male</Gender><!-- ? -->
+			<Plural>1</Plural><!-- ? -->
+		</Italian>
+		<Spanish>
+			<Text>Complejo Industrial</Text><!-- so says Google Translate -->
+			<Gender>Male</Gender><!-- ? -->
+			<Plural>1</Plural><!-- ? -->
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_WEST_POINT</Tag>
+		<English>War College</English>
+		<French>
+			<Text>Coll&#232;ge de la Guerre</Text><!-- so says Google Translate (for college of war) -->
+			<Gender>Female</Gender> <!-- Maybe -->
+			<Plural>1</Plural><!-- ? -->
+		</French>
+		<German>Kriegkolleg</German><!-- so says Google Translate, well - not really -->
+		<Italian>
+			<Text>Collegio di Guerra</Text><!-- so says Google Translate (for college of war) -->
+			<Gender>Male</Gender><!-- ? -->
+			<Plural>1</Plural><!-- ? -->
+		</Italian>
+		<Spanish>
+			<Text>La Universidad de la Guerra</Text><!-- so says Google Translate (for college of war) -->
+			<Gender>Male</Gender><!-- ? -->
+			<Plural>1</Plural><!-- ? -->
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_GREAT_PALACE</Tag>
+		<English>Office of the Ombudsman</English>
+		<French>
+			<Text>Bureau de L'Ombudsman</Text><!-- so says Google Translate -->
+			<Gender>Female</Gender> <!-- Maybe -->
+			<Plural>1</Plural><!-- ? -->
+		</French>
+		<German>B&#252;ro des B&#252;rgerbeauftragten</German><!-- so says Google Translate -->
+		<Italian>
+			<Text>Ufficio del Difensore Civico</Text><!-- so says Google Translate -->
+			<Gender>Male</Gender><!-- ? -->
+			<Plural>1</Plural><!-- ? -->
+		</Italian>
+		<Spanish>
+			<Text>Oficina del Defensor del Pueblo</Text><!-- so says Google Translate -->
+			<Gender>Male</Gender><!-- ? -->
+			<Plural>1</Plural><!-- ? -->
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITY_MARS</Tag>
+		<English>Mars</English>
+		<French>Mars</French>
+		<German>Mars</German>
+		<Italian>Marte</Italian>
+		<Spanish>Marte</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_GRANARY</Tag>
+		<English>Cryogenic Granary</English>
+		<French>
+			<Text>Grenier Cryog&#233;nique</Text><!-- so says Google Translate, mostly -->
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</French>
+		<German>
+			<Text>Kryo-Speicher</Text><!-- so says Google Translate -->
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>
+			<Text>Criogeni Granaio:Criogeni Granai</Text><!-- so says Google Translate -->
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Criog&#233;nicos Granero:Criog&#233;nicos Graneros</Text><!-- so says Google Translate -->
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_SURVIVAL_SHRINE</Tag>
+		<English>The Shrine of Survival</English>
+		<French>
+			<Text>Le Tombeau de Survivance</Text><!-- so says Google Translate, more or less -->
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</French>
+		<German>
+			<Text>Der Schrein des &#220;berlebens</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>
+			<Text>Il Santuario di Sopravvivenza</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Italian>
+		<Spanish>
+			<Text>El Capilla de la Supervivencia</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_KNOWLEDGE_SHRINE</Tag>
+		<English>The Shrine of Knowledge</English>
+		<French>
+			<Text>Le Tombeau de la Connaissance</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</French>
+		<German>
+			<Text>Der Schrein des Wissens</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>
+			<Text>Il Santuario della Conoscenza</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Italian>
+		<Spanish>
+			<Text>El Capilla de los Conocimientos</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_WEALTH_SHRINE</Tag>
+		<English>The Shrine of Wealth</English>
+		<French>
+			<Text>Le Tombeau de la Richesse</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</French>
+		<German>
+			<Text>Der Schrein des Wohlstands</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>
+			<Text>Il Santuario della Ricchezza</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Italian>
+		<Spanish>
+			<Text>El Capilla de la Riqueza</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_POWER_SHRINE</Tag>
+		<English>The Shrine of Power</English>
+		<French>
+			<Text>Le Tombeau de la Puissance</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</French>
+		<German>
+			<Text>Der Schrein der Macht</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>
+			<Text>Il Santuario di Potere</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Italian>
+		<Spanish>
+			<Text>El Capilla del Poder</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_RELIGION_SHRINE</Tag>
+		<English>The Shrine of Religion</English>
+		<French>
+			<Text>Le Tombeau de la Religion</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</French>
+		<German>
+			<Text>Der Schrein der Religion</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>
+			<Text>Il Santuario di Religione</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Italian>
+		<Spanish>
+			<Text>El Capilla de la Religi&#243;n</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_LEADER_HECTOR_ALVAREZ_2</Tag>
+		<English>Hector Alvarez Junior</English>
+		<French>Hector Alvarez Junior</French>
+		<German>
+			<Text>Hector Alvarez Junior</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>Hector Alvarez Junior</Italian>
+		<Spanish>H&#233;ctor &#193;lvarez</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_LEADER_LUKAS_VON_REUTHER_2</Tag>
+		<English>Lukas von Reuther II</English>
+		<French>Lukas von Reuther II</French>
+		<German>
+			<Text>Lukas von Reuther II</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>Lukas von Reuther II</Italian>
+		<Spanish>Lukas von Reuther II</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_LEADER_LU_TIANQU_2</Tag>
+		<English>Deja Vu Tianqu</English>
+		<French>Deja Vu Tianqu</French>
+		<German>
+			<Text>Deja Vu Tianqu</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>Deja Vu Tianqu</Italian>
+		<Spanish>Deja Vu Tianqu</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_LEADER_JOHN_RICHARDS_2</Tag>
+		<English>Johnathan Richards</English>
+		<French>Johnathan Richards</French>
+		<German>
+			<Text>Johnathan Richards</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>Johnathan Richards</Italian>
+		<Spanish>Johnathan Richards</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_LEADER_LEONARD_PRITCHARD_2</Tag>
+		<English>Leo Pritchard</English>
+		<French>Leo Pritchard</French>
+		<German>
+			<Text>Leo Pritchard</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>Leo Pritchard</Italian>
+		<Spanish>Leo Pritchard</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_LEADER_KANJI_TAKENO_2</Tag>
+		<English>Hiragana Takeno</English>
+		<French>Hiragana Takeno</French>
+		<German>
+			<Text>Hiragana Takeno</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>Hiragana Takeno</Italian>
+		<Spanish>Hiragana Takeno</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_LEADER_VLADIMIR_KOROVIN_2</Tag>
+		<English>Joseph Korovin</English>
+		<French>Joseph Korovin</French>
+		<German>
+			<Text>Joseph Korovin</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>Joseph Korovin</Italian>
+		<Spanish>Joseph Korovin</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_LEADER_RAUL_COLOMBO_2</Tag>
+		<English>Frank Colombo</English>
+		<French>Frank Colombo</French>
+		<German>
+			<Text>Frank Colombo</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>Frank Colombo</Italian>
+		<Spanish>Frank Colombo</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TECH_INDUSTRY_13</Tag> <!-- Untranslated -->
+		<English>Mind-Machine Interface</English>
+		<French>Mind-Machine Interface</French>
+		<German>
+			<Text>Mind-Machine Interface</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>Mind-Machine Interface</Italian>
+		<Spanish>Mind-Machine Interface</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TECH_INDUSTRY_14</Tag> <!-- Untranslated -->
+		<English>Quantum Power</English>
+		<French>Quantum Power</French>
+		<German>
+			<Text>Quantum Power</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>Quantum Power</Italian>
+		<Spanish>Quantum Power</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TECH_INDUSTRY_15</Tag> <!-- Untranslated -->
+		<English>Nanocybernetics</English>
+		<French>Nanocybernetics</French>
+		<German>
+			<Text>Nanocybernetics</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>Nanocybernetics</Italian>
+		<Spanish>Nanocybernetics</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TECH_MISC_0</Tag> <!-- Untranslated -->
+		<English>Vacuum Engineering</English>
+		<French>Vacuum Engineering</French>
+		<German>
+			<Text>Vacuum Engineering</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>Vacuum Engineering</Italian>
+		<Spanish>Vacuum Engineering</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_MISSILE_P_I</Tag> <!-- Untranslated -->
+		<English>
+			<TEXT>Assault Missile:Assault Missiles</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<TEXT>Assault Missile:Assault Missiles</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<Text>Assault Missile:Assault Missiles</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<TEXT>Assault Missile:Assault Missiles</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<TEXT>Assault Missile:Assault Missiles</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_MISSILE_P_II</Tag> <!-- Untranslated -->
+		<English>
+			<TEXT>[ICON_GREATPEOPLE] Assault Missile:[ICON_GREATPEOPLE] Assault Missiles</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<TEXT>[ICON_GREATPEOPLE] Assault Missile:[ICON_GREATPEOPLE] Assault Missiles</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<Text>[ICON_GREATPEOPLE] Assault Missile:[ICON_GREATPEOPLE] Assault Missiles</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<TEXT>[ICON_GREATPEOPLE] Assault Missile:[ICON_GREATPEOPLE] Assault Missiles</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<TEXT>[ICON_GREATPEOPLE] Assault Missile:[ICON_GREATPEOPLE] Assault Missiles</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_MISSILE_P_III</Tag> <!-- Untranslated -->
+		<English>
+			<TEXT>[ICON_POWER] Assault Missile:[ICON_POWER] Assault Missiles</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<TEXT>[ICON_POWER] Assault Missile:[ICON_POWER] Assault Missiles</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<Text>[ICON_POWER] Assault Missile:[ICON_POWER] Assault Missiles</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<TEXT>[ICON_POWER] Assault Missile:[ICON_POWER] Assault Missiles</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<TEXT>[ICON_POWER] Assault Missile:[ICON_POWER] Assault Missiles</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PROMOTION_MIND_MACHINE_INTERFACE</Tag> <!-- Untranslated -->
+		<English>Neural Interface</English>
+		<French>Neural Interface</French>
+		<German>
+			<Text>Neural Interface</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>Neural Interface</Italian>
+		<Spanish>Neural Interface</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PROMOTION_QUANTUM_ENGINES</Tag> <!-- Untranslated -->
+		<English>Quantum Engines (Speed)</English>
+		<French>Quantum Engines (Speed)</French>
+		<German>
+			<Text>Quantum Engines (Speed)n</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>Quantum Engines (Speed)</Italian>
+		<Spanish>Quantum Engines (Speed)</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PROMOTION_QUANTUM_ENGINES_SQUADRON</Tag> <!-- Untranslated -->
+		<English>Quantum Engines (Range)</English>
+		<French>Quantum Engines (Rangen)</French>
+		<German>
+			<Text>Quantum Engines (Range)</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>Quantum Engines (Range)</Italian>
+		<Spanish>Quantum Engines (Range)</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PROMOTION_MAN_MACHINE_INTEGRATION</Tag> <!-- Untranslated -->
+		<English>Neural Interface II</English>
+		<French>Neural Interface II</French>
+		<German>
+			<Text>Neural Interface II</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>Neural Interface II</Italian>
+		<Spanish>Neural Interface II</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_NANOTECH_HOSPITAL</Tag>
+		<English>Nanotech Hospital</English>
+		<French>
+			<Text>Nanotech H&#244;pital</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</French>
+		<German>
+			<Text>Nanotech-Krankenhaus</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>
+			<Text>Nanotech Ospedale:Nanotech Ospedali</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Nanotecnolog&#237;a Hospital:Nanotecnolog&#237;a Hospitales</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EVENTTRIGGER_MIND_MACHINE_INTERFACE</Tag>
+		<English>The neural interface for ship control has been invented. It increases the efficiency of controlling a starship and provides a small improvement in capabilities.</English>
+		<French>The neural interface for ship control has been invented. It increases the efficiency of controlling a starship and provides a small improvement in capabilities.</French>
+		<German>The neural interface for ship control has been invented. It increases the efficiency of controlling a starship and provides a small improvement in capabilities.</German>
+		<Italian>The neural interface for ship control has been invented. It increases the efficiency of controlling a starship and provides a small improvement in capabilities.</Italian>
+		<Spanish>The neural interface for ship control has been invented. It increases the efficiency of controlling a starship and provides a small improvement in capabilities.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EVENTTRIGGER_QUANTUM_ENGINES_SQUADRON</Tag>
+		<English>Quantum power sources and engines have been developed. These allow for an increased range of operation and combat power for starbases, squadrons, and missiles. This upgrade is being implemented immediately. Also available is an upgrade for ships.</English>
+		<French>Quantum power sources and engines have been developed. These allow for an increased range of operation and combat power for starbases, squadrons, and missiles. This upgrade is being implemented immediately. Also available is an upgrade for ships.</French>
+		<German>Quantum power sources and engines have been developed. These allow for an increased range of operation and combat power for starbases, squadrons, and missiles. This upgrade is being implemented immediately. Also available is an upgrade for ships.</German>
+		<Italian>Quantum power sources and engines have been developed. These allow for an increased range of operation and combat power for starbases, squadrons, and missiles. This upgrade is being implemented immediately. Also available is an upgrade for ships.</Italian>
+		<Spanish>Quantum power sources and engines have been developed. These allow for an increased range of operation and combat power for starbases, squadrons, and missiles. This upgrade is being implemented immediately. Also available is an upgrade for ships.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EVENTTRIGGER_MAN_MACHINE_INTEGRATION</Tag>
+		<English>The neural interface used for ship control has been improved.</English>
+		<French>The neural interface used for ship control has been improved.</French>
+		<German>The neural interface used for ship control has been improved.</German>
+		<Italian>The neural interface used for ship control has been improved.</Italian>
+		<Spanish>The neural interface used for ship control has been improved.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EVENT_MIND_MACHINE_INTERFACE</Tag>
+		<English>Good news! A free upgrade for all military ships, including squadrons and starbases.</English>
+		<French>Good news! A free upgrade for all military ships, including squadrons and starbases.</French>
+		<German>Good news! A free upgrade for all military ships, including squadrons and starbases.</German>
+		<Italian>Good news! A free upgrade for all military ships, including squadrons and starbases.</Italian>
+		<Spanish>Good news! A free upgrade for all military ships, including squadrons and starbases.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EVENT_QUANTUM_ENGINES_SQUADRON</Tag>
+		<English>Good news! A free upgrade for squadrons, starbases, and missiles. Missiles? Yep, missiles.</English>
+		<French>Good news! A free upgrade for squadrons, starbases, and missiles. Missiles? Yep, missiles.</French>
+		<German>Good news! A free upgrade for squadrons, starbases, and missiles. Missiles? Yep, missiles.</German>
+		<Italian>Good news! A free upgrade for squadrons, starbases, and missiles. Missiles? Yep, missiles.</Italian>
+		<Spanish>QGood news! A free upgrade for squadrons, starbases, and missiles. Missiles? Yep, missiles.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EVENT_MAN_MACHINE_INTEGRATION</Tag>
+		<English>Another free upgrade for all military ships? This must be my lucky day.</English>
+		<French>Another free upgrade for all military ships? This must be my lucky day.</French>
+		<German>Another free upgrade for all military ships? This must be my lucky day.</German>
+		<Italian>Another free upgrade for all military ships? This must be my lucky day.</Italian>
+		<Spanish>Another free upgrade for all military ships? This must be my lucky day.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_RECON_I</Tag> <!-- Untranslated -->
+		<English>
+			<TEXT>Recon Ship:Recon Ships</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<TEXT>Recon Ship:Recon Ships</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<Text>Recon Ship:Recon Ships</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<TEXT>Recon Ship:Recon Ships</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<TEXT>Recon Ship:Recon Ships</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_RECON_II</Tag> <!-- Untranslated -->
+		<English>
+			<TEXT>[ICON_GREATPEOPLE] Recon Ship:[ICON_GREATPEOPLE] Recon Ships</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<TEXT>[ICON_GREATPEOPLE] Recon Ship:[ICON_GREATPEOPLE] Recon Ships</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<Text>[ICON_GREATPEOPLE] Recon Ship:[ICON_GREATPEOPLE] Recon Ships</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<TEXT>[ICON_GREATPEOPLE] Recon Ship:[ICON_GREATPEOPLE] Recon Ships</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<TEXT>[ICON_GREATPEOPLE] Recon Ship:[ICON_GREATPEOPLE] Recon Ships</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_RECON_III</Tag> <!-- Untranslated -->
+		<English>
+			<TEXT>[ICON_POWER] Recon Ship:[ICON_POWER] Recon Ships</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<TEXT>[ICON_POWER] Recon Ship:[ICON_POWER] Recon Ships</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<Text>[ICON_POWER] Recon Ship:[ICON_POWER] Recon Ships</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<TEXT>[ICON_POWER] Recon Ship:[ICON_POWER] Recon Ships</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<TEXT>[ICON_POWER] Recon Ship:[ICON_POWER] Recon Ships</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_NANOEXTRACTION_UPGRADE</Tag> <!-- Untranslated -->
+		<English>Nanoextraction Upgrade</English>
+		<French>Nanoextraction Upgrade</French>
+		<German>Nanoextraction Upgrade</German>
+		<Italian>Nanoextraction Upgrade</Italian>
+		<Spanish>Nanoextraction Upgrade</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_EXTENDED_HABITATION_SYSTEM</Tag> <!-- Untranslated -->
+		<English>Extended Habitation System</English>
+		<French>Extended Habitation System</French>
+		<German>Extended Habitation System</German>
+		<Italian>Extended Habitation System</Italian>
+		<Spanish>Extended Habitation System</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_LR_SPACE_BOMBER_I</Tag><!-- Highly questionable translations -->
+		<English>
+			<TEXT>Long-Range Bomber Squadron:Long-Range Bomber Squadrons</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<Text>Escadron de bombardiers &#224; Grande Distance:Escadrons de bombardiers &#224; grande distance</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<TEXT>Langstrecken-Bomberstaffel:Langstrecken-Bomberstaffeln</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<Text>Squadriglia di Bombardieri a Lungo Raggio:Squadriglie di Bombardieri a Lungo Raggio</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Escuadr&#243;n de bombarderos de Largo Alcance:Escuadrones de bombarderos de Largo Alcance</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_LR_SPACE_BOMBER_II</Tag><!-- Highly questionable translations -->
+		<English>
+			<TEXT>[ICON_GREATPEOPLE] Long-Range Bomber Squadron:[ICON_GREATPEOPLE] Long-Range Bomber Squadrons</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<Text>Escadron de bombardiers &#224; Grande Distance [ICON_GREATPEOPLE]:Escadrons de bombardiers &#224; grande distance [ICON_GREATPEOPLE]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<TEXT>[ICON_GREATPEOPLE] Langstrecken-Bomberstaffel:[ICON_GREATPEOPLE] Langstrecken-Bomberstaffeln</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<Text>Squadriglia di Bombardieri a Lungo Raggio [ICON_GREATPEOPLE]:Squadriglie di Bombardieri a Lungo Raggio [ICON_GREATPEOPLE]</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Escuadr&#243;n de Bombarderos de Largo Alcance [ICON_GREATPEOPLE]:Escuadrones de Bombarderos de Largo Alcance [ICON_GREATPEOPLE]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_LR_SPACE_BOMBER_III</Tag><!-- Highly questionable translations -->
+		<English>
+			<TEXT>[ICON_POWER] Long-Range Bomber Squadron:[ICON_POWER] Long-Range Bomber Squadrons</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<Text>Escadron de bombardiers &#224; Grande Distance [ICON_POWER]:Escadrons de bombardiers &#224; grande distance [ICON_POWER]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<TEXT>[ICON_POWER] Langstrecken-Bomberstaffel:[ICON_POWER] Langstrecken-Bomberstaffeln</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<Text>Squadriglia di Bombardieri a Lungo Raggio [ICON_POWER]:Squadriglie di Bombardieri a Lungo Raggio [ICON_POWER]</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Escuadr&#243;n de Bombarderos de Largo Alcance [ICON_POWER]:Escuadrones de Bombarderos de Largo Alcance[ICON_POWER]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_MISSILE_FRIGATE_I</Tag><!-- Highly questionable translations -->
+		<English>
+			<TEXT>Missile Frigate:Missile Frigates</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<Text>Missile Fr&#233;gate:Missile Fr&#233;gates</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<TEXT>Raketen-Fregatte:Raketen-Fregatten</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<Text>Fregata Missilistica:Fregate Missilistica</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Fragata de Misiles:Fragatas de Misiles</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_MISSILE_FRIGATE_II</Tag><!-- Highly questionable translations -->
+		<English>
+			<TEXT>[ICON_GREATPEOPLE] Missile Frigate:[ICON_GREATPEOPLE] Missile Frigates</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<Text>Missile Fr&#233;gate [ICON_GREATPEOPLE]:Missile Fr&#233;gates [ICON_GREATPEOPLE]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<TEXT>[ICON_GREATPEOPLE]-Raketen-Fregatte:[ICON_GREATPEOPLE]-Raketen-Fregatten</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<Text>Fregata Missilistica [ICON_GREATPEOPLE]:Fregate Missilistica [ICON_GREATPEOPLE]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Fragata de Misiles [ICON_GREATPEOPLE]:Fragatas de Misiles [ICON_GREATPEOPLE]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_MISSILE_FRIGATE_III</Tag><!-- Highly questionable translations -->
+		<English>
+			<TEXT>[ICON_POWER] Missile Frigate:[ICON_POWER] Missile Frigates</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<Text>Missile Fr&#233;gate [ICON_POWER]:Missile Fr&#233;gates [ICON_POWER]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<TEXT>[ICON_POWER]-Raketen-Fregatte:[ICON_POWER]-Raketen-Fregatten</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<Text>Fregata Missilistica [ICON_POWER]:Fregate Missilistica [ICON_POWER]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Fragata de Misiles [ICON_POWER]:Fragatas de Misiles [ICON_POWER]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_RAPID_CONSTRUCT_SHIP</Tag><!-- Highly questionable translations -->
+		<English>
+			<TEXT>Rapid Construction Ship:Rapid Construction Ships</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<Text>Vaisseau de construction rapide:Vaisseaux de construction rapide</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<Text>Schnellkonstruktionsschiff:Schnellkonstruktionsschiffe</Text>
+			<Gender>Neuter</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<Text>Nave da costruzione rapida:Navi da costruzione rapida</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Nave de construcci&#243;n r&#225;pida:Naves de construcci&#243;n r#225;pida</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PROMOTION_SCOUT_III_SIGHT</Tag>
+		<English>+1 Visibility Range</English>
+		<French>Champ de vision +1</French>
+		<German>
+			<Text>+1 Sichtweite</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>+1 raggio visivo</Italian>
+		<Spanish>+1 al alcance de la visibilidad</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_BATTLECARRIER_I</Tag><!-- Highly questionable translations, at best -->
+		<English>
+			<TEXT>Battlecarrier:Battlecarriers</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<Text>Cuirass&#233;-Porte-Escadrons:Cuirass&#233;s-Porte-Escadrons</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<TEXT>Kriegsflugzeugtr&#228;ger:Kriegsflugzeugtr&#228;ger</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<Text>Corazzata-Portaerei:Corazzate-Portaerei</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Acorazado-Portanaves:Acorazados-Portanaves</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_BATTLECARRIER_II</Tag><!-- Highly questionable translations -->
+		<English>
+			<TEXT>[ICON_GREATPEOPLE] Battlecarrier:[ICON_GREATPEOPLE] Battlecarriers</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<Text>Cuirass&#233;-Porte-Escadrons [ICON_GREATPEOPLE]:Cuirass&#233;s-Porte-Escadrons [ICON_GREATPEOPLE]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<TEXT>[ICON_GREATPEOPLE]-Kriegsflugzeugtr&#228;ger:[ICON_GREATPEOPLE]-Kriegsflugzeugtr&#228;ger</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<Text>Corazzata-Portaerei [ICON_GREATPEOPLE]:Corazzate-Portaerei [ICON_GREATPEOPLE]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Acorazado-Portanaves [ICON_GREATPEOPLE]:Acorazados-Portanaves [ICON_GREATPEOPLE]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_BATTLECARRIER_III</Tag><!-- Highly questionable translations -->
+		<English>
+			<TEXT>[ICON_POWER] Battlecarrier:[ICON_POWER] Battlecarriers</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<Text>Cuirass&#233;-Porte-Escadrons [ICON_POWER]:Cuirass&#233;s-Porte-Escadrons [ICON_POWER]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<TEXT>[ICON_POWER]-Kriegsflugzeugtr&#228;ger:[ICON_POWER]-Kriegsflugzeugtr&#228;ger</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<Text>Corazzata-Portaerei [ICON_POWER]:Corazzate-Portaerei [ICON_POWER]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Acorazado-Portanaves [ICON_POWER]:Acorazados-Portanaves [ICON_POWER]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_BATTLECRUISER_I</Tag><!-- Highly questionable translations, at best -->
+		<English>
+			<TEXT>Battlecruiser:Battlecruisers</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<Text>Croiseur Lourd:Croiseurs Lourds</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<TEXT>Schlachtkreuzer:Schlachtkreuzer</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<Text>Incrociatore Pesante:Incrociatori Pesanti</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Crucero Pesado:Cruceros Pesados</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_BATTLECRUISER_II</Tag><!-- Highly questionable translations -->
+		<English>
+			<TEXT>[ICON_GREATPEOPLE] Battlecruiser:[ICON_GREATPEOPLE] Battlecruisers</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<Text>Croiseur Lourd [ICON_GREATPEOPLE]:Croiseurs Lourds [ICON_GREATPEOPLE]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<TEXT>[ICON_GREATPEOPLE]-Schlachtkreuzer:[ICON_GREATPEOPLE]-Schlachtkreuzer</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<Text>Incrociatore Pesante [ICON_GREATPEOPLE]:Incrociatori Pesanti [ICON_GREATPEOPLE]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Crucero Pesado [ICON_GREATPEOPLE]:Cruceros Pesados [ICON_GREATPEOPLE]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_BATTLECRUISER_III</Tag><!-- Highly questionable translations -->
+		<English>
+			<TEXT>[ICON_POWER] Battlecruiser:[ICON_POWER] Battlecruisers</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<Text>Croiseur Lourd [ICON_POWER]:Croiseurs Lourds [ICON_POWER]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<TEXT>[ICON_POWER]-Schlachtkreuzer:[ICON_POWER]-Schlachtkreuzer</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<Text>Incrociatore Pesante [ICON_POWER]:Incrociatori Pesanti [ICON_POWER]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Crucero Pesado [ICON_POWER]:Cruceros Pesados [ICON_POWER]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_PSU_I</Tag><!-- Highly questionable translations, at best -->
+		<English>
+			<TEXT>Planetary Siege Unit:Planetary Siege Units</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<Text>Vaisseau de Si&#232;ge Plan&#233;taire:Vaisseaux de Si&#232;ge Plan&#233;taire</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<TEXT>Planetarer-Belagerungschiff:Planetarer-Belagerungschiffe</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<Text>Nave da Assedio Planetario:Navi da Assedio Planetario</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Nave de Planetaria Sitio:Naves de Planetaria Sitio</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_PSU_II</Tag><!-- Highly questionable translations -->
+		<English>
+			<TEXT>[ICON_GREATPEOPLE] Planetary Siege Unit:[ICON_GREATPEOPLE] Planetary Siege Units</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<Text>Vaisseau de Si&#232;ge Plan&#233;taire [ICON_GREATPEOPLE]:Vaisseaux de Si&#232;ge Plan&#233;taire [ICON_GREATPEOPLE]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<TEXT>[ICON_GREATPEOPLE]-Planetarer-Belagerungschiff:[ICON_GREATPEOPLE]-Planetarer-Belagerungschiffe</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<Text>Nave da Assedio Planetario [ICON_GREATPEOPLE]:Navi da Assedio Planetario [ICON_GREATPEOPLE]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Nave de Planetaria Sitio [ICON_GREATPEOPLE]:Naves de Planetaria Sitio [ICON_GREATPEOPLE]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_PSU_III</Tag><!-- Highly questionable translations -->
+		<English>
+			<TEXT>[ICON_POWER] Planetary Siege Unit:[ICON_POWER] Planetary Siege Units</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<Text>Vaisseau de Si&#232;ge Plan&#233;taire [ICON_POWER]:Vaisseaux de Si&#232;ge Plan&#233;taire [ICON_POWER]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<TEXT>[ICON_POWER]-Planetarer-Belagerungschiff:[ICON_POWER]-Planetarer-Belagerungschiffe</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<Text>Nave da Assedio Planetario [ICON_POWER]:Navi da Assedio Planetario [ICON_POWER]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Nave de Planetaria Sitio [ICON_POWER]:Naves de Planetaria Sitio [ICON_POWER]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_SYSTEM_DEFENSE_BOAT_I</Tag>
+		<English>
+			<TEXT>System Defense Boat:System Defense Boats</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<Text>Bateau de d&#233;fense syst&#232;me:Bateaux de d&#233;fense syst&#232;me</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<TEXT>Systemverteidigungboot:Systemverteidigungboote</TEXT>
+			<Gender>Neuter</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<Text>Barca di difesa sistema:Barche di difesa sistema</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Barco de defensa sistema:Barcos de defensa sistema</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_SYSTEM_DEFENSE_BOAT_II</Tag>
+		<English>
+			<TEXT>[ICON_GREATPEOPLE] System Defense Boat:[ICON_GREATPEOPLE] System Defense Boats</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<Text>Bateau de d&#233;fense syst&#232;me [ICON_GREATPEOPLE]:Bateaux de d&#233;fense syst&#232;me [ICON_GREATPEOPLE]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<TEXT>[ICON_GREATPEOPLE]-Systemverteidigungboot:[ICON_GREATPEOPLE]-Systemverteidigungboote</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<Text>Barca di difesa sistema [ICON_GREATPEOPLE]:Barche di difesa sistema [ICON_GREATPEOPLE]</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Barco de defensa sistema [ICON_GREATPEOPLE]:Barcos de defensa sistema [ICON_GREATPEOPLE]</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_SYSTEM_DEFENSE_BOAT_III</Tag>
+		<English>
+			<TEXT>[ICON_POWER] System Defense Boat:[ICON_POWER] System Defense Boats</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<Text>Bateau de d&#233;fense syst&#232;me [ICON_POWER]:Bateaux de d&#233;fense syst&#232;me[ICON_POWER]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<TEXT>[ICON_POWER]-Systemverteidigungboot:[ICON_POWER]-Systemverteidigungboote</TEXT>
+			<Gender>Neuter</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<Text>Barca di difesa sistema [ICON_POWER]:Barche di difesa sistema [ICON_POWER]</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Barco de defensa sistema [ICON_POWER]:Barcos de defensa sistema [ICON_POWER]</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_MISSILE_Q</Tag>
+		<English>
+			<TEXT>Q-Missile:Q-Missiles</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<Text>Missile Q:Missiles Q</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<TEXT>Q-Schiffsabwehrrakete:Q-Schiffsabwehrraketen</TEXT>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<Text>Missile classe Q:Missili classe Q</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Misil Q:Misiles Q</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_SQUADRON_Q</Tag><!-- Highly questionable translations -->
+		<English>
+			<TEXT>Q-Squadron:Q-Squadrons</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<Text>Escadron de bombardiers Q:Escadrons de bombardiers Q</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<TEXT>Q-Bomberstaffel:Q-Bomberstaffeln</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<Text>Squadriglia di Bombardieri Q:Squadriglie di Bombardieri Q</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Escuadr&#243;n de Bombarderos Q:Escuadrones de Bombarderos Q</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_LR_SQUADRON_Q</Tag><!-- Highly questionable translations -->
+		<English>
+			<TEXT>Long-Range Q-Squadron:[Long-Range Bomber Q-Squadrons</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<Text>Escadron de bombardiers &#224; Grande Distance Q:Escadrons de bombardiers &#224; grande distance Q</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<TEXT>Langstrecken-Q-Bomberstaffel:Langstrecken-Q-Bomberstaffeln</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<Text>Squadriglia di Bombardieri a Lungo Raggio Q:Squadriglie di Bombardieri a Lungo Raggio Q</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Escuadr&#243;n de Bombarderos de Largo Alcance [ICON_GREATPEOPLE]:Escuadrones de Bombarderos de Largo Alcance [ICON_GREATPEOPLE]</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>	
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_CAPITOL_FINANCIAL</Tag><!-- Highly questionable translations -->
+		<English>Capitol of Finance</English>
+		<French>Capitol des Finances</French>
+		<German>
+			<Text>Kapitol der Finanzierung</Text>
+			<Gender>Neuter</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>Campidoglio delle Finanze</Italian>
+		<Spanish>Capitolio de Finanzas</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_GREAT_PALACE_FINANCIAL</Tag>
+		<English>Office of the Auditor General</English>
+		<French>
+			<Text>Bureau de L'V&#233;rificateur G&#233;n&#233;ral</Text><!-- so says Google Translate -->
+			<Gender>Female</Gender> <!-- Maybe -->
+			<Plural>1</Plural><!-- ? -->
+		</French>
+		<German>B&#252;ro des Pr&#252;fergeneral</German><!-- so says Google Translate -->
+		<Italian>
+			<Text>Ufficio del Revisore Generale</Text><!-- so says Google Translate -->
+			<Gender>Male</Gender><!-- ? -->
+			<Plural>1</Plural><!-- ? -->
+		</Italian>
+		<Spanish>
+			<Text>Oficina del Auditor General</Text><!-- so says Google Translate -->
+			<Gender>Male</Gender><!-- ? -->
+			<Plural>1</Plural><!-- ? -->
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CULTURELEVEL_ICONIC</Tag>
+		<English>Iconic</English>
+		<French>Iconique</French>
+		<German>Iconic</German>
+		<Italian>Iconico</Italian>
+		<Spanish>Icono</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_FLIGHT_SCHOOL</Tag>
+		<English>Flight School</English>
+		<French>L'&#201;cole de Pilotage</French>
+		<German>
+			<Text>Flugschule</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>Scuola di Volo</Italian>
+		<Spanish>La Escuela de Vuelo</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_LUNAR_BASE</Tag>
+		<English>
+			<Text>Moonbase:Moonbases</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<Text>Base Lunaire:Bases Lunaires</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<Text>Mondbasis:Mondbasen</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<Text>Base Lunare:Basi Lunari</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Base Lunar:Bases Lunares</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_TECHNICAL_INSTITUTE</Tag><!-- untranslated -->
+		<English>Technical Institute</English>
+		<French>Technical Institute</French>
+		<German>Technical Institute</German>
+		<Italian>Technical Institute</Italian>
+		<Spanish>Technical Institute</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_RESEARCH_INSTITUTE</Tag><!-- untranslated -->
+		<English>Research Institute</English>
+		<French>Research Institute</French>
+		<German>Research Institute</German>
+		<Italian>Research Institute</Italian>
+		<Spanish>Research Institute</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_ASSEMBLY_PLANT</Tag><!-- untranslated -->
+		<English>Assembly Plant</English>
+		<French>Assembly Plant</French>
+		<German>Assembly Plant</German>
+		<Italian>Assembly Plant</Italian>
+		<Spanish>Assembly Plant</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_STAR_CITADEL</Tag><!-- untranslated -->
+		<English>Star Citadel</English>
+		<French>Star Citadel</French>
+		<German>Star Citadel</German>
+		<Italian>Star Citadel</Italian>
+		<Spanish>Star Citadel</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_SPACEPARK</Tag><!-- untranslated -->
+		<English>Space Park</English>
+		<French>Space Park</French>
+		<German>Space Park</German>
+		<Italian>Space Park</Italian>
+		<Spanish>Space Park</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_STARBAZAAR</Tag><!-- untranslated -->
+		<English>Starbazaar</English>
+		<French>Starbazaar</French>
+		<German>Starbazaar</German>
+		<Italian>Starbazaar</Italian>
+		<Spanish>Starbazaar</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_PBS</Tag><!-- untranslated -->
+		<English>Public Broadcasting System</English>
+		<French>Public Broadcasting System</French>
+		<German>Public Broadcasting System</German>
+		<Italian>Public Broadcasting System</Italian>
+		<Spanish>Public Broadcasting System</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_NANOSEPARATION_SYSTEM</Tag><!-- untranslated -->
+		<English>Nanoseparation System</English>
+		<French>Nanoseparation System</French>
+		<German>Nanoseparation System</German>
+		<Italian>Nanoseparation System</Italian>
+		<Spanish>Nanoseparation System</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_GREAT_RINGS</Tag><!-- untranslated -->
+		<English>The Great Rings Park</English>
+		<French>The Great Rings Park</French>
+		<German>The Great Rings Park</German>
+		<Italian>The Great Rings Park</Italian>
+		<Spanish>The Great Rings Park</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_BOTANICAL_GARDENS</Tag><!-- untranslated -->
+		<English>Botanical Gardens</English>
+		<French>Botanical Gardens</French>
+		<German>Botanical Gardens</German>
+		<Italian>Botanical Gardens</Italian>
+		<Spanish>Botanical Gardens</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_WORKERS_MEMORIAL</Tag><!-- untranslated -->
+		<English>Workers' Memorial</English>
+		<French>Workers' Memorial</French>
+		<German>Workers' Memorial</German>
+		<Italian>Workers' Memorial</Italian>
+		<Spanish>Workers' Memorial</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_MIL_SCIENCE_ACADEMY</Tag><!-- untranslated -->
+		<English>Military Science Academy</English>
+		<French>Military Science Academy</French>
+		<German>Military Science Academy</German>
+		<Italian>Military Science Academy</Italian>
+		<Spanish>Military Science Academy</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_UNIVERSAL_FOUNDRY</Tag><!-- untranslated -->
+		<English>Universal Foundry</English>
+		<French>Universal Foundry</French>
+		<German>Universal Foundry</German>
+		<Italian>Universal Foundry</Italian>
+		<Spanish>Universal Foundry</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_FOUNDERS_MONUMENT</Tag><!-- untranslated -->
+		<English>Founders Monument</English>
+		<French>Founders Monument</French>
+		<German>Founders Monument</German>
+		<Italian>Founders Monument</Italian>
+		<Spanish>Founders Monument</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_THE_ARSENAL</Tag><!-- untranslated -->
+		<English>The Arsenal</English>
+		<French>The Arsenal</French>
+		<German>The Arsenal</German>
+		<Italian>The Arsenal</Italian>
+		<Spanish>The Arsenal</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PROMOTION_WEAPONS_IV</Tag> <!-- Untranslated -->
+		<English>Fusion Weapons</English>
+		<French>Fusion Weapons</French>
+		<German>
+			<Text>Fusion Weapons</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>Fusion Weapons</Italian>
+		<Spanish>Fusion Weapons</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PROJECT_ASTRAL_GATE_DESIGN</Tag>
+		<English>Astral Gate Design</English>
+		<French>
+			<Text>Design de portail astral</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</French>
+		<German>Astraltor-Design</German>
+		<Italian>
+			<Text>Design portale astrale</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Dise&#243;o de la puerta astral</Text>
+			<Gender>Female</Gender>
+			<Plural>0</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BONUS_COTTON</Tag>
+		<English>Cotton</English>
+		<French>
+			<Text>Coton</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</French>
+		<German>
+			<Text>Baumwolle</Text>
+			<Gender>Female</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>
+			<Text>Cotone</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Algod&#243;n</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BONUS_WHEAT</Tag><!-- poorly translated -->
+		<English>Grain</English>
+		<French>C&#233;r&#233;ale</French>
+		<German>Korn</German>
+		<Italian>Grano</Italian>
+		<Spanish>Grano</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BONUS_COW</Tag><!-- poorly translated -->
+		<English>Cattle</English>
+		<French>Bovins</French>
+		<German>Vieh</German>
+		<Italian>Bestiame</Italian>
+		<Spanish>Ganado</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BONUS_FISH</Tag><!-- poorly translated -->
+		<English>Seafood</English>
+		<French>Fruits de Mer</French>
+		<German>Meeresfr&#252;chte</German>
+		<Italian>Frutti di Mare</Italian>
+		<Spanish>Mariscos</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_FARM</Tag>
+		<English>Farm</English>
+		<French>
+			<Text>Ferme[SPACE]</Text>
+			<Gender>Female</Gender>
+			<Plural>0</Plural>
+		</French>
+		<German>
+			<Text>Bauernhof</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>
+			<Text>Fattoria:Fattorie</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Granja:Granjas</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_RANCH</Tag>
+		<English>Ranch</English>
+		<French>Ranch</French>
+		<German>Ranch</German>
+		<Italian>Ranch</Italian>		
+		<Spanish>
+			<Text>Rancho:Ranchos</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_PLANTATION</Tag>
+		<English>Plantation</English>
+		<French>
+			<Text>Plantation</Text>
+			<Gender>Female</Gender>
+			<Plural>0</Plural>
+		</French>
+		<German>
+			<Text>Plantage</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>
+			<Text>Piantagione:Piantagioni</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Plantaci&#243;n:Plantaciones</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_WINERY</Tag>
+		<English>Winery</English>
+		<French>
+			<Text>Exploitation vinicole</Text>
+			<Gender>Female</Gender>
+			<Plural>0</Plural>
+		</French>
+		<German>
+			<Text>Weingut</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>
+			<Text>Azienda vinicola:Aziende vinicole</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Bodega:Bodegas</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_COTTONMILL</Tag>
+		<English>Cotton Mill</English>
+		<French>
+			<Text>Filature de Coton</Text>
+			<Gender>Female</Gender>
+			<Plural>0</Plural>
+		</French>
+		<German>
+			<Text>Baumwollspinnerei</Text>
+			<Gender>Female</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>
+			<Text>Cotonificio</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Fabrica de Algod&#243;n</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Spanish>
+	</TEXT>
+</Civ4GameText>

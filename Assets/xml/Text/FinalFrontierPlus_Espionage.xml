@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Sid Meier's Civilization 4 -->
+<!-- Copyright Firaxis Games 2005 -->
+<!-- Final Frontier Plus: Espionage Expansion -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_CIV_WATCHERS_DESC</Tag>
+		<English>Interstellar Intelligence</English>
+		<French>Interstellar Intel</French>
+		<German>Interstellar Intel</German>
+		<Italian>Interstellar Intel</Italian>
+		<Spanish>Interstellar Intel</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CIV_WATCHERS_SHORT_DESC</Tag>
+		<English>The Watchers</English>
+		<French>The Watchers</French>
+		<German>The Watchers</German>
+		<Italian>The Watchers</Italian>
+		<Spanish>The Watchers</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CIV_WATCHERS_ADJECTIVE</Tag>
+		<English>Watcher</English>
+		<French>Watcher</French>
+		<German>Watcher</German>
+		<Italian>Watcher</Italian>
+		<Spanish>Watcher</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CIV_WATCHERS_PEDIA</Tag>
+		<English>[TAB]Interstellar Intelligence began as a heavily classified and redacted organization known officially as the "Center for Interstellar Intelligence", a research group inside the People's Democracy For Earth's labyrinthine intelligence apparatus. The Center for Interstellar Intelligence was a harmless sounding organization with an official mandate to study "how traditional surveillance methods have adapted in the context of interstellar travel"... or at least that's what it said on the official organization chart. In fact, the mission of CII was far more complex: the PDE Security Commission had realized that maintaining control over all of its far-flung colonies would become increasingly difficult, just as many empires on Earth ages ago had found it eventually too expensive to maintain their colonies in the 19th and 20th century. CAS was charged with ways to reduce the "human cost" of keeping order in space. This effort was given the codename "Project Panopticon".[NEWLINE][TAB]In order to keep their work as far from the public eye as possible, in 2263 AD the entire CII team was sent to the remote, heavily-classified colony of Oculus that had been founded just a year prior as a PDE military base in the stars. Accompanying them, to provide "protection" (the local PDE defense force were not given clearance for PROJECT PANOPTICON) were a number of special operations teams from the infamous, equally heavily classified Division Nine of the Security Commission. At first, things went smoothly; most of the colonists on Oculus were unaware of the presence of CII, and simply got on with the business of taming a new and alien world. But soon the CII team had deployed their remote monitoring infrastructure throughout the population, and had established complete and total surveillance on every citizen on the planet. This led to unrest, which, thanks to the nature of the total surveillance state, the directors of CII were easily able to suppress. Even before contact with Earth was lost, the intelligence agents, spooks, and special ops teams who had become colloqually known as "the Watchers" had become far more important to colony life than the People's Democracy of Earth. And since the CII's agents and leaders technically outranked the local PDE garrison, there was virtually no check on their power.[NEWLINE][TAB]When contact with Earth was lost, it barely effected life on Oculus. Director Shapiro maintained the illusion for a few years that the Watchers still answered to Earth, but eventually went through the formality of declaring herself civilian administrator of the colony in 2305 AD and rebranding her organization (dropping the "Center for" from her agency's name(. Work continued on the surveillance systems of Project Panopticon, and scouts were discreetly sent out to discover what had become of the PDE forces (who had vanished in search of Earth) and Earth's other colonies in the stars. When the scouts returned with news that the remaining human settlements were fractured and not united, planning immediately began to reunite humanity under one banner-- that of II. Colonial efforts were launched to spread the influence of the Watchers to other worlds; these were initially quite slow, as deploying the real-time FTL surveillance technology of Project Panopticon was far more expensive than the Security Commission back on Earth had originally hoped. But once such technology was set up, new colonies governed in exactly the same was as Oculus sprung up across the stars. Life on one of these colonies was quite good, as long as citizens did not mind that analysts back on Oculus had almost instantaneous access to everything they did or said: there was very little crime or corruption that could not instantly be dealt with. But it came at at a high price.[NEWLINE][TAB]Now, slowly building a cloaked fleet of warships and facing a galactic stage unaware of their presence, the Watchers prepare to reunify humanity-- by guile and spycraft if possible, but by force if necessary.</English>
+		<French>[TAB]Interstellar Intelligence began as a heavily classified and redacted organization known officially as the "Center for Interstellar Intelligence", a research group inside the People's Democracy For Earth's labyrinthine intelligence apparatus. The Center for Interstellar Intelligence was a harmless sounding organization with an official mandate to study "how traditional surveillance methods have adapted in the context of interstellar travel"... or at least that's what it said on the official organization chart. In fact, the mission of CII was far more complex: the PDE Security Commission had realized that maintaining control over all of its far-flung colonies would become increasingly difficult, just as many empires on Earth ages ago had found it eventually too expensive to maintain their colonies in the 19th and 20th century. CAS was charged with ways to reduce the "human cost" of keeping order in space. This effort was given the codename "Project Panopticon".[NEWLINE][TAB]In order to keep their work as far from the public eye as possible, in 2263 AD the entire CII team was sent to the remote, heavily-classified colony of Oculus that had been founded just a year prior as a PDE military base in the stars. Accompanying them, to provide "protection" (the local PDE defense force were not given clearance for PROJECT PANOPTICON) were a number of special operations teams from the infamous, equally heavily classified Division Nine of the Security Commission. At first, things went smoothly; most of the colonists on Oculus were unaware of the presence of CII, and simply got on with the business of taming a new and alien world. But soon the CII team had deployed their remote monitoring infrastructure throughout the population, and had established complete and total surveillance on every citizen on the planet. This led to unrest, which, thanks to the nature of the total surveillance state, the directors of CII were easily able to suppress. Even before contact with Earth was lost, the intelligence agents, spooks, and special ops teams who had become colloqually known as "the Watchers" had become far more important to colony life than the People's Democracy of Earth. And since the CII's agents and leaders technically outranked the local PDE garrison, there was virtually no check on their power.[NEWLINE][TAB]When contact with Earth was lost, it barely effected life on Oculus. Director Shapiro maintained the illusion for a few years that the Watchers still answered to Earth, but eventually went through the formality of declaring herself civilian administrator of the colony in 2305 AD and rebranding her organization (dropping the "Center for" from her agency's name(. Work continued on the surveillance systems of Project Panopticon, and scouts were discreetly sent out to discover what had become of the PDE forces (who had vanished in search of Earth) and Earth's other colonies in the stars. When the scouts returned with news that the remaining human settlements were fractured and not united, planning immediately began to reunite humanity under one banner-- that of II. Colonial efforts were launched to spread the influence of the Watchers to other worlds; these were initially quite slow, as deploying the real-time FTL surveillance technology of Project Panopticon was far more expensive than the Security Commission back on Earth had originally hoped. But once such technology was set up, new colonies governed in exactly the same was as Oculus sprung up across the stars. Life on one of these colonies was quite good, as long as citizens did not mind that analysts back on Oculus had almost instantaneous access to everything they did or said: there was very little crime or corruption that could not instantly be dealt with. But it came at at a high price.[NEWLINE][TAB]Now, slowly building a cloaked fleet of warships and facing a galactic stage unaware of their presence, the Watchers prepare to reunify humanity-- by guile and spycraft if possible, but by force if necessary.</French>
+		<German>[TAB]Interstellar Intelligence began as a heavily classified and redacted organization known officially as the "Center for Interstellar Intelligence", a research group inside the People's Democracy For Earth's labyrinthine intelligence apparatus. The Center for Interstellar Intelligence was a harmless sounding organization with an official mandate to study "how traditional surveillance methods have adapted in the context of interstellar travel"... or at least that's what it said on the official organization chart. In fact, the mission of CII was far more complex: the PDE Security Commission had realized that maintaining control over all of its far-flung colonies would become increasingly difficult, just as many empires on Earth ages ago had found it eventually too expensive to maintain their colonies in the 19th and 20th century. CAS was charged with ways to reduce the "human cost" of keeping order in space. This effort was given the codename "Project Panopticon".[NEWLINE][TAB]In order to keep their work as far from the public eye as possible, in 2263 AD the entire CII team was sent to the remote, heavily-classified colony of Oculus that had been founded just a year prior as a PDE military base in the stars. Accompanying them, to provide "protection" (the local PDE defense force were not given clearance for PROJECT PANOPTICON) were a number of special operations teams from the infamous, equally heavily classified Division Nine of the Security Commission. At first, things went smoothly; most of the colonists on Oculus were unaware of the presence of CII, and simply got on with the business of taming a new and alien world. But soon the CII team had deployed their remote monitoring infrastructure throughout the population, and had established complete and total surveillance on every citizen on the planet. This led to unrest, which, thanks to the nature of the total surveillance state, the directors of CII were easily able to suppress. Even before contact with Earth was lost, the intelligence agents, spooks, and special ops teams who had become colloqually known as "the Watchers" had become far more important to colony life than the People's Democracy of Earth. And since the CII's agents and leaders technically outranked the local PDE garrison, there was virtually no check on their power.[NEWLINE][TAB]When contact with Earth was lost, it barely effected life on Oculus. Director Shapiro maintained the illusion for a few years that the Watchers still answered to Earth, but eventually went through the formality of declaring herself civilian administrator of the colony in 2305 AD and rebranding her organization (dropping the "Center for" from her agency's name(. Work continued on the surveillance systems of Project Panopticon, and scouts were discreetly sent out to discover what had become of the PDE forces (who had vanished in search of Earth) and Earth's other colonies in the stars. When the scouts returned with news that the remaining human settlements were fractured and not united, planning immediately began to reunite humanity under one banner-- that of II. Colonial efforts were launched to spread the influence of the Watchers to other worlds; these were initially quite slow, as deploying the real-time FTL surveillance technology of Project Panopticon was far more expensive than the Security Commission back on Earth had originally hoped. But once such technology was set up, new colonies governed in exactly the same was as Oculus sprung up across the stars. Life on one of these colonies was quite good, as long as citizens did not mind that analysts back on Oculus had almost instantaneous access to everything they did or said: there was very little crime or corruption that could not instantly be dealt with. But it came at at a high price.[NEWLINE][TAB]Now, slowly building a cloaked fleet of warships and facing a galactic stage unaware of their presence, the Watchers prepare to reunify humanity-- by guile and spycraft if possible, but by force if necessary.</German>
+		<Italian>[TAB]Interstellar Intelligence began as a heavily classified and redacted organization known officially as the "Center for Interstellar Intelligence", a research group inside the People's Democracy For Earth's labyrinthine intelligence apparatus. The Center for Interstellar Intelligence was a harmless sounding organization with an official mandate to study "how traditional surveillance methods have adapted in the context of interstellar travel"... or at least that's what it said on the official organization chart. In fact, the mission of CII was far more complex: the PDE Security Commission had realized that maintaining control over all of its far-flung colonies would become increasingly difficult, just as many empires on Earth ages ago had found it eventually too expensive to maintain their colonies in the 19th and 20th century. CAS was charged with ways to reduce the "human cost" of keeping order in space. This effort was given the codename "Project Panopticon".[NEWLINE][TAB]In order to keep their work as far from the public eye as possible, in 2263 AD the entire CII team was sent to the remote, heavily-classified colony of Oculus that had been founded just a year prior as a PDE military base in the stars. Accompanying them, to provide "protection" (the local PDE defense force were not given clearance for PROJECT PANOPTICON) were a number of special operations teams from the infamous, equally heavily classified Division Nine of the Security Commission. At first, things went smoothly; most of the colonists on Oculus were unaware of the presence of CII, and simply got on with the business of taming a new and alien world. But soon the CII team had deployed their remote monitoring infrastructure throughout the population, and had established complete and total surveillance on every citizen on the planet. This led to unrest, which, thanks to the nature of the total surveillance state, the directors of CII were easily able to suppress. Even before contact with Earth was lost, the intelligence agents, spooks, and special ops teams who had become colloqually known as "the Watchers" had become far more important to colony life than the People's Democracy of Earth. And since the CII's agents and leaders technically outranked the local PDE garrison, there was virtually no check on their power.[NEWLINE][TAB]When contact with Earth was lost, it barely effected life on Oculus. Director Shapiro maintained the illusion for a few years that the Watchers still answered to Earth, but eventually went through the formality of declaring herself civilian administrator of the colony in 2305 AD and rebranding her organization (dropping the "Center for" from her agency's name(. Work continued on the surveillance systems of Project Panopticon, and scouts were discreetly sent out to discover what had become of the PDE forces (who had vanished in search of Earth) and Earth's other colonies in the stars. When the scouts returned with news that the remaining human settlements were fractured and not united, planning immediately began to reunite humanity under one banner-- that of II. Colonial efforts were launched to spread the influence of the Watchers to other worlds; these were initially quite slow, as deploying the real-time FTL surveillance technology of Project Panopticon was far more expensive than the Security Commission back on Earth had originally hoped. But once such technology was set up, new colonies governed in exactly the same was as Oculus sprung up across the stars. Life on one of these colonies was quite good, as long as citizens did not mind that analysts back on Oculus had almost instantaneous access to everything they did or said: there was very little crime or corruption that could not instantly be dealt with. But it came at at a high price.[NEWLINE][TAB]Now, slowly building a cloaked fleet of warships and facing a galactic stage unaware of their presence, the Watchers prepare to reunify humanity-- by guile and spycraft if possible, but by force if necessary.</Italian>
+		<Spanish>[TAB]Interstellar Intelligence began as a heavily classified and redacted organization known officially as the "Center for Interstellar Intelligence", a research group inside the People's Democracy For Earth's labyrinthine intelligence apparatus. The Center for Interstellar Intelligence was a harmless sounding organization with an official mandate to study "how traditional surveillance methods have adapted in the context of interstellar travel"... or at least that's what it said on the official organization chart. In fact, the mission of CII was far more complex: the PDE Security Commission had realized that maintaining control over all of its far-flung colonies would become increasingly difficult, just as many empires on Earth ages ago had found it eventually too expensive to maintain their colonies in the 19th and 20th century. CAS was charged with ways to reduce the "human cost" of keeping order in space. This effort was given the codename "Project Panopticon".[NEWLINE][TAB]In order to keep their work as far from the public eye as possible, in 2263 AD the entire CII team was sent to the remote, heavily-classified colony of Oculus that had been founded just a year prior as a PDE military base in the stars. Accompanying them, to provide "protection" (the local PDE defense force were not given clearance for PROJECT PANOPTICON) were a number of special operations teams from the infamous, equally heavily classified Division Nine of the Security Commission. At first, things went smoothly; most of the colonists on Oculus were unaware of the presence of CII, and simply got on with the business of taming a new and alien world. But soon the CII team had deployed their remote monitoring infrastructure throughout the population, and had established complete and total surveillance on every citizen on the planet. This led to unrest, which, thanks to the nature of the total surveillance state, the directors of CII were easily able to suppress. Even before contact with Earth was lost, the intelligence agents, spooks, and special ops teams who had become colloqually known as "the Watchers" had become far more important to colony life than the People's Democracy of Earth. And since the CII's agents and leaders technically outranked the local PDE garrison, there was virtually no check on their power.[NEWLINE][TAB]When contact with Earth was lost, it barely effected life on Oculus. Director Shapiro maintained the illusion for a few years that the Watchers still answered to Earth, but eventually went through the formality of declaring herself civilian administrator of the colony in 2305 AD and rebranding her organization (dropping the "Center for" from her agency's name(. Work continued on the surveillance systems of Project Panopticon, and scouts were discreetly sent out to discover what had become of the PDE forces (who had vanished in search of Earth) and Earth's other colonies in the stars. When the scouts returned with news that the remaining human settlements were fractured and not united, planning immediately began to reunite humanity under one banner-- that of II. Colonial efforts were launched to spread the influence of the Watchers to other worlds; these were initially quite slow, as deploying the real-time FTL surveillance technology of Project Panopticon was far more expensive than the Security Commission back on Earth had originally hoped. But once such technology was set up, new colonies governed in exactly the same was as Oculus sprung up across the stars. Life on one of these colonies was quite good, as long as citizens did not mind that analysts back on Oculus had almost instantaneous access to everything they did or said: there was very little crime or corruption that could not instantly be dealt with. But it came at at a high price.[NEWLINE][TAB]Now, slowly building a cloaked fleet of warships and facing a galactic stage unaware of their presence, the Watchers prepare to reunify humanity-- by guile and spycraft if possible, but by force if necessary.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TRAIT_HELP_WATCHERS</Tag>
+		<English>The Watchers trait is great for a player interested in experimenting with the new Espionage system in Final Frontier Plus. It increases a player's espionage output and base happiness, at the cost of also increasing civic upkeep. It makes Light Ships more survivable by granting them a first strike and withdrawal chance.</English>
+		<French>The Watchers trait is great for a player interested in experimenting with the new Espionage system in Final Frontier Plus. It increases a player's espionage output and base happiness, at the cost of also increasing civic upkeep. It makes Light Ships more survivable by granting them a first strike and withdrawal chance.</French>
+		<German>The Watchers trait is great for a player interested in experimenting with the new Espionage system in Final Frontier Plus. It increases a player's espionage output and base happiness, at the cost of also increasing civic upkeep. It makes Light Ships more survivable by granting them a first strike and withdrawal chance.</German>
+		<Italian>The Watchers trait is great for a player interested in experimenting with the new Espionage system in Final Frontier Plus. It increases a player's espionage output and base happiness, at the cost of also increasing civic upkeep. It makes Light Ships more survivable by granting them a first strike and withdrawal chance.</Italian>
+		<Spanish>The Watchers trait is great for a player interested in experimenting with the new Espionage system in Final Frontier Plus. It increases a player's espionage output and base happiness, at the cost of also increasing civic upkeep. It makes Light Ships more survivable by granting them a first strike and withdrawal chance.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TRAIT_WATCHERS_PEDIA</Tag>
+		<English>The Watchers trait is great for a player interested in experimenting with the new Espionage system in Final Frontier Plus. It increases a player's espionage output and base happiness, at the cost of also increasing civic upkeep. It makes Light Ships more survivable by granting them a first strike and withdrawal chance.</English>
+		<French>The Watchers trait is great for a player interested in experimenting with the new Espionage system in Final Frontier Plus. It increases a player's espionage output and base happiness, at the cost of also increasing civic upkeep. It makes Light Ships more survivable by granting them a first strike and withdrawal chance.</French>
+		<German>The Watchers trait is great for a player interested in experimenting with the new Espionage system in Final Frontier Plus. It increases a player's espionage output and base happiness, at the cost of also increasing civic upkeep. It makes Light Ships more survivable by granting them a first strike and withdrawal chance.</German>
+		<Italian>The Watchers trait is great for a player interested in experimenting with the new Espionage system in Final Frontier Plus. It increases a player's espionage output and base happiness, at the cost of also increasing civic upkeep. It makes Light Ships more survivable by granting them a first strike and withdrawal chance.</Italian>
+		<Spanish>The Watchers trait is great for a player interested in experimenting with the new Espionage system in Final Frontier Plus. It increases a player's espionage output and base happiness, at the cost of also increasing civic upkeep. It makes Light Ships more survivable by granting them a first strike and withdrawal chance.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_LEADER_CATHERINE_SHAPIRO</Tag>
+		<English>Catherine Shapiro</English>
+		<French>Catherine Shapiro</French>
+		<German>Catherine Shapiro</German>
+		<Italian>Catherine Shapiro</Italian>
+		<Spanish>Catherine Shapiro</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_LEADER_CATHERINE_SHAPIRO_PEDIA</Tag>
+		<English>[TAB]Director Catherine Shapiro is the current leader of Interstellar Intelligence. She is the third director to serve the position; her immediate predecessor retired and died under questionable circumstances. She is the first to hold the title who was born on Oculus, and has even less nominal loyalty to Earth than her immediate predecessors. However, Catherine Shapiro shares a desire to see a strong human race, united and protected in the shadows by the technology her scientists are developing-- she just believes that the Watchers should be directly in charge rather than answerable to some government.[NEWLINE][TAB]Director Shapiro deployed her espionage network throughout the galaxy to study the other surviving human colonies before formally making contact with them. When II learned that New Earth considered itself the rightful continuation of the People's Democracy of Earth, a movement of senior operatives began planning to overthrow Shapiro, renounce their independence, and recognize New Earth as the official continuation of the state. While nobody is quite clear how she managed to do it, Director Shapiro annihilated the conspiracy easily and quietly, to the point that nobody outside of the innermost circles of the Watchers knew that anything happened at all. This has given her a reputation as being almost unbeatable when it comes to espionage and intrigue, although it remains to be seen how well she will fare against the rest of the galaxy.</English>
+		<French>[TAB]Director Catherine Shapiro is the current leader of Interstellar Intelligence. She is the third director to serve the position; her immediate predecessor retired and died under questionable circumstances. She is the first to hold the title who was born on Oculus, and has even less nominal loyalty to Earth than her immediate predecessors. However, Catherine Shapiro shares a desire to see a strong human race, united and protected in the shadows by the technology her scientists are developing-- she just believes that the Watchers should be directly in charge rather than answerable to some government.[NEWLINE][TAB]Director Shapiro deployed her espionage network throughout the galaxy to study the other surviving human colonies before formally making contact with them. When II learned that New Earth considered itself the rightful continuation of the People's Democracy of Earth, a movement of senior operatives began planning to overthrow Shapiro, renounce their independence, and recognize New Earth as the official continuation of the state. While nobody is quite clear how she managed to do it, Director Shapiro annihilated the conspiracy easily and quietly, to the point that nobody outside of the innermost circles of the Watchers knew that anything happened at all. This has given her a reputation as being almost unbeatable when it comes to espionage and intrigue, although it remains to be seen how well she will fare against the rest of the galaxy.</French>
+		<German>[TAB]Director Catherine Shapiro is the current leader of Interstellar Intelligence. She is the third director to serve the position; her immediate predecessor retired and died under questionable circumstances. She is the first to hold the title who was born on Oculus, and has even less nominal loyalty to Earth than her immediate predecessors. However, Catherine Shapiro shares a desire to see a strong human race, united and protected in the shadows by the technology her scientists are developing-- she just believes that the Watchers should be directly in charge rather than answerable to some government.[NEWLINE][TAB]Director Shapiro deployed her espionage network throughout the galaxy to study the other surviving human colonies before formally making contact with them. When II learned that New Earth considered itself the rightful continuation of the People's Democracy of Earth, a movement of senior operatives began planning to overthrow Shapiro, renounce their independence, and recognize New Earth as the official continuation of the state. While nobody is quite clear how she managed to do it, Director Shapiro annihilated the conspiracy easily and quietly, to the point that nobody outside of the innermost circles of the Watchers knew that anything happened at all. This has given her a reputation as being almost unbeatable when it comes to espionage and intrigue, although it remains to be seen how well she will fare against the rest of the galaxy.</German>
+		<Italian>[TAB]Director Catherine Shapiro is the current leader of Interstellar Intelligence. She is the third director to serve the position; her immediate predecessor retired and died under questionable circumstances. She is the first to hold the title who was born on Oculus, and has even less nominal loyalty to Earth than her immediate predecessors. However, Catherine Shapiro shares a desire to see a strong human race, united and protected in the shadows by the technology her scientists are developing-- she just believes that the Watchers should be directly in charge rather than answerable to some government.[NEWLINE][TAB]Director Shapiro deployed her espionage network throughout the galaxy to study the other surviving human colonies before formally making contact with them. When II learned that New Earth considered itself the rightful continuation of the People's Democracy of Earth, a movement of senior operatives began planning to overthrow Shapiro, renounce their independence, and recognize New Earth as the official continuation of the state. While nobody is quite clear how she managed to do it, Director Shapiro annihilated the conspiracy easily and quietly, to the point that nobody outside of the innermost circles of the Watchers knew that anything happened at all. This has given her a reputation as being almost unbeatable when it comes to espionage and intrigue, although it remains to be seen how well she will fare against the rest of the galaxy.</Italian>
+		<Spanish>[TAB]Director Catherine Shapiro is the current leader of Interstellar Intelligence. She is the third director to serve the position; her immediate predecessor retired and died under questionable circumstances. She is the first to hold the title who was born on Oculus, and has even less nominal loyalty to Earth than her immediate predecessors. However, Catherine Shapiro shares a desire to see a strong human race, united and protected in the shadows by the technology her scientists are developing-- she just believes that the Watchers should be directly in charge rather than answerable to some government.[NEWLINE][TAB]Director Shapiro deployed her espionage network throughout the galaxy to study the other surviving human colonies before formally making contact with them. When II learned that New Earth considered itself the rightful continuation of the People's Democracy of Earth, a movement of senior operatives began planning to overthrow Shapiro, renounce their independence, and recognize New Earth as the official continuation of the state. While nobody is quite clear how she managed to do it, Director Shapiro annihilated the conspiracy easily and quietly, to the point that nobody outside of the innermost circles of the Watchers knew that anything happened at all. This has given her a reputation as being almost unbeatable when it comes to espionage and intrigue, although it remains to be seen how well she will fare against the rest of the galaxy.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_STEALTH_CRUISER_I</Tag>
+		<English>
+			<TEXT>Stealth Cruiser:Stealth Cruisers</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<TEXT>Stealth Cruiser:Stealth Cruisers</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<TEXT>Stealth Cruiser:Stealth Cruisers</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<TEXT>Stealth Cruiser:Stealth Cruisers</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<TEXT>Stealth Cruiser:Stealth Cruisers</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_STEALTH_CRUISER_II</Tag>
+		<English>
+			<TEXT>[ICON_GREATPEOPLE] Stealth Cruiser:[ICON_GREATPEOPLE] Stealth Cruisers</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<TEXT>[ICON_GREATPEOPLE] Stealth Cruiser:[ICON_GREATPEOPLE] Stealth Cruisers</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<TEXT>[ICON_GREATPEOPLE] Stealth Cruiser:[ICON_GREATPEOPLE] Stealth Cruisers</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<TEXT>[ICON_GREATPEOPLE] Stealth Cruiser:[ICON_GREATPEOPLE] Stealth Cruisers</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<TEXT>[ICON_GREATPEOPLE] Stealth Cruiser:[ICON_GREATPEOPLE] Stealth Cruisers</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>		
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_STEALTH_CRUISER_III</Tag>
+		<English>
+			<TEXT>[ICON_POWER] Stealth Cruiser:[ICON_POWER] Stealth Cruisers</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</English>
+		<French>
+			<TEXT>[ICON_POWER] Stealth Cruiser:[ICON_POWER] Stealth Cruisers</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</French>
+		<German>
+			<TEXT>[ICON_POWER] Stealth Cruiser:[ICON_POWER] Stealth Cruisers</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</German>
+		<Italian>
+			<TEXT>[ICON_POWER] Stealth Cruiser:[ICON_POWER] Stealth Cruisers</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Italian>
+		<Spanish>
+			<TEXT>[ICON_POWER] Stealth Cruiser:[ICON_POWER] Stealth Cruisers</TEXT>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_STEALTH_CRUISER_PEDIA_2</Tag>
+		<English>Deploying Watcher field agents onto enemy worlds is a problem that the Research and Development divisions inside II turned a lot of attention to. They rejected traditional PDE designs for a stealth ship and created a far more expensive and better armed model that somehow managed to maintain the same stealth profile as its competition. In fact, a Stealth Cruiser's stealth systems are significantly superior to anything outside of II, and means that such a vessel is capable of maintaining stealth for far longer when closing range and attacking an enemy vessel.[NEWLINE]The first prototype Stealth Cruiser successfully trailed a Brotherhood supply convoy escorted by two Destroyers, waited until they were damaged by a radiation storm, destroyed them, stole valuable resources from the convoy, and managed to escape a fleet scrambled to investigate. The only good news for the navies of the other colonies is that a Stealth Cruiser is a considerable investment and thus a very rare sight on the battlefield.</English>
+		<French>Deploying Watcher field agents onto enemy worlds is a problem that the Research and Development divisions inside II turned a lot of attention to. They rejected traditional PDE designs for a stealth ship and created a far more expensive and better armed model that somehow managed to maintain the same stealth profile as its competition. In fact, a Stealth Cruiser's stealth systems are significantly superior to anything outside of II, and means that such a vessel is capable of maintaining stealth for far longer when closing range and attacking an enemy vessel.[NEWLINE]The first prototype Stealth Cruiser successfully trailed a Brotherhood supply convoy escorted by two Destroyers, waited until they were damaged by a radiation storm, destroyed them, stole valuable resources from the convoy, and managed to escape a fleet scrambled to investigate. The only good news for the navies of the other colonies is that a Stealth Cruiser is a considerable investment and thus a very rare sight on the battlefield.</French>
+		<German>Deploying Watcher field agents onto enemy worlds is a problem that the Research and Development divisions inside II turned a lot of attention to. They rejected traditional PDE designs for a stealth ship and created a far more expensive and better armed model that somehow managed to maintain the same stealth profile as its competition. In fact, a Stealth Cruiser's stealth systems are significantly superior to anything outside of II, and means that such a vessel is capable of maintaining stealth for far longer when closing range and attacking an enemy vessel.[NEWLINE]The first prototype Stealth Cruiser successfully trailed a Brotherhood supply convoy escorted by two Destroyers, waited until they were damaged by a radiation storm, destroyed them, stole valuable resources from the convoy, and managed to escape a fleet scrambled to investigate. The only good news for the navies of the other colonies is that a Stealth Cruiser is a considerable investment and thus a very rare sight on the battlefield.</German>
+		<Italian>Deploying Watcher field agents onto enemy worlds is a problem that the Research and Development divisions inside II turned a lot of attention to. They rejected traditional PDE designs for a stealth ship and created a far more expensive and better armed model that somehow managed to maintain the same stealth profile as its competition. In fact, a Stealth Cruiser's stealth systems are significantly superior to anything outside of II, and means that such a vessel is capable of maintaining stealth for far longer when closing range and attacking an enemy vessel.[NEWLINE]The first prototype Stealth Cruiser successfully trailed a Brotherhood supply convoy escorted by two Destroyers, waited until they were damaged by a radiation storm, destroyed them, stole valuable resources from the convoy, and managed to escape a fleet scrambled to investigate. The only good news for the navies of the other colonies is that a Stealth Cruiser is a considerable investment and thus a very rare sight on the battlefield.</Italian>
+		<Spanish>Deploying Watcher field agents onto enemy worlds is a problem that the Research and Development divisions inside II turned a lot of attention to. They rejected traditional PDE designs for a stealth ship and created a far more expensive and better armed model that somehow managed to maintain the same stealth profile as its competition. In fact, a Stealth Cruiser's stealth systems are significantly superior to anything outside of II, and means that such a vessel is capable of maintaining stealth for far longer when closing range and attacking an enemy vessel.[NEWLINE]The first prototype Stealth Cruiser successfully trailed a Brotherhood supply convoy escorted by two Destroyers, waited until they were damaged by a radiation storm, destroyed them, stole valuable resources from the convoy, and managed to escape a fleet scrambled to investigate. The only good news for the navies of the other colonies is that a Stealth Cruiser is a considerable investment and thus a very rare sight on the battlefield.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_STEALTH_CRUISER_STRATEGY_3</Tag>
+		<English>Stealth Cruisers are much more expensive, but also more survivable, than a normal Stealth Ship. They get a chance of first strikes (when fully upgraded, they have at least one guaranteed first strike) and a small chance to withdraw from combat.</English>
+		<French>Stealth Cruisers are much more expensive, but also more survivable, than a normal Stealth Ship. They get a chance of first strikes (when fully upgraded, they have at least one guaranteed first strike) and a small chance to withdraw from combat.</French>
+		<German>Stealth Cruisers are much more expensive, but also more survivable, than a normal Stealth Ship. They get a chance of first strikes (when fully upgraded, they have at least one guaranteed first strike) and a small chance to withdraw from combat.</German>
+		<Italian>Stealth Cruisers are much more expensive, but also more survivable, than a normal Stealth Ship. They get a chance of first strikes (when fully upgraded, they have at least one guaranteed first strike) and a small chance to withdraw from combat.</Italian>
+		<Spanish>Stealth Cruisers are much more expensive, but also more survivable, than a normal Stealth Ship. They get a chance of first strikes (when fully upgraded, they have at least one guaranteed first strike) and a small chance to withdraw from combat.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_SECURITY_STATION</Tag>
+		<English>Security Directorate</English>
+		<French>Security Directorate</French>
+		<German>Security Directorate</German>
+		<Italian>Security Directorate</Italian>
+		<Spanish>Security Directorate</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_SECURITY_STATION_STRATEGY</Tag>
+		<English>Security Stations provide more Espionage than an Intelligence Center, but cost a few more hammers.</English>
+		<French>Security Stations provide more Espionage than an Intelligence Center, but cost a few more hammers.</French>
+		<German>Security Stations provide more Espionage than an Intelligence Center, but cost a few more hammers.</German>
+		<Italian>Security Stations provide more Espionage than an Intelligence Center, but cost a few more hammers.</Italian>
+		<Spanish>Security Stations provide more Espionage than an Intelligence Center, but cost a few more hammers.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_SECURITY_STATION_PEDIA</Tag>
+		<English>Much larger and far more advanced than a traditional Intelligence Center on other colonies, the Security Directorate is the center of Watcher activity on any colony. Here, local intelligence operations are coordinated and assignments handed out to field agents as necessary. Here, intelligence feeds for a planet are coordinated, filtered by local analysts, and then streamed back over FTL communications to the master control centers at Oculus.</English>
+		<French>Much larger and far more advanced than a traditional Intelligence Center on other colonies, the Security Directorate is the center of Watcher activity on any colony. Here, local intelligence operations are coordinated and assignments handed out to field agents as necessary. Here, intelligence feeds for a planet are coordinated, filtered by local analysts, and then streamed back over FTL communications to the master control centers at Oculus.</French>
+		<German>Much larger and far more advanced than a traditional Intelligence Center on other colonies, the Security Directorate is the center of Watcher activity on any colony. Here, local intelligence operations are coordinated and assignments handed out to field agents as necessary. Here, intelligence feeds for a planet are coordinated, filtered by local analysts, and then streamed back over FTL communications to the master control centers at Oculus.</German>
+		<Italian>Much larger and far more advanced than a traditional Intelligence Center on other colonies, the Security Directorate is the center of Watcher activity on any colony. Here, local intelligence operations are coordinated and assignments handed out to field agents as necessary. Here, intelligence feeds for a planet are coordinated, filtered by local analysts, and then streamed back over FTL communications to the master control centers at Oculus.</Italian>
+		<Spanish>Much larger and far more advanced than a traditional Intelligence Center on other colonies, the Security Directorate is the center of Watcher activity on any colony. Here, local intelligence operations are coordinated and assignments handed out to field agents as necessary. Here, intelligence feeds for a planet are coordinated, filtered by local analysts, and then streamed back over FTL communications to the master control centers at Oculus.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITY_WATCHERS_0</Tag>
+		<English>Oculus</English>
+		<French>Oculus</French>
+		<German>Oculus</German>
+		<Italian>Oculus</Italian>
+		<Spanish>Oculus</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITY_WATCHERS_1</Tag>
+		<English>System 2</English>
+		<French>System 2</French>
+		<German>System 2</German>
+		<Italian>System 2</Italian>
+		<Spanish>System 2</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITY_WATCHERS_2</Tag>
+		<English>System 3</English>
+		<French>System 3</French>
+		<German>System 3</German>
+		<Italian>System 3</Italian>
+		<Spanish>System 3</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITY_WATCHERS_3</Tag>
+		<English>System 4</English>
+		<French>System 4</French>
+		<German>System 4</German>
+		<Italian>System 4</Italian>
+		<Spanish>System 4</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITY_WATCHERS_4</Tag>
+		<English>System 5</English>
+		<French>System 5</French>
+		<German>System 5</German>
+		<Italian>System 5</Italian>
+		<Spanish>System 5</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITY_WATCHERS_5</Tag>
+		<English>System 6</English>
+		<French>System 6</French>
+		<German>System 6</German>
+		<Italian>System 6</Italian>
+		<Spanish>System 6</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITY_WATCHERS_6</Tag>
+		<English>System 7</English>
+		<French>System 7</French>
+		<German>System 7</German>
+		<Italian>System 7</Italian>
+		<Spanish>System 7</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITY_WATCHERS_7</Tag>
+		<English>System 8</English>
+		<French>System 8</French>
+		<German>System 8</German>
+		<Italian>System 8</Italian>
+		<Spanish>System 8</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITY_WATCHERS_8</Tag>
+		<English>System 9</English>
+		<French>System 9</French>
+		<German>System 9</German>
+		<Italian>System 9</Italian>
+		<Spanish>System 9</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITY_WATCHERS_9</Tag>
+		<English>System 10</English>
+		<French>System 10</French>
+		<German>System 10</German>
+		<Italian>System 10</Italian>
+		<Spanish>System 10</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITY_WATCHERS_10</Tag>
+		<English>System 11</English>
+		<French>System 11</French>
+		<German>System 11</German>
+		<Italian>System 11</Italian>
+		<Spanish>System 11</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITY_WATCHERS_11</Tag>
+		<English>System 12</English>
+		<French>System 12</French>
+		<German>System 12</German>
+		<Italian>System 12</Italian>
+		<Spanish>System 12</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITY_WATCHERS_113</Tag>
+		<English>System 13</English>
+		<French>System 13</French>
+		<German>System 13</German>
+		<Italian>System 13</Italian>
+		<Spanish>System 13</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITY_WATCHERS_13</Tag>
+		<English>System 14</English>
+		<French>System 14</French>
+		<German>System 14</German>
+		<Italian>System 14</Italian>
+		<Spanish>System 14</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITY_WATCHERS_14</Tag>
+		<English>System 15</English>
+		<French>System 15</French>
+		<German>System 15</German>
+		<Italian>System 15</Italian>
+		<Spanish>System 15</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITY_WATCHERS_15</Tag>
+		<English>System 16</English>
+		<French>System 16</French>
+		<German>System 16</German>
+		<Italian>System 16</Italian>
+		<Spanish>System 16</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITY_WATCHERS_16</Tag>
+		<English>System 17</English>
+		<French>System 17</French>
+		<German>System 17</German>
+		<Italian>System 17</Italian>
+		<Spanish>System 17</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITY_WATCHERS_17</Tag>
+		<English>System 18</English>
+		<French>System 18</French>
+		<German>System 18</German>
+		<Italian>System 18</Italian>
+		<Spanish>System 18</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITY_WATCHERS_18</Tag>
+		<English>System 19</English>
+		<French>System 19</French>
+		<German>System 19</German>
+		<Italian>System 19</Italian>
+		<Spanish>System 19</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITY_WATCHERS_19</Tag>
+		<English>System 20</English>
+		<French>System 20</French>
+		<German>System 20</German>
+		<Italian>System 20</Italian>
+		<Spanish>System 20</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_GREETINGS_FFP_SHAPIRO_ATT_MAD_1</Tag>
+		<English>Your assassination will come soon enough, I promise you. Please go away.</English>
+		<French>Your assassination will come soon enough, I promise you. Please go away.</French>
+		<German>Your assassination will come soon enough, I promise you. Please go away.</German>
+		<Italian>Your assassination will come soon enough, I promise you. Please go away.</Italian>
+		<Spanish>Your assassination will come soon enough, I promise you. Please go away.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_GREETINGS_FFP_SHAPIRO_ATT_MAD_2</Tag>
+		<English>If you don't stop meddling in my plans, [CT_NAME], it will go very badly for you.</English>
+		<French>If you don't stop meddling in my plans, [CT_NAME], it will go very badly for you.</French>
+		<German>If you don't stop meddling in my plans, [CT_NAME], it will go very badly for you.</German>
+		<Italian>If you don't stop meddling in my plans, [CT_NAME], it will go very badly for you.</Italian>
+		<Spanish>If you don't stop meddling in my plans, [CT_NAME], it will go very badly for you.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_FIRST_CONTACT_LEADER_CATHERINE_SHAPIRO</Tag>
+		<English>[CT_NAME]! A pleasure to meet you at last. I am the director of [OUR_EMPIRE], and I've heard so much about you and your people. I trust you take my meaning.</English>
+		<French>[CT_NAME]! A pleasure to meet you at last. I am the director of [OUR_EMPIRE], and I've heard so much about you and your people. I trust you take my meaning.</French>
+		<German>[CT_NAME]! A pleasure to meet you at last. I am the director of [OUR_EMPIRE], and I've heard so much about you and your people. I trust you take my meaning.</German>
+		<Italian>[CT_NAME]! A pleasure to meet you at last. I am the director of [OUR_EMPIRE], and I've heard so much about you and your people. I trust you take my meaning.</Italian>
+		<Spanish>[CT_NAME]! A pleasure to meet you at last. I am the director of [OUR_EMPIRE], and I've heard so much about you and your people. I trust you take my meaning.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TECH_ESPIONAGE_0</Tag>
+		<English>Galactic Infiltration</English>
+		<French>Galactic Infiltration</French>
+		<German>Galactic Infiltration</German>
+		<Italian>Galactic Infiltration</Italian>
+		<Spanish>Galactic Infiltration</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TECH_ESPIONAGE_0_PEDIA</Tag>
+		<English>"Galactic Infiltration" refers to the doctrine adopted by Interstellar Intelligence field agents in order to infiltrate, maintain surveillence on, and conduct black ops missions across the known galaxy. Once understood by the other human colonies, it was later adapted by all the survivors as their conflicts found a new sphere in which to express themselves: the world of the spy.</English>
+		<French>"Galactic Infiltration" refers to the doctrine adopted by Interstellar Intelligence field agents in order to infiltrate, maintain surveillence on, and conduct black ops missions across the known galaxy. Once understood by the other human colonies, it was later adapted by all the survivors as their conflicts found a new sphere in which to express themselves: the world of the spy.</French>
+		<German>"Galactic Infiltration" refers to the doctrine adopted by Interstellar Intelligence field agents in order to infiltrate, maintain surveillence on, and conduct black ops missions across the known galaxy. Once understood by the other human colonies, it was later adapted by all the survivors as their conflicts found a new sphere in which to express themselves: the world of the spy.</German>
+		<Italian>"Galactic Infiltration" refers to the doctrine adopted by Interstellar Intelligence field agents in order to infiltrate, maintain surveillence on, and conduct black ops missions across the known galaxy. Once understood by the other human colonies, it was later adapted by all the survivors as their conflicts found a new sphere in which to express themselves: the world of the spy.</Italian>
+		<Spanish>"Galactic Infiltration" refers to the doctrine adopted by Interstellar Intelligence field agents in order to infiltrate, maintain surveillence on, and conduct black ops missions across the known galaxy. Once understood by the other human colonies, it was later adapted by all the survivors as their conflicts found a new sphere in which to express themselves: the world of the spy.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TECH_ESPIONAGE_0_STRATEGY</Tag>
+		<English>[COLOR_TECH_TEXT]Galactic Infiltration[COLOR_REVERT] allows the construction of the [COLOR_UNIT_TEXT]Spy Ship[COLOR_REVERT] unit, which is capable of conducting espionage missions much like the Spy from vanilla Beyond the Sword.</English>
+		<French>[COLOR_TECH_TEXT]Galactic Infiltration[COLOR_REVERT] allows the construction of the [COLOR_UNIT_TEXT]Spy Ship[COLOR_REVERT] unit, which is capable of conducting espionage missions much like the Spy from vanilla Beyond the Sword.</French>
+		<German>[COLOR_TECH_TEXT]Galactic Infiltration[COLOR_REVERT] allows the construction of the [COLOR_UNIT_TEXT]Spy Ship[COLOR_REVERT] unit, which is capable of conducting espionage missions much like the Spy from vanilla Beyond the Sword.</German>
+		<Italian>[COLOR_TECH_TEXT]Galactic Infiltration[COLOR_REVERT] allows the construction of the [COLOR_UNIT_TEXT]Spy Ship[COLOR_REVERT] unit, which is capable of conducting espionage missions much like the Spy from vanilla Beyond the Sword.</Italian>
+		<Spanish>[COLOR_TECH_TEXT]Galactic Infiltration[COLOR_REVERT] allows the construction of the [COLOR_UNIT_TEXT]Spy Ship[COLOR_REVERT] unit, which is capable of conducting espionage missions much like the Spy from vanilla Beyond the Sword.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TECH_QUOTE_ESPIONAGE_0</Tag>
+		<English>[TAB]"Yes, deploying an agent onto a distant planet may be easy, but maintaining contact with them is not. Communications between star systems must be trunked and centralized at some point; this is simply a technological necessity at present. The obvious assumption is that any adversary will be carefully monitoring the communications relays on their planet. Thus maintaining contact with a field agent through any conventional channels without alerting local authorities will be nearly impossible. Solving this problem is currently a top priority for the Center for Interstellar Intelligence and has involved both technological work and changes to standard PDE espionage doctrine."[NEWLINE][NEWLINE][TAB]- Director Catherine Shapiro, February 2296, Inaugural Report to Center for Interstellar Intelligence Oversight Committee.</English>
+		<French>[TAB]"Yes, deploying an agent onto a distant planet may be easy, but maintaining contact with them is not. Communications between star systems must be trunked and centralized at some point; this is simply a technological necessity at present. The obvious assumption is that any adversary will be carefully monitoring the communications relays on their planet. Thus maintaining contact with a field agent through any conventional channels without alerting local authorities will be nearly impossible. Solving this problem is currently a top priority for the Center for Interstellar Intelligence and has involved both technological work and changes to standard PDE espionage doctrine."[NEWLINE][NEWLINE][TAB]- Director Catherine Shapiro, February 2296, Inaugural Report to Center for Interstellar Intelligence Oversight Committee.</French>
+		<German>[TAB]"Yes, deploying an agent onto a distant planet may be easy, but maintaining contact with them is not. Communications between star systems must be trunked and centralized at some point; this is simply a technological necessity at present. The obvious assumption is that any adversary will be carefully monitoring the communications relays on their planet. Thus maintaining contact with a field agent through any conventional channels without alerting local authorities will be nearly impossible. Solving this problem is currently a top priority for the Center for Interstellar Intelligence and has involved both technological work and changes to standard PDE espionage doctrine."[NEWLINE][NEWLINE][TAB]- Director Catherine Shapiro, February 2296, Inaugural Report to Center for Interstellar Intelligence Oversight Committee.</German>
+		<Italian>[TAB]"Yes, deploying an agent onto a distant planet may be easy, but maintaining contact with them is not. Communications between star systems must be trunked and centralized at some point; this is simply a technological necessity at present. The obvious assumption is that any adversary will be carefully monitoring the communications relays on their planet. Thus maintaining contact with a field agent through any conventional channels without alerting local authorities will be nearly impossible. Solving this problem is currently a top priority for the Center for Interstellar Intelligence and has involved both technological work and changes to standard PDE espionage doctrine."[NEWLINE][NEWLINE][TAB]- Director Catherine Shapiro, February 2296, Inaugural Report to Center for Interstellar Intelligence Oversight Committee.</Italian>
+		<Spanish>[TAB]"Yes, deploying an agent onto a distant planet may be easy, but maintaining contact with them is not. Communications between star systems must be trunked and centralized at some point; this is simply a technological necessity at present. The obvious assumption is that any adversary will be carefully monitoring the communications relays on their planet. Thus maintaining contact with a field agent through any conventional channels without alerting local authorities will be nearly impossible. Solving this problem is currently a top priority for the Center for Interstellar Intelligence and has involved both technological work and changes to standard PDE espionage doctrine."[NEWLINE][NEWLINE][TAB]- Director Catherine Shapiro, February 2296, Inaugural Report to Center for Interstellar Intelligence Oversight Committee.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_SPY_SHIP</Tag>
+		<English>Spy Ship</English>
+		<French>Spy Ship</French>
+		<German>Spy Ship</German>
+		<Italian>Spy Ship</Italian>
+		<Spanish>Spy Ship</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_SPY_SHIP_PEDIA</Tag>
+		<English>Deploying a spy and the hardware they need to accomplish their mission into a hostile star system is harder than it sounds. While space is big, sensor technology is very good, and most incoming civilian ships will be routinely searched by security forces in even the most peaceful and democratic interstellar civilizations. To compensate, Interstellar Intelligence planners designed the Spy Ship, a version of the traditional stealth ship but with most of the offensive capability stripped out and replaced with better espionage and stealth hardware. The design was later adopted by the rest of the galaxy.</English>
+		<French>Deploying a spy and the hardware they need to accomplish their mission into a hostile star system is harder than it sounds. While space is big, sensor technology is very good, and most incoming civilian ships will be routinely searched by security forces in even the most peaceful and democratic interstellar civilizations. To compensate, Interstellar Intelligence planners designed the Spy Ship, a version of the traditional stealth ship but with most of the offensive capability stripped out and replaced with better espionage and stealth hardware. The design was later adopted by the rest of the galaxy.</French>
+		<German>Deploying a spy and the hardware they need to accomplish their mission into a hostile star system is harder than it sounds. While space is big, sensor technology is very good, and most incoming civilian ships will be routinely searched by security forces in even the most peaceful and democratic interstellar civilizations. To compensate, Interstellar Intelligence planners designed the Spy Ship, a version of the traditional stealth ship but with most of the offensive capability stripped out and replaced with better espionage and stealth hardware. The design was later adopted by the rest of the galaxy.</German>
+		<Italian>Deploying a spy and the hardware they need to accomplish their mission into a hostile star system is harder than it sounds. While space is big, sensor technology is very good, and most incoming civilian ships will be routinely searched by security forces in even the most peaceful and democratic interstellar civilizations. To compensate, Interstellar Intelligence planners designed the Spy Ship, a version of the traditional stealth ship but with most of the offensive capability stripped out and replaced with better espionage and stealth hardware. The design was later adopted by the rest of the galaxy.</Italian>
+		<Spanish>Deploying a spy and the hardware they need to accomplish their mission into a hostile star system is harder than it sounds. While space is big, sensor technology is very good, and most incoming civilian ships will be routinely searched by security forces in even the most peaceful and democratic interstellar civilizations. To compensate, Interstellar Intelligence planners designed the Spy Ship, a version of the traditional stealth ship but with most of the offensive capability stripped out and replaced with better espionage and stealth hardware. The design was later adopted by the rest of the galaxy.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_SPY_SHIP_STRATEGY</Tag>
+		<English>Unlike spies in Beyond the Sword, the Spy Ship is not invisible to all units. Its invisibility is only as good as that of the Stealth Ship, meaning that an opposing civilization has a chance to detect and stop a Spy Ship from being deployed into their territory. To compensate, Spy Ships have been given the ability to defend themselves (but not attack).</English>
+		<French>Unlike spies in Beyond the Sword, the Spy Ship is not invisible to all units. Its invisibility is only as good as that of the Stealth Ship, meaning that an opposing civilization has a chance to detect and stop a Spy Ship from being deployed into their territory. To compensate, Spy Ships have been given the ability to defend themselves (but not attack).</French>
+		<German>Unlike spies in Beyond the Sword, the Spy Ship is not invisible to all units. Its invisibility is only as good as that of the Stealth Ship, meaning that an opposing civilization has a chance to detect and stop a Spy Ship from being deployed into their territory. To compensate, Spy Ships have been given the ability to defend themselves (but not attack).</German>
+		<Italian>Unlike spies in Beyond the Sword, the Spy Ship is not invisible to all units. Its invisibility is only as good as that of the Stealth Ship, meaning that an opposing civilization has a chance to detect and stop a Spy Ship from being deployed into their territory. To compensate, Spy Ships have been given the ability to defend themselves (but not attack).</Italian>
+		<Spanish>Unlike spies in Beyond the Sword, the Spy Ship is not invisible to all units. Its invisibility is only as good as that of the Stealth Ship, meaning that an opposing civilization has a chance to detect and stop a Spy Ship from being deployed into their territory. To compensate, Spy Ships have been given the ability to defend themselves (but not attack).</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GAME_OPTION_NO_SPIES</Tag>
+		<English>No Spies</English>
+		<French>No Spies</French>
+		<German>No Spies</German>
+		<Italian>No Spies</Italian>
+		<Spanish>No Spies</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GAME_OPTION_NO_SPIES_HELP</Tag>
+		<English>Allow espionage to be produced, but do not allow any units capable of conducting spy missions to be built.</English>
+		<French>Allow espionage to be produced, but do not allow any units capable of conducting spy missions to be built.</French>
+		<German>Allow espionage to be produced, but do not allow any units capable of conducting spy missions to be built.</German>
+		<Italian>Allow espionage to be produced, but do not allow any units capable of conducting spy missions to be built.</Italian>
+		<Spanish>Allow espionage to be produced, but do not allow any units capable of conducting spy missions to be built.</Spanish>
+	</TEXT>
+</Civ4GameText>

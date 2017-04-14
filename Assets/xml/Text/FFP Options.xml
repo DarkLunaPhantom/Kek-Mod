@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!--
+	Final Frontier Plus
+	Options Game Text
+-->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_FINALFRONTIERPLUS__HIDETECHTEXT_TEXT</Tag>
+		<English>Hide Pedia Text</English>
+		<French>Hide Pedia Text</French>
+		<German>Hide Pedia Text</German>
+		<Italian>Hide Pedia Text</Italian>
+		<Spanish>Hide Pedia Text</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_FINALFRONTIERPLUS__HIDETECHTEXT_HOVER</Tag>
+		<English>When checked, hides the quote and background text for techs in the 'pedia until they have been researched.</English>
+		<French>When checked, hides the quote and background text for techs in the 'pedia until they have been researched.</French>
+		<German>When checked, hides the quote and background text for techs in the 'pedia until they have been researched.</German>
+		<Italian>When checked, hides the quote and background text for techs in the 'pedia until they have been researched.</Italian>
+		<Spanish>When checked, hides the quote and background text for techs in the 'pedia until they have been researched.</Spanish>
+	</TEXT>
+</Civ4GameText>
