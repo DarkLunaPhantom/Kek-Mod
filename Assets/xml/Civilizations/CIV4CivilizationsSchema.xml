@@ -86,7 +86,16 @@
 	<ElementType name="VassalRefuseAttitudeThreshold" content="textOnly"/>
 	<ElementType name="iVassalPowerModifier" content="textOnly" dt:type="int"/>
 	<ElementType name="iFreedomAppreciation" content="textOnly" dt:type="int"/>
-	<ElementType name="FavoriteCivic" content="textOnly"/>
+
+	<ElementType name="bFavoriteCivic" content="textOnly" dt:type="boolean"/>
+	<ElementType name="FavoriteCivic" content="eltOnly">
+		<element type="CivicType"/>
+		<element type="bFavoriteCivic"/>
+	</ElementType>
+	<ElementType name="FavoriteCivics" content="eltOnly">
+		<element type="FavoriteCivic" minOccurs="0" maxOccurs="*"/>
+	</ElementType>
+
 	<ElementType name="FavoriteReligion" content="textOnly"/>
 	<ElementType name="TraitType" content="textOnly"/>
 	<ElementType name="bTrait" content="textOnly" dt:type="boolean"/>
@@ -272,7 +281,7 @@
 		<element type="VassalRefuseAttitudeThreshold"/>
 		<element type="iVassalPowerModifier"/>
 		<element type="iFreedomAppreciation"/>
-		<element type="FavoriteCivic"/>
+		<element type="FavoriteCivics" minOccurs="0"/>
 		<element type="FavoriteReligion"/>
 		<element type="Traits"/>
 		<element type="Flavors"/>
@@ -338,6 +347,16 @@
 	<ElementType name="FreePromotionUnitCombats" content="eltOnly">
 		<element type="FreePromotionUnitCombat" minOccurs="0" maxOccurs="*"/>
 	</ElementType>
+	<ElementType name="YieldChanges" content="eltOnly">
+		<element type="iYield" minOccurs="0" maxOccurs="*"/>
+	</ElementType>
+	<ElementType name="TradeRouteYieldChanges" content="eltOnly">
+		<element type="iYield" minOccurs="0" maxOccurs="*"/>
+	</ElementType>
+	<ElementType name="iFreePopulation" content="textOnly" dt:type="int"/>
+	<ElementType name="iFreeTradeRoutes" content="textOnly" dt:type="int"/>
+	<ElementType name="iStartingGoldMultiplier" content="textOnly" dt:type="int"/>
+	<ElementType name="FreePlanetBuildingClass" content="textOnly"/>
 	<ElementType name="TraitInfo" content="eltOnly">
 		<element type="Type"/>
 		<element type="Description"/>
@@ -360,6 +379,12 @@
 		<element type="CommerceModifiers"/>
 		<element type="FreePromotions"/>
 		<element type="FreePromotionUnitCombats"/>
+		<element type="iFreePopulation" minOccurs="0"/>
+		<element type="iFreeTradeRoutes" minOccurs="0"/>
+		<element type="iStartingGoldMultiplier" minOccurs="0"/>
+		<element type="YieldChanges" minOccurs="0"/>
+		<element type="FreePlanetBuildingClass" minOccurs="0"/>
+		<element type="TradeRouteYieldChanges" minOccurs="0"/>
 	</ElementType>
 	<ElementType name="TraitInfos" content="eltOnly">
 		<element type="TraitInfo" maxOccurs="*"/>
@@ -444,6 +469,7 @@
 	<ElementType name="CivilizationSelectionSound" content="textOnly"/>
 	<ElementType name="CivilizationActionSound" content="textOnly"/>
 	<ElementType name="UnitArtStyleType" content="textOnly"/>
+	<ElementType name="bAlien" content="textOnly" dt:type="boolean"/>
 	<ElementType name="CivilizationInfo" content="eltOnly">
 		<element type="Type"/>
 		<element type="Description"/>
@@ -469,6 +495,7 @@
 		<element type="DerivativeCiv"/>
 		<element type="CivilizationSelectionSound"/>
 		<element type="CivilizationActionSound"/>
+		<element type="bAlien" minOccurs="0"/>
 	</ElementType>
 	<ElementType name="CivilizationInfos" content="eltOnly">
 		<element type="CivilizationInfo" maxOccurs="*"/>
