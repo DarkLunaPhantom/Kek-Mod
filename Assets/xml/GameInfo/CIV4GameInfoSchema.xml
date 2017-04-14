@@ -284,6 +284,9 @@
 	<ElementType name="BarbarianClass" content="textOnly"/>
 	<ElementType name="iBarbarianUnitProb" content="textOnly" dt:type="int"/>
 	<ElementType name="iMinBarbarians" content="textOnly" dt:type="int"/>
+	<ElementType name="RequiredImprovement" content="textOnly"/>
+	<ElementType name="bDamageUnit" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bNewCiv" content="textOnly" dt:type="boolean"/>
 	<ElementType name="GoodyInfo" content="eltOnly">
 		<element type="Type"/>
 		<element type="Description"/>
@@ -303,6 +306,9 @@
 		<element type="BarbarianClass"/>
 		<element type="iBarbarianUnitProb"/>
 		<element type="iMinBarbarians"/>
+		<element type="RequiredImprovement" minOccurs="0"/>
+		<element type="bDamageUnit" minOccurs="0"/>
+		<element type="bNewCiv" minOccurs="0"/>
 	</ElementType>
 	<ElementType name="GoodyInfos" content="eltOnly">
 		<element type="GoodyInfo" maxOccurs="*"/>
@@ -741,7 +747,20 @@
 	<ElementType name="ImprovementYieldChanges" content="eltOnly">
 		<element type="ImprovementYieldChange" minOccurs="0" maxOccurs="*"/>
 	</ElementType>
+	<ElementType name="UnitCombat" content="textOnly"/>
+	<ElementType name="iCostMod" content="textOnly" dt:type="int"/>
+	<ElementType name="UnitCombatCostMod" content="eltOnly">
+		<element type="UnitCombat"/>
+		<element type="iCostMod"/>
+	</ElementType>
+	<ElementType name="UnitCombatCostMods" content="eltOnly">
+		<element type="UnitCombatCostMod" minOccurs="0" maxOccurs="*"/>
+	</ElementType>
+	<ElementType name="PlanetYieldChanges" content="eltOnly">
+		<element type="iYield" minOccurs="0" maxOccurs="*"/>
+	</ElementType>
 	<ElementType name="WeLoveTheKing" content="textOnly"/>
+	<ElementType name="iPlanetPopCapIncrease" content="textOnly" dt:type="int"/>
 	<ElementType name="CivicInfo" content="eltOnly">
 		<element type="CivicOptionType"/>
 		<element type="Type"/>
@@ -808,6 +827,9 @@
 		<element type="FeatureHappinessChanges"/>
 		<element type="ImprovementYieldChanges"/>
 		<element type="WeLoveTheKing"/>
+		<element type="UnitCombatCostMods" minOccurs="0"/>
+		<element type="PlanetYieldChanges" minOccurs="0"/>
+		<element type="iPlanetPopCapIncrease" minOccurs="0"/>
 	</ElementType>
 	<ElementType name="CivicInfos" content="eltOnly">
 		<element type="CivicInfo" maxOccurs="*"/>

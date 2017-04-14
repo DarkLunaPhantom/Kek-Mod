@@ -216,7 +216,7 @@
 			<iCounterespionageNumTurns>0</iCounterespionageNumTurns>
 			<iCounterespionageMod>0</iCounterespionageMod>
 		</EspionageMissionInfo>
-		<EspionageMissionInfo>
+		<!--<EspionageMissionInfo>
 			<Type>ESPIONAGEMISSION_DESTROY_BUILDING</Type>
 			<Description>TXT_KEY_ESPIONAGE_DESTROY_BUILDING</Description>
 			<iCost>0</iCost>
@@ -285,7 +285,7 @@
 			<iPlayerAnarchyCounter>0</iPlayerAnarchyCounter>
 			<iCounterespionageNumTurns>0</iCounterespionageNumTurns>
 			<iCounterespionageMod>0</iCounterespionageMod>
-		</EspionageMissionInfo>
+		</EspionageMissionInfo>-->
 		<EspionageMissionInfo>
 			<Type>ESPIONAGEMISSION_DESTROY_PRODUCTION</Type>
 			<Description>TXT_KEY_ESPIONAGE_DESTROY_PRODUCTION</Description>

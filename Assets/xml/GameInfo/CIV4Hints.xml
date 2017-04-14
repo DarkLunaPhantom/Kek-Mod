@@ -7,424 +7,103 @@
 <Civ4Hints xmlns="x-schema:CIV4GameInfoSchema.xml">
 	<HintInfos>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_1</Description>
+			<Description>TXT_KEY_FF_TUTORIAL_CREDITS</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_2</Description>
+			<Description>TXT_KEY_UNIT_COLONY_SHIP_STRATEGY</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_3</Description>
+			<Description>TXT_KEY_UNIT_CONSTRUCT_SHIP_STRATEGY</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_4</Description>
+			<Description>TXT_KEY_UNIT_PLANETARY_DEFENSE_STRATEGY</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_5</Description>
+			<Description>TXT_KEY_UNIT_INVASION_SHIP_STRATEGY</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_6</Description>
+			<Description>TXT_KEY_UNIT_SPACE_FIGHTER_STRATEGY</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_7</Description>
+			<Description>TXT_KEY_UNIT_SPACE_BOMBER_STRATEGY</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_8</Description>
+			<Description>TXT_KEY_UNIT_NUCLEAR_MISSILE_STRATEGY</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_9</Description>
+			<Description>TXT_KEY_UNIT_STEALTH_SHIP_STRATEGY_3</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_10</Description>
+			<Description>TXT_KEY_UNIT_DESTROYER_STRATEGY</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_11</Description>
+			<Description>TXT_KEY_UNIT_CRUISER_STRATEGY</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_12</Description>
+			<Description>TXT_KEY_UNIT_BATTLESHIP_STRATEGY</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_13</Description>
+			<Description>TXT_KEY_UNIT_CARRIER_STRATEGY</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_14</Description>
+			<Description>TXT_KEY_UNIT_STARBASE_STRATEGY</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_15</Description>
+			<Description>TXT_KEY_UNIT_ADVOCATE_STRATEGY</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_16</Description>
+			<Description>TXT_KEY_BUILDING_TEMPLE_OF_WORSHIP_STRATEGY</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_17</Description>
+			<Description>TXT_KEY_BUILDING_MILITARY_ACADEMY_STRATEGY</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_18</Description>
+			<Description>TXT_KEY_FF_INTERFACE_PLANET_POPULATION_HELP</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_19</Description>
+			<Description>TXT_KEY_FF_TUTORIAL_PRESTIGE</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_20</Description>
+			<Description>TXT_KEY_BUILDING_TRAINING_COMPOUND_STRATEGY</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_21</Description>
+			<Description>TXT_KEY_BUILDING_SQUADRON_FACTORY_STRATEGY</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_22</Description>
+			<Description>TXT_KEY_BUILDING_INTERPLANETARY_BEACON_STRATEGY</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_23</Description>
+			<Description>TXT_KEY_BUILDING_UNIVERSITY_STRATEGY</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_24</Description>
+			<Description>TXT_KEY_BUILDING_BANKING_SYSTEM_STRATEGY</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_25</Description>
+			<Description>TXT_KEY_BUILDING_SPORTS_ARENA_STRATEGY</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_26</Description>
+			<Description>TXT_KEY_BUILDING_SPACEPORT_STRATEGY_2</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_27</Description>
+			<Description>TXT_KEY_BUILDING_RESEARCH_LAB_STRATEGY</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_28</Description>
+			<Description>TXT_KEY_BUILDING_MANUFACTURING_PLANT_STRATEGY</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_29</Description>
+			<Description>TXT_KEY_BUILDING_STARDOCK_STRATEGY_2</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_30</Description>
+			<Description>TXT_KEY_BUILDING_POLICE_AGENCY_STRATEGY</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_31</Description>
+			<Description>TXT_KEY_BUILDING_INTELLIGENCE_CENTER_STRATEGY</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_32</Description>
+			<Description>TXT_KEY_BUILDING_AIR_DEFENSE_NETWORK_STRATEGY</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_33</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_34</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_35</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_36</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_37</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_38</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_39</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_40</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_41</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_42</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_43</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_44</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_45</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_46</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_47</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_48</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_49</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_50</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_51</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_52</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_53</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_54</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_55</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_56</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_57</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_58</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_59</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_60</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_61</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_62</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_63</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_64</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_65</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_66</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_67</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_INTERFACE_68</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_1</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_2</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_3</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_4</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_5</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_6</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_7</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_8</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_9</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_10</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_11</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_12</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_13</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_14</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_15</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_16</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_17</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_18</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_19</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_20</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_21</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_22</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_23</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_24</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_25</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_26</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_27</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_28</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_29</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_30</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_31</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_32</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_33</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_34</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_35</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_36</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_37</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_38</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_39</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_40</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_41</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_42</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_43</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_44</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_45</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_46</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_47</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_48</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_49</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_50</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_51</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_52</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_53</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_54</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_55</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_56</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_57</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_58</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_59</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_60</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_61</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_62</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_63</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_64</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_65</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_67</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_68</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_69</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_70</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_71</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_72</Description>
-		</HintInfo>
-		<HintInfo>
-			<Description>TXT_KEY_HINT_73</Description>
+			<Description>TXT_KEY_BUILDING_STAR_FORTRESS_STRATEGY</Description>
 		</HintInfo>
 <!-- K-Mod hints -->
 		<HintInfo>

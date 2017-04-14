@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by Jon Shafer (Firaxis Games) -->
+<!-- Sid Meier's Civilization 4 -->
+<!-- Copyright Firaxis Games 2005 -->
+<!-- -->
+<!-- Project Infos -->
+<!-- You must have atleast one project in order for the game to load properly. -->
+<Civ4ProjectInfo xmlns="x-schema:CIV4GameInfoSchema.xml">
+	<ProjectInfos>
+		<ProjectInfo>
+			<Type>PROJECT_ASTRAL_GATE</Type>
+			<Description>TXT_KEY_PROJECT_ASTRAL_GATE</Description>
+			<Civilopedia>TXT_KEY_ASTRAL_GATE_PIECE_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_PROJECT_ASTRAL_GATE_STRATEGY</Strategy>
+			<VictoryPrereq>VICTORY_SPACE_RACE</VictoryPrereq>
+			<TechPrereq>TECH_INDUSTRY_12</TechPrereq>
+			<AnyonePrereqProject>NONE</AnyonePrereqProject>
+			<iMaxGlobalInstances>-1</iMaxGlobalInstances>
+			<iMaxTeamInstances>5</iMaxTeamInstances>
+			<iCost>800</iCost>
+			<iNukeInterception>0</iNukeInterception>
+			<iTechShare>0</iTechShare>
+			<EveryoneSpecialUnit>NONE</EveryoneSpecialUnit>
+			<EveryoneSpecialBuilding>NONE</EveryoneSpecialBuilding>
+			<bSpaceship>0</bSpaceship>
+			<bAllowsNukes>0</bAllowsNukes>
+			<Button>,Art/Interface/Buttons/Units/Transport.dds,Art/Interface/Buttons/FinalFrontier2_Atlas.dds,5,8</Button>
+			<PrereqProjects>
+				<PrereqProject>
+					<ProjectType>PROJECT_ASTRAL_GATE_DESIGN</ProjectType>
+					<iNeeded>1</iNeeded>
+				</PrereqProject>
+			</PrereqProjects>
+			<VictoryThresholds>
+				<VictoryThreshold>
+					<VictoryType>VICTORY_SPACE_RACE</VictoryType>
+					<iThreshold>5</iThreshold>
+				</VictoryThreshold>
+			</VictoryThresholds>
+			<VictoryMinThresholds/>
+			<iVictoryDelayPercent>0</iVictoryDelayPercent>
+			<iSuccessRate>0</iSuccessRate>
+			<BonusProductionModifiers>
+				<BonusProductionModifier>
+					<BonusType>BONUS_URANIUM</BonusType>
+					<iProductonModifier>20</iProductonModifier>
+				</BonusProductionModifier>
+			</BonusProductionModifiers>
+			<CreateSound/>
+			<MovieDefineTag/>
+		</ProjectInfo>
+		<ProjectInfo>
+			<Type>PROJECT_ASTRAL_GATE_DESIGN</Type>
+			<Description>TXT_KEY_PROJECT_ASTRAL_GATE_DESIGN</Description>
+			<Civilopedia>TXT_KEY_ASTRAL_GATE_DESIGN_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_PROJECT_ASTRAL_GATE_DESIGN_STRATEGY</Strategy><!-- Note: like the strategey jey above, this is never defined. It is not used anywhere in the game. -->
+			<VictoryPrereq>VICTORY_SPACE_RACE</VictoryPrereq>
+			<TechPrereq>TECH_HAPPY_11</TechPrereq>
+			<AnyonePrereqProject>NONE</AnyonePrereqProject>
+			<iMaxGlobalInstances>-1</iMaxGlobalInstances>
+			<iMaxTeamInstances>1</iMaxTeamInstances>
+			<iCost>1600</iCost>
+			<iNukeInterception>0</iNukeInterception>
+			<iTechShare>0</iTechShare>
+			<EveryoneSpecialUnit>NONE</EveryoneSpecialUnit>
+			<EveryoneSpecialBuilding>NONE</EveryoneSpecialBuilding>
+			<bSpaceship>0</bSpaceship>
+			<bAllowsNukes>0</bAllowsNukes>
+			<Button>Art/Interface/Buttons/AstralGateDesign.dds</Button>
+			<PrereqProjects/>
+			<VictoryThresholds/>
+			<VictoryMinThresholds/>
+			<iVictoryDelayPercent>0</iVictoryDelayPercent>
+			<iSuccessRate>0</iSuccessRate>
+			<BonusProductionModifiers/>
+			<CreateSound/>
+			<MovieDefineTag/>
+		</ProjectInfo>
+	</ProjectInfos>
+</Civ4ProjectInfo>
