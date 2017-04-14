@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by Jon Shafer (Firaxis Games) -->
+<!-- Sid Meier's Civilization 4 -->
+<!-- Copyright Firaxis Games 2005 -->
+<!-- -->
+<!-- Route Infos -->
+<Civ4RouteInfos xmlns="x-schema:CIV4MiscSchema.xml">
+	<RouteInfos>
+		<RouteInfo>
+			<Type>ROUTE_ROAD</Type>
+			<Description>TXT_KEY_ROUTE_WARP_LANE</Description>
+			<iValue>1</iValue>
+			<iAdvancedStartCost>10</iAdvancedStartCost>
+			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
+			<iMovement>30</iMovement>
+			<iFlatMovement>30</iFlatMovement>
+			<BonusType>NONE</BonusType>
+			<PrereqOrBonuses/>
+			<Yields/>
+			<TechMovementChanges/>
+			<Button>,Art/Interface/Buttons/Units/Transport.dds,Art/Interface/Buttons/FinalFrontier2_Atlas.dds,1,3</Button>
+		</RouteInfo>
+		<RouteInfo>
+			<Type>ROUTE_RAILROAD</Type>
+			<Description>TXT_KEY_ROUTE_JUMP_LANE</Description>
+			<iValue>2</iValue>
+			<iAdvancedStartCost>20</iAdvancedStartCost>
+			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
+			<iMovement>20</iMovement>
+			<iFlatMovement>8</iFlatMovement>
+			<BonusType>NONE</BonusType>
+			<PrereqOrBonuses/>
+			<Yields/>
+			<TechMovementChanges/>
+			<Button>,Art/Interface/Buttons/Units/Transport.dds,Art/Interface/Buttons/FinalFrontier2_Atlas.dds,2,3</Button>
+		</RouteInfo>
+	</RouteInfos>
+</Civ4RouteInfos>
