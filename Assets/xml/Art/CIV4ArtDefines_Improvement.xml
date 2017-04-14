@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by Jon Shafer (Firaxis Games) -->
+<!-- Sid Meier's Civilization 4 -->
+<!-- Copyright Firaxis Games 2005 -->
+<!-- -->
+<!-- Improvement art path information -->
+<Civ4ArtDefines xmlns="x-schema:CIV4ArtDefinesSchema.xml">
+	<ImprovementArtInfos>
+		<ImprovementArtInfo>
+			<Type>ART_DEF_IMPROVEMENT_LAND_WORKED</Type>
+			<bExtraAnimations>0</bExtraAnimations>
+			<fScale>1.0</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<NIF>Art/Structures/Improvements/LandWorked/sm_farm_house.nif</NIF>
+			<KFM>Art/Structures/Improvements/LandWorked/sm_farm_house.kfm</KFM>
+			<Button>,Art/Interface/Buttons/Brown_empty.dds,Art/Interface/Buttons/Actions_Builds_LeaderHeads_Specialists_Atlas.dds,-1,-1</Button>
+		</ImprovementArtInfo>
+		<ImprovementArtInfo>
+			<Type>ART_DEF_IMPROVEMENT_WATER_WORKED</Type>
+			<bExtraAnimations>0</bExtraAnimations>
+			<fScale>0.5</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<NIF>Art/Structures/Improvements/WaterWorked/WaterWorked.nif</NIF>
+			<KFM>Art/Structures/Improvements/WaterWorked/WaterWorked.kfm</KFM>
+			<Button>,Art/Interface/Buttons/Brown_empty.dds,Art/Interface/Buttons/Actions_Builds_LeaderHeads_Specialists_Atlas.dds,-1,-1</Button>
+		</ImprovementArtInfo>
+		<ImprovementArtInfo>
+			<Type>ART_DEF_IMPROVEMENT_CITY_RUINS</Type>
+			<bExtraAnimations>0</bExtraAnimations>
+			<fScale>0.01</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<NIF>Art/Structures/Cities/destroyed_city.nif</NIF>
+			<KFM/>
+			<Button>,Art/Interface/Buttons/Builds/BuildCityRuins.dds,Art/Interface/Buttons/Actions_Builds_LeaderHeads_Specialists_Atlas.dds,8,9</Button>
+		</ImprovementArtInfo>
+		<ImprovementArtInfo>
+			<Type>ART_DEF_IMPROVEMENT_GOODY_HUT</Type>
+			<bExtraAnimations>0</bExtraAnimations>
+			<fScale>0.75</fScale>
+			<fInterfaceScale>0.6</fInterfaceScale>
+			<NIF>Art/Structures/Improvements/Wreckage/Wreckage.nif</NIF>
+			<KFM/>
+			<SHADERNIF>Art/Structures/Improvements/Wreckage/Wreckage_FX.nif</SHADERNIF>
+			<Button>,Art/Interface/Buttons/Units/Transport.dds,Art/Interface/Buttons/FinalFrontier2_Atlas.dds,4,3</Button>
+		</ImprovementArtInfo>
+		<ImprovementArtInfo>
+			<Type>ART_DEF_IMPROVEMENT_OFFSHORE_PLATFORM</Type>
+			<bExtraAnimations>0</bExtraAnimations>
+			<fScale>1.4</fScale>
+			<fInterfaceScale>0.8</fInterfaceScale>
+			<NIF>Art\Structures\Improvements\ExtractionFacility/ExtractionFacility.nif</NIF>
+			<KFM/>
+			<SHADERNIF>Art/Structures/Improvements/ExtractionFacility/ExtractionFacility_FX.nif</SHADERNIF>
+			<Button>,Art/Interface/Buttons/Units/Transport.dds,Art/Interface/Buttons/FinalFrontier2_Atlas.dds,3,3</Button>
+		</ImprovementArtInfo>
+		<ImprovementArtInfo>
+			<Type>ART_DEF_IMPROVEMENT_ALIENS</Type>
+			<bExtraAnimations>0</bExtraAnimations>
+			<fScale>0.25</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<NIF>Art/Structures/Improvements/WaterWorked/WaterWorked.nif</NIF>
+			<KFM>Art/Structures/Improvements/WaterWorked/WaterWorked.kfm</KFM>
+			<Button>,Art/Interface/Buttons/Civilizations/Barbarian.dds,Art/Interface/Buttons/Civics_Civilizations_Religions_Atlas.dds,4,5</Button>
+		</ImprovementArtInfo>
+	</ImprovementArtInfos>
+</Civ4ArtDefines>

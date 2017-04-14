@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by Dean Ray Johnson (Firaxis Games) -->
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by Michael Curran (Firaxis Games) -->
 <!-- Sid Meier's Civilization 4 -->
 <!-- Copyright Firaxis Games 2005 -->
 <!-- -->
@@ -170,13 +170,6 @@
 		<SoundData>
 			<SoundID>SONG_GODS_OF_OLD</SoundID>
 			<Filename>Sounds/Soundtrack/GodsOfOld</Filename>
-			<LoadType>STREAMED</LoadType>
-			<bIsCompressed>1</bIsCompressed>
-			<bInGeneric>1</bInGeneric>
-		</SoundData>
-		<SoundData>
-			<SoundID>SONG_ARABIC_SOUNDTRACK1</SoundID>
-			<Filename>Sounds/Soundtrack/ArabicSoundtrack1</Filename>
 			<LoadType>STREAMED</LoadType>
 			<bIsCompressed>1</bIsCompressed>
 			<bInGeneric>1</bInGeneric>
@@ -3192,41 +3185,6 @@
 			<bInGeneric>1</bInGeneric>
 		</SoundData>
 		<SoundData>
-			<SoundID>SND_GRAVE_FUNCTION</SoundID>
-			<Filename>Sounds/Units/GraveFunction</Filename>
-			<LoadType>DYNAMIC_RES</LoadType>
-			<bIsCompressed>1</bIsCompressed>
-			<bInGeneric>1</bInGeneric>
-		</SoundData>
-		<SoundData>
-			<SoundID>SND_ENTITY_ACTIVATE</SoundID>
-			<Filename>Sounds/Units/EntityActivate</Filename>
-			<LoadType>DYNAMIC_RES</LoadType>
-			<bIsCompressed>1</bIsCompressed>
-			<bInGeneric>1</bInGeneric>
-		</SoundData>
-		<SoundData>
-			<SoundID>SND_ENTITY_DIE</SoundID>
-			<Filename>Sounds/Units/EntityDie</Filename>
-			<LoadType>DYNAMIC_RES</LoadType>
-			<bIsCompressed>1</bIsCompressed>
-			<bInGeneric>1</bInGeneric>
-		</SoundData>
-		<SoundData>
-			<SoundID>SND_ENTITY_IDLE</SoundID>
-			<Filename>Sounds/Units/EntityIdle</Filename>
-			<LoadType>DYNAMIC_RES</LoadType>
-			<bIsCompressed>1</bIsCompressed>
-			<bInGeneric>1</bInGeneric>
-		</SoundData>
-		<SoundData>
-			<SoundID>SND_ENTITY_STRIKE</SoundID>
-			<Filename>Sounds/Units/EntityStrike</Filename>
-			<LoadType>DYNAMIC_RES</LoadType>
-			<bIsCompressed>1</bIsCompressed>
-			<bInGeneric>1</bInGeneric>
-		</SoundData>
-		<SoundData>
 			<SoundID>SND_AIRSHIP_DEATH</SoundID>
 			<Filename>Sounds/Units/AirshipDeath</Filename>
 			<LoadType>DYNAMIC_RES</LoadType>
@@ -3264,6 +3222,62 @@
 		<SoundData>
 			<SoundID>SND_AIRSHIP_COMMAND_PATROL</SoundID>
 			<Filename>Sounds/Units/AirshipCommandPatrol</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_STARBASE_DIEA_AMB</SoundID>
+			<Filename>Sounds/Units/StarbaseDieAAmb</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_STARBASE_DIEA_FADE_AMB</SoundID>
+			<Filename>Sounds/Units/StarbaseDieAFadeAmb</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_STARBASE_FORTIFYA_AMB</SoundID>
+			<Filename>Sounds/Units/StarbaseFortifyAAmb</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_STARBASE_FORTIFYA_IDLE_AMB</SoundID>
+			<Filename>Sounds/Units/StarbaseFortifyAIdleAmb</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_STARBASE_HURTA_AMB</SoundID>
+			<Filename>Sounds/Units/StarbaseHurtAAmb</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_STARBASE_IDLE_AMB</SoundID>
+			<Filename>Sounds/Units/StarbaseIdleAmb</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_STARBASE_RUN_AMB</SoundID>
+			<Filename>Sounds/Units/StarbaseRunAmb</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_STARBASE_STRIKEA_AMB</SoundID>
+			<Filename>Sounds/Units/StarbaseStrikeAAmb</Filename>
 			<LoadType>DYNAMIC_RES</LoadType>
 			<bIsCompressed>1</bIsCompressed>
 			<bInGeneric>1</bInGeneric>
@@ -3362,6 +3376,20 @@
 		<SoundData>
 			<SoundID>DIPLO_CATHERINE_SFX</SoundID>
 			<Filename>Sounds/Diplomacy/Catherine_SFX</Filename>
+			<LoadType>STREAMED</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>DIPLO_ZARA_YAQOB_SFX</SoundID>
+			<Filename>Sounds/Diplomacy/ZaraYaqob_SFX</Filename>
+			<LoadType>STREAMED</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>DIPLO_GILGAMESH_SFX</SoundID>
+			<Filename>Sounds/Diplomacy/Gilgamesh_SFX</Filename>
 			<LoadType>STREAMED</LoadType>
 			<bIsCompressed>1</bIsCompressed>
 			<bInGeneric>1</bInGeneric>
@@ -6552,15 +6580,15 @@
 			<bInGeneric>1</bInGeneric>
 		</SoundData>
 		<SoundData>
-			<SoundID>SND_FIGHTER_COMMAND_PATROL</SoundID>
-			<Filename>Sounds/Units/FighterCommandPatrol</Filename>
+			<SoundID>SND_FF_FIGHTER_COMMAND_PATROL</SoundID>
+			<Filename>Sounds/Units/FFFighterCommandPatrol</Filename>
 			<LoadType>DYNAMIC_RES</LoadType>
 			<bIsCompressed>1</bIsCompressed>
 			<bInGeneric>1</bInGeneric>
 		</SoundData>
 		<SoundData>
-			<SoundID>SND_FIGHTER_PATROL</SoundID>
-			<Filename>Sounds/Units/FighterPatrol</Filename>
+			<SoundID>SND_FF_FIGHTER_PATROL</SoundID>
+			<Filename>Sounds/Units/FFFighterPatrol</Filename>
 			<LoadType>DYNAMIC_RES</LoadType>
 			<bIsCompressed>1</bIsCompressed>
 			<bInGeneric>1</bInGeneric>
@@ -7154,13 +7182,6 @@
 			<bInGeneric>1</bInGeneric>
 		</SoundData>
 		<SoundData>
-			<SoundID>SND_SPY_THEME_C</SoundID>
-			<Filename>Sounds/Units/SpyThemeC</Filename>
-			<LoadType>DYNAMIC_RES</LoadType>
-			<bIsCompressed>1</bIsCompressed>
-			<bInGeneric>1</bInGeneric>
-		</SoundData>
-		<SoundData>
 			<SoundID>SND_CAMERA_CLICK</SoundID>
 			<Filename>Sounds/Units/CameraClick</Filename>
 			<LoadType>DYNAMIC_RES</LoadType>
@@ -7618,6 +7639,237 @@
 		<SoundData>
 			<SoundID>SND_GASMASK_INHALE</SoundID>
 			<Filename>Sounds/Units/GasmaskInhale</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_SPACESHIP_FORTIFY</SoundID>
+			<Filename>Sounds/Units/SpaceshipFortify</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_ADVOCATE_RUN</SoundID>
+			<Filename>Sounds/Units/AdvocateRun</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_BATTLESHIP_RUN</SoundID>
+			<Filename>Sounds/Units/BattleshipRun</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_BOMBER_RUN</SoundID>
+			<Filename>Sounds/Units/BomberRun</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_CARRIER_RUN</SoundID>
+			<Filename>Sounds/Units/CarrierRun</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_COLONY_SHIP_RUN</SoundID>
+			<Filename>Sounds/Units/ColonyShipRun</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_CONSTRUCTION_RUN</SoundID>
+			<Filename>Sounds/Units/ConstructionRun</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_CRUISER_RUN</SoundID>
+			<Filename>Sounds/Units/CruiserRun</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_DESTROYER_RUN</SoundID>
+			<Filename>Sounds/Units/DestroyerRun</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_FIGHTER_RUN</SoundID>
+			<Filename>Sounds/Units/FighterRun</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_INVASION_RUN</SoundID>
+			<Filename>Sounds/Units/InvasionRun</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_PLANETARY_DEFENSE_RUN</SoundID>
+			<Filename>Sounds/Units/PlanetaryDefenseRun</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_SCOUT_RUN</SoundID>
+			<Filename>Sounds/Units/ScoutRun</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_STEALTH_RUN</SoundID>
+			<Filename>Sounds/Units/StealthRun</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_MOTOR_DOWN</SoundID>
+			<Filename>Sounds/Units/MotorDown</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_BATTLESHIP_HURT</SoundID>
+			<Filename>Sounds/Units/BattleshipHurt</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_BEND_BRIDGE</SoundID>
+			<Filename>Sounds/Units/BendBridge</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_BOMBER_HURT</SoundID>
+			<Filename>Sounds/Units/BomberHurt</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_CARRIER_HURT</SoundID>
+			<Filename>Sounds/Units/CarrierHurt</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_CRUISER_HURT</SoundID>
+			<Filename>Sounds/Units/CruiserHurt</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_DESTROYER_HURT</SoundID>
+			<Filename>Sounds/Units/DestroyerHurt</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_FIGHTER_HURT</SoundID>
+			<Filename>Sounds/Units/FighterHurt</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_INVASION_HURT</SoundID>
+			<Filename>Sounds/Units/InvasionHurt</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_LASER</SoundID>
+			<Filename>Sounds/Units/Laser</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_LASER_LOW</SoundID>
+			<Filename>Sounds/Units/Laser</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_LONG_LASER</SoundID>
+			<Filename>Sounds/Units/LongLaser</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_PULSE_CANNON</SoundID>
+			<Filename>Sounds/Units/PulseCannon</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_SERVO_MED</SoundID>
+			<Filename>Sounds/Units/ServoMed</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_SPACESHIP_SURRENDER</SoundID>
+			<Filename>Sounds/Units/SpaceshipSurrender</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_STATIC</SoundID>
+			<Filename>Sounds/Units/Static</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_TORPEDO</SoundID>
+			<Filename>Sounds/Units/Torpedo</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_TUBE_TRANSPORT</SoundID>
+			<Filename>Sounds/Units/TubeTransport</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>SND_FLAK_CANNON</SoundID>
+			<Filename>Sounds/Units/FlakCannon</Filename>
 			<LoadType>DYNAMIC_RES</LoadType>
 			<bIsCompressed>1</bIsCompressed>
 			<bInGeneric>1</bInGeneric>

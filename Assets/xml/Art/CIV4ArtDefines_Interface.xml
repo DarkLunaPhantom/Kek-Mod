@@ -1671,7 +1671,7 @@
 <!-- BUG - Main Interface - BUG Options Screen - Start -->			
 		<InterfaceArtInfo>
 			<Type>BUG_OPTIONS_SCREEN_BUTTON</Type>
-			<Path>Art/BUG/options.dds</Path>
+			<Path>Art/BUG/BUGMantis.dds</Path>
 		</InterfaceArtInfo>
 <!-- BUG - Main Interface - BUG Options Screen - end -->			
 
