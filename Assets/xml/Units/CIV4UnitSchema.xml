@@ -42,6 +42,7 @@
 	<ElementType name="bCtrlDownAlt" content="textOnly" dt:type="boolean"/>
 	<ElementType name="iHotKeyPriorityAlt" content="textOnly" dt:type="int"/>
 	<ElementType name="iOrderPriority" content="textOnly" dt:type="int"/>
+	<ElementType name="bStarbase" content="textOnly" dt:type="boolean"/>
 	<ElementType name="BuildInfo" content="eltOnly">
 		<element type="Type"/>
 		<element type="Description"/>
@@ -61,6 +62,7 @@
 		<element type="iHotKeyPriority"/>
 		<element type="Button" maxOccurs="*"/>
 		<element type="iOrderPriority" minOccurs="0"/>
+		<element type="bStarbase" minOccurs="0"/>
 	</ElementType>
 	<ElementType name="BuildInfos" content="eltOnly">
 		<element type="BuildInfo" maxOccurs="*"/>
@@ -438,6 +440,22 @@
 	<ElementType name="UnitCombatMods" content="eltOnly">
 		<element type="UnitCombatMod" minOccurs="0" maxOccurs="*"/>
 	</ElementType>
+	
+	<ElementType name="UnitCombatAttackMod" content="eltOnly">
+		<element type="UnitCombatType"/>
+		<element type="iUnitCombatMod"/>
+	</ElementType>
+		<ElementType name="UnitCombatAttackMods" content="eltOnly">
+		<element type="UnitCombatAttackMod" minOccurs="0" maxOccurs="*"/>
+	</ElementType>
+	<ElementType name="UnitCombatDefenseMod" content="eltOnly">
+		<element type="UnitCombatType"/>
+		<element type="iUnitCombatMod"/>
+	</ElementType>
+	<ElementType name="UnitCombatDefenseMods" content="eltOnly">
+		<element type="UnitCombatDefenseMod" minOccurs="0" maxOccurs="*"/>
+	</ElementType>
+	
 	<ElementType name="iUnitCombatCollateralImmune" content="textOnly" dt:type="int"/>
 	<ElementType name="UnitCombatCollateralImmune" content="eltOnly">
 		<element type="UnitCombatType"/>
@@ -509,6 +527,25 @@
 	</ElementType>
 	<ElementType name="LeaderPromotion" content="textOnly"/>
 	<ElementType name="iLeaderExperience" content="textOnly" dt:type="int"/>
+	<ElementType name="iCultureRange" content="textOnly" dt:type="int"/>
+	<ElementType name="MinBarbarianSpawnEra" content="textOnly"/>
+	<ElementType name="MaxBarbarianSpawnEra" content="textOnly"/>
+	<ElementType name="iBarbarianChanceMultiplier" content="textOnly" dt:type="int"/>
+	<ElementType name="iUpgradePriceOverride" content="textOnly" dt:type="int"/>
+	<ElementType name="bDelta" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bOmega" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bOtherStation" content="textOnly" dt:type="boolean"/>
+	<ElementType name="MovementSound" content="textOnly"/>
+	<ElementType name="bMissile" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bTroopTransport" content="textOnly" dt:type="boolean"/>
+	<ElementType name="iFeatureDamageModifier" content="textOnly" dt:type="int"/>
+	<ElementType name="FeatureDamageModifier" content="eltOnly">
+		<element type="FeatureType"/>
+		<element type="iFeatureDamageModifier"/>
+	</ElementType>
+	<ElementType name="FeatureDamageModifiers" content="eltOnly">
+		<element type="FeatureDamageModifier" minOccurs="0" maxOccurs="*"/>
+	</ElementType>
 	<ElementType name="UnitInfo" content="eltOnly">
 		<element type="Class"/>
 		<element type="Type"/>
@@ -665,6 +702,21 @@
 		<element type="LeaderPromotion"/>
 		<element type="iLeaderExperience"/>
 		<element type="iOrderPriority" minOccurs="0"/>
+		<element type="bStarbase" minOccurs="0"/>
+		<element type="iCultureRange" minOccurs="0"/>
+		<element type="MaxBarbarianSpawnEra" minOccurs="0"/>
+		<element type="MinBarbarianSpawnEra" minOccurs="0"/>
+		<element type="iBarbarianChanceMultiplier" minOccurs="0"/>
+		<element type="iUpgradePriceOverride" minOccurs="0"/>
+		<element type="bDelta" minOccurs="0"/>
+		<element type="bOmega" minOccurs="0"/>
+		<element type="bOtherStation" minOccurs="0"/>
+		<element type="MovementSound" minOccurs="0"/>
+		<element type="bMissile" minOccurs="0"/>
+		<element type="bTroopTransport" minOccurs="0"/>
+		<element type="UnitCombatAttackMods" minOccurs="0"/>
+		<element type="UnitCombatDefenseMods" minOccurs="0"/>
+		<element type="FeatureDamageModifiers" minOccurs="0"/>
 	</ElementType>
 	<ElementType name="UnitInfos" content="eltOnly">
 		<element type="UnitInfo" maxOccurs="*"/>
@@ -848,6 +900,7 @@
 		<element type="bAlwaysHeal"/>
 		<element type="bHillsDoubleMove"/>
 		<element type="bImmuneToFirstStrikes"/>
+		<element type="bCanMoveImpassable" minOccurs="0"/>
 		<element type="iVisibilityChange"/>
 		<element type="iMovesChange"/>
 		<element type="iMoveDiscountChange"/>
@@ -882,6 +935,7 @@
 		<element type="FeatureDefenses"/>
 		<element type="UnitCombatMods"/>
 		<element type="DomainMods"/>
+		<element type="FeatureDamageModifiers" minOccurs="0"/>
 		<element type="TerrainDoubleMoves"/>
 		<element type="FeatureDoubleMoves"/>
 		<element type="UnitCombats"/>

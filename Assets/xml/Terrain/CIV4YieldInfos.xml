@@ -15,7 +15,7 @@
 			<iCityChange>0</iCityChange>
 			<iPopulationChangeOffset>0</iPopulationChangeOffset>
 			<iPopulationChangeDivisor>0</iPopulationChangeDivisor>
-			<iMinCity>2</iMinCity>
+			<iMinCity>0</iMinCity>
 			<iTradeModifier>0</iTradeModifier>
 			<iGoldenAgeYield>0</iGoldenAgeYield>
 			<iGoldenAgeYieldThreshold>0</iGoldenAgeYieldThreshold>
@@ -38,11 +38,11 @@
 			<iCityChange>0</iCityChange>
 			<iPopulationChangeOffset>0</iPopulationChangeOffset>
 			<iPopulationChangeDivisor>0</iPopulationChangeDivisor>
-			<iMinCity>1</iMinCity>
+			<iMinCity>0</iMinCity>
 			<iTradeModifier>0</iTradeModifier>
 			<iGoldenAgeYield>1</iGoldenAgeYield>
 			<iGoldenAgeYieldThreshold>1</iGoldenAgeYieldThreshold>
-			<iAIWeightPercent>100</iAIWeightPercent>
+			<iAIWeightPercent>110</iAIWeightPercent>
 			<ColorType>COLOR_YIELD_PRODUCTION</ColorType>
 			<SymbolPaths>
 				<SymbolPath>Art/Interface/Symbols/Production/Production01.nif</SymbolPath>
@@ -61,11 +61,11 @@
 			<iCityChange>0</iCityChange>
 			<iPopulationChangeOffset>0</iPopulationChangeOffset>
 			<iPopulationChangeDivisor>0</iPopulationChangeDivisor>
-			<iMinCity>1</iMinCity>
+			<iMinCity>0</iMinCity>
 			<iTradeModifier>100</iTradeModifier>
 			<iGoldenAgeYield>1</iGoldenAgeYield>
 			<iGoldenAgeYieldThreshold>1</iGoldenAgeYieldThreshold>
-			<iAIWeightPercent>100</iAIWeightPercent>
+			<iAIWeightPercent>80</iAIWeightPercent>
 			<ColorType>COLOR_YIELD_COMMERCE</ColorType>
 			<SymbolPaths>
 				<SymbolPath>Art/Interface/Symbols/Commerce/Commerce01.nif</SymbolPath>

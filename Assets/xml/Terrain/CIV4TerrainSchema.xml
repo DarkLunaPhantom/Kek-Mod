@@ -25,6 +25,7 @@
 	<ElementType name="bFound" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bFoundCoast" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bFoundFreshWater" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bFoundFeature" content="textOnly" dt:type="boolean"/>
 	<ElementType name="iMovement" content="textOnly" dt:type="int"/>
 	<ElementType name="iSeeFrom" content="textOnly" dt:type="int"/>
 	<ElementType name="iSeeThrough" content="textOnly" dt:type="int"/>
@@ -65,6 +66,7 @@
 		<element type="FootstepSounds"/>
 		<element type="WorldSoundscapeAudioScript" minOccurs="0"/>
 		<element type="bGraphicalOnly"/>
+		<element type="bFoundFeature" minOccurs="0"/>
 	</ElementType>
 	<ElementType name="TerrainInfos" content="eltOnly">
 		<element type="TerrainInfo" maxOccurs="*"/>
@@ -139,6 +141,12 @@
 	<ElementType name="EffectType" content="textOnly"/>
 	<ElementType name="iEffectProbability" content="textOnly" dt:type="int"/>
 	<ElementType name="OnUnitChangeTo" content="textOnly"/>
+	<ElementType name="bNoBarbarianSpawn" content="textOnly" dt:type="boolean"/>
+	<ElementType name="iMovePathExtraCost" content="textOnly" dt:type="int"/>
+	<ElementType name="BlackHoleFeatureType" content="textOnly"/>
+	<ElementType name="iGravityFieldForce" content="textOnly" dt:type="int"/>
+	<ElementType name="iBlackHoleInArea" content="textOnly" dt:type="int"/>
+	<ElementType name="TargetWormholeType" content="textOnly" />
 	<ElementType name="FeatureInfo" content="eltOnly">
 		<element type="Type"/>
 		<element type="Description"/>
@@ -175,6 +183,12 @@
 		<element type="EffectType"/>
 		<element type="iEffectProbability"/>
 		<element type="iAdvancedStartRemoveCost"/>
+		<element type="bNoBarbarianSpawn" minOccurs="0"/>
+		<element type="iMovePathExtraCost" minOccurs="0"/>
+		<element type="iGravityFieldForce" minOccurs="0"/>
+		<element type="iBlackHoleInArea" minOccurs="0"/>
+		<element type="BlackHoleFeatureType" minOccurs="0"/>
+		<element type="TargetWormholeType" minOccurs="0"/>
 	</ElementType>
 	<ElementType name="FeatureInfos" content="eltOnly">
 		<element type="FeatureInfo" maxOccurs="*"/>
@@ -401,6 +415,7 @@
 	<ElementType name="iTilesPerGoody" content="textOnly" dt:type="int"/>
 	<ElementType name="iUpgradeTime" content="textOnly" dt:type="int"/>
 	<ElementType name="bMakesValid" content="textOnly" dt:type="boolean"/>
+	<ElementType name="UnitClassBuilt" content="textOnly"/>
 	<ElementType name="TerrainMakesValid" content="eltOnly">
 		<element type="TerrainType"/>
 		<element type="bMakesValid"/>
@@ -460,6 +475,7 @@
 		<element type="RouteYieldChanges"/>
 		<element type="WorldSoundscapeAudioScript" minOccurs="0"/>
 		<element type="bGraphicalOnly"/>
+		<element type="UnitClassBuilt" minOccurs="0"/>
 	</ElementType>
 	<ElementType name="ImprovementInfos" content="eltOnly">
 		<element type="ImprovementInfo" maxOccurs="*"/>
