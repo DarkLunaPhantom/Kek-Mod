@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by Jon Shafer (Firaxis Games) -->
+<!-- Sid Meier's Civilization 4 -->
+<!-- Copyright Firaxis Games 2005 -->
+<!-- -->
+<!-- Basic Infos -->
+<Civ4UnitCombatInfos xmlns="x-schema:CIV4BasicInfoSchema.xml">
+	<UnitCombatInfos>
+		<UnitCombatInfo>
+			<Type>UNITCOMBAT_RECON</Type>
+			<Description>TXT_KEY_UNITCOMBAT_RECON</Description>
+			<Button>,Art/Interface/Buttons/Promotions/Recon_Units.dds,Art/Interface/Buttons/Promotions_Atlas.dds,1,7</Button>
+		</UnitCombatInfo>
+		<UnitCombatInfo>
+			<Type>UNITCOMBAT_SQUADRON</Type>
+			<Description>TXT_KEY_UNITCOMBAT_SQUADRON</Description>
+			<Button>,Art/Interface/Buttons/Units/Transport.dds,Art/Interface/Buttons/FinalFrontier1_Atlas.dds,7,8</Button>
+		</UnitCombatInfo>
+		<UnitCombatInfo>
+			<Type>UNITCOMBAT_LIGHT_SHIP</Type>
+			<Description>TXT_KEY_UNITCOMBAT_LIGHT_SHIP</Description>
+			<Button>,Art/Interface/Buttons/Units/Transport.dds,Art/Interface/Buttons/FinalFrontier1_Atlas.dds,8,8</Button>
+		</UnitCombatInfo>
+		<UnitCombatInfo>
+			<Type>UNITCOMBAT_CAPITAL_SHIP</Type>
+			<Description>TXT_KEY_UNITCOMBAT_CAPITAL_SHIP</Description>
+			<Button>,Art/Interface/Buttons/Units/Transport.dds,Art/Interface/Buttons/FinalFrontier1_Atlas.dds,7,9</Button>
+		</UnitCombatInfo>
+		<UnitCombatInfo>
+			<Type>UNITCOMBAT_CARRIER_SHIP</Type>
+			<Description>TXT_KEY_UNITCOMBAT_CARRIER_SHIP</Description>
+			<Button>,Art/Interface/Buttons/Units/Transport.dds,Art/Interface/Buttons/FinalFrontier1_Atlas.dds,8,9</Button>
+		</UnitCombatInfo>
+		<UnitCombatInfo>
+			<Type>UNITCOMBAT_STARBASE</Type>
+			<Description>TXT_KEY_UNITCOMBAT_STARBASE</Description>
+			<Button>,Art/Interface/Buttons/Units/Transport.dds,Art/Interface/Buttons/FinalFrontier1_Atlas.dds,7,10</Button>
+		</UnitCombatInfo>
+		<UnitCombatInfo>
+			<Type>UNITCOMBAT_MISSILE</Type>
+			<Description>TXT_KEY_UNITCOMBAT_MISSILE</Description>
+			<Button>,Art/Interface/Buttons/Units/Transport.dds,Art/Interface/Buttons/FinalFrontier1_Atlas.dds,8,11</Button>
+		</UnitCombatInfo>
+	</UnitCombatInfos>
+</Civ4UnitCombatInfos>

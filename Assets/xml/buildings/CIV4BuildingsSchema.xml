@@ -94,6 +94,7 @@
 	<ElementType name="bWater" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bRiver" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bPower" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bOnePerSystem" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bDirtyPower" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bAreaCleanPower" content="textOnly" dt:type="boolean"/>
 	<ElementType name="DiploVoteType" content="textOnly"/>
@@ -177,6 +178,7 @@
 	<ElementType name="iHurryAngerModifier" content="textOnly" dt:type="int"/>
 	<ElementType name="bBorderObstacle" content="textOnly" dt:type="boolean"/>
 	<ElementType name="iYield" content="textOnly" dt:type="int"/>
+	<ElementType name="iCostModIncrease" content="textOnly" dt:type="int"/>
 	<ElementType name="SeaPlotYieldChanges" content="eltOnly">
 		<element type="iYield" minOccurs="0" maxOccurs="*"/>
 	</ElementType>
@@ -327,12 +329,20 @@
 		<element type="PrereqBuildingClass" minOccurs="0" maxOccurs="*"/>
 	</ElementType>
 	<ElementType name="bNeededInCity" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bNeededOnPlanet" content="textOnly" dt:type="boolean"/>
 	<ElementType name="BuildingClassNeeded" content="eltOnly">
 		<element type="BuildingClassType"/>
 		<element type="bNeededInCity"/>
 	</ElementType>
 	<ElementType name="BuildingClassNeededs" content="eltOnly">
 		<element type="BuildingClassNeeded" minOccurs="0" maxOccurs="*"/>
+	</ElementType>
+	<ElementType name="PlanetBuildingClassNeeded" content="eltOnly">
+		<element type="BuildingClassType"/>
+		<element type="bNeededOnPlanet"/>
+	</ElementType>
+	<ElementType name="PlanetBuildingClassNeededs" content="eltOnly">
+		<element type="PlanetBuildingClassNeeded" minOccurs="0" maxOccurs="*"/>
 	</ElementType>
 	<ElementType name="SpecialistYieldChange" content="eltOnly">
 		<element type="SpecialistType"/>
@@ -341,6 +351,14 @@
 	<ElementType name="SpecialistYieldChanges" content="eltOnly">
 		<element type="SpecialistYieldChange" minOccurs="0" maxOccurs="*"/>
 	</ElementType>
+	<ElementType name="TraitPlanetYieldChange" content="eltOnly">
+		<element type="TraitType"/>
+		<element type="PlanetYieldChanges"/>
+	</ElementType>
+	<ElementType name="TraitPlanetYieldChanges" content="eltOnly">
+		<element type="TraitPlanetYieldChange" minOccurs="0" maxOccurs="*"/>
+	</ElementType>
+	<ElementType name="TraitType" content="textOnly"/>
 	<ElementType name="BonusYieldModifier" content="eltOnly">
 		<element type="BonusType"/>
 		<element type="YieldModifiers"/>
@@ -379,6 +397,14 @@
 	<ElementType name="GenericBuildingInfos" content="eltOnly">
 		<element type="GenericBuildingInfo" maxOccurs="*"/>
 	</ElementType>
+	<ElementType name="PlanetYieldChanges" content="eltOnly">
+		<element type="iYield" minOccurs="0" maxOccurs="*"/>
+	</ElementType>
+	<ElementType name="iPlanetPopCapIncrease" content="textOnly" dt:type="int"/>
+	<ElementType name="SystemArtTag" content="textOnly"/>
+	<ElementType name="bMoon" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bRings" content="textOnly" dt:type="boolean"/>
+	<ElementType name="iSingleRingBuildingLocation" content="textOnly" dt:type="int"/>
 	<ElementType name="BuildingInfo" content="eltOnly">
 		<element type="BuildingClass"/>
 		<element type="Type"/>
@@ -541,6 +567,16 @@
 		<element type="bCtrlDown"/>
 		<element type="iHotKeyPriority"/>
 		<element type="iOrderPriority" minOccurs="0"/>
+		<element type="bOnePerSystem" minOccurs="0"/>
+		<element type="iCostModIncrease" minOccurs="0"/>
+		<element type="PlanetYieldChanges" minOccurs="0"/>
+		<element type="iPlanetPopCapIncrease" minOccurs="0"/>
+		<element type="SystemArtTag" minOccurs="0"/>
+		<element type="bMoon" minOccurs="0"/>
+		<element type="bRings" minOccurs="0"/>
+		<element type="PlanetBuildingClassNeededs" minOccurs="0"/>
+		<element type="iSingleRingBuildingLocation" minOccurs="0"/>
+		<element type="TraitPlanetYieldChanges" minOccurs="0"/>
 	</ElementType>
 	<ElementType name="BuildingInfos" content="eltOnly">
 		<element type="BuildingInfo" maxOccurs="*"/>

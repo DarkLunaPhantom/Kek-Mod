@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by Alex Mantzaris (Firaxis Games) -->
+<!-- Sid Meier's Civilization 4 -->
+<!-- Copyright Firaxis Games 2005 -->
+<!-- -->
+<!-- Basic Infos -->
+<Civ4BasicInfos xmlns="x-schema:CIV4BasicInfoSchema.xml">
+	<ConceptInfos>
+		<ConceptInfo>
+			<Type>CONCEPT_CITY_SCREEN</Type>
+			<Description>TXT_KEY_FF_CONCEPT_STAR_SYSTEM_MANAGEMENT</Description>
+			<Civilopedia>TXT_KEY_FF_TUTORIAL_CITY_SCREEN</Civilopedia>
+		</ConceptInfo>
+		<ConceptInfo>
+			<Type>CONCEPT_CITY_SCREEN</Type>
+			<Description>TXT_KEY_FF_SPACE_PIRATES</Description>
+			<Civilopedia>TXT_KEY_FF_TUTORIAL_SPACE_PIRATES</Civilopedia>
+		</ConceptInfo>
+		<ConceptInfo>
+			<Type>CONCEPT_VALUES</Type>
+			<Description>TXT_KEY_TRADE_RELIGIONS</Description>
+			<Civilopedia>TXT_KEY_FF_TUTORIAL_VALUE</Civilopedia>
+		</ConceptInfo>
+		<ConceptInfo>
+			<Type>CONCEPT_VALUES</Type>
+			<Description>TXT_KEY_TRADE_RELIGIONS</Description>
+			<Civilopedia>TXT_KEY_FF_TUTORIAL_VALUE</Civilopedia>
+		</ConceptInfo>
+		<ConceptInfo>
+			<Type>CONCEPT_RESOURCES</Type>
+			<Description>TXT_KEY_FOREIGN_ADVISOR_RESOURCES</Description>
+			<Civilopedia>TXT_KEY_FF_TUTORIAL_RESOURCE</Civilopedia>
+		</ConceptInfo>
+		<ConceptInfo>
+			<Type>CONCEPT_BLACK_HOLE</Type>
+			<Description>TXT_KEY_FEATURE_OASIS</Description>
+			<Civilopedia>TXT_KEY_FF_TUTORIAL_BLACK_HOLE</Civilopedia>
+		</ConceptInfo>
+		<ConceptInfo>
+			<Type>CONCEPT_RADIATION</Type>
+			<Description>TXT_KEY_FEATURE_FALLOUT</Description>
+			<Civilopedia>TXT_KEY_FF_TUTORIAL_RADIATION</Civilopedia>
+		</ConceptInfo>
+		<ConceptInfo>
+			<Type>CONCEPT_CREDITS</Type>
+			<Description>TXT_KEY_COMMERCE_GOLD</Description>
+			<Civilopedia>TXT_KEY_FF_TUTORIAL_CREDITS</Civilopedia>
+		</ConceptInfo>
+		<ConceptInfo>
+			<Type>CONCEPT_INFLUENCE</Type>
+			<Description>TXT_KEY_CONCEPT_CULTURE</Description>
+			<Civilopedia>TXT_KEY_FF_TUTORIAL_INFLUENCE</Civilopedia>
+		</ConceptInfo>
+		<ConceptInfo>
+			<Type>CONCEPT_PRESTIGE</Type>
+			<Description>INTERFACE_PANE_EXPERIENCE</Description>
+			<Civilopedia>TXT_KEY_FF_TUTORIAL_PRESTIGE</Civilopedia>
+		</ConceptInfo>
+		<ConceptInfo>
+			<Type>CONCEPT_WARP_AND_JUMP_LANES</Type>
+			<Description>TXT_KEY_FF_WARP_AND_JUMP_LANES</Description>
+			<Civilopedia>TXT_KEY_FF_TUTORIAL_WARP_AND_JUMP_LANES</Civilopedia>
+		</ConceptInfo>
+	</ConceptInfos>
+</Civ4BasicInfos>
