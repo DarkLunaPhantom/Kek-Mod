@@ -14,6 +14,7 @@
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -101,6 +102,7 @@
 			<PromotionPrereq>PROMOTION_WEAPONS_I</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -188,6 +190,7 @@
 			<PromotionPrereq>PROMOTION_WEAPONS_II</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>TECH_MILITARY_8</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -275,6 +278,7 @@
 			<PromotionPrereq>PROMOTION_WEAPONS_III</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>TECH_MILITARY_11</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -354,6 +358,7 @@
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -441,6 +446,7 @@
 			<PromotionPrereq>PROMOTION_COMPUTERS_I</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -528,6 +534,7 @@
 			<PromotionPrereq>PROMOTION_COMPUTERS_II</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>TECH_MILITARY_7</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -615,6 +622,7 @@
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -703,6 +711,7 @@
 			<PromotionPrereq>PROMOTION_ARMOR_I</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -791,6 +800,7 @@
 			<PromotionPrereq>PROMOTION_ARMOR_II</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -879,6 +889,7 @@
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>TECH_MILITARY_3</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -962,6 +973,7 @@
 			<PromotionPrereq>PROMOTION_SHIELDS_I</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -1045,6 +1057,7 @@
 			<PromotionPrereq>PROMOTION_SHIELDS_II</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>TECH_MISC_1</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -1142,6 +1155,7 @@
 			<PromotionPrereq>PROMOTION_SHIELDS_II</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>TECH_MISC_1</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -1236,6 +1250,7 @@
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_WEAPONS_II</PromotionPrereqOr1>
 			<PromotionPrereqOr2>PROMOTION_ARMOR_II</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -1315,6 +1330,7 @@
 			<PromotionPrereq>PROMOTION_ENGINES_I</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_WEAPONS_III</PromotionPrereqOr1>
 			<PromotionPrereqOr2>PROMOTION_ARMOR_III</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -1394,6 +1410,7 @@
 			<PromotionPrereq>PROMOTION_ENGINES_II</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -1473,6 +1490,7 @@
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_WEAPONS_I</PromotionPrereqOr1>
 			<PromotionPrereqOr2>PROMOTION_ARMOR_I</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -1556,6 +1574,7 @@
 			<PromotionPrereq>PROMOTION_SENSORS_I</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_WEAPONS_II</PromotionPrereqOr1>
 			<PromotionPrereqOr2>PROMOTION_ARMOR_II</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>TECH_INDUSTRY_0</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -1639,6 +1658,7 @@
 			<PromotionPrereq>PROMOTION_SENSORS_II</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_WEAPONS_III</PromotionPrereqOr1>
 			<PromotionPrereqOr2>PROMOTION_ARMOR_III</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -1722,6 +1742,7 @@
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -1784,6 +1805,7 @@
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -1846,6 +1868,7 @@
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_SENSORS_II</PromotionPrereqOr1>
 			<PromotionPrereqOr2>PROMOTION_COMPUTERS_II</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -1929,6 +1952,7 @@
 			<PromotionPrereq>PROMOTION_REPAIR_STAFF_I</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -2000,6 +2024,7 @@
 			<PromotionPrereq>PROMOTION_STORAGE_BAY_I</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -2071,6 +2096,7 @@
 			<PromotionPrereq>PROMOTION_STORAGE_BAY_II</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -2142,6 +2168,7 @@
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -2225,6 +2252,7 @@
 			<PromotionPrereq>PROMOTION_STEALTH_I</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>TECH_INDUSTRY_3</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -2308,6 +2336,7 @@
 			<PromotionPrereq>PROMOTION_STEALTH_II</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -2391,6 +2420,7 @@
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -2474,6 +2504,7 @@
 			<PromotionPrereq>PROMOTION_REPAIR_STAFF_I</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -2557,6 +2588,7 @@
 			<PromotionPrereq>PROMOTION_REPAIR_STAFF_II</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -2640,6 +2672,7 @@
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>TECH_MILITARY_1</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -2723,6 +2756,7 @@
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -2806,6 +2840,7 @@
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -2889,6 +2924,7 @@
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>TECH_HAPPY_1</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -2977,6 +3013,7 @@
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -3065,6 +3102,7 @@
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>TECH_MILITARY_4</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -3153,6 +3191,7 @@
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>TECH_MILITARY_6</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -3241,6 +3280,7 @@
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_WEAPONS_II</PromotionPrereqOr1>
 			<PromotionPrereqOr2>PROMOTION_COMPUTERS_II</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -3308,6 +3348,7 @@
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_RANGE1</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -3375,6 +3416,7 @@
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>TECH_INDUSTRY_2</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -3450,6 +3492,7 @@
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_INTERCEPTION1</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>TECH_MILITARY_6</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -3525,6 +3568,7 @@
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_WEAPONS_II</PromotionPrereqOr1>
 			<PromotionPrereqOr2>PROMOTION_COMPUTERS_III</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -3592,6 +3636,7 @@
 			<PromotionPrereq>PROMOTION_REPAIR_STAFF_I</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -3675,6 +3720,7 @@
 			<PromotionPrereq>PROMOTION_REPAIR_FACILITIES</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>TECH_HAPPY_6</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -3758,6 +3804,7 @@
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>NONE</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>1</bLeader>
@@ -3791,7 +3838,7 @@
 			<iHillsAttack>0</iHillsAttack>
 			<iHillsDefense>0</iHillsDefense>
 			<iKamikazePercent>0</iKamikazePercent>
-			<iRevoltProtection>0</iRevoltProtection>
+			<iRevoltProtection>50</iRevoltProtection>
 			<iCollateralDamageProtection>0</iCollateralDamageProtection>
 			<iPillageChange>0</iPillageChange>
 			<iUpgradeDiscount>100</iUpgradeDiscount>
@@ -3841,6 +3888,7 @@
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>TECH_INDUSTRY_13</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -3928,6 +3976,7 @@
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>TECH_INDUSTRY_15</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -4015,6 +4064,7 @@
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>TECH_INDUSTRY_14</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -4094,6 +4144,7 @@
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>TECH_INDUSTRY_14</TechPrereq>
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -4169,6 +4220,7 @@
 			<PromotionPrereq>PROMOTION_TRAINED_OFFICERS</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>TECH_MILITARY_10</TechPrereq><!-- Extended Range Systems -->
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -4254,6 +4306,7 @@
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>TECH_HAPPY_0</TechPrereq><!-- Space Exploration -->
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -4343,6 +4396,7 @@
 			<PromotionPrereq>PROMOTION_IMPROVED_TRACKING_SYSTEM</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>TECH_MILITARY_7</TechPrereq><!-- Intuitive Computers -->
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>
@@ -4437,6 +4491,7 @@
 			<PromotionPrereq>PROMOTION_ENGINES_I</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
 			<PromotionPrereqOr2>NONE</PromotionPrereqOr2>
+			<PromotionPrereqOr3>NONE</PromotionPrereqOr3>
 			<TechPrereq>TECH_INDUSTRY_6</TechPrereq> <!--  Space Elevator -->
 			<StateReligionPrereq>NONE</StateReligionPrereq>
 			<bLeader>0</bLeader>

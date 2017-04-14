@@ -6341,7 +6341,7 @@
 			<PrereqBuilding>BUILDING_CAPITAL_SHIPYARD</PrereqBuilding>
 			<PrereqTech>TECH_MILITARY_8</PrereqTech>
 			<TechTypes/>
-				<BonusType>NONE</BonusType>
+			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
 			<Flavors/>
@@ -6707,7 +6707,7 @@
 			<PrereqBuilding>BUILDING_CAPITAL_SHIPYARD</PrereqBuilding>
 			<PrereqTech>TECH_MILITARY_5</PrereqTech>
 			<TechTypes/>
-				<BonusType>NONE</BonusType>
+			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
 			<Flavors/>
@@ -6886,7 +6886,7 @@
 			<PrereqBuilding>BUILDING_CAPITAL_SHIPYARD</PrereqBuilding>
 			<PrereqTech>TECH_MILITARY_9</PrereqTech>
 			<TechTypes/>
-				<BonusType>NONE</BonusType>
+			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
 			<Flavors/>
@@ -7060,7 +7060,7 @@
 			<PrereqBuilding>BUILDING_CAPITAL_SHIPYARD</PrereqBuilding>
 			<PrereqTech>TECH_MILITARY_12</PrereqTech>
 			<TechTypes/>
-				<BonusType>NONE</BonusType>
+			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
 			<Flavors/>
@@ -8364,7 +8364,7 @@
 			<PrereqBuilding>NONE</PrereqBuilding>
 			<PrereqTech>TECH_HAPPY_5</PrereqTech>
 			<TechTypes/>
-				<BonusType>NONE</BonusType>
+			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
 			<Flavors/>
@@ -9135,7 +9135,7 @@
 			<iHurryMultiplier>0</iHurryMultiplier>
 			<iBaseTrade>0</iBaseTrade>
 			<iTradeMultiplier>0</iTradeMultiplier>
-			<iGreatWorkCulture>4000</iGreatWorkCulture>
+			<iGreatWorkCulture>800</iGreatWorkCulture>
 			<iEspionagePoints>0</iEspionagePoints>
 			<TerrainImpassables/>
 			<FeatureImpassables/>
@@ -9806,7 +9806,7 @@
 			<PrereqReligion>NONE</PrereqReligion>
 			<PrereqCorporation>NONE</PrereqCorporation>
 			<PrereqBuilding>NONE</PrereqBuilding>
-				<PrereqTech>NONE</PrereqTech>
+			<PrereqTech>NONE</PrereqTech>
 			<TechTypes/>
 			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
@@ -9938,7 +9938,7 @@
 			<bDestroy>0</bDestroy>
 			<bStealPlans>0</bStealPlans>
 			<bInvestigate>0</bInvestigate>
-			<bCounterSpy>0</bCounterSpy>
+			<bCounterSpy>1</bCounterSpy>
 			<bFound>0</bFound>
 			<bGoldenAge>1</bGoldenAge>
 			<bInvisible>0</bInvisible>
@@ -9964,7 +9964,7 @@
 			<FlankingStrikes/>
 			<UnitAIs>
 				<UnitAI>
-					<UnitAIType>UNITAI_MERCHANT</UnitAIType>
+					<UnitAIType>UNITAI_GREAT_SPY</UnitAIType>
 					<bUnitAI>1</bUnitAI>
 				</UnitAI>
 			</UnitAIs>
@@ -10075,7 +10075,12 @@
 			<bShiftDown>0</bShiftDown>
 			<bCtrlDown>0</bCtrlDown>
 			<iHotKeyPriority>0</iHotKeyPriority>
-			<FreePromotions/>
+			<FreePromotions>
+				<FreePromotion>
+					<PromotionType>PROMOTION_WARP_PM</PromotionType>
+					<bFreePromotion>1</bFreePromotion>
+				</FreePromotion>
+			</FreePromotions>
 			<LeaderPromotion>NONE</LeaderPromotion>
 			<iLeaderExperience>0</iLeaderExperience>
 		</UnitInfo>
@@ -11813,7 +11818,7 @@
 			<PrereqBuilding>NONE</PrereqBuilding>
 			<PrereqTech>TECH_MILITARY_1</PrereqTech>
 			<TechTypes/>
-				<BonusType>NONE</BonusType>
+			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
 			<Flavors/>
@@ -13987,7 +13992,7 @@
 			<PrereqBuilding>NONE</PrereqBuilding>
 			<PrereqTech>TECH_MILITARY_0</PrereqTech>
 			<TechTypes/>
-				<BonusType>NONE</BonusType>
+			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
 			<Flavors/>
@@ -14366,7 +14371,7 @@
 			<PrereqBuilding>NONE</PrereqBuilding>
 			<PrereqTech>TECH_MILITARY_8</PrereqTech>
 			<TechTypes/>
-				<BonusType>NONE</BonusType>
+			<BonusType>NONE</BonusType>
 			<PrereqBonuses/>
 			<ProductionTraits/>
 			<Flavors/>
