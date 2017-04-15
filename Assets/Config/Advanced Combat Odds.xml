@@ -14,7 +14,7 @@
 	 
 	<options id="ACO" file="Advanced Combat Odds.ini">
 		<section id="ACO">
-			<option id="Enabled" type="boolean" default="False"/>
+			<option id="Enabled" type="boolean" default="True"/>
 			<option id="Debug" type="boolean" default="False"/>
 			
 			<option id="ForceOriginalOdds" key="Force Original Odds" 
@@ -51,7 +51,7 @@
 			<list   id="ShowAttackerHealthBars" key="Show Attacker Health Bars" 
 					type="int" default="3" listType="string" 
 					values="ACO__ShowBasicInfo"/>
-			<list   id="ShowDefenderHealthBars" key="Show Dedender Health Bars" 
+			<list   id="ShowDefenderHealthBars" key="Show Defender Health Bars" 
 					type="int" default="2" listType="string" 
 					values="ACO__ShowBasicInfo"/>
 					

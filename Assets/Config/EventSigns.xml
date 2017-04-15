@@ -16,7 +16,7 @@
 	<options id="EventSigns" file="EventSigns.ini">
 		<section id="EventSigns">
 			<option id="Enabled" key="Enabled" 
-					type="boolean" default="False" 
+					type="boolean" default="True" 
 					get="isEnabled">
 				<change module="EventSigns" function="enabledOptionChanged"/>
 			</option>

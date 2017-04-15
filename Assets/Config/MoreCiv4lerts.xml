@@ -18,50 +18,50 @@
 		<section id="MoreCiv4lerts">
 			<!-- City -->
 			<option id="CityPendingBorderExpansion" key="City Pending Border Expansion" 
-					type="boolean" default="False" and="Enabled" 
+					type="boolean" default="True" and="Enabled" 
 					get="isShowCityPendingExpandBorderAlert" set="setShowCityPendingExpandBorderAlert" 
 					label="Pending Border Expansion" 
 					help="When checked, displays an alert when a city will expand its curltural borders next turn."/>
 			<option id="CityFounded" key="City Founded" 
-					type="boolean" default="False" and="Enabled" 
+					type="boolean" default="True" and="Enabled" 
 					get="isShowCityFoundedAlert" set="setShowCityFoundedAlert" 
 					label="Founded by Rival" 
 					help="When checked, displays an alert when a rival founds a city."/>
 			
 			<!-- Trade -->
 			<option id="TechTrade" key="CheckForNewTrades" 
-					type="boolean" default="False" and="Enabled" 
+					type="boolean" default="True" and="Enabled" 
 					get="isShowTechTradeAlert" set="setShowTechTradeAlert"/>
 			<option id="BonusTrade" key="CheckForNewBonuses" 
-					type="boolean" default="False" and="Enabled" 
+					type="boolean" default="True" and="Enabled" 
 					get="isShowBonusTradeAlert" set="setShowBonusTradeAlert"/>
 			<option id="MapTrade" key="Map Trades" 
-					type="boolean" default="False" and="Enabled" 
+					type="boolean" default="True" and="Enabled" 
 					get="isShowMapTradeAlert" set="setShowMapTradeAlert"/>
 			
 			<!-- Diplomacy -->
 			<option id="OpenBordersTrade" key="Open Borders Trades" 
-					type="boolean" default="False" and="Enabled" 
+					type="boolean" default="True" and="Enabled" 
 					get="isShowOpenBordersTradeAlert" set="setShowOpenBordersTradeAlert"/>
 			<option id="DefensivePactTrade" key="Defensive Pact Trades" 
-					type="boolean" default="False" and="Enabled" 
+					type="boolean" default="True" and="Enabled" 
 					get="isShowDefensivePactTradeAlert" set="setShowDefensivePactTradeAlert"/>
 			<option id="PermanentAllianceTrade" key="Permanent Alliance Trades" 
-					type="boolean" default="False" and="Enabled" 
+					type="boolean" default="True" and="Enabled" 
 					get="isShowPermanentAllianceTradeAlert" set="setShowPermanentAllianceTradeAlert"/>
 			<option id="VassalTrade" key="Vassal Trades" 
-					type="boolean" default="False" and="Enabled" 
+					type="boolean" default="True" and="Enabled" 
 					get="isShowVassalTradeAlert" set="setShowVassalTradeAlert"/>
 			<option id="SurrenderTrade" key="Surrender Trades" 
-					type="boolean" default="False" and="Enabled" 
+					type="boolean" default="True" and="Enabled" 
 					get="isShowSurrenderTradeAlert" set="setShowSurrenderTradeAlert"/>
 			<option id="PeaceTrade" key="Peace Trades" 
-					type="boolean" default="False" and="Enabled" 
+					type="boolean" default="True" and="Enabled" 
 					get="isShowPeaceTradeAlert" set="setShowPeaceTradeAlert"/>
 			
 			<!-- Victory -->
 			<option id="DomPop" key="CheckForDomPopVictory" 
-					type="boolean" default="False" and="Enabled" 
+					type="boolean" default="True" and="Enabled" 
 					get="isShowDomPopAlert" set="setShowDomPopAlert" 
 					label="Domination: Population" 
 					help="."/>
@@ -72,7 +72,7 @@
 					label="Pop Threshold" 
 					help="Population threshold for Domination victory."/>
 			<option id="DomLand" key="CheckForDomLandVictory" 
-					type="boolean" default="False" and="Enabled" 
+					type="boolean" default="True" and="Enabled" 
 					get="isShowDomLandAlert" set="setShowDomLandAlert" 
 					label="Domination: Land" 
 					help="."/>

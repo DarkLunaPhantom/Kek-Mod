@@ -15,12 +15,12 @@
 	<options id="NJAGC" file="Not Just Another Game Clock Mod Config.ini">
 		<section id="Not Just Another Game Clock Mod">
 			<option id="Enabled" key="Enabled" 
-					type="boolean" default="False" 
+					type="boolean" default="True" 
 					get="isEnabled" set="setEnabled" dirtyBit="GameData" 
 					label="Enable NJAGC" 
 					help="When checked, the game clock is displayed using TheLopez's NJAGC mod."/>
 			<option id="ShowEra" key="Show Era" 
-					type="boolean" default="False" 
+					type="boolean" default="True" 
 					get="isShowEra" set="setShowEra" dirtyBit="GameData" 
 					label="Display Era" 
 					help="When checked, the current era is displayed to the left of the research bar."/>
@@ -30,26 +30,27 @@
 					label="Use Era-Related Colors" 
 					help="When checked, the game date and era are displayed using a color for each era."/>
 			
-			<list   id="Color_ERA_ANCIENT" key="ERA_ANCIENT" 
+			<list   id="Color_ERA_ISOLATION" key="ERA_ISOLATION" 
 					type="color" default="COLOR_RED" 
 					get="getAncientEraColor" set="setAncientEraColor" dirtyBit="GameData" 
-					label="Ancient Era" 
-					help="Color to use for the Ancient era."/>
-			<list   id="Color_ERA_CLASSICAL" key="ERA_CLASSICAL" 
+					label="Isolation Era" 
+					help="Color to use for the Isolation era."/>
+			<list   id="Color_ERA_EXPANSION" key="ERA_EXPANSION" 
 					type="color" default="COLOR_YELLOW" 
 					get="getClassicalEraColor" set="setClassicalEraColor" dirtyBit="GameData" 
-					label="Classical Era" 
-					help="Color to use for the Classical era."/>
-			<list   id="Color_ERA_MEDIEVAL" key="ERA_MEDIEVAL" 
+					label="Expansion Era" 
+					help="Color to use for the Expansion era."/>
+			<list   id="Color_ERA_GALACTIC" key="ERA_GALACTIC" 
 					type="color" default="COLOR_GREEN" 
 					get="getMedievalEraColor" set="setMedievalEraColor" dirtyBit="GameData" 
-					label="Medieval Era" 
-					help="Color to use for the Medieval era."/>
-			<list   id="Color_ERA_RENAISSANCE" key="ERA_RENAISSANCE" 
+					label="Galactic Era" 
+					help="Color to use for the Galactic era."/>
+			<list   id="Color_ERA_FAR_FUTURE" key="ERA_FAR_FUTURE" 
 					type="color" default="COLOR_CYAN" 
 					get="getRenaissanceEraColor" set="setRenaissanceEraColor" dirtyBit="GameData" 
-					label="Renaissance Era" 
-					help="Color to use for the Renaissance era."/>
+					label="Far Future Era" 
+					help="Color to use for the Far Future era."/>
+			<!-- FFP has only 4 eras
 			<list   id="Color_ERA_INDUSTRIAL" key="ERA_INDUSTRIAL" 
 					type="color" default="COLOR_BLUE" 
 					get="getIndustrialEraColor" set="setIndustrialEraColor" dirtyBit="GameData" 
@@ -65,6 +66,7 @@
 					get="getFutureEraColor" set="getFutureEraColor" dirtyBit="GameData" 
 					label="Future Era" 
 					help="Color to use for the Future era."/>
+			-->
 			<accessor get="getEraColor" set="setEraColor" args="era" id="Color_%s"/>
 			
 			<option id="ShowTime" key="Show Game Clock" 
@@ -78,7 +80,7 @@
 					label="Completed Turns" 
 					help="When checked, the number of turns completed is displayed."/>
 			<option id="ShowTotalTurns" key="Show Game Total Turns" 
-					type="boolean" default="False" 
+					type="boolean" default="True" 
 					get="isShowTotalTurns" set="setShowTotalTurns" dirtyBit="GameData" 
 					label="Total Turns" 
 					help="When checked, the total turns in the game is displayed if Time Victory is enabled."/>
@@ -94,7 +96,7 @@
 					help="When checked, the in-game date and turns left in a Golden Age are displayed."/>
 			
 			<option id="AlternateText" key="Alternate Views" 
-					type="boolean" default="False" 
+					type="boolean" default="True" 
 					get="isAlternateTimeText" set="setAlternateTimeText" dirtyBit="GameData" 
 					label="Alternate Game Clock" 
 					help="When checked, the game clock switches between two views: standard and alternate."/>

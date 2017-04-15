@@ -19,10 +19,10 @@
 		<section id="CustDomAdv">
 			<!-- Customizable Domestic Advisor (F1) by Taelis, pages by Cammagno -->
 			<option id="Enabled" key="Enabled" 
-					type="boolean" default="False"/>
+					type="boolean" default="True"/>
 			<list	id="SpaceTop" key="Space Top"
 					type="int" listType="string" 
-					values="None|Small|Medium|Large" default="2">
+					values="None|Small|Medium|Large" default="1">
 				<change module="CvCustomizableDomesticAdvisor" function="forcePositionCalc"/>
 			</list>
 			<list	id="SpaceSides" key="Space Sides"

@@ -16,30 +16,30 @@
 		<section id="Scoreboard">
 			<!-- Dead Civ Scoreboard -->
 			<option id="ShowDead" key="Show Dead Civilizations" 
-					type="boolean" default="False" 
+					type="boolean" default="True" 
 					get="isShowDeadCivs" set="setShowDeadCivs" dirtyBit="Score"/>
 			<option id="TagDead" key="Show Dead Tag" 
-					type="boolean" default="False" 
+					type="boolean" default="True" 
 					get="isShowDeadTag" set="setShowDeadTag" dirtyBit="Score"/>
 			<option id="GreyDead" key="Grey Out Dead Civilizations" 
-					type="boolean" default="False" 
+					type="boolean" default="True" 
 					get="isGreyOutDeadCivs" set="setGreyOutDeadCivs" dirtyBit="Score"/>
 			
 			<!-- Minor Civs -->
 			<option id="ShowMinor" key="Show Minor Civilizations" 
-					type="boolean" default="False" 
+					type="boolean" default="True" 
 					get="isShowMinorCivs" set="setShowMinorCivs" dirtyBit="Score"/>
 			
 			<!-- New Columns -->
 			<option id="Delta" key="Delta" 
-					type="boolean" default="False" 
+					type="boolean" default="True" 
 					get="isShowScoreDelta" set="setShowScoreDelta" dirtyBit="Score"/>
 			<option id="DeltaIncludeCurrent" key="Delta Includes Current Turn" 
-					type="boolean" default="False" 
+					type="boolean" default="True" 
 					get="isScoreDeltaIncludeCurrentTurn" set="setScoreDeltaIncludeCurrentTurn" dirtyBit="Score"/>
 			
 			<list   id="DisplayName" key="Display Name" 
-					type="int" default="0" listType="string" 
+					type="int" default="2" listType="string" 
 					get="getDisplayName" set="setDisplayName" dirtyBit="Score">
 				<choice id="Leader" get="isShowLeaderName" set="setShowLeaderName"/>
 				<choice id="Civilization" get="isShowCivName" set="setShowCivName"/>
@@ -52,16 +52,16 @@
 					get="isUsePlayerName" set="setUsePlayerName" dirtyBit="Score"/>
 			
 			<option id="Attitude" key="Attitude Icons" 
-					type="boolean" default="False" 
+					type="boolean" default="True" 
 					get="isShowAttitude" set="setShowAttitude" dirtyBit="Score"/>
 			<option id="WorstEnemy" key="Worst Enemy Icons" 
-					type="boolean" default="False" 
+					type="boolean" default="True" 
 					get="isShowWorstEnemy" set="setShowWorstEnemy" dirtyBit="Score"/>
 			<option id="WHEOOH" key="WHEOOH" 
-					type="boolean" default="False" 
+					type="boolean" default="True" 
 					get="isShowWHEOOH" set="setShowWHEOOH" dirtyBit="Score"/>
 			<option id="Cities" key="Number of Cities" 
-					type="boolean" default="False" 
+					type="boolean" default="True" 
 					get="isShowCountCities" set="setShowCountCities" dirtyBit="Score"/>
 			
 			<!-- Advanced Layout -->
@@ -69,7 +69,7 @@
 					type="boolean" default="True" 
 					get="isAlignIcons" set="setAlignIcons" dirtyBit="Score"/>
 			<option id="DisplayOrder" key="Display Order" 
-					type="string" default="!?2WSZVC6EPTUNBDRAHQ*LO"
+					type="string" default="FWSZVC?EPTUNBDRAHMQ*LO" 
 					get="getDisplayOrder" set="setDisplayOrder" dirtyBit="Score"/>
 			<list   id="DefaultSpacing" key="Default Column Spacing" 
 					type="int" default="0" values="0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10" 
@@ -98,10 +98,10 @@
 			
 			<!-- Power Ratio -->
 			<option id="Power" key="Power" 
-					type="boolean" default="False" 
+					type="boolean" default="True" 
 					get="isShowPower" set="setShowPower" dirtyBit="Score"/>
 			<list   id="PowerFormula" key="Power Formula" 
-					type="int" default="0" listType="string" 
+					type="int" default="1" listType="string" 
 					get="getPowerFormula" set="setPowerFormula" dirtyBit="Score">
 				<choice id="ThemVersusYou" get="isPowerThemVersusYou"/>
 				<choice id="YouVersusThem" get="isPowerYouVersusThem"/>
@@ -117,14 +117,14 @@
 					values="1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0" format="%.1f" 
 					get="getHighPowerRatio" set="setHighPowerRatio" dirtyBit="Score"/>
 			<option id="PowerHighColor" key="Power High Color" 
-					type="color" default="COLOR_RED" 
+					type="color" default="COLOR_GREEN" 
 					get="getHighPowerColor" set="setHighPowerColor" dirtyBit="Score"/>
 			<list   id="PowerLowRatio" key="Power Low" 
 					type="float" default="0.8" listType="float" 
 					values="0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0" format="%.1f" 
 					get="getLowPowerRatio" set="setLowPowerRatio" dirtyBit="Score"/>
 			<option id="PowerLowColor" key="Power Low Color" 
-					type="color" default="COLOR_GREEN" 
+					type="color" default="COLOR_RED" 
 					get="getLowPowerColor" set="setLowPowerColor" dirtyBit="Score"/>
 		</section>
 	</options>

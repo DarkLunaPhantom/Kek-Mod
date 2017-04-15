@@ -15,7 +15,7 @@
 	<options id="UnitNaming" file="Unit Naming.ini">
 		<section id="UnitName">
 			<option id="Enabled" key="Enabled" 
-					type="boolean" default="False"/>
+					type="boolean" default="True"/>
 			<option id="UseAdvanced" key="UseAdvanced" 
 					type="boolean" default="False" 
 					get="isAdvanced" set="setAdvanced"/>
@@ -24,25 +24,19 @@
 			
 			<option id="Combat_None" key="CombatNone" 
 					type="string" default="DEFAULT"/>
-			<option id="Combat_AIR" key="CombatAIR" 
+			<option id="Combat_SQUADRON" key="CombatSQUADRON" 
 					type="string" default="DEFAULT"/>
-			<option id="Combat_ARCHER" key="CombatARCHER" 
+			<option id="Combat_LIGHT_SHIP" key="CombatLIGHT_SHIP" 
 					type="string" default="DEFAULT"/>
-			<option id="Combat_ARMOR" key="CombatARMOR" 
+			<option id="Combat_CAPITAL_SHIP" key="CombatCAPITAL_SHIP" 
 					type="string" default="DEFAULT"/>
-			<option id="Combat_GUN" key="CombatGUN" 
+			<option id="Combat_CARRIER_SHIP" key="CombatCARRIER_SHIP" 
 					type="string" default="DEFAULT"/>
-			<option id="Combat_HELICOPTER" key="CombatHELICOPTER" 
+			<option id="Combat_STARBASE" key="CombatSTARBASE" 
 					type="string" default="DEFAULT"/>
-			<option id="Combat_MELEE" key="CombatMELEE" 
-					type="string" default="DEFAULT"/>
-			<option id="Combat_MOUNTED" key="CombatMOUNTED" 
-					type="string" default="DEFAULT"/>
-			<option id="Combat_NAVAL" key="CombatNAVAL" 
+			<option id="Combat_MISSILE" key="CombatMISSILE" 
 					type="string" default="DEFAULT"/>
 			<option id="Combat_RECON" key="CombatRECON" 
-					type="string" default="DEFAULT"/>
-			<option id="Combat_SIEGE" key="CombatSIEGE" 
 					type="string" default="DEFAULT"/>
 			<accessor get="getByCombatType" set="setByCombatType" 
 					  args="combatType" id="Combat_%s"/>

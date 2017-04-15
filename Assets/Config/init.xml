@@ -163,10 +163,17 @@
 	
 	<!-- <load mod="BUFFY"/> -->
 	
+	<!-- This is the thing: Final Frontier Plus -->
+	
+	<load mod="Final Frontier Plus"/>
+	<symbol id="delta" name="DELTA" from="POWER" offset="10"/>
+	<symbol id="omega" name="OMEGA"/>
 	
 	<!-- Options Screen -->
 	
 	<screen id="BUGFull">
+		<tab module="FFPOptionsTab"/>
+	
 		<tab module="BugGeneralOptionsTab"/>
 		<tab module="BugMapOptionsTab"/>
 		<tab module="BugCityScreenOptionsTab"/>
@@ -184,6 +191,6 @@
 		<tab module="BugAutologOptionsTab"/>
 		
 		<tab module="BugSystemOptionsTab"/>
-		<!--tab module="BugCreditsOptionsTab"/-->
+		<tab module="BugCreditsOptionsTab"/>
 	</screen>
 </bug>
