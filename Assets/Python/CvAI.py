@@ -1423,7 +1423,7 @@ class CvAI:
 		bValid = False
 		
 		#General construction stuff (before specific to unit)
-		iBuildCost = gc.getBuildInfo(iBuild).getCost() * (100 + pPlayer.calculateInflationRate()) / 100
+		iBuildCost = gc.getBuildInfo(iBuild).getCost() * (100 + pPlayer.getInflationRate()) / 100 # DarkLunaPhantom - calculateInflationRate is not used in K-Mod, so replaced it with getInflationRate.
 		if (pPlayer.getGold() > iBuildCost):
 			if pTeam.isHasTech(pBuildInfo.getTechPrereq()):
 				bValid = True
