@@ -2192,7 +2192,11 @@ class CvSignDesc:
 		f.write("BeginSign\n")
 		f.write("\tplotX=%d\n" %(sign.getPlot().getX(),))
 		f.write("\tplotY=%d\n" %(sign.getPlot().getY(),))
-		f.write("\tplayerType=%d, (%s)\n" %(sign.getPlayerType(), gc.getPlayer(sign.getPlayerType()).getName().encode(fileencoding)))
+		# DarkLunaPhantom - Fixed a bug with landmarks.
+		if (sign.getPlayerType() != -1):
+			f.write("\tplayerType=%d, (%s)\n" %(sign.getPlayerType(), gc.getPlayer(sign.getPlayerType()).getName().encode(fileencoding)))
+		else:
+			f.write("\tplayerType=%d, (%s)\n" %(sign.getPlayerType(), "Landmark"))
 		f.write("\tcaption=%s\n" %(sign.getCaption(),))
 		f.write("EndSign\n")
 
