@@ -1,11 +1,14 @@
 ## Sid Meier's Civilization 4
 ## Copyright Firaxis Games 2005
+# Final Frontier + BUG merge by God-Emperor, November 2010
 from CvPythonExtensions import *
 import CvUtil
 import ScreenInput
 import CvScreenEnums
 import CvEventInterface
 import time
+
+from CvSolarSystem import *
 
 # BUG - DLL - start
 import BugDll
@@ -29,6 +32,13 @@ import ReligionUtil
 # BUG - Limit/Extra Religions - end
 
 # BUG - PLE - start
+import MonkeyTools as mt
+import string
+from AStarTools import *
+import PyHelpers 
+import UnitUtil
+PyPlayer = PyHelpers.PyPlayer
+
 PleOpt = BugCore.game.PLE
 # BUG - PLE - end
 
@@ -105,7 +115,7 @@ MAX_SELECTED_TEXT = 5
 MAX_DISPLAYABLE_BUILDINGS = 15
 MAX_DISPLAYABLE_TRADE_ROUTES = 4
 MAX_BONUS_ROWS = 10
-MAX_CITIZEN_BUTTONS = 8
+MAX_CITIZEN_BUTTONS = 6
 
 SELECTION_BUTTON_COLUMNS = 8
 SELECTION_BUTTON_ROWS = 2
@@ -201,6 +211,8 @@ RAW_YIELD_HELP = ( "TXT_KEY_RAW_YIELD_VIEW_TRADE",
 HELP_TEXT_MINIMUM_WIDTH = 300
 
 g_pSelectedUnit = 0
+
+g_iFFStartY = 165
 
 # BUG - start
 g_mainInterface = None
@@ -565,10 +577,11 @@ class CvMainInterface:
 		screen.setStyle( "ReligiousAdvisorButton", "Button_HUDAdvisorReligious_Style" )
 		screen.hide( "ReligiousAdvisorButton" )
 		
-		iBtnX += iBtnAdvance
-		screen.setImageButton( "CorporationAdvisorButton", "", iBtnX, iBtnY, iBtnWidth, iBtnWidth, WidgetTypes.WIDGET_ACTION, gc.getControlInfo(ControlTypes.CONTROL_CORPORATION_SCREEN).getActionInfoIndex(), -1 )
-		screen.setStyle( "CorporationAdvisorButton", "Button_HUDAdvisorCorporation_Style" )
-		screen.hide( "CorporationAdvisorButton" )
+		# FF has no corporations (currently)
+		#iBtnX += iBtnAdvance
+		#screen.setImageButton( "CorporationAdvisorButton", "", iBtnX, iBtnY, iBtnWidth, iBtnWidth, WidgetTypes.WIDGET_ACTION, gc.getControlInfo(ControlTypes.CONTROL_CORPORATION_SCREEN).getActionInfoIndex(), -1 )
+		#screen.setStyle( "CorporationAdvisorButton", "Button_HUDAdvisorCorporation_Style" )
+		#screen.hide( "CorporationAdvisorButton" )
 		
 		iBtnX += iBtnAdvance
 		screen.setImageButton( "VictoryAdvisorButton", "", iBtnX, iBtnY, iBtnWidth, iBtnWidth, WidgetTypes.WIDGET_ACTION, gc.getControlInfo(ControlTypes.CONTROL_VICTORY_SCREEN).getActionInfoIndex(), -1 )
@@ -792,51 +805,51 @@ class CvMainInterface:
 		screen.setStackedBarColors( "ResearchBar", InfoBarTypes.INFOBAR_RATE_EXTRA, gc.getInfoTypeForString("COLOR_EMPTY") )
 		screen.setStackedBarColors( "ResearchBar", InfoBarTypes.INFOBAR_EMPTY, gc.getInfoTypeForString("COLOR_EMPTY") )
 		screen.hide( "ResearchBar" )
-
-# BUG - Great General Bar - start
-		screen.addStackedBarGFC( "GreatGeneralBar", xCoord, 27, 100, iStackBarHeight, InfoBarTypes.NUM_INFOBAR_TYPES, WidgetTypes.WIDGET_HELP_GREAT_GENERAL, -1, -1 )
-		screen.setStackedBarColors( "GreatGeneralBar", InfoBarTypes.INFOBAR_STORED, gc.getInfoTypeForString("COLOR_NEGATIVE_RATE") ) #gc.getInfoTypeForString("COLOR_GREAT_PEOPLE_STORED") )
-		screen.setStackedBarColors( "GreatGeneralBar", InfoBarTypes.INFOBAR_RATE, gc.getInfoTypeForString("COLOR_EMPTY") )
-		screen.setStackedBarColors( "GreatGeneralBar", InfoBarTypes.INFOBAR_RATE_EXTRA, gc.getInfoTypeForString("COLOR_EMPTY") )
-		screen.setStackedBarColors( "GreatGeneralBar", InfoBarTypes.INFOBAR_EMPTY, gc.getInfoTypeForString("COLOR_EMPTY") )
-		screen.hide( "GreatGeneralBar" )
-# BUG - Great General Bar - end
-
-# BUG - Great Person Bar - start
-		xCoord += 7 + 100
-		screen.addStackedBarGFC( "GreatPersonBar", xCoord, 27, 380, iStackBarHeight, InfoBarTypes.NUM_INFOBAR_TYPES, WidgetTypes.WIDGET_GP_PROGRESS_BAR, -1, -1 )
-		screen.setStackedBarColors( "GreatPersonBar", InfoBarTypes.INFOBAR_STORED, gc.getInfoTypeForString("COLOR_GREAT_PEOPLE_STORED") )
-		screen.setStackedBarColors( "GreatPersonBar", InfoBarTypes.INFOBAR_RATE, gc.getInfoTypeForString("COLOR_GREAT_PEOPLE_RATE") )
-		screen.setStackedBarColors( "GreatPersonBar", InfoBarTypes.INFOBAR_RATE_EXTRA, gc.getInfoTypeForString("COLOR_EMPTY") )
-		screen.setStackedBarColors( "GreatPersonBar", InfoBarTypes.INFOBAR_EMPTY, gc.getInfoTypeForString("COLOR_EMPTY") )
-		screen.hide( "GreatPersonBar" )
-# BUG - Great Person Bar - end
-
-# BUG - Bars on single line for higher resolution screens - start
-		xCoord = 268 + (xResolution - 1440) / 2
-		screen.addStackedBarGFC( "GreatGeneralBar-w", xCoord, 2, 84, iStackBarHeight, InfoBarTypes.NUM_INFOBAR_TYPES, WidgetTypes.WIDGET_HELP_GREAT_GENERAL, -1, -1 )
-		screen.setStackedBarColors( "GreatGeneralBar-w", InfoBarTypes.INFOBAR_STORED, gc.getInfoTypeForString("COLOR_NEGATIVE_RATE") ) #gc.getInfoTypeForString("COLOR_GREAT_PEOPLE_STORED") )
-		screen.setStackedBarColors( "GreatGeneralBar-w", InfoBarTypes.INFOBAR_RATE, gc.getInfoTypeForString("COLOR_EMPTY") )
-		screen.setStackedBarColors( "GreatGeneralBar-w", InfoBarTypes.INFOBAR_RATE_EXTRA, gc.getInfoTypeForString("COLOR_EMPTY") )
-		screen.setStackedBarColors( "GreatGeneralBar-w", InfoBarTypes.INFOBAR_EMPTY, gc.getInfoTypeForString("COLOR_EMPTY") )
-		screen.hide( "GreatGeneralBar-w" )
-
-		xCoord += 6 + 84
-		screen.addStackedBarGFC( "ResearchBar-w", xCoord, 2, 487, iStackBarHeight, InfoBarTypes.NUM_INFOBAR_TYPES, WidgetTypes.WIDGET_RESEARCH, -1, -1 )
-		screen.setStackedBarColors( "ResearchBar-w", InfoBarTypes.INFOBAR_STORED, gc.getInfoTypeForString("COLOR_RESEARCH_STORED") )
-		screen.setStackedBarColors( "ResearchBar-w", InfoBarTypes.INFOBAR_RATE, gc.getInfoTypeForString("COLOR_RESEARCH_RATE") )
-		screen.setStackedBarColors( "ResearchBar-w", InfoBarTypes.INFOBAR_RATE_EXTRA, gc.getInfoTypeForString("COLOR_EMPTY") )
-		screen.setStackedBarColors( "ResearchBar-w", InfoBarTypes.INFOBAR_EMPTY, gc.getInfoTypeForString("COLOR_EMPTY") )
-		screen.hide( "ResearchBar-w" )
-
-		xCoord += 6 + 487
-		screen.addStackedBarGFC( "GreatPersonBar-w", xCoord, 2, 320, iStackBarHeight, InfoBarTypes.NUM_INFOBAR_TYPES, WidgetTypes.WIDGET_GP_PROGRESS_BAR, -1, -1 )
-		screen.setStackedBarColors( "GreatPersonBar-w", InfoBarTypes.INFOBAR_STORED, gc.getInfoTypeForString("COLOR_GREAT_PEOPLE_STORED") )
-		screen.setStackedBarColors( "GreatPersonBar-w", InfoBarTypes.INFOBAR_RATE, gc.getInfoTypeForString("COLOR_GREAT_PEOPLE_RATE") )
-		screen.setStackedBarColors( "GreatPersonBar-w", InfoBarTypes.INFOBAR_RATE_EXTRA, gc.getInfoTypeForString("COLOR_EMPTY") )
-		screen.setStackedBarColors( "GreatPersonBar-w", InfoBarTypes.INFOBAR_EMPTY, gc.getInfoTypeForString("COLOR_EMPTY") )
-		screen.hide( "GreatPersonBar-w" )
-# BUG - Bars on single line for higher resolution screens - end
+# FF has no great generals or other great people (yet)
+## BUG - Great General Bar - start
+#		screen.addStackedBarGFC( "GreatGeneralBar", xCoord, 27, 100, iStackBarHeight, InfoBarTypes.NUM_INFOBAR_TYPES, WidgetTypes.WIDGET_HELP_GREAT_GENERAL, -1, -1 )
+#		screen.setStackedBarColors( "GreatGeneralBar", InfoBarTypes.INFOBAR_STORED, gc.getInfoTypeForString("COLOR_NEGATIVE_RATE") ) #gc.getInfoTypeForString("COLOR_GREAT_PEOPLE_STORED") )
+#		screen.setStackedBarColors( "GreatGeneralBar", InfoBarTypes.INFOBAR_RATE, gc.getInfoTypeForString("COLOR_EMPTY") )
+#		screen.setStackedBarColors( "GreatGeneralBar", InfoBarTypes.INFOBAR_RATE_EXTRA, gc.getInfoTypeForString("COLOR_EMPTY") )
+#		screen.setStackedBarColors( "GreatGeneralBar", InfoBarTypes.INFOBAR_EMPTY, gc.getInfoTypeForString("COLOR_EMPTY") )
+#		screen.hide( "GreatGeneralBar" )
+## BUG - Great General Bar - end
+#
+## BUG - Great Person Bar - start
+#		xCoord += 7 + 100
+#		screen.addStackedBarGFC( "GreatPersonBar", xCoord, 27, 380, iStackBarHeight, InfoBarTypes.NUM_INFOBAR_TYPES, WidgetTypes.WIDGET_GP_PROGRESS_BAR, -1, -1 )
+#		screen.setStackedBarColors( "GreatPersonBar", InfoBarTypes.INFOBAR_STORED, gc.getInfoTypeForString("COLOR_GREAT_PEOPLE_STORED") )
+#		screen.setStackedBarColors( "GreatPersonBar", InfoBarTypes.INFOBAR_RATE, gc.getInfoTypeForString("COLOR_GREAT_PEOPLE_RATE") )
+#		screen.setStackedBarColors( "GreatPersonBar", InfoBarTypes.INFOBAR_RATE_EXTRA, gc.getInfoTypeForString("COLOR_EMPTY") )
+#		screen.setStackedBarColors( "GreatPersonBar", InfoBarTypes.INFOBAR_EMPTY, gc.getInfoTypeForString("COLOR_EMPTY") )
+#		screen.hide( "GreatPersonBar" )
+## BUG - Great Person Bar - end
+#
+## BUG - Bars on single line for higher resolution screens - start
+#		xCoord = 268 + (xResolution - 1440) / 2
+#		screen.addStackedBarGFC( "GreatGeneralBar-w", xCoord, 2, 84, iStackBarHeight, InfoBarTypes.NUM_INFOBAR_TYPES, WidgetTypes.WIDGET_HELP_GREAT_GENERAL, -1, -1 )
+#		screen.setStackedBarColors( "GreatGeneralBar-w", InfoBarTypes.INFOBAR_STORED, gc.getInfoTypeForString("COLOR_NEGATIVE_RATE") ) #gc.getInfoTypeForString("COLOR_GREAT_PEOPLE_STORED") )
+#		screen.setStackedBarColors( "GreatGeneralBar-w", InfoBarTypes.INFOBAR_RATE, gc.getInfoTypeForString("COLOR_EMPTY") )
+#		screen.setStackedBarColors( "GreatGeneralBar-w", InfoBarTypes.INFOBAR_RATE_EXTRA, gc.getInfoTypeForString("COLOR_EMPTY") )
+#		screen.setStackedBarColors( "GreatGeneralBar-w", InfoBarTypes.INFOBAR_EMPTY, gc.getInfoTypeForString("COLOR_EMPTY") )
+#		screen.hide( "GreatGeneralBar-w" )
+#
+#		xCoord += 6 + 84
+#		screen.addStackedBarGFC( "ResearchBar-w", xCoord, 2, 487, iStackBarHeight, InfoBarTypes.NUM_INFOBAR_TYPES, WidgetTypes.WIDGET_RESEARCH, -1, -1 )
+#		screen.setStackedBarColors( "ResearchBar-w", InfoBarTypes.INFOBAR_STORED, gc.getInfoTypeForString("COLOR_RESEARCH_STORED") )
+#		screen.setStackedBarColors( "ResearchBar-w", InfoBarTypes.INFOBAR_RATE, gc.getInfoTypeForString("COLOR_RESEARCH_RATE") )
+#		screen.setStackedBarColors( "ResearchBar-w", InfoBarTypes.INFOBAR_RATE_EXTRA, gc.getInfoTypeForString("COLOR_EMPTY") )
+#		screen.setStackedBarColors( "ResearchBar-w", InfoBarTypes.INFOBAR_EMPTY, gc.getInfoTypeForString("COLOR_EMPTY") )
+#		screen.hide( "ResearchBar-w" )
+#
+#		xCoord += 6 + 487
+#		screen.addStackedBarGFC( "GreatPersonBar-w", xCoord, 2, 320, iStackBarHeight, InfoBarTypes.NUM_INFOBAR_TYPES, WidgetTypes.WIDGET_GP_PROGRESS_BAR, -1, -1 )
+#		screen.setStackedBarColors( "GreatPersonBar-w", InfoBarTypes.INFOBAR_STORED, gc.getInfoTypeForString("COLOR_GREAT_PEOPLE_STORED") )
+#		screen.setStackedBarColors( "GreatPersonBar-w", InfoBarTypes.INFOBAR_RATE, gc.getInfoTypeForString("COLOR_GREAT_PEOPLE_RATE") )
+#		screen.setStackedBarColors( "GreatPersonBar-w", InfoBarTypes.INFOBAR_RATE_EXTRA, gc.getInfoTypeForString("COLOR_EMPTY") )
+#		screen.setStackedBarColors( "GreatPersonBar-w", InfoBarTypes.INFOBAR_EMPTY, gc.getInfoTypeForString("COLOR_EMPTY") )
+#		screen.hide( "GreatPersonBar-w" )
+## BUG - Bars on single line for higher resolution screens - end
 
 		
 		# *********************************************************************************
@@ -988,6 +1001,82 @@ class CvMainInterface:
 
 		screen.setLabel( "BuildingListLabel", "Background", localText.getText("TXT_KEY_CONCEPT_BUILDINGS", ()), CvUtil.FONT_CENTER_JUSTIFY, 129, 295, -0.1, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 		screen.hide( "BuildingListLabel" )
+
+##############################################3
+##		Final Frontier
+##############################################3
+		
+		printd("Adding Final Frontier stuff in interfaceScreen function")
+		
+		screen.addPanel( "SelectedPlanetBackground", u"", u"", True, False, xResolution - 249, g_iFFStartY, 238, 30, PanelStyles.PANEL_STYLE_STANDARD )
+		screen.setStyle( "SelectedPlanetBackground", "Panel_City_Header_Style" )
+		screen.hide( "SelectedPlanetBackground" )
+		
+		screen.setLabel( "SelectedPlanetLabel", "Background", "???", CvUtil.FONT_CENTER_JUSTIFY, xResolution - 135, g_iFFStartY + 8, -0.1, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, 666, -1 )
+		screen.hide( "SelectedPlanetLabel" )
+		
+		filename = ArtFileMgr.getFeatureArtInfo("ART_DEF_FEATURE_SOLAR_SYSTEM").getFeatureDummyNodeName(0, "FEATURE_MODEL_TAG_SMALL_PLANET")
+		screen.addModelGraphicGFC("SelectedPlanetGraphic", filename, xResolution - 220, g_iFFStartY + 46, 90, 90, WidgetTypes.WIDGET_GENERAL, 666, -1, -20, 30, 1.0)
+		screen.hide( "SelectedPlanetGraphic" )
+		
+		szText = localText.getText("TXT_KEY_DEMO_SCREEN_POPULATION_TEXT", ())
+		screen.setLabel( "PlanetPopulationTitle", "Background", szText, CvUtil.FONT_CENTER_JUSTIFY, xResolution - 65, g_iFFStartY + 41, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 667, -1 )
+		screen.hide( "PlanetPopulationTitle" )
+		
+		screen.setLabel( "PlanetPopulationLabel", "Background", "0", CvUtil.FONT_RIGHT_JUSTIFY, xResolution - 80, g_iFFStartY + 63, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 667, -1 )
+		screen.hide( "PlanetPopulationLabel" )
+		
+		screen.setButtonGFC( "PlanetPopulationIncrease", u"", "", xResolution - 72, g_iFFStartY + 61, 20, 20, WidgetTypes.WIDGET_GENERAL, 667, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS )
+		screen.hide( "PlanetPopulationIncrease" )
+		screen.setButtonGFC( "PlanetPopulationDecrease", u"", "", xResolution - 50, g_iFFStartY + 61, 20, 20, WidgetTypes.WIDGET_GENERAL, 667, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
+		screen.hide( "PlanetPopulationDecrease" )
+		
+		szText = localText.getText("TXT_KEY_FF_INTERFACE_PRODUCES", ())
+		screen.setLabel( "PlanetYieldTitle", "Background", szText, CvUtil.FONT_CENTER_JUSTIFY, xResolution - 65, g_iFFStartY + 84, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 668, -1 )
+		screen.hide( "PlanetYieldTitle" )
+		
+		screen.setLabel( "PlanetYieldLabel", "Background", "No Yield", CvUtil.FONT_CENTER_JUSTIFY, xResolution - 65, g_iFFStartY + 104, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 668, -1 )
+		screen.hide( "PlanetYieldLabel" )
+		
+		screen.setLabel( "UnassignedLabel", "Background", "Unassigned", CvUtil.FONT_CENTER_JUSTIFY, xResolution - 65, g_iFFStartY + 124, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 668, -1 )
+		screen.hide( "UnassignedLabel" )
+		
+#		screen.setButtonGFC("AssignBuildingButton", u"Assign Construction Planet", "", xResolution - 235, g_iFFStartY + 161, 220, 30, WidgetTypes.WIDGET_GENERAL, 669, -1, ButtonStyles.BUTTON_STYLE_STANDARD  )
+#		screen.hide( "AssignBuildingButton" )
+		
+		szTexture = ArtFileMgr.getInterfaceArtInfo("INTERFACE_BUTTONS_CHECK").getPath()
+		szCheckedTexture = ArtFileMgr.getInterfaceArtInfo("INTERFACE_BUTTONS_CHECK").getPath()
+		screen.addCheckBoxGFC( "PlanetAssignConstruction", "", szCheckedTexture, xResolution - 245, g_iFFStartY + 151, 24, 26, WidgetTypes.WIDGET_GENERAL, 669, -1, ButtonStyles.BUTTON_STYLE_STANDARD )
+#		screen.setStyle( "PlanetAssignConstruction", "Button_CityC3_Style" )
+		screen.hide( "PlanetAssignConstruction" )
+		
+		szText = localText.getText("TXT_KEY_FF_INTERFACE_PLANET_BUILDINGS", ())
+		screen.addMultilineText("PlanetAssignConstructionLabel", szText, xResolution - 215, g_iFFStartY + 142, 215, 48, WidgetTypes.WIDGET_GENERAL, 669, -1, CvUtil.FONT_LEFT_JUSTIFY )
+#		screen.setLabel( "PlanetAssignConstructionLabel", "Background", szText, CvUtil.FONT_CENTER_JUSTIFY, xResolution - 65, g_iFFStartY + 96, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 668, -1 )
+		screen.hide( "PlanetAssignConstructionLabel" )
+		
+		# List of Planets at the bottom right
+		for iPlanetLoop in range(1,9):
+			
+			iRow = (iPlanetLoop - 1) / 4
+			iCol = (iPlanetLoop - 1) % 4
+			iX = (xResolution - 240) + (iCol * 55)
+			iY = (yResolution - 268) + (iRow * 55)
+			
+			szName = "PlanetGraphic" + str(iPlanetLoop)
+			filename = ArtFileMgr.getFeatureArtInfo("ART_DEF_FEATURE_SOLAR_SYSTEM").getFeatureDummyNodeName(0, "FEATURE_MODEL_TAG_SMALL_PLANET")
+			screen.addModelGraphicGFC(szName, filename, iX, iY, 50, 50, WidgetTypes.WIDGET_GENERAL, 670 + iPlanetLoop, -1, -20, 30, 1.0)
+			screen.hide(szName)
+			
+			szName = "PlanetPop" + str(iPlanetLoop)
+			iX += 49
+			iY += 42
+			screen.setLabel( szName, "Background", "0", CvUtil.FONT_RIGHT_JUSTIFY, iX, iY, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 670 + iPlanetLoop, -1 )
+			screen.hide(szName)
+		
+##############################################3
+##		Final Frontier
+##############################################3
 
 		# *********************************************************************************
 		# UNIT INFO ELEMENTS
@@ -1251,16 +1340,17 @@ class CvMainInterface:
 			CyInterface().setDirty(InterfaceDirtyBits.ResearchButtons_DIRTY_BIT, False)
 		if ( CyInterface().isDirty(InterfaceDirtyBits.CitizenButtons_DIRTY_BIT) == True ):
 			# Citizen Buttons Dirty
-
-# BUG - city specialist - start
-			self.updateCitizenButtons_hide()
-			if (CityScreenOpt.isCitySpecialist_Stacker()):
-				self.updateCitizenButtons_Stacker()
-			elif (CityScreenOpt.isCitySpecialist_Chevron()):
-				self.updateCitizenButtons_Chevron()
-			else:
-				self.updateCitizenButtons()
-# BUG - city specialist - end
+# FF Uses the citizen button functionality for its planet displays
+## BUG - city specialist - start
+#			self.updateCitizenButtons_hide()
+#			if (CityScreenOpt.isCitySpecialist_Stacker()):
+#				self.updateCitizenButtons_Stacker()
+#			elif (CityScreenOpt.isCitySpecialist_Chevron()):
+#				self.updateCitizenButtons_Chevron()
+#			else:
+#				self.updateCitizenButtons()
+## BUG - city specialist - end
+			self.updateCitizenButtons()
 			
 			CyInterface().setDirty(InterfaceDirtyBits.CitizenButtons_DIRTY_BIT, False)
 		if ( CyInterface().isDirty(InterfaceDirtyBits.GameData_DIRTY_BIT) == True ):
@@ -1274,6 +1364,7 @@ class CvMainInterface:
 		if ( CyInterface().isDirty(InterfaceDirtyBits.CityScreen_DIRTY_BIT) == True ):
 			# Selection Data Dirty Bit
 			self.updateCityScreen()
+			self.updateCitizenButtons() # FF
 			CyInterface().setDirty(InterfaceDirtyBits.Domestic_Advisor_DIRTY_BIT, True)
 			CyInterface().setDirty(InterfaceDirtyBits.CityScreen_DIRTY_BIT, False)
 		if ( CyInterface().isDirty(InterfaceDirtyBits.Score_DIRTY_BIT) == True or CyInterface().checkFlashUpdate() ):
@@ -1451,11 +1542,11 @@ class CvMainInterface:
 		screen = CyGInterfaceScreen( "MainInterface", CvScreenEnums.MAIN_INTERFACE )
 		
 		xResolution = screen.getXResolution()
-
-# BUG - Great Person Bar - start
-		if ( CyInterface().getShowInterface() != InterfaceVisibility.INTERFACE_HIDE_ALL and CyInterface().getShowInterface() != InterfaceVisibility.INTERFACE_MINIMAP_ONLY  and CyInterface().getShowInterface() != InterfaceVisibility.INTERFACE_ADVANCED_START):
-			self.updateGreatPersonBar(screen)
-# BUG - Great Person Bar - end
+# No Great People in FF (yet)
+## BUG - Great Person Bar - start
+#		if ( CyInterface().getShowInterface() != InterfaceVisibility.INTERFACE_HIDE_ALL and CyInterface().getShowInterface() != InterfaceVisibility.INTERFACE_MINIMAP_ONLY  and CyInterface().getShowInterface() != InterfaceVisibility.INTERFACE_ADVANCED_START):
+#			self.updateGreatPersonBar(screen)
+## BUG - Great Person Bar - end
 
 		if ( CyInterface().shouldDisplayFlag() and CyInterface().getShowInterface() == InterfaceVisibility.INTERFACE_SHOW ):
 			screen.show( "CivilizationFlag" )
@@ -1482,7 +1573,7 @@ class CvMainInterface:
 			screen.hide( "TechAdvisorButton" )
 			screen.hide( "CivicsAdvisorButton" )
 			screen.hide( "ReligiousAdvisorButton" )
-			screen.hide( "CorporationAdvisorButton" )
+#			screen.hide( "CorporationAdvisorButton" )
 			screen.hide( "FinanceAdvisorButton" )
 			screen.hide( "MilitaryAdvisorButton" )
 			screen.hide( "VictoryAdvisorButton" )
@@ -1515,7 +1606,7 @@ class CvMainInterface:
 			screen.hide( "TechAdvisorButton" )
 			screen.hide( "CivicsAdvisorButton" )
 			screen.hide( "ReligiousAdvisorButton" )
-			screen.hide( "CorporationAdvisorButton" )
+#			screen.hide( "CorporationAdvisorButton" )
 			screen.hide( "FinanceAdvisorButton" )
 			screen.hide( "MilitaryAdvisorButton" )
 			screen.hide( "VictoryAdvisorButton" )
@@ -1548,7 +1639,7 @@ class CvMainInterface:
 			screen.show( "TechAdvisorButton" )
 			screen.show( "CivicsAdvisorButton" )
 			screen.show( "ReligiousAdvisorButton" )
-			screen.show( "CorporationAdvisorButton" )
+#			screen.show( "CorporationAdvisorButton" )
 			screen.show( "FinanceAdvisorButton" )
 			screen.show( "MilitaryAdvisorButton" )
 			screen.show( "VictoryAdvisorButton" )
@@ -1573,7 +1664,7 @@ class CvMainInterface:
 			screen.moveToFront( "TechAdvisorButton" )
 			screen.moveToFront( "CivicsAdvisorButton" )
 			screen.moveToFront( "ReligiousAdvisorButton" )
-			screen.moveToFront( "CorporationAdvisorButton" )
+#			screen.moveToFront( "CorporationAdvisorButton" )
 			screen.moveToFront( "FinanceAdvisorButton" )
 			screen.moveToFront( "MilitaryAdvisorButton" )
 			screen.moveToFront( "VictoryAdvisorButton" )
@@ -1628,7 +1719,7 @@ class CvMainInterface:
 			screen.show( "TechAdvisorButton" )
 			screen.show( "CivicsAdvisorButton" )
 			screen.show( "ReligiousAdvisorButton" )
-			screen.show( "CorporationAdvisorButton" )
+#			screen.show( "CorporationAdvisorButton" )
 			screen.show( "FinanceAdvisorButton" )
 			screen.show( "MilitaryAdvisorButton" )
 			screen.show( "VictoryAdvisorButton" )
@@ -1653,7 +1744,7 @@ class CvMainInterface:
 			screen.moveToFront( "TechAdvisorButton" )
 			screen.moveToFront( "CivicsAdvisorButton" )
 			screen.moveToFront( "ReligiousAdvisorButton" )
-			screen.moveToFront( "CorporationAdvisorButton" )
+#			screen.moveToFront( "CorporationAdvisorButton" )
 			screen.moveToFront( "FinanceAdvisorButton" )
 			screen.moveToFront( "MilitaryAdvisorButton" )
 			screen.moveToFront( "VictoryAdvisorButton" )
@@ -1678,7 +1769,7 @@ class CvMainInterface:
 			screen.show( "TechAdvisorButton" )
 			screen.show( "CivicsAdvisorButton" )
 			screen.show( "ReligiousAdvisorButton" )
-			screen.show( "CorporationAdvisorButton" )
+#			screen.show( "CorporationAdvisorButton" )
 			screen.show( "FinanceAdvisorButton" )
 			screen.show( "MilitaryAdvisorButton" )
 			screen.show( "VictoryAdvisorButton" )
@@ -1711,7 +1802,7 @@ class CvMainInterface:
 			screen.moveToFront( "TechAdvisorButton" )
 			screen.moveToFront( "CivicsAdvisorButton" )
 			screen.moveToFront( "ReligiousAdvisorButton" )
-			screen.moveToFront( "CorporationAdvisorButton" )
+#			screen.moveToFront( "CorporationAdvisorButton" )
 			screen.moveToFront( "FinanceAdvisorButton" )
 			screen.moveToFront( "MilitaryAdvisorButton" )
 			screen.moveToFront( "VictoryAdvisorButton" )
@@ -2173,7 +2264,9 @@ class CvMainInterface:
 			screen = CyGInterfaceScreen( "MainInterface", CvScreenEnums.MAIN_INTERFACE )
 			xResolution = screen.getXResolution()
 			yResolution = screen.getYResolution()
-			screen.addFlagWidgetGFC( "CivilizationFlag", xResolution - 288, yResolution - 138, 68, 250, gc.getGame().getActivePlayer(), WidgetTypes.WIDGET_FLAG, gc.getGame().getActivePlayer(), -1)
+#			screen.addFlagWidgetGFC( "CivilizationFlag", xResolution - 288, yResolution - 138, 68, 250, gc.getGame().getActivePlayer(), WidgetTypes.WIDGET_FLAG, gc.getGame().getActivePlayer(), -1)
+#			screen.addFlagWidgetGFC( "CivilizationFlag", xResolution - 294, yResolution - 148, 78, 250, gc.getGame().getActivePlayer(), WidgetTypes.WIDGET_FLAG, gc.getGame().getActivePlayer(), -1)
+			screen.addFlagWidgetGFC( "CivilizationFlag", xResolution - 294, yResolution - 140, 78, 250, gc.getGame().getActivePlayer(), WidgetTypes.WIDGET_FLAG, gc.getGame().getActivePlayer(), -1)
 		
 	# Will hide and show the selection buttons and their associated buttons
 	def updateSelectionButtons( self ):
@@ -2232,7 +2325,8 @@ class CvMainInterface:
 		screen.hide( "Conscript" )
 		#screen.hide( "Liberate" )
 		screen.hide( "AutomateProduction" )
-		screen.hide( "AutomateCitizens" )
+#		screen.hide( "AutomateCitizens" )
+		
 
 		if (not CyEngine().isGlobeviewUp() and pHeadSelectedCity):
 		
@@ -2289,8 +2383,8 @@ class CvMainInterface:
 				iBtnX += iBtnW
 
 				# Automate Citizens Button
-				screen.addCheckBoxGFC( "AutomateCitizens", "", "", iBtnX, iBtnY, iBtnW, iBtnH, WidgetTypes.WIDGET_AUTOMATE_CITIZENS, -1, -1, ButtonStyles.BUTTON_STYLE_STANDARD )
-				screen.setStyle( "AutomateCitizens", "Button_CityC4_Style" )
+#				screen.addCheckBoxGFC( "AutomateCitizens", "", "", iBtnX, iBtnY, iBtnW, iBtnH, WidgetTypes.WIDGET_AUTOMATE_CITIZENS, -1, -1, ButtonStyles.BUTTON_STYLE_STANDARD )
+#				screen.setStyle( "AutomateCitizens", "Button_CityC4_Style" )
 
 				iBtnY += iBtnH
 				iBtnX = iBtnSX
@@ -2346,12 +2440,16 @@ class CvMainInterface:
 				screen.hide( szButtonID )
 				
 				g_pSelectedUnit = 0
-				screen.setState( "AutomateCitizens", pHeadSelectedCity.isCitizensAutomated() )
+#				screen.setState( "AutomateCitizens", pHeadSelectedCity.isCitizensAutomated() )
 				screen.setState( "AutomateProduction", pHeadSelectedCity.isProductionAutomated() )
 				
 				for i in range (g_NumEmphasizeInfos):
 					szButtonID = "Emphasize" + str(i)
-					screen.show( szButtonID )
+					
+					# XXX - Special hack for Final Frontier : only show Avoid Growth emphasize buttons, none of the others
+					if (i == CvUtil.findInfoTypeNum(gc.getEmphasizeInfo,gc.getNumEmphasizeInfos(),'EMPHASIZE_AVOID_GROWTH')):
+						screen.show( szButtonID )
+						
 					if ( pHeadSelectedCity.AI_isEmphasize(i) ):
 						screen.setState( szButtonID, True )
 					else:
@@ -2561,6 +2659,78 @@ class CvMainInterface:
 					
 		return 0
 		
+	def addPlanetCustomization(self, pSystem, pPlanet, szWidgetName, bShowSelection = true):
+		
+		screen = CyGInterfaceScreen( "MainInterface", CvScreenEnums.MAIN_INTERFACE )
+		
+		# Disabled by Doomsday Missile?
+		if (pPlanet.isDisabled()):
+			szFilename = ArtFileMgr.getFeatureArtInfo("ART_DEF_FEATURE_SOLAR_SYSTEM").getFeatureDummyNodeName(0, "FEATURE_MODEL_TAG_SUN_ORANGE")
+			screen.addToModelGraphicGFC(szWidgetName, szFilename)
+		
+		else:
+			
+			iType = pPlanet.getPlanetType()
+			# Atmospheric effect
+			if (iType == iPlanetTypeGreen or iType == iPlanetTypeOrange or iType == iPlanetTypeWhite):
+				szPlanetArt = aszPlanetGlowSizes[pPlanet.getPlanetSize()]
+				szFilename = ArtFileMgr.getFeatureArtInfo("ART_DEF_FEATURE_SOLAR_SYSTEM").getFeatureDummyNodeName(0, szPlanetArt)
+				screen.addToModelGraphicGFC(szWidgetName, szFilename)
+			
+			# Clouds effect
+			if (iType == iPlanetTypeGreen):
+				szPlanetArt = aszPlanetCloudsSizes[pPlanet.getPlanetSize()]
+				szFilename = ArtFileMgr.getFeatureArtInfo("ART_DEF_FEATURE_SOLAR_SYSTEM").getFeatureDummyNodeName(0, szPlanetArt)
+				screen.addToModelGraphicGFC(szWidgetName, szFilename)
+			
+			# Rings effect
+			if (pPlanet.isRings()):
+				szPlanetArt = aszPlanetRingsSizes[pPlanet.getPlanetSize()]
+				szFilename = ArtFileMgr.getFeatureArtInfo("ART_DEF_FEATURE_SOLAR_SYSTEM").getFeatureDummyNodeName(0, szPlanetArt)
+				screen.addToModelGraphicGFC(szWidgetName, szFilename)
+			
+			# Moon
+			if (pPlanet.isMoon()):
+				szPlanetArt = aszPlanetMoonSizes[pPlanet.getPlanetSize()]
+				szFilename = ArtFileMgr.getFeatureArtInfo("ART_DEF_FEATURE_SOLAR_SYSTEM").getFeatureDummyNodeName(0, szPlanetArt)
+				screen.addToModelGraphicGFC(szWidgetName, szFilename)
+			
+			# Population Lights effect
+			if (pPlanet.getPopulation() == 1):
+				szPlanetArt = aszPlanetPopulation1Sizes[pPlanet.getPlanetSize()]
+				szFilename = ArtFileMgr.getFeatureArtInfo("ART_DEF_FEATURE_SOLAR_SYSTEM").getFeatureDummyNodeName(0, szPlanetArt)
+				screen.addToModelGraphicGFC(szWidgetName, szFilename)
+			elif (pPlanet.getPopulation() == 2):
+				szPlanetArt = aszPlanetPopulation2Sizes[pPlanet.getPlanetSize()]
+				szFilename = ArtFileMgr.getFeatureArtInfo("ART_DEF_FEATURE_SOLAR_SYSTEM").getFeatureDummyNodeName(0, szPlanetArt)
+				screen.addToModelGraphicGFC(szWidgetName, szFilename)
+			elif (pPlanet.getPopulation() >= 3):
+				szPlanetArt = aszPlanetPopulation3Sizes[pPlanet.getPlanetSize()]
+				szFilename = ArtFileMgr.getFeatureArtInfo("ART_DEF_FEATURE_SOLAR_SYSTEM").getFeatureDummyNodeName(0, szPlanetArt)
+				screen.addToModelGraphicGFC(szWidgetName, szFilename)
+			
+			# Mag-Lev Network
+			iMagLevNetwork = CvUtil.findInfoTypeNum(gc.getBuildingInfo,gc.getNumBuildingInfos(),'BUILDING_MAG_LEV_NETWORK')
+			if (pPlanet.isHasBuilding(iMagLevNetwork)):
+				szPlanetArt = aszPlanetMagLevNetworkSizes[pPlanet.getPlanetSize()]
+				szFilename = ArtFileMgr.getFeatureArtInfo("ART_DEF_FEATURE_SOLAR_SYSTEM").getFeatureDummyNodeName(0, szPlanetArt)
+				screen.addToModelGraphicGFC(szWidgetName, szFilename)
+			
+			# Commercial Satellites or PBS (UB for Brotherhood)
+			iCommercialSatellites = gc.getInfoTypeForString('BUILDING_COMMERCIAL_SATELLITES')
+			iPBS = gc.getInfoTypeForString('BUILDING_PBS')
+			if (pPlanet.isHasBuilding(iCommercialSatellites) or pPlanet.isHasBuilding(iPBS)):
+				szPlanetArt = aszPlanetCommercialSatellitesSizes[pPlanet.getPlanetSize()]
+				szFilename = ArtFileMgr.getFeatureArtInfo("ART_DEF_FEATURE_SOLAR_SYSTEM").getFeatureDummyNodeName(0, szPlanetArt)
+				screen.addToModelGraphicGFC(szWidgetName, szFilename)
+			
+			# Selected?
+			if (bShowSelection):
+				if (CyInterface().isCityScreenUp()):
+					if (pSystem.getSelectedPlanet() == pPlanet.getOrbitRing()):
+						szPlanetArt = aszPlanetSelectionSizes[pPlanet.getPlanetSize()]
+						szFilename = ArtFileMgr.getFeatureArtInfo("ART_DEF_FEATURE_SOLAR_SYSTEM").getFeatureDummyNodeName(0, szPlanetArt)
+						screen.addToModelGraphicGFC(szWidgetName, szFilename)
 # BUG - city specialist - start
 	def updateCitizenButtons_hide( self ):
 
@@ -2647,6 +2817,191 @@ class CvMainInterface:
 		# Find out our resolution
 		xResolution = screen.getXResolution()
 		yResolution = screen.getYResolution()
+#################################################################################################
+##		Final Frontier: Planet Stuff
+#################################################################################################
+		
+		FinalFrontier = CvEventInterface.getEventManager().FinalFrontier
+		
+		FinalFrontier.updateNeededSystemsDisplay()
+		
+		pHeadSelectedCity = CyInterface().getHeadSelectedCity()
+		
+		if (pHeadSelectedCity):
+			
+			pSystem = getSystemAt(pHeadSelectedCity.getX(), pHeadSelectedCity.getY()) #FFPBUG
+			
+			if (pSystem):
+				
+				# Update planet selection graphics
+				#pSystem.updateDisplay()
+				pSystem.setNeedsUpdate(true)
+				
+				# Only show planet widgets when in the "real" city screen, not the mini-version
+				if (CyInterface().isCityScreenUp()):
+					
+					# TutorialPopup
+					if (not CyUserProfile().getPlayerOption(PlayerOptionTypes.PLAYEROPTION_MODDER_1)):
+						if (not FinalFrontier.getTutorial().isCityScreen()):
+							bImmediate = true
+							szText = localText.getText("TXT_KEY_FF_TUTORIAL_CITY_SCREEN_2", ()) + " " + localText.getText("TXT_KEY_FF_TUTORIAL_MULTIPLE_BUILDINGS_EXTRA", ())
+							FinalFrontier.addPopup(localText.getText("TXT_KEY_FF_TUTORIAL_CITY_SCREEN_TITLE_2", ()), szText, bImmediate)
+							
+							bImmediate = true
+							FinalFrontier.addPopup(localText.getText("TXT_KEY_FF_TUTORIAL_CITY_SCREEN_TITLE", ()), localText.getText("TXT_KEY_FF_TUTORIAL_CITY_SCREEN", ()), bImmediate)
+							
+							FinalFrontier.getTutorial().setCityScreen(1)
+					
+					iSelectedRing = pSystem.getSelectedPlanet()
+					
+					printd("Default Selected Ring is %d" %(iSelectedRing))
+					
+					if (iSelectedRing == -1):
+						iSelectedRing = 1
+						pSystem.setSelectedPlanet(iSelectedRing)
+					
+					pPlanet = pSystem.getPlanet(iSelectedRing)
+					
+					printd(pPlanet)
+					
+					if (pPlanet != -1):
+						
+	#					szText = "%s %d: %s" %(pHeadSelectedCity.getName(), iSelectedRing, aszPlanetTypeNames[pPlanet.getPlanetType()])
+						szText = pPlanet.getName()
+						if pPlanet.isBonus(): # Planetary Resource Indicator
+							szText += u" %c" % gc.getBonusInfo(pPlanet.getBonusType()).getChar() # Planetary Resource Indicator
+						screen.setLabel( "SelectedPlanetLabel", "Background", szText, CvUtil.FONT_CENTER_JUSTIFY, xResolution - 135, g_iFFStartY + 8, -0.1, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, 666, -1 )
+						
+						# Planet Widget (Placeholder)
+						sizeTag = aszPlanetSizes[pPlanet.getPlanetSize()]
+						filename = ArtFileMgr.getFeatureArtInfo("ART_DEF_FEATURE_SOLAR_SYSTEM").getFeatureDummyNodeName(0, sizeTag)
+						screen.addModelGraphicGFC("SelectedPlanetGraphic", filename, xResolution - 220, g_iFFStartY + 46, 90, 90, WidgetTypes.WIDGET_GENERAL, 666, -1, -20, 30, 1.0)
+						textureTag = aszPlanetTypes[pPlanet.getPlanetType()]
+						textureFilename = ArtFileMgr.getFeatureArtInfo("ART_DEF_FEATURE_SOLAR_SYSTEM").getFeatureDummyNodeName(0, textureTag)
+						screen.changeModelGraphicTextureGFC("SelectedPlanetGraphic", textureFilename)
+						
+						self.addPlanetCustomization(pSystem, pPlanet, "SelectedPlanetGraphic", false)
+						
+#						filename = ArtFileMgr.getFeatureArtInfo("ART_DEF_FEATURE_SOLAR_SYSTEM").getFeatureDummyNodeName(0, "FEATURE_MODEL_TAG_LARGE_PLANET_RINGS")
+#						screen.addToModelGraphicGFC("SelectedPlanetGraphic", filename)
+						
+						screen.setModelGraphicRotationRateGFC("SelectedPlanetGraphic", -0.5)
+						
+						# Selected Planet Pop
+						szPopulation = "%d/%d" %(pPlanet.getPopulation(), pPlanet.getPopulationLimit(pHeadSelectedCity.getOwner()))
+						screen.setLabel( "PlanetPopulationLabel", "Background", szPopulation, CvUtil.FONT_RIGHT_JUSTIFY, xResolution - 80, g_iFFStartY + 63, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 667, -1 )
+						
+						# Planet yield
+						iFood = pPlanet.getTotalYield(pHeadSelectedCity.getOwner(), 0)
+						iProd = pPlanet.getTotalYield(pHeadSelectedCity.getOwner(), 1)
+						iCom = pPlanet.getTotalYield(pHeadSelectedCity.getOwner(), 2)
+						szYield = u"%d%c %d%c %d%c" %(iFood, gc.getYieldInfo(YieldTypes.YIELD_FOOD).getChar(), iProd, gc.getYieldInfo(YieldTypes.YIELD_PRODUCTION).getChar(), iCom, gc.getYieldInfo(YieldTypes.YIELD_COMMERCE).getChar())
+						screen.setLabel( "PlanetYieldLabel", "Background", szYield, CvUtil.FONT_CENTER_JUSTIFY, xResolution - 65, g_iFFStartY + 104, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 668, -1 )
+						
+						# Unassigned Population in this Star System
+						iMax = pSystem.getPopulationLimit(true)
+						iUnassigned = iMax
+						for iPlanetLoop in range(pSystem.getNumPlanets()):
+							iUnassigned -= pSystem.getPlanetByIndex(iPlanetLoop).getPopulation()
+						
+						szText = "%s: %d/%d" %(localText.getText("TXT_KEY_FF_CITY_SCREEN_UNASSIGNED_POPULATION", ()), iUnassigned, iMax)
+						screen.setLabel( "UnassignedLabel", "Background", szText, CvUtil.FONT_CENTER_JUSTIFY, xResolution - 65, g_iFFStartY + 124, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 668, -1 )
+						
+						bState = false
+						if (pSystem.getBuildingPlanetRing() == iSelectedRing):
+							bState = true
+						
+						screen.setState("PlanetAssignConstruction", bState)
+						
+						printd("About to make Planet Buildings table")
+						
+						# Planet within usable cultural range?
+						if (pPlanet.isPlanetWithinCulturalRange()):
+							
+							# Building Table
+							screen.addTableControlGFC( "PlanetBuildingListTable", 1, xResolution - 220, g_iFFStartY + 193, 190, yResolution - 620, False, False, 32, 32, TableStyles.TABLE_STYLE_STANDARD )
+							screen.setStyle( "PlanetBuildingListTable", "Table_City_Style" )
+							
+							screen.setTableColumnHeader( "PlanetBuildingListTable", 0, u"", 150 )
+							
+							iNumBuildings = 0
+							
+							for iBuildingLoop in range(gc.getNumBuildingInfos()):
+								
+								if (pPlanet.isHasBuilding(iBuildingLoop)):
+									
+									szText = gc.getBuildingInfo(iBuildingLoop).getDescription()
+									
+									screen.appendTableRow( "PlanetBuildingListTable" )
+									screen.setTableText( "PlanetBuildingListTable", 0, iNumBuildings, "<font=1>" + szText + "</font>", "", WidgetTypes.WIDGET_HELP_BUILDING, iBuildingLoop, -1, CvUtil.FONT_LEFT_JUSTIFY )
+									
+									iNumBuildings += 1
+							
+							screen.show("PlanetBuildingListTable")
+							
+							szText = localText.getText("TXT_KEY_FF_INTERFACE_PLANET_BUILDINGS", ())
+							screen.addMultilineText("PlanetAssignConstructionLabel", szText, xResolution - 215, g_iFFStartY + 142, 215, 48, WidgetTypes.WIDGET_GENERAL, 669, -1, CvUtil.FONT_LEFT_JUSTIFY )
+							
+							if (pHeadSelectedCity.getOwner() == CyGame().getActivePlayer()):
+								screen.show( "PlanetAssignConstruction" )
+							else:
+								screen.hide( "PlanetAssignConstructionLabel" )
+						
+						# Not within range, hide some widgets and do some stuff
+						else:
+							
+							screen.hide( "PlanetAssignConstruction" )
+							screen.hide("PlanetBuildingListTable")
+							
+							szText = localText.getText("TXT_KEY_INFLUENCE_PLANET_HELP", ())
+							screen.addMultilineText("PlanetAssignConstructionLabel", szText, xResolution - 240, g_iFFStartY + 142, 240, 190, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
+							
+							if (pHeadSelectedCity.getOwner() != CyGame().getActivePlayer()):
+								screen.hide( "PlanetAssignConstructionLabel" )
+						
+					# List of Planets at the bottom right
+					for iPlanetLoop in range(1,9):
+						
+						iRow = (iPlanetLoop - 1) / 4
+						iCol = (iPlanetLoop - 1) % 4
+						iX = (xResolution - 240) + (iCol * 55)
+						iY = (yResolution - 268) + (iRow * 55)
+						
+						pLoopPlanet = pSystem.getPlanet(iPlanetLoop)
+	
+						szGraphicName = "PlanetGraphic" + str(iPlanetLoop)
+						szLabelName = "PlanetPop" + str(iPlanetLoop)
+						
+						if (pLoopPlanet != -1):
+							
+							sizeTag = aszPlanetSizes[pLoopPlanet.getPlanetSize()]
+							filename = ArtFileMgr.getFeatureArtInfo("ART_DEF_FEATURE_SOLAR_SYSTEM").getFeatureDummyNodeName(0, sizeTag)
+							screen.addModelGraphicGFC(szGraphicName, filename, iX, iY, 50, 50, WidgetTypes.WIDGET_GENERAL, 670 + iPlanetLoop, -1, -20, 30, 1.0)
+							textureTag = aszPlanetTypes[pLoopPlanet.getPlanetType()]
+							textureFilename = ArtFileMgr.getFeatureArtInfo("ART_DEF_FEATURE_SOLAR_SYSTEM").getFeatureDummyNodeName(0, textureTag)
+							screen.changeModelGraphicTextureGFC(szGraphicName, textureFilename)
+							
+							self.addPlanetCustomization(pSystem, pLoopPlanet, szGraphicName)
+							
+							screen.setModelGraphicRotationRateGFC(szGraphicName, -0.5)
+							
+							szText = "%d/%d" %(pLoopPlanet.getPopulation(), pLoopPlanet.getPopulationLimit(pHeadSelectedCity.getOwner()))
+							
+							if (pSystem.getBuildingPlanetRing() == iPlanetLoop):
+								szText += " B"
+							
+							iX += 49
+							iY += 42
+							screen.setLabel( szLabelName, "Background", szText, CvUtil.FONT_RIGHT_JUSTIFY, iX, iY, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 670 + iPlanetLoop, -1 )
+							
+						else:
+							
+							screen.hide(szGraphicName)
+							screen.hide(szLabelName)
+					
+#################################################################################################
+##		Final Frontier: End Planet Stuff
+#################################################################################################
 
 		if ( pHeadSelectedCity.angryPopulation(0) < MAX_CITIZEN_BUTTONS ):
 			iCount = pHeadSelectedCity.angryPopulation(0)
@@ -2656,7 +3011,7 @@ class CvMainInterface:
 		for i in range(iCount):
 			bHandled = True
 			szName = "AngryCitizen" + str(i)
-			screen.show( szName )
+#			screen.show( szName )
 
 		iFreeSpecialistCount = 0
 		for i in range(gc.getNumSpecialistInfos()):
@@ -2672,7 +3027,7 @@ class CvMainInterface:
 					if (iCount < MAX_CITIZEN_BUTTONS):
 						szName = "FreeSpecialist" + str(iCount)
 						screen.setImageButton( szName, gc.getSpecialistInfo(i).getTexture(), (xResolution - 74  - (26 * iCount)), yResolution - 214, 24, 24, WidgetTypes.WIDGET_FREE_CITIZEN, i, 1 )
-						screen.show( szName )
+#						screen.show( szName )
 						bHandled = true
 					iCount += 1
 					
@@ -2682,7 +3037,7 @@ class CvMainInterface:
 					if (iCount < MAX_CITIZEN_BUTTONS):
 						szName = "FreeSpecialist" + str(iCount)
 						screen.setImageButton( szName, gc.getSpecialistInfo(i).getTexture(), (xResolution - 74  - (26 * iCount)), yResolution - 214, 24, 24, WidgetTypes.WIDGET_FREE_CITIZEN, i, -1 )
-						screen.show( szName )
+#						screen.show( szName )
 						bHandled = true
 
 					iCount = iCount + 1
@@ -2700,15 +3055,15 @@ class CvMainInterface:
 			
 				if (pHeadSelectedCity.isSpecialistValid(i, 1) and (pHeadSelectedCity.isCitizensAutomated() or iSpecialistCount < (pHeadSelectedCity.getPopulation() + pHeadSelectedCity.totalFreeSpecialists()))):
 					szName = "IncreaseSpecialist" + str(i)
-					screen.show( szName )
+#					screen.show( szName )
 					szName = "CitizenDisabledButton" + str(i)
-					screen.show( szName )
+#					screen.show( szName )
 
 				if iSpecialistCount > 0:
 					szName = "CitizenDisabledButton" + str(i)
 					screen.hide( szName )
 					szName = "DecreaseSpecialist" + str(i)
-					screen.show( szName )
+#					screen.show( szName )
 					
 			if (pHeadSelectedCity.getSpecialistCount(i) < MAX_CITIZEN_BUTTONS):
 				iCount = pHeadSelectedCity.getSpecialistCount(i)
@@ -2720,17 +3075,18 @@ class CvMainInterface:
 				bHandled = True
 				szName = "CitizenButton" + str((i * 100) + j)
 				screen.addCheckBoxGFC( szName, gc.getSpecialistInfo(i).getTexture(), "", xResolution - 74 - (26 * j), (yResolution - 272 - (26 * i)), 24, 24, WidgetTypes.WIDGET_CITIZEN, i, j, ButtonStyles.BUTTON_STYLE_LABEL )
-				screen.show( szName )
+#				screen.show( szName )
 				szName = "CitizenButtonHighlight" + str((i * 100) + j)
-				screen.addDDSGFC( szName, ArtFileMgr.getInterfaceArtInfo("BUTTON_HILITE_SQUARE").getPath(), xResolution - 74 - (26 * j), (yResolution - 272 - (26 * i)), 24, 24, WidgetTypes.WIDGET_CITIZEN, i, j )
+#				screen.addDDSGFC( szName, ArtFileMgr.getInterfaceArtInfo("BUTTON_HILITE_SQUARE").getPath(), xResolution - 74 - (26 * j), (yResolution - 272 - (26 * i)), 24, 24, WidgetTypes.WIDGET_CITIZEN, i, j )
 				if ( pHeadSelectedCity.getForceSpecialistCount(i) > j ):
-					screen.show( szName )
+#					screen.show( szName )
+					szName = "Python really wants something to be inside this if block"
 				else:
 					screen.hide( szName )
 				
 			if ( not bHandled ):
 				szName = "CitizenDisabledButton" + str(i)
-				screen.show( szName )
+#				screen.show( szName )
 
 		return 0
 
@@ -3197,11 +3553,11 @@ class CvMainInterface:
 # BUG - Progress Bar - Tick Marks - end
 
 # BUG - Great Person Bar - start
-				self.updateGreatPersonBar(screen)
+#FF				self.updateGreatPersonBar(screen)
 # BUG - Great Person Bar - end
 
 # BUG - Great General Bar - start
-				self.updateGreatGeneralBar(screen)
+#FF				self.updateGreatGeneralBar(screen)
 # BUG - Great General Bar - end
 					
 		return 0
@@ -3437,19 +3793,19 @@ class CvMainInterface:
 			szName = "CityPercentText" + str(i)
 			screen.hide( szName )
 
-		screen.addPanel( "BonusPane0", u"", u"", True, False, xResolution - 244, 94, 57, yResolution - 520, PanelStyles.PANEL_STYLE_CITY_COLUMNL )
+		screen.addPanel( "BonusPane0", u"", u"", True, False, xResolution - 244, 70, 57, 100, PanelStyles.PANEL_STYLE_CITY_COLUMNL )
 		screen.hide( "BonusPane0" )
-		screen.addScrollPanel( "BonusBack0", u"", xResolution - 242, 94, 157, yResolution - 536, PanelStyles.PANEL_STYLE_EXTERNAL )
+		screen.addScrollPanel( "BonusBack0", u"", xResolution - 242, 62, 157, 100, PanelStyles.PANEL_STYLE_EXTERNAL )
 		screen.hide( "BonusBack0" )
 
-		screen.addPanel( "BonusPane1", u"", u"", True, False, xResolution - 187, 94, 68, yResolution - 520, PanelStyles.PANEL_STYLE_CITY_COLUMNC )
+		screen.addPanel( "BonusPane1", u"", u"", True, False, xResolution - 187, 70, 68, 100, PanelStyles.PANEL_STYLE_CITY_COLUMNC )
 		screen.hide( "BonusPane1" )
-		screen.addScrollPanel( "BonusBack1", u"", xResolution - 191, 94, 184, yResolution - 536, PanelStyles.PANEL_STYLE_EXTERNAL )
+		screen.addScrollPanel( "BonusBack1", u"", xResolution - 191, 62, 184, 100, PanelStyles.PANEL_STYLE_EXTERNAL )
 		screen.hide( "BonusBack1" )
 
-		screen.addPanel( "BonusPane2", u"", u"", True, False, xResolution - 119, 94, 107, yResolution - 520, PanelStyles.PANEL_STYLE_CITY_COLUMNR )
+		screen.addPanel( "BonusPane2", u"", u"", True, False, xResolution - 119, 70, 107, 100, PanelStyles.PANEL_STYLE_CITY_COLUMNR )
 		screen.hide( "BonusPane2" )
-		screen.addScrollPanel( "BonusBack2", u"", xResolution - 125, 94, 205, yResolution - 536, PanelStyles.PANEL_STYLE_EXTERNAL )
+		screen.addScrollPanel( "BonusBack2", u"", xResolution - 125, 62, 205, 100, PanelStyles.PANEL_STYLE_EXTERNAL )
 		screen.hide( "BonusBack2" )
 
 		screen.hide( "TradeRouteTable" )
@@ -3459,6 +3815,28 @@ class CvMainInterface:
 		screen.hide( "TradeRouteListBackground" )
 		screen.hide( "BuildingListLabel" )
 		screen.hide( "TradeRouteListLabel" )
+
+		# Final Frontier
+				
+		printd("Hiding Final Frontier City Screen IFace stuff")
+		
+		screen.hide( "SelectedPlanetBackground" )
+		screen.hide( "SelectedPlanetLabel" )
+		screen.hide( "SelectedPlanetGraphic" )
+		screen.hide( "PlanetPopulationTitle" )
+		screen.hide( "PlanetPopulationLabel" )
+		screen.hide( "PlanetPopulationIncrease" )
+		screen.hide( "PlanetPopulationDecrease" )
+		screen.hide( "PlanetYieldTitle" )
+		screen.hide( "PlanetYieldLabel" )
+		screen.hide( "UnassignedLabel" )
+#		screen.hide( "AssignBuildingButton" )
+		screen.hide( "PlanetAssignConstruction" )
+		screen.hide( "PlanetAssignConstructionLabel" )
+		screen.hide( "PlanetBuildingListTable" )
+		for iPlanetLoop in range(1,9):
+			screen.hide( "PlanetGraphic" + str(iPlanetLoop) )
+			screen.hide( "PlanetPop" + str(iPlanetLoop) )
 
 		i = 0
 		for i in range( g_iNumLeftBonus ):
@@ -3821,6 +4199,24 @@ class CvMainInterface:
 					screen.show( "TradeRouteListLabel" )
 # BUG - Raw Yields - end
 				
+				# Final Frontier
+				screen.show( "SelectedPlanetBackground" )
+				screen.show( "SelectedPlanetLabel" )
+				screen.show( "SelectedPlanetGraphic" )
+				screen.show( "PlanetPopulationTitle" )
+				screen.show( "PlanetPopulationLabel" )
+				if (pHeadSelectedCity.getOwner() == CyGame().getActivePlayer()):
+					screen.show( "PlanetPopulationIncrease" )
+					screen.show( "PlanetPopulationDecrease" )
+					screen.show( "PlanetAssignConstruction" )
+					screen.show( "PlanetAssignConstructionLabel" )
+				screen.show( "PlanetYieldTitle" )
+				screen.show( "PlanetYieldLabel" )
+				screen.show( "UnassignedLabel" )
+				for iPlanetLoop in range(1,9):
+					screen.show( "PlanetGraphic" + str(iPlanetLoop) )
+					screen.show( "PlanetPop" + str(iPlanetLoop) )
+				
 				for i in range( 3 ):
 					szName = "BonusPane" + str(i)
 					screen.show( szName )
@@ -3836,8 +4232,11 @@ class CvMainInterface:
 					if (pHeadSelectedCity.getNumBuilding(i) > 0):
 
 						for k in range(pHeadSelectedCity.getNumBuilding(i)):
+							if pHeadSelectedCity.getNumBuilding(i) == 1:
+								szLeftBuffer = gc.getBuildingInfo(i).getDescription()
+							else:
+								szLeftBuffer = u"(%s) %s" %(pHeadSelectedCity.getNumBuilding(i), gc.getBuildingInfo(i).getDescription())
 							
-							szLeftBuffer = gc.getBuildingInfo(i).getDescription()
 							szRightBuffer = u""
 							bFirst = True
 							
@@ -5577,6 +5976,50 @@ class CvMainInterface:
 				self.setFieldofView_Text(screen)
 				MainOpt.setFieldOfView(self.iField_View)
 # BUG - field of view slider - end
+
+		pCity = CyInterface().getHeadSelectedCity()
+				
+		if (pCity):
+			
+			pPlot = pCity.plot()
+			
+			FinalFrontier = CvEventInterface.getEventManager().FinalFrontier
+			
+			pSystem = getSystemAt(pCity.getX(), pCity.getY()) #FFPBUG
+			iPlanetRing = pSystem.getSelectedPlanet()
+			pPlanet = pSystem.getPlanet(iPlanetRing)
+			
+			# Select a planet
+			if (inputClass.getFunctionName() == "PlanetGraphic"):
+				
+				CyMessageControl().sendModNetMessage(FinalFrontier.iNetMessage_setSelectedPlanet, pSystem.getX(), pSystem.getY(), inputClass.getID(), -1)
+				
+			if (pPlanet != -1):
+				
+				# Increase Planet Population Button
+				if (inputClass.getFunctionName() == "PlanetPopulationIncrease"):
+					
+					CyMessageControl().sendModNetMessage(FinalFrontier.iNetMessage_addPopulation, pSystem.getX(), pSystem.getY(), iPlanetRing, -1)
+				
+				# Increase Planet Population Button
+				elif (inputClass.getFunctionName() == "PlanetPopulationDecrease"):
+					
+					if (pPlanet.getPopulation() > 0):
+						iRemove = -1
+						CyMessageControl().sendModNetMessage(FinalFrontier.iNetMessage_RemovePopulation, pSystem.getX(), pSystem.getY(), iPlanetRing, iRemove)
+						
+				# Assign Building to Planet Button
+				elif (inputClass.getFunctionName() == "PlanetAssignConstruction"):
+					
+					if (pSystem.getBuildingPlanetRing() != iPlanetRing):
+
+						CyMessageControl().sendModNetMessage(FinalFrontier.iNetMessage_AssignBuilding, pSystem.getX(), pSystem.getY(), iPlanetRing, -1)
+						
+					# Don't really allow player to "uncheck" the box
+					else:
+						
+						screen = CyGInterfaceScreen( "MainInterface", CvScreenEnums.MAIN_INTERFACE )
+						screen.setState("PlanetAssignConstruction", true)
 
 		return 0
 	

@@ -5,6 +5,9 @@
 
 from CvPythonExtensions import CivilopediaPageTypes
 
+# FINAL FRONTIER
+PLANET_INFO_SCREEN = 666
+
 DOMESTIC_ADVISOR = 0
 REWARD_SCREEN = 1
 DAWN_OF_MAN = 2

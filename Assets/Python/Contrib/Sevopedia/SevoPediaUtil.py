@@ -16,7 +16,7 @@ sortOption = None
 
 if not AdvisorOpt._hasOption("Sevopedia"):
 	BugUtil.debug("BUG: creating stub Sevopedia option")
-	enabledOption = BugOptions.UnsavedOption(AdvisorOpt, BugOptions.qualify(AdvisorOpt._getID(), "Sevopedia"), "boolean", False)
+	enabledOption = BugOptions.UnsavedOption(AdvisorOpt, BugOptions.qualify(AdvisorOpt._getID(), "Sevopedia"), "boolean", True)
 	AdvisorOpt._addOption(enabledOption)
 
 if not AdvisorOpt._hasOption("SevopediaSortItemList"):

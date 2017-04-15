@@ -71,7 +71,7 @@ class CvReligionScreen:
 
 		self.LEFT_EDGE_TEXT = 10
 		self.X_RELIGION_START = 180
-		self.DX_RELIGION = 98
+		self.DX_RELIGION = 128 # was 98, changed for FF+
 		self.Y_RELIGION = 35
 		self.Y_FOUNDED = 90
 		self.Y_HOLY_CITY = 115

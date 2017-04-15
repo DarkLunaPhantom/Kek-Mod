@@ -1,7 +1,26 @@
-## Sid Meier's Civilization 4
-## Copyright Firaxis Games 2005
-##
-## Implementaion of miscellaneous game functions
+##################################################################################################################
+
+#DO NOT MODIFY THIS FILE
+
+#This is a vanilla CvGameUtils- all the FF+ specific stuff is happening in the BUG Game Utils system
+#This is here to fix various installer-related problems related to copying the Final Frontier data
+#You *can* modify it, but you SHOULD make all your changes in FinalFrontierGameUtils.py
+
+#TC01 and God-Emperor
+#Final Frontier Plus
+
+
+
+
+
+
+
+
+
+
+
+
+##################################################################################################################
 
 import CvUtil
 from CvPythonExtensions import *

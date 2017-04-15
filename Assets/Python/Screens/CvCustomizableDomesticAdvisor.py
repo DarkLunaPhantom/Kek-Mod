@@ -1,4 +1,4 @@
-#
+#### Modified for FFP
 ## Customizable Domestic Advisor Mod v 0.91
 ## for Sid Meier's Civilization 4
 ## Copyright Firaxis Games 2005
@@ -273,7 +273,7 @@ class CvCustomizableDomesticAdvisor:
 				("NRANK_CULTURE",			38,		"int",	None,					CyCity.findCommerceRateRank, CommerceTypes.COMMERCE_CULTURE,	None,								None,						"self.cultureIcon + u\"n\""),
 				("NRANK_GOLD",				38,		"int",	None,					CyCity.findCommerceRateRank, CommerceTypes.COMMERCE_GOLD,	None,									None,						"self.goldIcon + u\"n\""),
 				("NRANK_RESEARCH",			38,		"int",	None,					CyCity.findCommerceRateRank, CommerceTypes.COMMERCE_RESEARCH,	None,								None,						"self.researchIcon + u\"n\""),
-				("NUM_SPECIALIST_GG",		30,		"int",	None,					None,					0,									self.countFreeSpecialists,				"GREAT_GENERAL",			"self.milInstructorIcon"),
+#FF				("NUM_SPECIALIST_GG",		30,		"int",	None,					None,					0,									self.countFreeSpecialists,				"GREAT_GENERAL",			"self.milInstructorIcon"),
 				("POPULATION",				35,		"int",	CyCity.getPopulation,	None,					0,									None,									None,						"localText.getText(\"TXT_KEY_POPULATION\", ()).upper()"),
 				("POPULATION_REAL",			65,		"int",	CyCity.getRealPopulation,	None,				0,									None,									None,						"localText.getText(\"TXT_KEY_POPULATION\", ()).upper() + u\"#\""),
 				("POWER",					50,		"text",	None,					None,					0,									self.calculatePower,					None,						"self.powerIcon"),
@@ -282,7 +282,7 @@ class CvCustomizableDomesticAdvisor:
 				("PRODUCTION",				38,		"int",	None,					None,					0,									self.calculateProduction,				None,						"self.hammerIcon"),
 				("RELIGIONS",				90,		"text",	None,					None,					0,									self.calculateReligions,				None,						"localText.getText(\"TXT_KEY_ADVISOR_RELIGION\", ()).upper()"),
 				("RESEARCH",				38,		"int",	None,					CyCity.getCommerceRate, CommerceTypes.COMMERCE_RESEARCH,	None,									None,						"self.researchIcon"),
-				("SPECIALISTS",				209,	"text",	None,					None,					0,									self.calculateSpecialists,				None,						"localText.getText(\"TXT_KEY_CONCEPT_SPECIALISTS\", ()).upper()"),
+#FF				("SPECIALISTS",				209,	"text",	None,					None,					0,									self.calculateSpecialists,				None,						"localText.getText(\"TXT_KEY_CONCEPT_SPECIALISTS\", ()).upper()"),
 				("THREATS",					60,		"text",	None,					None,					0,									self.calculateThreats,					None,						"u\"Threats\""),
 				("TRADE",					30,		"int",	None,					None,					0,									self.calculateTrade,					None,						"self.tradeIcon"),
 				("TRADE_DOMESTIC",			30,		"int",	None,					None,					0,									self.calculateTrade,					"D",						"u\"D\" + self.tradeIcon"),
@@ -781,7 +781,7 @@ class CvCustomizableDomesticAdvisor:
 
 		# Location of Culture Threshold Info
 		self.nCultureLevelX = self.nPanelX + self.nPanelWidth - 354 # was 670 when nPanelWidth was 1024
-		self.nCultureLevelY = self.nPanelY + self.nPanelLength - 120 # was 450 when nPanelLength was 562
+		self.nCultureLevelY = self.nPanelY + self.nPanelLength - 126 # was 450 when nPanelLength was 562 ##FFP 120 -> 126
 		self.nCultureLevelDistance = 15
 		self.nCultureLevelTextOffset = 110
 
@@ -915,9 +915,9 @@ class CvCustomizableDomesticAdvisor:
 		screen.addCheckBoxGFC(self.START_CUSTOMIZING_NAME, ArtFileMgr.getInterfaceArtInfo("INTERFACE_BTN_FOREIGN").getPath(), ArtFileMgr.getInterfaceArtInfo("BUTTON_HILITE_SQUARE").getPath(), x, self.Y_SPECIAL, self.nControlSize, self.nControlSize, WidgetTypes.WIDGET_CDA_EDIT_PAGE, -1, -1, ButtonStyles.BUTTON_STYLE_IMAGE )
 		x += self.nControlSize + 2
 		screen.setImageButton( self.RENAME_PAGE_NAME, ArtFileMgr.getInterfaceArtInfo("INTERFACE_BTN_EVENT_LOG").getPath(), x, self.Y_SPECIAL, self.nControlSize, self.nControlSize, WidgetTypes.WIDGET_CDA_RENAME_PAGE, -1, -1 )
-		x += self.nControlSize + 2
-		info = gc.getSpecialistInfo(gc.getInfoTypeForString("SPECIALIST_CITIZEN"))
-		screen.addCheckBoxGFC(self.TOGGLE_SPECS_NAME, info.getTexture(), ArtFileMgr.getInterfaceArtInfo("BUTTON_HILITE_SQUARE").getPath(), x, self.Y_SPECIAL, self.nControlSize, self.nControlSize, WidgetTypes.WIDGET_CDA_TOGGLE_SPECIALISTS, -1, -1, ButtonStyles.BUTTON_STYLE_IMAGE )
+#FF		x += self.nControlSize + 2
+#FF		info = gc.getSpecialistInfo(gc.getInfoTypeForString("SPECIALIST_CITIZEN"))
+#FF		screen.addCheckBoxGFC(self.TOGGLE_SPECS_NAME, info.getTexture(), ArtFileMgr.getInterfaceArtInfo("BUTTON_HILITE_SQUARE").getPath(), x, self.Y_SPECIAL, self.nControlSize, self.nControlSize, WidgetTypes.WIDGET_CDA_TOGGLE_SPECIALISTS, -1, -1, ButtonStyles.BUTTON_STYLE_IMAGE )
 		x += self.nControlSize + 2
 		screen.setImageButton( self.ADD_PAGE_NAME, ArtFileMgr.getInterfaceArtInfo("INTERFACE_BUTTONS_PLUS").getPath(), x, self.Y_SPECIAL, self.nControlSize, self.nControlSize, WidgetTypes.WIDGET_CDA_ADD_PAGE, -1, -1 )
 		x += self.nControlSize + 2
@@ -944,10 +944,10 @@ class CvCustomizableDomesticAdvisor:
 			nValue = GameUtil.getCultureThreshold(i)
 			# Only show non-zero levels
 			if (nValue != 0):
-				# Set text
-				screen.setText (self.CULTURE_TEXT_NAME + str(i), "Background", "<font=2>" + pCultureLevel.getText() + "</font>", CvUtil.FONT_LEFT_JUSTIFY, self.nCultureLevelX, self.nCultureLevelY + (self.nCultureLevelDistance * iCount), self.Z_TEXT, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+				# Set text #FF HAve nudged each up by  int(self.nCultureLevelDistance / 2), reducing the space below the icon
+				screen.setText (self.CULTURE_TEXT_NAME + str(i), "Background", "<font=2>" + pCultureLevel.getText() + "</font>", CvUtil.FONT_LEFT_JUSTIFY, self.nCultureLevelX, self.nCultureLevelY + (self.nCultureLevelDistance * iCount) - int(self.nCultureLevelDistance / 2), self.Z_TEXT, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 				# Set value
-				screen.setText (self.CULTURE_TEXT_NAME + self.NUMBER_TEXT + str(i), "Background", "<font=2>" + str(nValue) + "</font>", CvUtil.FONT_RIGHT_JUSTIFY, self.nCultureLevelX + self.nCultureLevelTextOffset, self.nCultureLevelY + (self.nCultureLevelDistance * iCount), self.Z_TEXT, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+				screen.setText (self.CULTURE_TEXT_NAME + self.NUMBER_TEXT + str(i), "Background", "<font=2>" + str(nValue) + "</font>", CvUtil.FONT_RIGHT_JUSTIFY, self.nCultureLevelX + self.nCultureLevelTextOffset, self.nCultureLevelY + (self.nCultureLevelDistance * iCount) - int(self.nCultureLevelDistance / 2), self.Z_TEXT, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 				# Increment counter
 				iCount += 1
 
@@ -955,15 +955,15 @@ class CvCustomizableDomesticAdvisor:
 		iPlayer = PyPlayer(CyGame().getActivePlayer())
 
 		# GP Level Text
-		screen.setText (self.GP_TEXT_NAME, "Background", self.figureheadIcon, CvUtil.FONT_RIGHT_JUSTIFY, self.nGPLevelX, self.nGPLevelY, self.Z_TEXT, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-		screen.setText (self.GP_TEXT_NAME + self.NUMBER_TEXT, "Background", "<font=2>" + str (iPlayer.player.greatPeopleThreshold(false)) + "</font>", CvUtil.FONT_RIGHT_JUSTIFY, self.nGPLevelX, self.nGPLevelY + self.nGPLevelDistance, self.Z_TEXT, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+#FF		screen.setText (self.GP_TEXT_NAME, "Background", self.figureheadIcon, CvUtil.FONT_RIGHT_JUSTIFY, self.nGPLevelX, self.nGPLevelY, self.Z_TEXT, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+#FF		screen.setText (self.GP_TEXT_NAME + self.NUMBER_TEXT, "Background", "<font=2>" + str (iPlayer.player.greatPeopleThreshold(false)) + "</font>", CvUtil.FONT_RIGHT_JUSTIFY, self.nGPLevelX, self.nGPLevelY + self.nGPLevelDistance, self.Z_TEXT, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		# Header...
 		#szText = "<font=4>" + localText.getText("TXT_KEY_DOMESTIC_ADVISOR_TITLE", ()).upper() + "</font>"
 		#screen.setLabel( "DomesticTitleHeader", "Background", szText, CvUtil.FONT_CENTER_JUSTIFY, 472, 40, STANDARD_Z, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 
 		# Draw the specialist (but don't SHOW them)
-		self.drawSpecialists()
+#FF		self.drawSpecialists()
 
 		# Draw the customization controls (but don't SHOW them)
 		self.drawCustomizationControls()
@@ -1165,7 +1165,7 @@ class CvCustomizableDomesticAdvisor:
 	def hide (self, screen, page):
 		""" Hide function which hides a specific screen."""
 		screen.hide (page)
-		self.hideSpecialists()
+#FF		self.hideSpecialists()
 	
 	def drawScreen (self, page):
 		""" Draw the screen based on which mode we get."""
@@ -1509,8 +1509,11 @@ class CvCustomizableDomesticAdvisor:
 			return self.objectNotPossible
 
 	def calculatePotentialConscriptUnit (self, city, szKey, arg):
-		
-		szReturn = unicode(gc.getUnitInfo(city.getConscriptUnit()).getDescription() )
+		iUnit = city.getConscriptUnit() # bug fix: validate the unit this returns before using it
+		if iUnit != -1:
+			szReturn = unicode(gc.getUnitInfo(iUnit).getDescription() )
+		else:
+			szReturn = u""
 		return szReturn
 
 	def calculateConscriptUnit (self, city, szKey, arg):
@@ -2185,7 +2188,7 @@ class CvCustomizableDomesticAdvisor:
 
 			# And hide the regular controls and legends
 			screen.hide(self.currentPage)
-			self.hideSpecialists()
+#FF			self.hideSpecialists()
 			self.hideCultureLegend()
 			self.hideGPLegend()
 
@@ -2315,10 +2318,10 @@ class CvCustomizableDomesticAdvisor:
 					continue
 
 			# Finally, display the specialist controls,
-			if self.PAGES[self.currentPageNum]["showSpecControls"]:
-				self.showSpecialists()
-			else:
-				self.hideSpecialists()
+#FF			if self.PAGES[self.currentPageNum]["showSpecControls"]:
+#FF				self.showSpecialists()
+#FF			else:
+#FF				self.hideSpecialists()
 
 			# and the legends,
 			if self.PAGES[self.currentPageNum]["showCultureLegend"]:
@@ -2388,8 +2391,8 @@ class CvCustomizableDomesticAdvisor:
 					if (city):
 						CyInterface().lookAtCityOffset(city.getID())
 					
-					if self.PAGES[self.currentPageNum]["showSpecControls"]:
-						self.showSpecialists()
+#FF					if self.PAGES[self.currentPageNum]["showSpecControls"]:
+#FF						self.showSpecialists()
 					
 					# And pass it back to the screen
 					self.updateAppropriateCitySelection( self.currentPage, len( PyPlayer(CyGame().getActivePlayer()).getCityList() ) )

@@ -287,7 +287,7 @@ class PLE:
 			for i in range(len(self.lPLEUnitList)):
 				pLoopUnit = self.getInterfacePlotUnit(i)
 
-				if (pLoopUnit):
+				if (pLoopUnit and not pLoopUnit.isNone() and not pLoopUnit.isDead()): # G-E bugfix - don't show dead units 
 					# checks if the units matches actual filters
 					if (self.checkDisplayFilter(pLoopUnit)):
 
@@ -1398,9 +1398,14 @@ class PLE:
 		screen.enable(szString, bEnable)
 
 		# check if the units is selected
-		if (pLoopUnit.IsSelected()):
-			screen.setState(szString, True)
-		else:
+		# This can crash, apparently, if the unit vanishes while making a starbase.
+		try:
+			if (pLoopUnit.IsSelected()):
+				screen.setState(szString, True)
+			else:
+				raise RuntimeError
+		except RuntimeError:
+			bEnable = False
 			screen.setState(szString, False)
 		# set select state of the unit button
 		screen.show( szString )

@@ -60,6 +60,7 @@ import TradeUtil
 import GameUtil
 
 gc = CyGlobalContext()
+g_rand = None # Post v1.81
 
 ## Players and Teams - Getting IDs and Cy objects 
 
@@ -294,17 +295,48 @@ def getStateReligion(playerOrID):
 	player = getPlayer(playerOrID)
 	return player.getStateReligion()
 
+#Added in Final Frontier Plus by TC01
+#This function gets a list of a player's favorite civics
+#Apparently, MFC doesn't have a function to do that, for some reason
+def getFavoriteCivics(leader):
+	if not leader.isHasFavoriteCivic():
+		return []
+	favorites = []
+	for iCivic in range(gc.getNumCivicInfos()):
+		if leader.hasFavoriteCivic(iCivic):
+			favorites.append(iCivic)
+	return favorites
+#End of Final Frontier Plus
+	
 def getFavoriteCivic(playerOrID):
 	"""
 	Returns the favorite civic of the given player's leader or -1 if none.
 	
 	This works even when the Random Personalities option is enabled.
 	"""
+	global g_rand # Post v1.81
 	eLeaderType = getPlayer(playerOrID).getPersonalityType()
 	if eLeaderType != -1:
 		leader = gc.getLeaderHeadInfo(eLeaderType)
 		if leader:
-			return leader.getFavoriteCivic()
+			#Change by TC01 for Final Frontier Plus
+			#This is a dirty hack, but I don't feel like rewriting all the places that use this to accept an array of civics
+			#So we'll pick a random one and return that!				
+			favorites = getFavoriteCivics(leader)
+			if len(favorites) == 0:
+				return CivicTypes.NO_CIVIC
+			elif len(favorites) == 1:
+				return favorites[0]
+			else:
+				# Post v1.81 : do not use synchronized RNG for this, it is called just to show thigns to a human player
+				# used to be: randCivic = CyGame().getSorenRandNum(len(favorites), "Random Civic MFC") 
+				if g_rand == None:
+					g_rand = gc.getASyncRand()
+					
+				randCivic = g_rand.get(len(favorites), "Random Civic MFC")
+				
+				return favorites[randCivic]
+			#End of TC01's Dirty Hack for Final Frontier Plus
 	return CivicTypes.NO_CIVIC
 
 def getWorstEnemy(playerOrID, askingPlayerOrID=None):

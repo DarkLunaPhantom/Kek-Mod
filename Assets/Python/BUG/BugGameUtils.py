@@ -217,7 +217,7 @@ class Dispatcher:
 		self._setDefault("doGreatPeople", False)
 		self._setDefault("doMeltdown", False)
 		self._setDefault("doReviveActivePlayer", False)
-		self._setDefault("citiesDestroyFeatures", True)
+		self._setDefault("citiesDestroyFeatures", False) #FFP
 		self._setDefault("canFoundCitiesOnWater", False)
 		self._setDefault("doCombat", False)
 		self._setDefault("getConscriptUnitType", UnitTypes.NO_UNIT)

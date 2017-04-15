@@ -368,7 +368,18 @@ def calculateTradeRouteYield(city, route, yieldType):
 	
 	If Fractional Trade Routes is active, the value returned is fractional (times 100).
 	"""
-	return city.calculateTradeYield(yieldType, TRADE_PROFIT_FUNC(city, city.getTradeCity(route)))
+	# FFP 1.73: add trait's TradeRouteYieldChanges values
+	iExtraYield = 0
+	pPlayer = gc.getPlayer(city.getOwner())
+	for iLoopTrait in range(gc.getNumTraitInfos()):
+		if pPlayer.hasTrait(iLoopTrait):
+			pTraitInfo = gc.getTraitInfo(iLoopTrait)
+			if pTraitInfo.getTradeRouteYieldChanges(yieldType) != -1 :
+				iExtraYield = pTraitInfo.getTradeRouteYieldChanges(yieldType)
+	if isFractionalTrade():
+		iExtraYield *= 100
+				
+	return city.calculateTradeYield(yieldType, TRADE_PROFIT_FUNC(city, city.getTradeCity(route))) + iExtraYield
 
 def calculateTotalTradeRouteYield(city, yieldType):
 	"""

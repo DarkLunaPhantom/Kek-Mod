@@ -290,6 +290,24 @@ class AutoLogEvent(AbstractAutoLogEvent):
 				CyInterface().addMessage(CyGame().getActivePlayer(), True, 10, message, None, 2, None, ColorTypes(8), 0, 0, False, False)
 				return 1
 
+			'Check if ALT + T was hit == testing!'
+#			if (theKey == int(InputTypes.KB_T)
+#			and self.eventMgr.bAlt):
+#				message = "Civ / Civic %i %i %i" % (0, 0, self.CIVCivics[0])
+#				CyInterface().addMessage(CyGame().getActivePlayer(), True, 10, message, None, 2, None, ColorTypes(8), 0, 0, False, False)
+
+#				self.storeStuff()
+#				return 1
+
+			'Check if ALT + T was hit == testing!'
+			if (theKey == int(InputTypes.KB_T)
+			and self.eventMgr.bAlt):
+				for i in range(0, 126):   #range(0,1000000):
+					ci = gc.getColorInfo(i)
+					ci2 = "XML Val %i %s" % (i, ci.getXmlVal())
+					print ci2
+
+
 	def onLoadGame(self, argsList):
 		self.bHumanPlaying = True
 		self.bHumanEndTurn = False
@@ -621,6 +639,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 		if (AutologOpt.isLogTribalVillage()):
 			iPlayer, pPlot, pUnit, iGoodyType = argsList
 			if iPlayer == CyGame().getActivePlayer():
+				iInhabitedFirstKey = 12
 				GoodyTypeMap = {
 						-1: BugUtil.getPlainText("TXT_KEY_AUTOLOG_VILLAGE_RESULT_NOTHING"),
 						0:	BugUtil.getPlainText("TXT_KEY_AUTOLOG_VILLAGE_RESULT_LITTLEGOLD"),
@@ -634,9 +653,19 @@ class AutoLogEvent(AbstractAutoLogEvent):
 						8:	BugUtil.getPlainText("TXT_KEY_AUTOLOG_VILLAGE_RESULT_HEALING"),
 						9:	BugUtil.getPlainText("TXT_KEY_AUTOLOG_VILLAGE_RESULT_TECH"),
 						10:	BugUtil.getPlainText("TXT_KEY_AUTOLOG_VILLAGE_RESULT_WEAKHOSTILES"),
-						11: BugUtil.getPlainText("TXT_KEY_AUTOLOG_VILLAGE_RESULT_STRONGHOSTILES")
+						11: BugUtil.getPlainText("TXT_KEY_AUTOLOG_VILLAGE_RESULT_STRONGHOSTILES"),
+						12: BugUtil.getPlainText("TXT_KEY_AUTOLOG_VILLAGE_RESULT_TECH"),
+						13: BugUtil.getPlainText("TXT_KEY_AUTOLOG_VILLAGE_RESULT_MAP"),
+						14: BugUtil.getPlainText("TXT_KEY_AUTOLOG_VILLAGE_RESULT_LITTLEGOLD"),
+						15: BugUtil.getPlainText("TXT_KEY_AUTOLOG_VILLAGE_RESULT_LOTSOFGOLD"),
+						16: BugUtil.getPlainText("TXT_KEY_AUTOLOG_ALIEN_RESULT_GIFT_CITY"),
+						17: BugUtil.getPlainText("TXT_KEY_AUTOLOG_ALIEN_RESULT_SHOT_DOWN"),
+						18: BugUtil.getPlainText("TXT_KEY_AUTOLOG_ALIEN_RESULT_NEWCIV")
 					}
-				message = BugUtil.getText("TXT_KEY_AUTOLOG_VILLAGE_RESULT", (GoodyTypeMap[iGoodyType], ))
+				sMessage = "TXT_KEY_AUTOLOG_VILLAGE_RESULT"
+				if iGoodyType >= iInhabitedFirstKey :
+					sMessage = "TXT_KEY_AUTOLOG_ALIEN_RESULT"
+				message = BugUtil.getText(sMessage, (GoodyTypeMap[iGoodyType], ))
 				Logger.writeLog(message, vColor="Brown")
 
 	def onGreatPersonBorn(self, argsList):
@@ -1408,9 +1437,9 @@ class AutoLogEvent(AbstractAutoLogEvent):
 	def initStuff(self):
 		#set up variables to hold stuff
 		ziMaxCiv = gc.getGame().countCivPlayersEverAlive()
-
+		self.iNumCivicOptions = gc.getNumCivicOptionInfos() # CivicOption bug fix
 		self.CIVAttitude = [""] * ziMaxCiv * ziMaxCiv
-		self.CIVCivics = [0] * ziMaxCiv * 5
+		self.CIVCivics = [0] * ziMaxCiv * self.iNumCivicOptions # CivicOption bug fix
 		self.CIVReligion = [-1] * ziMaxCiv
 		self.CityWhipCounter = [0] * 1000
 		self.CityConscriptCounter = [0] * 1000
@@ -1436,8 +1465,8 @@ class AutoLogEvent(AbstractAutoLogEvent):
 		# store the civ's civics
 		for iCiv in range(0, ziMaxCiv, 1):
 			if PyPlayer(iCiv).isAlive():
-				for iCivic in range(0, 5, 1):
-					zKey = 5 * iCiv + iCivic
+				for iCivic in range(0, self.iNumCivicOptions, 1): # CivicOption bug fix
+					zKey = self.iNumCivicOptions * iCiv + iCivic # CivicOption bug fix
 					self.CIVCivics[zKey] = gc.getPlayer(iCiv).getCivics(iCivic)
 
 		return 0
@@ -1500,8 +1529,8 @@ class AutoLogEvent(AbstractAutoLogEvent):
 				zsCiv = gc.getPlayer(iCiv).getName() + "(" + gc.getPlayer(iCiv).getCivilizationShortDescription(0) + ")"
 				if (PyPlayer(iCiv).isAlive()
 				and gc.getTeam(gc.getPlayer(iCiv).getTeam()).isHasMet(gc.getActivePlayer().getTeam())):
-					for iCivic in range(0, 5, 1):
-						zKey = 5 * iCiv + iCivic
+					for iCivic in range(0, self.iNumCivicOptions, 1): # CivicOption bug fix
+						zKey = self.iNumCivicOptions * iCiv + iCivic # CivicOption bug fix
 						if (self.CIVCivics[zKey] != gc.getPlayer(iCiv).getCivics(iCivic)):
 							zsOldCiv = gc.getCivicInfo(self.CIVCivics[zKey]).getDescription()
 							zsNewCiv = gc.getCivicInfo(gc.getPlayer(iCiv).getCivics(iCivic)).getDescription()
@@ -1546,8 +1575,8 @@ class AutoLogEvent(AbstractAutoLogEvent):
 		# dump civ's civics
 		for iCiv in range(0, ziMaxCiv, 1):
 			zsCiv = gc.getPlayer(iCiv).getCivilizationShortDescription(0)
-			for iCivic in range(0, 5, 1):
-				zKey = 5 * iCiv + iCivic
+			for iCivic in range(0, self.iNumCivicOptions, 1): # CivicOption bug fix
+				zKey = self.iNumCivicOptions * iCiv + iCivic # CivicOption bug fix
 				zsOldCiv = gc.getCivicInfo(self.CIVCivics[zKey]).getDescription()
 				zsNewCiv = gc.getCivicInfo(gc.getPlayer(iCiv).getCivics(iCivic)).getDescription()
 				message = "Civics, %s, %s, %s" % (zsCiv, zsOldCiv, zsNewCiv)

@@ -1361,7 +1361,10 @@ class CvInfoScreen:
 	def getHealthValue(self, pPlayer):
 		iGood = pPlayer.calculateTotalCityHealthiness()
 		iBad = pPlayer.calculateTotalCityUnhealthiness()
-		return (iGood * 100) / max(1, iGood + iBad)	 
+		# The existing "average lifespan" numbers thrown out by this algorithm don't seem quite "realistic" in the future.
+		# So let's fudge them a bit. --TC01
+		spaceFudgeFactor = 1.5
+		return int(iGood * 100 * spaceFudgeFactor) / max(1, iGood + iBad)	 
 		
 	def getRank(self, aiGroup):
 		aiGroup.sort()
@@ -1459,7 +1462,12 @@ class CvInfoScreen:
 					iMilitaryGameAverage += iValue
 				aiGroupMilitary.append((iValue, iPlayerLoop))
 
-				iValue = pCurrPlayer.getTotalLand() * 1000
+				# Changed, by TC01: Final Frontier Plus: because why not?
+				# With lots of handwaving: rough min dist b/w stars = 5 plots
+				# Furthest "close stars" to our Sun = ~15 ly
+				# 1 plot length = 3 ly, surface area = 9 ly, volume = 27 ly
+				# Round that up to 30 ly and give units in volume
+				iValue = pCurrPlayer.getTotalLand() * 30
 				if iPlayerLoop == self.iActivePlayer:
 					iLandArea = iValue
 				else:

@@ -1137,7 +1137,7 @@ class CvVictoryScreen:
 						if (gc.getProjectInfo(i).getVictoryThreshold(iLoopVC) > 0):
 							if not self.isApolloBuilt():
 								iRow = screen.appendTableRow(szTable)
-								screen.setTableText(szTable, 0, iRow, localText.getText("TXT_KEY_PROJECT_APOLLO_PROGRAM", ()), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+								screen.setTableText(szTable, 0, iRow, localText.getText("TXT_KEY_PROJECT_ASTRAL_GATE_DESIGN", ()), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY) # FFP - Astral Gate Design, not Apollo Program
 								screen.setTableText(szTable, 2, iRow, activePlayer.getTeam().getName() + ":", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 								screen.setTableText(szTable, 3, iRow, localText.getText("TXT_KEY_VICTORY_SCREEN_NOT_BUILT", ()), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 								bEntriesFound = True
@@ -1146,7 +1146,7 @@ class CvVictoryScreen:
 								if not bApolloShown:
 									bApolloShown = True
 									iRow = screen.appendTableRow(szTable)
-									screen.setTableText(szTable, 0, iRow, localText.getText("TXT_KEY_PROJECT_APOLLO_PROGRAM", ()), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+									screen.setTableText(szTable, 0, iRow, localText.getText("TXT_KEY_PROJECT_ASTRAL_GATE_DESIGN", ()), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY) # FFP - Astral Gate Design, not Apollo Program
 
 									if self.isApolloBuiltbyTeam(activePlayer.getTeam()):
 										screen.setTableText(szTable, 2, iRow, localText.getText("TXT_KEY_VICTORY_SCREEN_BUILT", (activePlayer.getTeam().getName(), )), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
@@ -1245,7 +1245,7 @@ class CvVictoryScreen:
 # BUG Additions End
 						
 				#add spaceship button
-				if (bSpaceshipFound):
+				if (False): # FFP - do not provide a spaceship screen button; was if (bSpaceshipFound)
 					screen.setButtonGFC("SpaceShipButton" + str(iLoopVC), localText.getText("TXT_KEY_GLOBELAYER_STRATEGY_VIEW", ()), "", 0, 0, 15, 10, WidgetTypes.WIDGET_GENERAL, self.SPACESHIP_SCREEN_BUTTON, -1, ButtonStyles.BUTTON_STYLE_STANDARD )
 					screen.attachControlToTableCell("SpaceShipButton" + str(iLoopVC), szTable, iVictoryTitleRow, 1)
 					
@@ -1533,23 +1533,40 @@ class CvVictoryScreen:
 #			print sString
 #			return self.ApolloTeamCheckResult[iTeam]
 
-		for i in range(gc.getNumProjectInfos()):
-			component = gc.getProjectInfo(i)
-			if (component.isSpaceship()):
-				bApollo = True
-				for j in range(gc.getNumProjectInfos()):
-					if(vTeam.getProjectCount(j) < component.getProjectsNeeded(j)):
-						bApollo = False
-#					sString = "2: %s %s %i %i %s" % (component.getDescription(), gc.getProjectInfo(j).getDescription(), vTeam.getProjectCount(j), component.getProjectsNeeded(j), bApollo)
-#					print sString
+# FFP: new check for enabling project completion
+		iDesign = gc.getInfoTypeForString("PROJECT_ASTRAL_GATE_DESIGN")
+		pDesign = gc.getProjectInfo(iDesign)
+		if vTeam.getProjectCount(iDesign) ==  pDesign.getMaxTeamInstances():
+			# could have just used "== 1", or "> 0"
+			self.ApolloTeamCheckResult[iTeam] = True
+			self.ApolloTeamsChecked.add(iTeam)
+			return True			
 
-#				sString = "2: %s %s" % (component.getDescription(), bApollo)
-#				print sString
-				if bApollo:
-					self.ApolloTeamCheckResult[iTeam] = True
-					self.ApolloTeamsChecked.add(iTeam)
-					return True
-				break
+# FFP: as spiffy as the following commented out code was as a method of determining
+#	if the prereq project had been built, it required the bSpaceship flag
+#	to be set on the components you need to build for victory (the Astral Gate Piece,
+#	in our case), which caused the default event handler for the projectBuilt event
+#	to show the spaceship screen. So this is changed up above to just check for
+#	completion of our specific prereq project, PROJECT_ASTRAL_GATE_DESIGN.
+#
+#		for i in range(gc.getNumProjectInfos()):
+#			component = gc.getProjectInfo(i)
+#
+#			if (component.isSpaceship()):
+#				bApollo = True
+#				for j in range(gc.getNumProjectInfos()):
+#					if(vTeam.getProjectCount(j) < component.getProjectsNeeded(j)):
+#						bApollo = False
+##					sString = "2: %s %s %i %i %s" % (component.getDescription(), gc.getProjectInfo(j).getDescription(), vTeam.getProjectCount(j), component.getProjectsNeeded(j), bApollo)
+##					print sString
+#
+##				sString = "2: %s %s" % (component.getDescription(), bApollo)
+##				print sString
+#				if bApollo:
+#					self.ApolloTeamCheckResult[iTeam] = True
+#					self.ApolloTeamsChecked.add(iTeam)
+#					return True
+#				break
 
 		self.ApolloTeamCheckResult[iTeam] = False
 		self.ApolloTeamsChecked.add(iTeam)

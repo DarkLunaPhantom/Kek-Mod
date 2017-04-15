@@ -1,8 +1,13 @@
+# FFPBUG version
 from CvPythonExtensions import *
 import os
 import sys
 import CvUtil
 from array import *
+
+from CvSolarSystem import *
+
+from CvPythonExtensions import CyReplayInfo		#Added in Final Frontier Worldbuilder: TC01
 
 # globals
 gc = CyGlobalContext()
@@ -141,7 +146,12 @@ class CvGameDesc:
 
 		f.write("\tStartYear=%d\n" %(gc.getGame().getStartYear(),))
 		f.write("\tDescription=%s\n" % (self.szDescription,))
-		f.write("\tModPath=%s\n" % (self.szModPath,))
+#Added in Final Frontier Worldbuilder: TC01
+		replay = CyReplayInfo()
+		replay.createInfo(0)
+		szModPath = replay.getModName()
+		f.write("\tModPath=%s\n" % (szModPath,))
+#End of Final Frontier Worldbuilder
 		f.write("EndGame\n")
 
 	def read(self, f):
@@ -937,7 +947,7 @@ class CvUnitDesc:
 
 			v = parser.findTokenValue(toks, "UnitName")
 			if (v != -1):
-				self.szName = v.decode(fileencoding)
+				self.szName = v.decode('unicode_escape') #FFPBUG: was (fileencoding), current version preserves delta & omega symbols
 				continue
 
 			v = parser.findTokenValue(toks, "LeaderUnitType")
@@ -1098,6 +1108,29 @@ class CvCityDesc:
 		self.lFreeBonus = []
 		self.lNoBonus = []
 
+#Added in Final Frontier Worldbuilder: TC01
+		self.planet1Population = -1
+		self.planet2Population = -1
+		self.planet3Population = -1
+		self.planet4Population = -1
+		self.planet5Population = -1
+		self.planet6Population = -1
+		self.planet7Population = -1
+		self.planet8Population = -1
+		
+		self.iSelectedPlanet = -1
+		self.iBuildingPlanetRing = -1
+
+		self.planet1BldgType = []
+		self.planet2BldgType = []
+		self.planet3BldgType = []
+		self.planet4BldgType = []
+		self.planet5BldgType = []
+		self.planet6BldgType = []
+		self.planet7BldgType = []
+		self.planet8BldgType = []
+#End of Final Frontier Worldbuilder
+
 	def write(self, f, plot):
 		"write out city data"
 		city = plot.getPlotCity()
@@ -1106,6 +1139,28 @@ class CvCityDesc:
 		f.write("\t\tCityOwner=%d, (%s)\n" %(city.getOwner(), gc.getPlayer(city.getOwner()).getName().encode(fileencoding)))
 		f.write("\t\tCityName=%s\n" %(city.getName().encode(fileencoding),))
 		f.write("\t\tCityPopulation=%d\n" %(city.getPopulation(),))
+#Added in Final Frontier Worldbuilder: TC01
+#		FinalFrontier = CvEventInterface.getEventManager().FinalFrontier #FFPBUG
+		pSystem = getSystemAt(city.getX(), city.getY())
+		for iPlanetPopLoop in range(pSystem.getNumPlanets()):
+			pPlanet = pSystem.getPlanetByIndex(iPlanetPopLoop)
+			if iPlanetPopLoop == 0:
+				f.write("\t\tPlanet1Population=%d\n" % (pPlanet.getPopulation()))
+			if iPlanetPopLoop == 1:
+				f.write("\t\tPlanet2Population=%d\n" % (pPlanet.getPopulation()))
+			if iPlanetPopLoop == 2:
+				f.write("\t\tPlanet3Population=%d\n" % (pPlanet.getPopulation()))
+			if iPlanetPopLoop == 3:
+				f.write("\t\tPlanet4Population=%d\n" % (pPlanet.getPopulation()))
+			if iPlanetPopLoop == 4:
+				f.write("\t\tPlanet5Population=%d\n" % (pPlanet.getPopulation()))
+			if iPlanetPopLoop == 5:
+				f.write("\t\tPlanet6Population=%d\n" % (pPlanet.getPopulation()))
+			if iPlanetPopLoop == 6:
+				f.write("\t\tPlanet7Population=%d\n" % (pPlanet.getPopulation()))
+			if iPlanetPopLoop == 7:
+				f.write("\t\tPlanet8Population=%d\n" % (pPlanet.getPopulation()))
+#End of Final Frontier Worldbuilder
 		if (city.isProductionUnit()):
 			f.write("\t\tProductionUnit=%s\n" %(gc.getUnitInfo(city.getProductionUnit()).getType(),))
 		elif (city.isProductionBuilding()):
@@ -1114,10 +1169,51 @@ class CvCityDesc:
 			f.write("\t\tProductionProject=%s\n" %(gc.getProjectInfo(city.getProductionProject()).getType(),))
 		elif (city.isProductionProcess()):
 			f.write("\t\tProductionProcess=%s\n" %(gc.getProcessInfo(city.getProductionProcess()).getType(),))
+			
+#Added in Final Frontier Worldbuilder: TC01
+		f.write("\t\tSelectedPlanet= %d\n" % (pSystem.getSelectedPlanet()))
+		f.write("\t\tBuildingPlanetRing = %d\n" % (pSystem.getBuildingPlanetRing()))
+#End of Final Frontier Worldbuilder: TC01
 
 		for iI in range(gc.getNumBuildingInfos()):
 			if city.getNumRealBuilding(iI) > 0:
 				f.write("\t\tBuildingType=%s\n" %(gc.getBuildingInfo(iI).getType()))
+#Added in Final Frontier Worldbuilder: TC01
+		for iPlanetLoop in range(pSystem.getNumPlanets()):
+			pPlanet = pSystem.getPlanetByIndex(iPlanetLoop)
+			if iPlanetLoop == 0:
+				for iBuildingLoop in range(gc.getNumBuildingInfos()):
+					if pPlanet.isHasBuilding(iBuildingLoop):
+						f.write("\t\tPlanet1BuildingType=%s\n" %(gc.getBuildingInfo(iBuildingLoop).getType()))
+			if iPlanetLoop == 1:
+				for iBuildingLoop in range(gc.getNumBuildingInfos()):
+					if pPlanet.isHasBuilding(iBuildingLoop):
+						f.write("\t\tPlanet2BuildingType=%s\n" %(gc.getBuildingInfo(iBuildingLoop).getType()))
+			if iPlanetLoop == 2:
+				for iBuildingLoop in range(gc.getNumBuildingInfos()):
+					if pPlanet.isHasBuilding(iBuildingLoop):
+						f.write("\t\tPlanet3BuildingType=%s\n" %(gc.getBuildingInfo(iBuildingLoop).getType()))
+			if iPlanetLoop == 3:
+				for iBuildingLoop in range(gc.getNumBuildingInfos()):
+					if pPlanet.isHasBuilding(iBuildingLoop):
+						f.write("\t\tPlanet4BuildingType=%s\n" %(gc.getBuildingInfo(iBuildingLoop).getType()))
+			if iPlanetLoop == 4:
+				for iBuildingLoop in range(gc.getNumBuildingInfos()):
+					if pPlanet.isHasBuilding(iBuildingLoop):
+						f.write("\t\tPlanet5BuildingType=%s\n" %(gc.getBuildingInfo(iBuildingLoop).getType()))
+			if iPlanetLoop == 5:
+				for iBuildingLoop in range(gc.getNumBuildingInfos()):
+					if pPlanet.isHasBuilding(iBuildingLoop):
+						f.write("\t\tPlanet6BuildingType=%s\n" %(gc.getBuildingInfo(iBuildingLoop).getType()))
+			if iPlanetLoop == 6:
+				for iBuildingLoop in range(gc.getNumBuildingInfos()):
+					if pPlanet.isHasBuilding(iBuildingLoop):
+						f.write("\t\tPlanet7BuildingType=%s\n" %(gc.getBuildingInfo(iBuildingLoop).getType()))
+			if iPlanetLoop == 7:
+				for iBuildingLoop in range(gc.getNumBuildingInfos()):
+					if pPlanet.isHasBuilding(iBuildingLoop):
+						f.write("\t\tPlanet8BuildingType=%s\n" %(gc.getBuildingInfo(iBuildingLoop).getType()))
+#End of Final Frontier Worldbuilder	
 
 		for iI in range(gc.getNumReligionInfos()):
 			if city.isHasReligion(iI):
@@ -1201,6 +1297,51 @@ class CvCityDesc:
 				self.population = (int(v))
 				continue
 
+#Added in Final Frontier Worldbuilder: TC01:
+			v=parser.findTokenValue(toks, "Planet1Population")
+			if v!=-1:
+				self.planet1Population = (int(v))
+				continue
+			v=parser.findTokenValue(toks, "Planet2Population")
+			if v!=-1:
+				self.planet2Population = (int(v))
+				continue
+			v=parser.findTokenValue(toks, "Planet3Population")
+			if v!=-1:
+				self.planet3Population = (int(v))
+				continue
+			v=parser.findTokenValue(toks, "Planet4Population")
+			if v!=-1:
+				self.planet4Population = (int(v))
+				continue
+			v=parser.findTokenValue(toks, "Planet5Population")
+			if v!=-1:
+				self.planet5Population = (int(v))
+				continue
+			v=parser.findTokenValue(toks, "Planet6Population")
+			if v!=-1:
+				self.planet6Population = (int(v))
+				continue
+			v=parser.findTokenValue(toks, "Planet7Population")
+			if v!=-1:
+				self.planet7Population = (int(v))
+				continue
+			v=parser.findTokenValue(toks, "Planet8Population")
+			if v!=-1:
+				self.planet8Population = v
+				continue
+				
+			v=parser.findTokenValue(toks, "SelectedPlanet")
+			if v!=-1:
+				self.iSelectedPlanet = v
+				continue
+
+			v=parser.findTokenValue(toks, "BuildingPlanetRing")
+			if v!=-1:
+				self.iBuildingPlanetRing = v
+				continue
+#End of Final Frontier Worldbuilder
+
 			# City - Production Unit
 			v=parser.findTokenValue(toks, "ProductionUnit")
 			if v!=-1:
@@ -1230,6 +1371,41 @@ class CvCityDesc:
 			if v!=-1:
 				self.bldgType.append(v)
 				continue
+
+#Added in Final Frontier Worldbuilder: TC01:
+			v=parser.findTokenValue(toks, "Planet1BuildingType")
+			if v!=-1:
+				self.planet1BldgType.append(v)
+				continue
+			v=parser.findTokenValue(toks, "Planet2BuildingType")
+			if v!=-1:
+				self.planet2BldgType.append(v)
+				continue
+			v=parser.findTokenValue(toks, "Planet3BuildingType")
+			if v!=-1:
+				self.planet3BldgType.append(v)
+				continue
+			v=parser.findTokenValue(toks, "Planet4BuildingType")
+			if v!=-1:
+				self.planet4BldgType.append(v)
+				continue
+			v=parser.findTokenValue(toks, "Planet5BuildingType")
+			if v!=-1:
+				self.planet5BldgType.append(v)
+				continue
+			v=parser.findTokenValue(toks, "Planet6BuildingType")
+			if v!=-1:
+				self.planet6BldgType.append(v)
+				continue
+			v=parser.findTokenValue(toks, "Planet7BuildingType")
+			if v!=-1:
+				self.planet7BldgType.append(v)
+				continue
+			v=parser.findTokenValue(toks, "Planet8BuildingType")
+			if v!=-1:
+				self.planet8BldgType.append(v)
+				continue
+#End of Final Frontier Worldbuilder
 
 			# City - Religions
 			v=parser.findTokenValue(toks, "ReligionType")
@@ -1340,16 +1516,130 @@ class CvCityDesc:
 
 		if (self.name != None):
 			self.city.setName(self.name, False)
+			
+#Added in Final Frontier Worldbuilder: TC01
+#		FinalFrontier = CvEventInterface.getEventManager().FinalFrontier #FFPBUG - data is no longer on the event manager - is is global data in CvSolarSystem (which is "*" imported into the local namespace)
+		pSystem = getSystemAt(self.city.getX(), self.city.getY())
+		iNumPlanets = pSystem.getNumPlanets()
+#End of Final Frontier Worldbuilder
 
 		if self.population > -1:
 			self.city.setPopulation(self.population)
+#Added in Final Frontier Worldbuilder: TC01
+			if not iNumPlanets <= 7:
+				if not self.planet8Population == -1:
+					pSystem.getPlanetByIndex(7).setPopulation(self.planet8Population)
+			if not iNumPlanets <= 6:
+				if not self.planet7Population == -1:
+					pSystem.getPlanetByIndex(6).setPopulation(self.planet7Population)
+			if not iNumPlanets <= 5:
+				if not self.planet6Population == -1:
+					pSystem.getPlanetByIndex(5).setPopulation(self.planet6Population)
+			if not iNumPlanets <= 4:
+				if not self.planet5Population == -1:
+					pSystem.getPlanetByIndex(4).setPopulation(self.planet5Population)
+			if not iNumPlanets <= 3:
+				if not self.planet4Population == -1:
+					pSystem.getPlanetByIndex(3).setPopulation(self.planet4Population)
+			if not iNumPlanets <= 2:
+				if not self.planet3Population == -1:
+					pSystem.getPlanetByIndex(2).setPopulation(self.planet3Population)
+			if not iNumPlanets <= 1:
+				if not self.planet2Population == -1:
+					pSystem.getPlanetByIndex(1).setPopulation(self.planet2Population)
+			if not self.planet1Population == -1:
+				pSystem.getPlanetByIndex(0).setPopulation(self.planet1Population)
+#End of Final Frontier Worldbuilder
 
 		for item in self.lCulture:
 			self.city.setCulture(item[0], item[1], true)
+			
+#Added in Final Frontier Worldbuilder: TC01
+			if self.iSelectedPlanet != -1:
+				pSystem.setSelectedPlanet(self.iSelectedPlanet)
+			if self.iBuildingPlanetRing != -1:
+				pSystem.setBuildingPlanetRing(self.iBuildingPlanetRing)
+#End of Final Frontier Worldbuilder
 
 		for bldg in (self.bldgType):
 			bldgTypeNum = CvUtil.findInfoTypeNum(gc.getBuildingInfo, gc.getNumBuildingInfos(), bldg)
 			self.city.setNumRealBuilding(bldgTypeNum, 1)
+#Changed in Final Frontier Worldbuilder: TC01
+			iNumBuilding = 0
+			if not iNumPlanets <= 7:
+				for planet8Bldg in (self.planet8BldgType):
+					iBuilding = gc.getInfoTypeForString(planet8Bldg)
+					if iBuilding == bldgTypeNum:
+						iNumBuilding += 1
+			if not iNumPlanets <= 6:
+				for planet7Bldg in (self.planet7BldgType):
+					iBuilding = gc.getInfoTypeForString(planet7Bldg)
+					if iBuilding == bldgTypeNum:
+						iNumBuilding += 1
+			if not iNumPlanets <= 5:
+				for planet6Bldg in (self.planet6BldgType):
+					iBuilding = gc.getInfoTypeForString(planet6Bldg)
+					if iBuilding == bldgTypeNum:
+						iNumBuilding += 1
+			if not iNumPlanets <= 4:
+				for planet5Bldg in (self.planet5BldgType):
+					iBuilding = gc.getInfoTypeForString(planet5Bldg)
+					if iBuilding == bldgTypeNum:
+						iNumBuilding += 1
+			if not iNumPlanets <= 3:
+				for planet4Bldg in (self.planet4BldgType):
+					iBuilding = gc.getInfoTypeForString(planet4Bldg)
+					if iBuilding == bldgTypeNum:
+						iNumBuilding += 1
+			if not iNumPlanets <= 2:
+				for planet3Bldg in (self.planet3BldgType):
+					iBuilding = gc.getInfoTypeForString(planet3Bldg)
+					if iBuilding == bldgTypeNum:
+						iNumBuilding += 1
+			if not iNumPlanets <= 1:
+				for planet2Bldg in (self.planet2BldgType):
+					iBuilding = gc.getInfoTypeForString(planet2Bldg)
+					if iBuilding == bldgTypeNum:
+						iNumBuilding += 1
+			for planet1Bldg in (self.planet1BldgType):
+				iBuilding = gc.getInfoTypeForString(planet1Bldg)
+				if iBuilding == bldgTypeNum:
+					iNumBuilding += 1
+
+			self.city.setNumRealBuilding(bldgTypeNum, iNumBuilding)
+
+		if not iNumPlanets <= 7:
+			for planet8Bldg in (self.planet8BldgType):
+				iBuilding = gc.getInfoTypeForString(planet8Bldg)
+				pSystem.getPlanetByIndex(7).setHasBuilding(iBuilding, true)
+		if not iNumPlanets <= 6:
+			for planet7Bldg in (self.planet7BldgType):
+				iBuilding = gc.getInfoTypeForString(planet7Bldg)
+				pSystem.getPlanetByIndex(6).setHasBuilding(iBuilding, true) # Bug fix: was using index of 8
+		if not iNumPlanets <= 5:
+			for planet6Bldg in (self.planet6BldgType):
+				iBuilding = gc.getInfoTypeForString(planet6Bldg)
+				pSystem.getPlanetByIndex(5).setHasBuilding(iBuilding, true)
+		if not iNumPlanets <= 4:
+			for planet5Bldg in (self.planet5BldgType):
+				iBuilding = gc.getInfoTypeForString(planet5Bldg)
+				pSystem.getPlanetByIndex(4).setHasBuilding(iBuilding, true)
+		if not iNumPlanets <= 3:
+			for planet4Bldg in (self.planet4BldgType):
+				iBuilding = gc.getInfoTypeForString(planet4Bldg)
+				pSystem.getPlanetByIndex(3).setHasBuilding(iBuilding, true)
+		if not iNumPlanets <= 2:
+			for planet3Bldg in (self.planet3BldgType):
+				iBuilding = gc.getInfoTypeForString(planet3Bldg)
+				pSystem.getPlanetByIndex(2).setHasBuilding(iBuilding, true)
+		if not iNumPlanets <= 1:
+			for planet2Bldg in (self.planet2BldgType):
+				iBuilding = gc.getInfoTypeForString(planet2Bldg)
+				pSystem.getPlanetByIndex(1).setHasBuilding(iBuilding, true)
+		for planet1Bldg in (self.planet1BldgType):
+			iBuilding = gc.getInfoTypeForString(planet1Bldg)
+			pSystem.getPlanetByIndex(0).setHasBuilding(iBuilding, true)
+#End of Final Frontier Worldbuilder
 
 		for religion in (self.religions):
 			religionTypeNum = CvUtil.findInfoTypeNum(gc.getReligionInfo, gc.getNumReligionInfos(), religion)
@@ -1436,6 +1726,16 @@ class CvPlotDesc:
 		self.abTeamPlotRevealed = []
 		self.lCulture = []
 
+		self.szStarType = ""
+		self.iNumPlanets = 0
+		self.aszPlanetType = []
+		self.aiOrbitRing = []
+		self.aiPlanetSize = []
+		self.aiMoon = []
+		self.aiRings = []
+		self.aszPlanetName = []		#Added in Final Frontier Worldbuilder: TC01
+		self.aiBonusType = []		#Added in Final Frontier Worldbuilder: TC01
+
 	def needToWritePlot(self, plot):
 		"returns true if this plot needs to be written out."
 		return True
@@ -1476,6 +1776,30 @@ class CvPlotDesc:
 		if (plot.getFeatureType()!=-1):
 			f.write("\tFeatureType=%s, FeatureVariety=%d\n"
 			%(gc.getFeatureInfo(plot.getFeatureType()).getType(), plot.getFeatureVariety(), ) )
+			if (gc.getFeatureInfo(plot.getFeatureType()).getType() == 'FEATURE_SOLAR_SYSTEM'):
+				
+#				FinalFrontier = CvEventInterface.getEventManager().FinalFrontier #FFPBUG
+				
+				pSystem = getSystemAt(plot.getX(), plot.getY())
+				
+				szStarType = aszSunTypeNames[pSystem.getSunType()]
+				f.write("\t\tStarType=%s\n" %(szStarType))
+				
+				# Loop through all planets in this system
+				for iPlanetLoop in range(pSystem.getNumPlanets()):
+					pPlanet = pSystem.getPlanetByIndex(iPlanetLoop)
+					
+					szPlanetType = aszPlanetTypeNames[pPlanet.getPlanetType()]
+				
+#Changed in Final Frontier Worldbuilder: TC01
+					szPlanetType = szPlanetType.encode(fileencoding)
+					szPlanetName = pPlanet.getName().encode(fileencoding)
+					if pPlanet.getBonusType() != -1:
+						szBonusType = gc.getBonusInfo(pPlanet.getBonusType()).getType()
+					else:
+						szBonusType = "NO_BONUS"
+					f.write("\t\tPlanetType=%s, OrbitRing=%d, PlanetSize=%d, HasMoon=%d, HasRings=%d, PlanetName=%s, PlanetBonusType=%s\n" %(szPlanetType, pPlanet.getOrbitRing(), pPlanet.getPlanetSize(), pPlanet.isMoon(), pPlanet.isRings(), szPlanetName, szBonusType))
+#End of Final Frontier Worldbuilder
 		if (plot.getRouteType()!=-1):
 			f.write("\tRouteType=%s\n" %(gc.getRouteInfo(plot.getRouteType()).getType()) )
 		if (plot.getTerrainType()!=-1):
@@ -1583,6 +1907,49 @@ class CvPlotDesc:
 					self.featureVariety = int(v)
 				continue
 
+			if (self.featureType == 'FEATURE_SOLAR_SYSTEM'):
+				
+				v = parser.findTokenValue(toks, "StarType")
+				if v!=-1:
+					self.szStarType = v
+					continue
+				
+				v = parser.findTokenValue(toks, "PlanetType")
+				if v!=-1:
+#Changed in Final Frontier Plus: TC01 (uses decode() function now)
+					szV = v.decode(fileencoding)
+					self.aszPlanetType.append(szV)
+#End of Final Frontier Plus changes
+					self.iNumPlanets += 1
+				
+				v = parser.findTokenValue(toks, "OrbitRing")
+				if v!=-1:
+					self.aiOrbitRing.append(int(v))
+				
+				v = parser.findTokenValue(toks, "PlanetSize")
+				if v!=-1:
+					self.aiPlanetSize.append(int(v))
+				
+				v = parser.findTokenValue(toks, "HasMoon")
+				if v!=-1:
+					self.aiMoon.append(int(v))
+				
+				v = parser.findTokenValue(toks, "HasRings")
+				if v!=-1:
+					self.aiRings.append(int(v))
+
+#Added in Final Frontier Worldbuilder: TC01
+				v = parser.findTokenValue(toks, "PlanetName")
+				if v!=-1:
+					szV = v.decode(fileencoding)		#decode() all strings in this file...
+					self.aszPlanetName.append(szV)
+				
+				v = parser.findTokenValue(toks, "PlanetBonusType")
+				if v!=-1:
+					self.aiBonusType.append(gc.getInfoTypeForString(v))
+					continue
+#End of Final Frontier Worldbuilder
+
 			v = parser.findTokenValue(toks, "RouteType")
 			if v!=-1:
 				self.routeType = v
@@ -1652,6 +2019,25 @@ class CvPlotDesc:
 		if (self.featureType):
 			featureTypeNum = CvUtil.findInfoTypeNum(gc.getFeatureInfo, gc.getNumFeatureInfos(), self.featureType)
 			plot.setFeatureType(featureTypeNum, self.featureVariety)
+#Added in Final Frontier Worldbuilder: TC01
+			if plot.getFeatureType() == gc.getInfoTypeForString('FEATURE_SOLAR_SYSTEM'):
+#				FinalFrontier = CvEventInterface.getEventManager().FinalFrontier #FFPBUG
+				iSunType = getStarIndexFromTag(self.szStarType)
+				pSystem = CvSystem(self.iX, self.iY, iSunType)
+				for iPlanetLoop in range(self.iNumPlanets):
+					iPlanetType = getPlanetIndexFromTag(self.aszPlanetType[iPlanetLoop])
+					iPlanetSize = self.aiPlanetSize[iPlanetLoop]
+					iOrbitRing = self.aiOrbitRing[iPlanetLoop]
+					iMoon = self.aiMoon[iPlanetLoop]
+					iRings = self.aiRings[iPlanetLoop]
+					szPlanetName = self.aszPlanetName[iPlanetLoop]
+					iBonus = self.aiBonusType[iPlanetLoop]
+					pSystem.addPlanet(iPlanetType, iPlanetSize, iOrbitRing, iMoon, iRings)
+					pPlanet = pSystem.getPlanet(iOrbitRing)
+					pPlanet.setName(szPlanetName)
+					pPlanet.setBonusType(iBonus)
+				addSystem(pSystem) #FFPBUG
+#End of Final Frontier Worldbuilder
 		if (self.routeType):
 			routeTypeNum = CvUtil.findInfoTypeNum(gc.getRouteInfo, gc.getNumRouteInfos(), self.routeType)
 			plot.setRouteType(routeTypeNum)
@@ -1928,6 +2314,11 @@ class CvWBDesc:
 		CyMap().recalculateAreas()
 
 		print "apply plots"
+#Added in Final Frontier Worldbuilder: TC01
+#FFPBUG - this is not necessary anymore
+#		FinalFrontier = CvEventInterface.getEventManager().FinalFrontier #FFPBUG
+#		FinalFrontier.initMembers()
+#End of Final Frontier Worldbuilder
 		for pDesc in self.plotDesc:
 			pDesc.apply()
 
@@ -2123,6 +2514,11 @@ class CvWBDesc:
 		if (version != self.getVersion()):
 			CvUtil.pyPrint("Error: wrong WorldBuilder save version.  Expected %d, got %d" %(self.getVersion(), version))
 			return -1	# failed
+
+		#FF+ Worldbuilder change from God-Emperor
+		#Fix for FFPBUG/FF+ 1.72
+		resetSystems()
+		#End FF+ Worldbuilder
 
 		print "Reading game desc"
 		self.gameDesc.read(f)	# read game info

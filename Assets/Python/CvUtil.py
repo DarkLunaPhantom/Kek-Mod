@@ -342,6 +342,16 @@ def combatDetailMessageBuilder(cdUnit, ePlayer, iChange):
 		msg=localText.getText("TXT_KEY_COMBAT_MESSAGE_CLASS_ATTACK",(cdUnit.iClassAttackModifier * iChange,))
 		CyInterface().addCombatMessage(ePlayer,msg)
 
+	# < Unit Combat Attack Defense Mod Start >
+	if (cdUnit.iCombatDefenseModifier != 0):
+		msg=localText.getText("TXT_KEY_COMBAT_MESSAGE_COMBAT_DEFENSE",(cdUnit.iCombatDefenseModifier * iChange,))
+		CyInterface().addCombatMessage(ePlayer,msg)
+
+	if (cdUnit.iCombatAttackModifier != 0):
+		msg=localText.getText("TXT_KEY_COMBAT_MESSAGE_COMBAT_ATTACK",(cdUnit.iCombatAttackModifier * iChange,))
+		CyInterface().addCombatMessage(ePlayer,msg)
+	# < Unit Combat Attack Defense Mod End   >
+
 	if (cdUnit.iCombatModifierT != 0):
 		msg=localText.getText("TXT_KEY_COMBAT_MESSAGE_CLASS_COMBAT",(cdUnit.iCombatModifierT * iChange,))
 		CyInterface().addCombatMessage(ePlayer,msg)

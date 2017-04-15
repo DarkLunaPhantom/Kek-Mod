@@ -49,6 +49,9 @@ AdvisorOpt = BugCore.game.Advisors
 CustDomAdvOpt = BugCore.game.CustDomAdv
 TechWindowOpt = BugCore.game.TechWindow
 
+# Final Frontier
+import CvPlanetInfoScreen
+
 # K-Mod
 import BugOptionsScreen
 def showBugOptionsScreen(argsList=None):
@@ -295,6 +298,10 @@ def showVictoryScreen():
 	if (-1 != CyGame().getActivePlayer()):
 		victoryScreen.interfaceScreen()
 
+planetInfoScreen = CvPlanetInfoScreen.CvPlanetInfoScreen(PLANET_INFO_SCREEN)
+def showPlanetInfoScreen(argsList):
+	planetInfoScreen.interfaceScreen(argsList)
+
 # BUG - Sevopedia - start
 
 pediaMainScreen = None
@@ -353,7 +360,7 @@ def createCivilopedia():
 								SevoScreenEnums.PEDIA_IMPROVEMENTS	: pediaMainScreen,
 								SevoScreenEnums.PEDIA_CIVS		: pediaMainScreen,
 								SevoScreenEnums.PEDIA_LEADERS		: pediaMainScreen,
-								# SevoScreenEnums.PEDIA_TRAITS		: pediaMainScreen,
+								SevoScreenEnums.PEDIA_TRAITS		: pediaMainScreen,
 								SevoScreenEnums.PEDIA_CIVICS		: pediaMainScreen,
 								SevoScreenEnums.PEDIA_RELIGIONS		: pediaMainScreen,
 								SevoScreenEnums.PEDIA_CORPORATIONS	: pediaMainScreen,
@@ -401,7 +408,7 @@ def createCivilopedia():
 							SevoScreenEnums.PEDIA_IMPROVEMENTS	: pediaMainScreen,
 							SevoScreenEnums.PEDIA_CIVS		 	: pediaMainScreen,
 							SevoScreenEnums.PEDIA_LEADERS		: pediaMainScreen,
-							# SevoScreenEnums.PEDIA_TRAITS		: pediaMainScreen,
+							SevoScreenEnums.PEDIA_TRAITS		: pediaMainScreen,
 							SevoScreenEnums.PEDIA_CIVICS		: pediaMainScreen,
 							SevoScreenEnums.PEDIA_RELIGIONS		: pediaMainScreen,
 							SevoScreenEnums.PEDIA_CORPORATIONS	: pediaMainScreen,
@@ -963,6 +970,7 @@ HandleInputMap = {  MAIN_INTERFACE : mainInterface,
 					VICTORY_MOVIE_SCREEN : victoryMovie,
 					ESPIONAGE_ADVISOR : espionageAdvisor,
 					DAN_QUAYLE_SCREEN : danQuayleScreen,
+					PLANET_INFO_SCREEN : planetInfoScreen,
 
 					WORLDBUILDER_SCREEN : worldBuilderScreen,
 

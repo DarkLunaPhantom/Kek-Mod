@@ -25,11 +25,11 @@ class BugGeneralOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.addSpacer(screen, left, "General1")
 		self.createTechSplashPanel(screen, left)
 		self.addSpacer(screen, left, "General2")
-		#self.createLeaderheadPanel(screen, left)
+		self.createLeaderheadPanel(screen, left)
 
-		#self.createAutoSavePanel(screen, center)
+		self.createAutoSavePanel(screen, center)
 		self.addSpacer(screen, center, "General3")
-		#self.createActionsPanel(screen, center)
+		self.createActionsPanel(screen, center)
 
 		self.createInfoPanePanel(screen, center)
 		self.addSpacer(screen, right, "General4")
@@ -91,6 +91,8 @@ class BugGeneralOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.addCheckbox(screen, panel, "MainInterface__GoldRateWarning")
 		self.addCheckbox(screen, panel, "MainInterface__MinMax_Commerce")
 		self.addCheckbox(screen, panel, "MainInterface__ProgressBarsTickMarks")
+		self.addCheckbox(screen, panel, "MainInterface__UnitMovementPointsFraction")
+		self.addCheckbox(screen, panel, "MainInterface__StackMovementPoints")
 		self.addTextDropdown(screen, panel, panel, "MainInterface__BuildIconSize", True)
 		self.addCheckbox(screen, panel, "MainInterface__CityArrows")
 		self.addCheckbox(screen, panel, "MainInterface__RapidUnitCycling")

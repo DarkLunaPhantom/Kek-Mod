@@ -85,6 +85,7 @@ RENAME_EVENT_ID = CvUtil.getNewEventID("UnitNaming.Rename")
 
 gc = CyGlobalContext()
 PyInfo = PyHelpers.PyInfo
+localText = CyTranslator() # FFPBUG
 
 UnitNamingOpt = BugCore.game.UnitNaming
 
@@ -429,8 +430,8 @@ class UnitReName(object):
 			era = Era[4:]
 			unitClass = UnitClass[10:]
 
-			zsUnitNameConv = UnitNamingOpt.getByEraAndClass(era, unitClass)
-
+			sUnitNameRaw = UnitNamingOpt.getByEraAndClass(era, unitClass)  # FFPBUG
+			zsUnitNameConv = localText.getText(sUnitNameRaw, ()) # FFPBUG
 			#BUGPrint("UnitNameEM-iniAdv [" + zsUnitNameConv + "]" + Era + "|" + unitClass + "|" + era + "|" + unitClass +"]")
 		else:
 			#BUGPrint("UnitNameEM-ini0 [isAdvanced-NO]")

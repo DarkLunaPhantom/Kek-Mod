@@ -29,7 +29,7 @@ class CvCivicsScreen:
 		self.BACKGROUND_ID = "CivicsBackground"
 		self.HELP_HEADER_NAME = "CivicsScreenHeaderName"
 
-		self.HEADINGS_WIDTH = 199
+		self.HEADINGS_WIDTH = 250
 		self.HEADINGS_TOP = 70
 		self.HEADINGS_SPACING = 5
 		self.HEADINGS_BOTTOM = 280
@@ -315,8 +315,7 @@ class CvCivicsScreen:
 		screen.setLabel("CivicsRevText", "Background", u"<font=3>" + szText + u"</font>", CvUtil.FONT_CENTER_JUSTIFY, self.X_SCREEN, self.BOTTOM_LINE_TOP + self.TEXT_MARGIN//2, 0, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		# Maintenance		
-		#szText = localText.getText("TXT_KEY_CIVIC_SCREEN_UPKEEP", (activePlayer.getCivicUpkeep(self.m_paeDisplayCivics, True), ))
-		szText = localText.getText("TXT_KEY_CIVIC_SCREEN_UPKEEP", (activePlayer.getCivicUpkeep(self.m_paeDisplayCivics, True)*(100+activePlayer.getInflationRate())/100, )) # K-Mod
+		szText = localText.getText("TXT_KEY_CIVIC_SCREEN_UPKEEP", (activePlayer.getCivicUpkeep(self.m_paeDisplayCivics, True), ))
 		screen.setLabel("CivicsUpkeepText", "Background", u"<font=3>" + szText + u"</font>", CvUtil.FONT_CENTER_JUSTIFY, self.X_SCREEN, self.BOTTOM_LINE_TOP + self.BOTTOM_LINE_HEIGHT - 2 * self.TEXT_MARGIN, 0, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		
 	# Revolution!!!

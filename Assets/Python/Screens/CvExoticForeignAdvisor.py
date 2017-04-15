@@ -32,6 +32,7 @@ import DiplomacyUtil
 import FavoriteCivicDetector
 import FontUtil
 import TradeUtil
+import PlayerUtil		#Added for Final Frontier Plus by TC01 (MFC compatibility)
 
 # globals
 gc = CyGlobalContext()
@@ -510,7 +511,10 @@ class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
 
 				# Don't show favorite civic if playing with Random Personalities.
 				if not gc.getGame().isOption(GameOptionTypes.GAMEOPTION_RANDOM_PERSONALITIES):
-					nFavoriteCivic = objLeaderHead.getFavoriteCivic()
+#Changed for Final Frontier Plus by TC01 (MFC compatibility)
+					#nFavoriteCivic = objLeaderHead.getFavoriteCivic()
+					nFavoriteCivic = PlayerUtil.getFavoriteCivic(iLoopPlayer)
+#End of Final Frontier Plus
 					if (nFavoriteCivic != -1) and (not gc.getGame().isOption(GameOptionTypes.GAMEOPTION_RANDOM_PERSONALITIES)):
 						screen.attachTextGFC(infoPanelName, "", localText.getText("TXT_KEY_PEDIA_FAV_CIVIC", ()) + ":", FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 						objCivicInfo = gc.getCivicInfo (nFavoriteCivic)
@@ -589,7 +593,7 @@ class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
 		lKnownPlayers = []
 		lUnknownPlayers = []
 		for iLoopPlayer in range(gc.getMAX_PLAYERS()):
-			if (iLoopPlayer != self.iActiveLeader):
+			if gc.getPlayer(iLoopPlayer) and gc.getPlayer(iLoopPlayer).isAlive() and (iLoopPlayer != self.iActiveLeader): # bug fix: make sure the player is valid and alive or they may not have a valid team pointer
 				objLoopPlayer = gc.getPlayer(iLoopPlayer)
 				if (self.objActiveTeam.isHasMet(objLoopPlayer.getTeam()) or gc.getGame().isDebugMode()):
 					lKnownPlayers.append(iLoopPlayer)
@@ -709,7 +713,10 @@ class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
 			
 			# Favorite Civic
 			if (not bIsActivePlayer):
-				nFavoriteCivic = objLeaderHead.getFavoriteCivic()
+#Changed for Final Frontier Plus by TC01 (MFC compatibility)
+				#nFavoriteCivic = objLeaderHead.getFavoriteCivic()
+				nFavoriteCivic = PlayerUtil.getFavoriteCivic(iLoopPlayer)
+#End of Final Frontier Plus
 				if FavoriteCivicDetector.isDetectionNecessary():
 					objFavorite = FavoriteCivicDetector.getFavoriteCivicInfo(iLoopPlayer)
 					if objFavorite.isKnown():

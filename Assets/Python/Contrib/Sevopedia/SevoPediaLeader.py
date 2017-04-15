@@ -109,11 +109,24 @@ class SevoPediaLeader:
 		screen = self.top.getScreen()
 		panelName = self.top.getNextWidgetName()
 		screen.addPanel(panelName, localText.getText("TXT_KEY_PEDIA_FAV_CIVIC_AND_RELIGION", ()), "", True, True, self.X_CIVIC, self.Y_CIVIC, self.W_CIVIC, self.H_CIVIC, PanelStyles.PANEL_STYLE_BLUE50)
-		iCivic = gc.getLeaderHeadInfo(self.iLeader).getFavoriteCivic()
-		if (-1 != iCivic):
-			szCivicText = u"<link=literal>" + gc.getCivicInfo(iCivic).getDescription() + u"</link>"
+		
+		# < Multiple Favorite Civics Start >		
+		szCivicText = u""
+		for iI in range(gc.getNumCivicInfos()):
+			if(gc.getLeaderHeadInfo(self.iLeader).hasFavoriteCivic(iI)):
+				szCivicText = szCivicText + u"<link=literal>" + gc.getCivicInfo(iI).getDescription() + u"</link>\n"
+			
+		if(len(szCivicText) > 0):
 			listName = self.top.getNextWidgetName()
-			screen.addMultilineText(listName, szCivicText, self.X_CIVIC+5, self.Y_CIVIC+30, self.W_CIVIC-10, self.H_CIVIC-10, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+			screen.attachMultilineText( panelName, listName, szCivicText, WidgetTypes.WIDGET_GENERAL,-1,-1, CvUtil.FONT_LEFT_JUSTIFY ) 
+		# < Multiple Favorite Civics End   >
+		
+		#Old code, commented out by TC01
+		#iCivic = gc.getLeaderHeadInfo(self.iLeader).getFavoriteCivic()
+		#if (-1 != iCivic):
+		#	szCivicText = u"<link=literal>" + gc.getCivicInfo(iCivic).getDescription() + u"</link>"
+		#	listName = self.top.getNextWidgetName()
+		#	screen.addMultilineText(listName, szCivicText, self.X_CIVIC+5, self.Y_CIVIC+30, self.W_CIVIC-10, self.H_CIVIC-10, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 
 
 	def placeReligion(self):		

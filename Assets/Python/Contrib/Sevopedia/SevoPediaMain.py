@@ -30,7 +30,7 @@ import SevoPediaImprovement
 import SevoPediaCivic
 import SevoPediaCivilization
 import SevoPediaLeader
-# import SevoPediaTrait
+import SevoPediaTrait
 import SevoPediaSpecialist
 import SevoPediaHistory
 import SevoPediaProject
@@ -155,7 +155,7 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 			SevoScreenEnums.PEDIA_IMPROVEMENTS	: self.placeImprovements,
 			SevoScreenEnums.PEDIA_CIVS		: self.placeCivs,
 			SevoScreenEnums.PEDIA_LEADERS		: self.placeLeaders,
-			# SevoScreenEnums.PEDIA_TRAITS		: self.placeTraits,
+			SevoScreenEnums.PEDIA_TRAITS		: self.placeTraits,
 			SevoScreenEnums.PEDIA_CIVICS		: self.placeCivics,
 			SevoScreenEnums.PEDIA_RELIGIONS		: self.placeReligions,
 			SevoScreenEnums.PEDIA_CORPORATIONS	: self.placeCorporations,
@@ -163,6 +163,7 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 			SevoScreenEnums.PEDIA_BTS_CONCEPTS	: self.placeBTSConcepts,
 			SevoScreenEnums.PEDIA_HINTS		: self.placeHints,
 			SevoScreenEnums.PEDIA_SHORTCUTS  	: self.placeShortcuts,
+			SevoScreenEnums.PEDIA_STRATEGY  	: self.placeStrategy,
 			}
 
 		self.pediaBuilding	= SevoPediaBuilding.SevoPediaBuilding(self)
@@ -185,13 +186,14 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 			SevoScreenEnums.PEDIA_IMPROVEMENTS	: SevoPediaImprovement.SevoPediaImprovement(self),
 			SevoScreenEnums.PEDIA_CIVS		: SevoPediaCivilization.SevoPediaCivilization(self),
 			SevoScreenEnums.PEDIA_LEADERS		: self.pediaLeader,
-			# SevoScreenEnums.PEDIA_TRAITS		: SevoPediaTrait.SevoPediaTrait(self),
+			SevoScreenEnums.PEDIA_TRAITS		: SevoPediaTrait.SevoPediaTrait(self),
 			SevoScreenEnums.PEDIA_CIVICS		: SevoPediaCivic.SevoPediaCivic(self),
 			SevoScreenEnums.PEDIA_RELIGIONS		: SevoPediaReligion.SevoPediaReligion(self),
 			SevoScreenEnums.PEDIA_CORPORATIONS	: SevoPediaCorporation.SevoPediaCorporation(self),
 			SevoScreenEnums.PEDIA_CONCEPTS		: SevoPediaHistory.SevoPediaHistory(self),
 			SevoScreenEnums.PEDIA_BTS_CONCEPTS	: SevoPediaHistory.SevoPediaHistory(self),
 			SevoScreenEnums.PEDIA_SHORTCUTS  	: SevoPediaHistory.SevoPediaHistory(self),
+			SevoScreenEnums.PEDIA_STRATEGY  	: SevoPediaHistory.SevoPediaHistory(self),
 			}
 
 
@@ -279,6 +281,8 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 		BugUtil.debug("NewConcept itme %d is %s" % (iItem, info.getDescription()))
 		if (self.isTraitInfo(info)):
 			return SevoScreenEnums.PEDIA_TRAITS
+		if (self.isStrategyInfo(info)):
+			return SevoScreenEnums.PEDIA_STRATEGY
 		if (self.isShortcutInfo(info)):
 			return SevoScreenEnums.PEDIA_SHORTCUTS
 		return SevoScreenEnums.PEDIA_BTS_CONCEPTS
@@ -348,7 +352,7 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 		self.szCategoryImprovements	= localText.getText("TXT_KEY_PEDIA_CATEGORY_IMPROVEMENT", ())
 		self.szCategoryCivs			= localText.getText("TXT_KEY_PEDIA_CATEGORY_CIV", ())
 		self.szCategoryLeaders		= localText.getText("TXT_KEY_PEDIA_CATEGORY_LEADER", ())
-		# self.szCategoryTraits		= localText.getText("TXT_KEY_PEDIA_TRAITS", ())
+		self.szCategoryTraits		= localText.getText("TXT_KEY_PEDIA_TRAITS", ())
 		self.szCategoryCivics		= localText.getText("TXT_KEY_PEDIA_CATEGORY_CIVIC", ())
 		self.szCategoryReligions	= localText.getText("TXT_KEY_PEDIA_CATEGORY_RELIGION", ())
 		self.szCategoryCorporations	= localText.getText("TXT_KEY_CONCEPT_CORPORATIONS", ())
@@ -356,6 +360,7 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 		self.szCategoryConceptsNew	= localText.getText("TXT_KEY_PEDIA_CATEGORY_CONCEPT_NEW", ())
 		self.szCategoryHints		= localText.getText("TXT_KEY_PEDIA_CATEGORY_HINTS", ())
 		self.szCategoryShortcuts	= localText.getText("TXT_KEY_PEDIA_CATEGORY_SHORTCUTS", ())
+		self.szCategoryStrategy   	= localText.getText("TXT_KEY_PEDIA_CATEGORY_STRATEGY", ())
 		
 		self.categoryList = [
 			["TECHS",	self.szCategoryTechs],
@@ -375,14 +380,15 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 			["TERRAINS",	self.szCategoryImprovements],
 			["CIVS",	self.szCategoryCivs],
 			["CIVS",	self.szCategoryLeaders],
-			# ["CIVS",	self.szCategoryTraits],
+			["CIVS",	self.szCategoryTraits],
 			["CIVICS",	self.szCategoryCivics],
 			["CIVICS",	self.szCategoryReligions],
 			["CIVICS",	self.szCategoryCorporations],
 			["HINTS",	self.szCategoryConcepts],
 			["HINTS",	self.szCategoryConceptsNew],
 			["HINTS",	self.szCategoryHints],
-			# ["HINTS",	self.szCategoryShortcuts],
+			["HINTS",	self.szCategoryShortcuts],
+			["HINTS",	self.szCategoryStrategy],
 			]
 
 		self.categoryGraphics = {
@@ -591,6 +597,8 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 					return u"%c %s" % (TraitUtil.getIcon(self.eTrait), self.traitInfo.getDescription())
 				def getButton(self):
 					return self.traitInfo.getButton()
+				def isGraphicalOnly(self):	# FFP : do not show items with bGraphicalOnly set to 1
+					return self.traitInfo.isGraphicalOnly()
 			
 			return TraitInfo(info)
 		return None
@@ -640,7 +648,7 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 
 	def getNewConceptInfo(self, id):
 		info = gc.getNewConceptInfo(id)
-		if not self.isShortcutInfo(info) and not self.isTraitInfo(info):
+		if not self.isShortcutInfo(info) and not self.isStrategyInfo(info) and not self.isTraitInfo(info):
 			return info
 		return None
 
@@ -673,6 +681,21 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 		return info.getType().find("SHORTCUTS") != -1
 
 	
+	def placeStrategy(self):
+		self.list = self.getSortedList(gc.getNumNewConceptInfos(), self.getStrategyInfo)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_DESCRIPTION, self.getStrategyInfo)
+
+	def getStrategyInfo(self, id):
+		info = gc.getNewConceptInfo(id)
+		if self.isStrategyInfo(info):
+			return info
+		return None
+	
+	def isStrategyInfo(self, info):
+		return info.getType().find("STRATEGY") != -1
+	
+	
+	
 	def placeItems(self, widget, info):
 		screen = self.getScreen()
 		screen.clearListBoxGFC(self.ITEM_LIST_ID)
@@ -691,6 +714,9 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 				data1 = CivilopediaPageTypes.CIVILOPEDIA_PAGE_CONCEPT_NEW
 				data2 = item[1]
 			elif (info == self.getShortcutInfo):
+				data1 = CivilopediaPageTypes.CIVILOPEDIA_PAGE_CONCEPT_NEW
+				data2 = item[1]
+			elif (info == self.getStrategyInfo):
 				data1 = CivilopediaPageTypes.CIVILOPEDIA_PAGE_CONCEPT_NEW
 				data2 = item[1]
 			elif (info == self.getTraitInfo):
@@ -762,6 +788,8 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 			return self.pediaJump(SevoScreenEnums.PEDIA_MAIN, SevoScreenEnums.PEDIA_HINTS, True, True)
 		elif (szLink == "PEDIA_MAIN_SHORTCUTS"):
 			return self.pediaJump(SevoScreenEnums.PEDIA_MAIN, SevoScreenEnums.PEDIA_SHORTCUTS, True, True)
+		elif (szLink == "PEDIA_MAIN_STRATEGY"):
+			return self.pediaJump(SevoScreenEnums.PEDIA_MAIN, SevoScreenEnums.PEDIA_STRATEGY, True, True)
 
 		for i in range(gc.getNumTechInfos()):
 			if (gc.getTechInfo(i).isMatchForLink(szLink, False)):
@@ -862,7 +890,7 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 		list = []
 		for i in range(numInfos):
 			item = getInfo(i)
-			if item:
+			if item and not item.isGraphicalOnly(): # FFP : do not show items with bGraphicalOnly set to 1
 				# DarkLunaPhantom begin - Items sorted without taking "The " into account.
 				if item.getDescription()[:4] == "The ":
 					list.append((item.getDescription(), i, item.getDescription()[4:]))
