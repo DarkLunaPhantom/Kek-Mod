@@ -21,6 +21,21 @@ class CvSpaceShipScreen:
 
 		#create screen
 		screen = CyGInterfaceScreen( "SpaceShipScreen", CvScreenEnums.SPACE_SHIP_SCREEN)
+		# DarkLunaPhantom begin - CvSpaceShipScreen is activated by innacessible default event handler whenever project with isSpaceShip is built.
+		# Ideally, this screen would be modded to fit the Astral Gate, but for now I will just use it to automatically "launch" the Astral Gate.
+		iVictory = -1
+		for iLoopVC in range(gc.getNumVictoryInfos()):
+			if gc.getGame().isVictoryValid(iLoopVC):
+				if (gc.getVictoryInfo(iLoopVC).getVictoryDelayTurns() > 0):
+					iVictory = iLoopVC
+					break;
+		if (iVictory != -1):
+			if (gc.getTeam(gc.getGame().getActiveTeam()).canLaunch(iVictory)):
+				screen.setSpaceShip(iFinishedProject) # Required to activate the screen, launch will not work without this. (Lauch could alternatively be done by exposing CvPlayer::launch to Python.)
+				screen.setDying(True) # Required to hide the spaceship view screen before it shows up.
+				screen.spaceShipLaunch() # This innaccessible function launches spaceship, but the animation in spaceship view will not be shown since screen is not active anymore.
+		return 0
+		# DarkLunaPhantom end
 
 		#setup panel
 		self.windowWidth = screen.getXResolution()

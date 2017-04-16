@@ -1245,9 +1245,10 @@ class CvVictoryScreen:
 # BUG Additions End
 						
 				#add spaceship button
-				if (False): # FFP - do not provide a spaceship screen button; was if (bSpaceshipFound)
-					screen.setButtonGFC("SpaceShipButton" + str(iLoopVC), localText.getText("TXT_KEY_GLOBELAYER_STRATEGY_VIEW", ()), "", 0, 0, 15, 10, WidgetTypes.WIDGET_GENERAL, self.SPACESHIP_SCREEN_BUTTON, -1, ButtonStyles.BUTTON_STYLE_STANDARD )
-					screen.attachControlToTableCell("SpaceShipButton" + str(iLoopVC), szTable, iVictoryTitleRow, 1)
+				#if (False): # FFP - do not provide a spaceship screen button; was if (bSpaceshipFound)
+				if (bSpaceshipFound): # DarkLunaPhantom - Restore the information, but not the button.
+					#screen.setButtonGFC("SpaceShipButton" + str(iLoopVC), localText.getText("TXT_KEY_GLOBELAYER_STRATEGY_VIEW", ()), "", 0, 0, 15, 10, WidgetTypes.WIDGET_GENERAL, self.SPACESHIP_SCREEN_BUTTON, -1, ButtonStyles.BUTTON_STYLE_STANDARD )
+					#screen.attachControlToTableCell("SpaceShipButton" + str(iLoopVC), szTable, iVictoryTitleRow, 1)
 					
 					victoryDelay = gc.getTeam(iActiveTeam).getVictoryCountdown(iLoopVC)
 					if((victoryDelay > 0) and (gc.getGame().getGameState() != GameStateTypes.GAMESTATE_EXTENDED)):
@@ -1533,40 +1534,41 @@ class CvVictoryScreen:
 #			print sString
 #			return self.ApolloTeamCheckResult[iTeam]
 
-# FFP: new check for enabling project completion
-		iDesign = gc.getInfoTypeForString("PROJECT_ASTRAL_GATE_DESIGN")
-		pDesign = gc.getProjectInfo(iDesign)
-		if vTeam.getProjectCount(iDesign) ==  pDesign.getMaxTeamInstances():
-			# could have just used "== 1", or "> 0"
-			self.ApolloTeamCheckResult[iTeam] = True
-			self.ApolloTeamsChecked.add(iTeam)
-			return True			
+#DarkLunaPhantom - Restored original code.
+## FFP: new check for enabling project completion
+#		iDesign = gc.getInfoTypeForString("PROJECT_ASTRAL_GATE_DESIGN")
+#		pDesign = gc.getProjectInfo(iDesign)
+#		if vTeam.getProjectCount(iDesign) ==  pDesign.getMaxTeamInstances():
+#			# could have just used "== 1", or "> 0"
+#			self.ApolloTeamCheckResult[iTeam] = True
+#			self.ApolloTeamsChecked.add(iTeam)
+#			return True			
 
-# FFP: as spiffy as the following commented out code was as a method of determining
+##FFP: as spiffy as the following commented out code was as a method of determining
 #	if the prereq project had been built, it required the bSpaceship flag
 #	to be set on the components you need to build for victory (the Astral Gate Piece,
 #	in our case), which caused the default event handler for the projectBuilt event
 #	to show the spaceship screen. So this is changed up above to just check for
 #	completion of our specific prereq project, PROJECT_ASTRAL_GATE_DESIGN.
-#
-#		for i in range(gc.getNumProjectInfos()):
-#			component = gc.getProjectInfo(i)
-#
-#			if (component.isSpaceship()):
-#				bApollo = True
-#				for j in range(gc.getNumProjectInfos()):
-#					if(vTeam.getProjectCount(j) < component.getProjectsNeeded(j)):
-#						bApollo = False
-##					sString = "2: %s %s %i %i %s" % (component.getDescription(), gc.getProjectInfo(j).getDescription(), vTeam.getProjectCount(j), component.getProjectsNeeded(j), bApollo)
-##					print sString
-#
-##				sString = "2: %s %s" % (component.getDescription(), bApollo)
-##				print sString
-#				if bApollo:
-#					self.ApolloTeamCheckResult[iTeam] = True
-#					self.ApolloTeamsChecked.add(iTeam)
-#					return True
-#				break
+
+		for i in range(gc.getNumProjectInfos()):
+			component = gc.getProjectInfo(i)
+
+			if (component.isSpaceship()):
+				bApollo = True
+				for j in range(gc.getNumProjectInfos()):
+					if(vTeam.getProjectCount(j) < component.getProjectsNeeded(j)):
+						bApollo = False
+#					sString = "2: %s %s %i %i %s" % (component.getDescription(), gc.getProjectInfo(j).getDescription(), vTeam.getProjectCount(j), component.getProjectsNeeded(j), bApollo)
+#					print sString
+
+#				sString = "2: %s %s" % (component.getDescription(), bApollo)
+#				print sString
+				if bApollo:
+					self.ApolloTeamCheckResult[iTeam] = True
+					self.ApolloTeamsChecked.add(iTeam)
+					return True
+				break
 
 		self.ApolloTeamCheckResult[iTeam] = False
 		self.ApolloTeamsChecked.add(iTeam)
