@@ -204,7 +204,8 @@ class CvAI:
 			
 			#If avoid growth is on, prioritize commerce or production -- TC01
 			# Unless it has a negative iSurplusFood -- GE, post v1.81
-			if (pCity.AI_avoidGrowth() and iSurplusFood >= 0):
+			#if (pCity.AI_avoidGrowth() and iSurplusFood >= 0): # DarkLunaPhantom - AI_avoidGrowth() is unused in K-Mod. This is obviously not a very good replacement.
+			if (pCity.angryPopulation(1) > pCity.getPopulation()  and iSurplusFood >= 0):
 				iYieldNeededMost = gc.getGame().getSorenRandNum(2, "AI Population Assignment Logic") + 1
 				
 #			printd("   iYieldNeededMost")
