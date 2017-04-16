@@ -841,6 +841,7 @@ class FinalFrontierEvents(CvEventManager.CvEventManager):
 		'Project Completed'
 		pCity, iProjectType = argsList
 		
+		""" DarkLunaPhantom - DLL can handle this.
 		if (CyGame().getWinner() == -1):
 			
 			iProjectAstralGate = gc.getInfoTypeForString('PROJECT_ASTRAL_GATE')
@@ -864,7 +865,7 @@ class FinalFrontierEvents(CvEventManager.CvEventManager):
 					pPlot.changeVisibilityCount(CyGame().getActiveTeam(), 1, -1);
 					CyCamera().JustLookAtPlot(pPlot)
 					CyCamera().SetZoom(0.5)
-					self.startWinCountdown(iTeam)
+					self.startWinCountdown(iTeam)"""
 
 					
 	def onNukeExplosion(self, argsList):
@@ -931,10 +932,11 @@ class FinalFrontierEvents(CvEventManager.CvEventManager):
 			
 			pSystem.updateDisplay()
 		
+	""" DarkLunaPhantom - DLL can handle this.
 	def startWinCountdown(self, iTeamID):
 		
 		self.iWinningTeam = iTeamID
-		self.iTimeLeft = 20
+		self.iTimeLeft = 20"""
 	
 	def onGameUpdate(self, argsList):
 		'sample generic event, called on each game turn slice'

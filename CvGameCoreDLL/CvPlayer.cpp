@@ -21669,8 +21669,8 @@ void CvPlayer::launch(VictoryTypes eVictory)
 
 	//gDLL->getEngineIFace()->AddLaunch(getID());
 	// K-Mod. The spaceship launch causes pitboss to crash
-	if (GC.IsGraphicsInitialized())
-		gDLL->getEngineIFace()->AddLaunch(getID());
+	//if (GC.IsGraphicsInitialized())
+	//	gDLL->getEngineIFace()->AddLaunch(getID()); // DarkLunaPhantom - Astral Gate doesn't need launch animation.
 	// K-Mod end.
 
 	kTeam.setCanLaunch(eVictory, false);

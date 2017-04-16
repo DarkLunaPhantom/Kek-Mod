@@ -64,7 +64,7 @@
 			<iTechShare>0</iTechShare>
 			<EveryoneSpecialUnit>NONE</EveryoneSpecialUnit>
 			<EveryoneSpecialBuilding>NONE</EveryoneSpecialBuilding>
-			<bSpaceship>0</bSpaceship>
+			<bSpaceship>1</bSpaceship>
 			<bAllowsNukes>0</bAllowsNukes>
 			<Button>Art/Interface/Buttons/AstralGateDesign.dds</Button>
 			<PrereqProjects/>
