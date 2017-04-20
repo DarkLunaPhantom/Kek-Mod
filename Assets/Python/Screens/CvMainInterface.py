@@ -1350,6 +1350,7 @@ class CvMainInterface:
 #			else:
 #				self.updateCitizenButtons()
 ## BUG - city specialist - end
+			self.updateCitizenButtons_hide() # DarkLunaPhantom
 			self.updateCitizenButtons()
 			
 			CyInterface().setDirty(InterfaceDirtyBits.CitizenButtons_DIRTY_BIT, False)
@@ -3015,6 +3016,8 @@ class CvMainInterface:
 
 		iFreeSpecialistCount = 0
 		for i in range(gc.getNumSpecialistInfos()):
+			if (not gc.getSpecialistInfo(i).isVisible()): # DarkLunaPhantom
+				continue
 			iFreeSpecialistCount += pHeadSelectedCity.getFreeSpecialistCount(i)
 
 		iCount = 0
@@ -3023,6 +3026,8 @@ class CvMainInterface:
 		
 		if (iFreeSpecialistCount > MAX_CITIZEN_BUTTONS):
 			for i in range(gc.getNumSpecialistInfos()):
+				if (not gc.getSpecialistInfo(i).isVisible()): # DarkLunaPhantom
+					continue
 				if (pHeadSelectedCity.getFreeSpecialistCount(i) > 0):
 					if (iCount < MAX_CITIZEN_BUTTONS):
 						szName = "FreeSpecialist" + str(iCount)
@@ -3033,6 +3038,8 @@ class CvMainInterface:
 					
 		else:				
 			for i in range(gc.getNumSpecialistInfos()):
+				if (not gc.getSpecialistInfo(i).isVisible()): # DarkLunaPhantom
+					continue
 				for j in range( pHeadSelectedCity.getFreeSpecialistCount(i) ):
 					if (iCount < MAX_CITIZEN_BUTTONS):
 						szName = "FreeSpecialist" + str(iCount)
@@ -3043,6 +3050,8 @@ class CvMainInterface:
 					iCount = iCount + 1
 
 		for i in range( gc.getNumSpecialistInfos() ):
+			if (not gc.getSpecialistInfo(i).isVisible()): # DarkLunaPhantom
+				continue
 		
 			bHandled = False
 
@@ -3134,6 +3143,8 @@ class CvMainInterface:
 		currentSuperSpecialistCount = 0
 
 		for i in range(gc.getNumSpecialistInfos()):
+			if (not gc.getSpecialistInfo(i).isVisible()): # DarkLunaPhantom
+				continue
 			if(pHeadSelectedCity.getFreeSpecialistCount(i) > 0):
 				currentSuperSpecialistCount = currentSuperSpecialistCount + pHeadSelectedCity.getFreeSpecialistCount(i)
 
@@ -3143,6 +3154,8 @@ class CvMainInterface:
 				stackWidth = MAX_SPECIALIST_BUTTON_SPACING
 
 		for i in range(gc.getNumSpecialistInfos()):
+			if (not gc.getSpecialistInfo(i).isVisible()): # DarkLunaPhantom
+				break
 			for j in range( pHeadSelectedCity.getFreeSpecialistCount(i) ):
 
 				szName = "FreeSpecialist" + str(iCount)
@@ -3161,6 +3174,8 @@ class CvMainInterface:
 		iSpecialistCount = 0
 
 		for i in range( gc.getNumSpecialistInfos() ):
+			if (not gc.getSpecialistInfo(i).isVisible()): # DarkLunaPhantom
+				continue
 		
 			bHandled = False
 			if( iSpecialistCount > SPECIALIST_ROWS ):
@@ -3268,6 +3283,8 @@ class CvMainInterface:
 
 		iFreeSpecialistCount = 0
 		for i in range(gc.getNumSpecialistInfos()):
+			if (not gc.getSpecialistInfo(i).isVisible()): # DarkLunaPhantom
+				continue
 			iFreeSpecialistCount += pHeadSelectedCity.getFreeSpecialistCount(i)
 
 		iCount = 0
@@ -3276,6 +3293,8 @@ class CvMainInterface:
 		
 		if (iFreeSpecialistCount > MAX_CITIZEN_BUTTONS):
 			for i in range(gc.getNumSpecialistInfos()):
+				if (not gc.getSpecialistInfo(i).isVisible()): # DarkLunaPhantom
+					continue
 				if (pHeadSelectedCity.getFreeSpecialistCount(i) > 0):
 					if (iCount < MAX_CITIZEN_BUTTONS):
 						szName = "FreeSpecialist" + str(iCount)
@@ -3286,6 +3305,8 @@ class CvMainInterface:
 					
 		else:				
 			for i in range(gc.getNumSpecialistInfos()):
+				if (not gc.getSpecialistInfo(i).isVisible()): # DarkLunaPhantom
+					continue
 				for j in range( pHeadSelectedCity.getFreeSpecialistCount(i) ):
 					if (iCount < MAX_CITIZEN_BUTTONS):
 						szName = "FreeSpecialist" + str(iCount)
@@ -3296,6 +3317,8 @@ class CvMainInterface:
 					iCount = iCount + 1
 
 		for i in range( gc.getNumSpecialistInfos() ):
+			if (not gc.getSpecialistInfo(i).isVisible()): # DarkLunaPhantom
+				continue
 		
 			bHandled = False
 
@@ -4161,8 +4184,8 @@ class CvMainInterface:
 					screen.addTableControlGFC( "TradeRouteTable", 3, 10, 187, 238, 98, False, False, 32, 32, TableStyles.TABLE_STYLE_STANDARD )
 					screen.setStyle( "TradeRouteTable", "Table_City_Style" )
 # K-Mod: Trade culture
-					screen.setTableColumnHeader( "TradeRouteTable", 0, u"", 128 )
-					screen.setTableColumnHeader( "TradeRouteTable", 1, u"", 98 )
+					screen.setTableColumnHeader( "TradeRouteTable", 0, u"", 128 ) # FFP 1.73 - yeilds need more room, was 158
+					screen.setTableColumnHeader( "TradeRouteTable", 1, u"", 98 ) # FFP 1.73 - yeilds need more room, was 68
 # K-Mod: Trade culture end					
 					screen.setTableColumnHeader( "TradeRouteTable", 2, u"", 10 )
 					screen.setTableColumnRightJustify( "TradeRouteTable", 1 )
