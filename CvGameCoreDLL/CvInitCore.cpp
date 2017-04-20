@@ -1094,13 +1094,12 @@ bool CvInitCore::getOption(GameOptionTypes eIndex) const
 	FASSERT_BOUNDS(0, NUM_GAMEOPTION_TYPES, eIndex, "CvInitCore::getOption");
 	if ( checkBounds(eIndex, 0, NUM_GAMEOPTION_TYPES) )
 	{
-        // DarkLunaPhantom begin - There is a bug in exe regarding the Unrestricted Leaders game option. Exe has that option hardcoded in the 8th place in the list of game options.
-        // Unrestricted Leaders option is reimplemented in CvGame::init. This always returns true for a new dummy option so that leaders are unrestricted in the custom game lobby screen.
-        if ((int)eIndex == 7)
-        {
-            return true;
-        }
-        // DarkLunaPhantom end
+		// DarkLunaPhantom begin - Hidden game options should always be set to their default value.
+		if (GC.getGameOptionInfo(eIndex).getVisible() == 0)
+		{
+			return GC.getGameOptionInfo(eIndex).getDefault();
+		}
+		// DarkLunaPhantom end
 		return m_abOptions[eIndex];
 	}
 	else

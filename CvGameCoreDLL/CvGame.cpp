@@ -173,7 +173,6 @@ void CvGame::init(HandicapTypes eHandicap)
     // Idea from FfH2 by Kael, but implementation and details different.
     std::set<CivilizationTypes> unused_civs;
     std::set<LeaderHeadTypes> unused_leaders;
-    bool bUnrestricted = GC.getGameINLINE().isOption(GAMEOPTION_LEAD_ANY_CIV);
     // Find all possible civs and leaders.
     for (int iCiv = 0; iCiv < GC.getNumCivilizationInfos(); ++iCiv)
     {

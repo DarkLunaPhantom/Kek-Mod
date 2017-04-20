@@ -59,8 +59,8 @@
 			<Type>GAMEOPTION_DUMMY</Type>
 			<Description>TXT_KEY_GAME_OPTION_DUMMY</Description>
 			<Help>TXT_KEY_GAME_OPTION_DUMMY_HELP</Help>
-			<bDefault>0</bDefault>
-			<bVisible>1</bVisible>
+			<bDefault>1</bDefault>
+			<bVisible>0</bVisible>
 		</GameOptionInfo>
 		<GameOptionInfo>
 			<Type>GAMEOPTION_AGGRESSIVE_AI</Type>
