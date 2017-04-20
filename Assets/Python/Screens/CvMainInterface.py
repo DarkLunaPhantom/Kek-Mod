@@ -2325,7 +2325,7 @@ class CvMainInterface:
 		screen.hide( "Conscript" )
 		#screen.hide( "Liberate" )
 		screen.hide( "AutomateProduction" )
-#		screen.hide( "AutomateCitizens" )
+		screen.hide( "AutomateCitizens" )
 		
 
 		if (not CyEngine().isGlobeviewUp() and pHeadSelectedCity):
@@ -2383,8 +2383,8 @@ class CvMainInterface:
 				iBtnX += iBtnW
 
 				# Automate Citizens Button
-#				screen.addCheckBoxGFC( "AutomateCitizens", "", "", iBtnX, iBtnY, iBtnW, iBtnH, WidgetTypes.WIDGET_AUTOMATE_CITIZENS, -1, -1, ButtonStyles.BUTTON_STYLE_STANDARD )
-#				screen.setStyle( "AutomateCitizens", "Button_CityC4_Style" )
+				screen.addCheckBoxGFC( "AutomateCitizens", "", "", iBtnX, iBtnY, iBtnW, iBtnH, WidgetTypes.WIDGET_AUTOMATE_CITIZENS, -1, -1, ButtonStyles.BUTTON_STYLE_STANDARD )
+				screen.setStyle( "AutomateCitizens", "Button_CityC4_Style" )
 
 				iBtnY += iBtnH
 				iBtnX = iBtnSX
@@ -2440,7 +2440,7 @@ class CvMainInterface:
 				screen.hide( szButtonID )
 				
 				g_pSelectedUnit = 0
-#				screen.setState( "AutomateCitizens", pHeadSelectedCity.isCitizensAutomated() )
+				screen.setState( "AutomateCitizens", pHeadSelectedCity.isCitizensAutomated() )
 				screen.setState( "AutomateProduction", pHeadSelectedCity.isProductionAutomated() )
 				
 				for i in range (g_NumEmphasizeInfos):
