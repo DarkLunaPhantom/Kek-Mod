@@ -1473,6 +1473,10 @@ class AutoLogEvent(AbstractAutoLogEvent):
 
 	def storeWhip(self):
 		# store the city whip counter
+		# DarkLunaPhantom
+		if CyGame().isPitbossHost():
+			BugUtil.debug("BugInit - BUG component disabled for PitBoss host")
+			return
 		iPlayer = gc.getActivePlayer()
 		for i in range(0, iPlayer.getNumCities(), 1):
 			iCity = iPlayer.getCity(i)

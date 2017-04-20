@@ -264,6 +264,10 @@ def getTradePartnersByTeam(playerOrID, testFunction, *args):
 	
 	<testFunction> is passed two CyTeams plus <args> for each viable pairing and should return a boolean value.
 	"""
+	# DarkLunaPhantom
+	if CyGame().isPitbossHost():
+		BugUtil.debug("BugInit - BUG component disabled for PitBoss host")
+		return
 	player = PlayerUtil.getPlayer(playerOrID)
 	team = PlayerUtil.getTeam(player.getTeam())
 	partners = []

@@ -135,11 +135,19 @@ class MoreCiv4lertsEvent( AbstractMoreCiv4lertsEvent):
 
 	def onBeginActivePlayerTurn(self, argsList):
 		"Called when the active player can start making their moves."
+		# DarkLunaPhantom
+		if CyGame().isPitbossHost():
+			BugUtil.debug("BugInit - BUG component disabled for PitBoss host")
+			return
 		iGameTurn = argsList[0]
 		iPlayer = gc.getGame().getActivePlayer()
 		self.CheckForAlerts(iPlayer, PyPlayer(iPlayer).getTeam(), True)
 
 	def OnCityAcquired(self, argsList):
+		# DarkLunaPhantom
+		if CyGame().isPitbossHost():
+			BugUtil.debug("BugInit - BUG component disabled for PitBoss host")
+			return
 		owner, playerType, city, bConquest, bTrade = argsList
 		iPlayer = city.getOwner()
 		if (not self.getCheckForDomVictory()): return
@@ -147,6 +155,10 @@ class MoreCiv4lertsEvent( AbstractMoreCiv4lertsEvent):
 			self.CheckForAlerts(iPlayer, PyPlayer(iPlayer).getTeam(), False)
 
 	def OnCityBuilt(self, argsList):
+		# DarkLunaPhantom
+		if CyGame().isPitbossHost():
+			BugUtil.debug("BugInit - BUG component disabled for PitBoss host")
+			return
 		city = argsList[0]
 		iPlayer = city.getOwner()
 		iActivePlayer = gc.getGame().getActivePlayer()
@@ -168,12 +180,20 @@ class MoreCiv4lertsEvent( AbstractMoreCiv4lertsEvent):
 						self._addMessageNoIcon(iActivePlayer, message, iColor)
 
 	def OnCityRazed(self, argsList):
+		# DarkLunaPhantom
+		if CyGame().isPitbossHost():
+			BugUtil.debug("BugInit - BUG component disabled for PitBoss host")
+			return
 		city, iPlayer = argsList
 		if (not self.getCheckForDomVictory()): return
 		if (iPlayer == gc.getGame().getActivePlayer()):
 			self.CheckForAlerts(iPlayer, PyPlayer(iPlayer).getTeam(), False)
 
 	def OnCityLost(self, argsList):
+		# DarkLunaPhantom
+		if CyGame().isPitbossHost():
+			BugUtil.debug("BugInit - BUG component disabled for PitBoss host")
+			return
 		city = argsList[0]
 		iPlayer = city.getOwner()
 		if (not self.getCheckForDomVictory()): return
