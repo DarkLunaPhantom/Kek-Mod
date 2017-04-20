@@ -4339,6 +4339,8 @@ class CvMainInterface:
 							screen.setTableText( "BuildingListTable", 1, iNumBuildings, "<font=1>" + szRightBuffer + "</font>", "", WidgetTypes.WIDGET_HELP_BUILDING, i, -1, CvUtil.FONT_RIGHT_JUSTIFY )
 							
 							iNumBuildings = iNumBuildings + 1
+							
+							break
 						
 				if ( iNumBuildings > g_iNumBuildings ):
 					g_iNumBuildings = iNumBuildings
