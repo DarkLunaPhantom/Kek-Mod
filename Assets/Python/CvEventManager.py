@@ -362,13 +362,6 @@ class CvEventManager:
 					popupInfo.addPopup(iPlayer)
 
 		CvAdvisorUtils.resetNoLiberateCities()
-
-## Stabilizer ##
-		for i in xrange(gc.getNumGameOptionInfos()):
-			Info = gc.getGameOptionInfo(i)
-			if Info.getVisible(): continue
-			CyGame().setOption(i, Info.getDefault())
-## Stabilizer ##
 								
 	def onGameEnd(self, argsList):
 		'Called at the End of the game'

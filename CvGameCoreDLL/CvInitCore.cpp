@@ -1094,6 +1094,12 @@ bool CvInitCore::getOption(GameOptionTypes eIndex) const
 	FASSERT_BOUNDS(0, NUM_GAMEOPTION_TYPES, eIndex, "CvInitCore::getOption");
 	if ( checkBounds(eIndex, 0, NUM_GAMEOPTION_TYPES) )
 	{
+		// DarkLunaPhantom begin - Hidden game options should always be set to their default value.
+		if (GC.getGameOptionInfo(eIndex).getVisible() == 0)
+		{
+			return GC.getGameOptionInfo(eIndex).getDefault();
+		}
+		// DarkLunaPhantom end
 		return m_abOptions[eIndex];
 	}
 	else
