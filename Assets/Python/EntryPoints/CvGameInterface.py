@@ -14,6 +14,7 @@ import CvGameUtils
 import CvGameInterfaceFile
 import CvEventInterface
 from CvPythonExtensions import *
+import CvAI # DarkLunaPhantom
 
 # globals
 gc = CyGlobalContext()
@@ -193,6 +194,11 @@ def AI_doDiplo(argsList):
 	'AI decides does diplomacy for the turn - return 0 to let AI handle it, return 1 to say that the move is handled in python '
 	#CvUtil.pyPrint( "CvGameInterface.AI_doDiplo" )
 	return gameUtils().AI_doDiplo(argsList)
+	
+# DarkLunaPhantom begin
+def AI_assignWorkingPlots(argsList):
+	return CvAI.CvAI().doCityAIUpdate(argsList[0])
+# DarkLunaPhantom end
 
 def calculateScore(argsList):
 	return gameUtils().calculateScore(argsList)

@@ -1376,11 +1376,13 @@ class FinalFrontierEvents(CvEventManager.CvEventManager):
 			
 		printd("Population which should be assigned on cultural expansion: %d" %(iUnassigned))
 			
-		if (iUnassigned > 0):
+		bAI = not gc.getPlayer(pCity.getOwner()).isHuman() or pCity.isCitizensAutomated() # DarkLunaPhantom
+		
+		if (iUnassigned > 0 and bAI): # DarkLunaPhantom - Added bAI.
 			AI.doCityAIUpdate(pCity, iUnassigned)
 		elif (iUnassigned < 0): # for 1.81 - if the system has "gone negative", do a full reassignment
 			AI.doCityAIUpdate(pCity)
-		elif (not pCity.isDisorder()): # post v1.81 - try to avoid starvation:
+		elif (not pCity.isDisorder() and bAI): # post v1.81 - try to avoid starvation: # DarkLunaPhantom - Added bAI.
 			# If the city is not in disorder, check to see if the food produced is less than the food consumed.
 			# note: If the city has serious happiness or health issues it may do this every turn to no avail.
 			#		Especially if it is The Forge with its -1 food per city. Oh well.
