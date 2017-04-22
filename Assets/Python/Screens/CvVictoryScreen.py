@@ -609,7 +609,7 @@ class CvVictoryScreen:
 
 		# add info about vote timing
 		iRow = screen.appendTableRow(szTable)
-		iVoteTimer = gc.getGame().getVoteTimer(iActiveVote)
+		iVoteTimer = gc.getGame().getVoteTimer(iActiveVote)+1 # DarkLunaPhantom - Copied K-Mod's vote timing.
 		sString = localText.getText("TXT_KEY_BUG_VICTORY_TURNS_NEXT_VOTE", (iVoteTimer,) )
 		sString = u"<font=2>" + sString + "</font>"
 		screen.setTableText(szTable, 0, iRow, sString, "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
