@@ -251,6 +251,11 @@ class CvGameUtils:
 	def AI_doDiplo(self,argsList):
 		ePlayer = argsList[0]
 		return False
+		
+	# DarkLunaPhantom begin
+	def AI_assignWorkingPlots(self, argsList):
+		return False
+	# DarkLunaPhantom end
 
 	def calculateScore(self,argsList):
 		ePlayer = argsList[0]
@@ -263,7 +268,7 @@ class CvGameUtils:
 		iWondersScore = CvUtil.getScoreComponent(gc.getPlayer(ePlayer).getWondersScore(), CyGame().getInitWonders(), CyGame().getMaxWonders(), gc.getDefineINT("SCORE_WONDER_FACTOR"), False, bFinal, bVictory)
 		return int(iPopulationScore + iLandScore + iWondersScore + iTechScore)
 
-	# begin DarkLunaPhantom
+	# DarkLunaPhantom begin
 	def calculateTechScore(self,argsList):
 		ePlayer = argsList[0]
 		bFinal = argsList[1]
@@ -271,7 +276,7 @@ class CvGameUtils:
 		
 		iTechScore = CvUtil.getScoreComponent(gc.getPlayer(ePlayer).getTechScore(), CyGame().getInitTech(), CyGame().getMaxTech(), gc.getDefineINT("SCORE_TECH_FACTOR"), True, bFinal, bVictory)
 		return int(iTechScore)	
-	# end DarkLunaPhantom
+	# DarkLunaPhantom end
 
 	def doHolyCity(self):
 		return False

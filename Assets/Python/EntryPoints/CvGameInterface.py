@@ -14,7 +14,6 @@ import CvGameUtils
 import CvGameInterfaceFile
 import CvEventInterface
 from CvPythonExtensions import *
-import CvAI # DarkLunaPhantom
 
 # globals
 gc = CyGlobalContext()
@@ -197,7 +196,7 @@ def AI_doDiplo(argsList):
 	
 # DarkLunaPhantom begin
 def AI_assignWorkingPlots(argsList):
-	return CvAI.CvAI().doCityAIUpdate(argsList[0])
+	return gameUtils().AI_assignWorkingPlots(argsList)
 # DarkLunaPhantom end
 
 def calculateScore(argsList):
