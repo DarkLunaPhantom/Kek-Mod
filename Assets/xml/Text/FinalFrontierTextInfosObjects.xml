@@ -5,15 +5,15 @@
 	<!--CIVS AND LEADERS-->
 	<TEXT>
 		<Tag>TXT_KEY_LEADER_BARBARIAN</Tag>
-		<English>Pirate Leader</English>
-		<French>Chef des pirates</French>
+		<English>Pirate</English>
+		<French>Pirate</French>
 		<German>
-			<Text>Piratenanf&#252;hrer</Text>
+			<Text>Pirat</Text>
 			<Gender>Male</Gender>
 			<Plural>0</Plural>
 		</German>
-		<Italian>Leader dei pirati</Italian>
-		<Spanish>Jefe pirata</Spanish>
+		<Italian>Pirata</Italian>
+		<Spanish>Pirata</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_LEADER_HECTOR_ALVAREZ</Tag>
