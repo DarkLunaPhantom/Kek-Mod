@@ -19567,7 +19567,8 @@ int CvPlayerAI::AI_calculateSpaceVictoryStage() const
 
 		if (iValue >= 100)
 		{
-			if( getCurrentEra() >= GC.getNumEraInfos() - 3 )
+			//if( getCurrentEra() >= GC.getNumEraInfos() - 3 )
+			if(getCurrentEra() >= (GC.getNumEraInfos() + 1) / 2) // DarkLunaPhantom
 			{
 				return 2;
 			}
