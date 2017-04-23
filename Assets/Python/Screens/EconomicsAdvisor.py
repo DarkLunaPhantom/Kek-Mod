@@ -50,11 +50,11 @@ class EconomicsAdvisor:
 
 		self.PAGE_NAME_LIST = [
 			"TXT_KEY_ECONOMICS_ADVISOR_FINANCE_TAB",
-			"TXT_KEY_ECONOMICS_ADVISOR_ENVIRONMENT_TAB",
+			#"TXT_KEY_ECONOMICS_ADVISOR_ENVIRONMENT_TAB", # DarkLunaPhantom - Hide GW tab.
 			]
 		self.PAGE_DRAW_LIST = [
 			self.drawFinance,
-			self.drawEnvironment,
+			#self.drawEnvironment, # DarkLunaPhantom - Hide GW tab.
 			]
 			
 #		self.DX_LINK = (self.X_EXIT - self.X_LINK) / (len (self.PAGE_NAME_LIST) + 1)

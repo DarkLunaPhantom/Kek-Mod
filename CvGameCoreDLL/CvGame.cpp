@@ -6066,7 +6066,7 @@ void CvGame::doTurn()
 
 	createBarbarianUnits();
 
-	doGlobalWarming();
+	//doGlobalWarming(); // DarkLunaPhantom - Disabled GW.
 
 	doHolyCity();
 
