@@ -84,8 +84,9 @@ class FinalFrontierEvents(CvEventManager.CvEventManager):
 		
 		self.bUpdateDisplay = false	# Used when loading, since the order is wonky and trying to update display in onLoad 'splodes
 		
-		self.iWinningTeam = -1
-		self.iTimeLeft = 0
+		# DarkLunaPhantom - DLL can handle this.
+		#self.iWinningTeam = -1
+		#self.iTimeLeft = 0
 		
 		self.aiKillTimerData = -1
 		
@@ -131,8 +132,9 @@ class FinalFrontierEvents(CvEventManager.CvEventManager):
 		global AI
 		AI = CvAI.CvAI()
 		
-		self.iWinningTeam = -1
-		self.iTimeLeft = 0
+		# DarkLunaPhantom - DLL can handle this.
+		#self.iWinningTeam = -1
+		#self.iTimeLeft = 0
 		
 		self.initValues()
 		CyGame().makeNukesValid(true)
@@ -943,13 +945,15 @@ class FinalFrontierEvents(CvEventManager.CvEventManager):
 		genericArgs = argsList[0][0]	# tuple of tuple of my args
 		turnSlice = genericArgs[0]
 		
-		if (self.iTimeLeft > 0):
-			self.iTimeLeft -= 1
+		# DarkLunaPhantom - DLL can handle this.
+		#if (self.iTimeLeft > 0):
+		#	self.iTimeLeft -= 1
 		
+		# DarkLunaPhantom - DLL can handle this.
 		# Winnar!
-		if (self.iTimeLeft == 0 and self.iWinningTeam != -1):
-			iVictoryAscension = gc.getInfoTypeForString('VICTORY_SPACE_RACE')
-			CyGame().setWinner(self.iWinningTeam, iVictoryAscension)
+		#if (self.iTimeLeft == 0 and self.iWinningTeam != -1):
+		#	iVictoryAscension = gc.getInfoTypeForString('VICTORY_SPACE_RACE')
+		#	CyGame().setWinner(self.iWinningTeam, iVictoryAscension)
 		
 		# Timer to kill Construction ships which have built Starbases... necessary because of potential AI crash issue in AI_unitUpdate (killing the unit while inside the update function)
 		if (self.aiKillTimerData != -1):
@@ -1483,10 +1487,11 @@ class FinalFrontierEvents(CvEventManager.CvEventManager):
 #			pPlayer.setScriptData(pickle.dumps(aPlayerData))
 			
 	def onLoadGame(self, argsList):
-		#self.parentClass.onLoadGame(self, argsList)
-		
-		self.iWinningTeam = -1
-		self.iTimeLeft = 0
+		#self.parentClass.onLoadGame(self, ar
+
+		# DarkLunaPhantom - DLL can handle this.
+		#self.iWinningTeam = -1
+		#self.iTimeLeft = 0
 		
 		self.initValues()
 		
