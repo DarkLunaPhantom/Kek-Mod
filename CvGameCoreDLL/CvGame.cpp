@@ -7088,6 +7088,7 @@ New Code:*/
 
 									bValid = (kUnit.getCombat() > 0 && !kUnit.isOnlyDefensive());
 
+									/* DarkLunaPhantom - Disabled AI type check. Since there is only DOMAIN_LAND in FFP, it works like before.
 									if (bValid)
 									{
 										// DarkLunaPhantom begin - Unit must have appropriate AI type.
@@ -7102,7 +7103,7 @@ New Code:*/
 										{
 											bValid = false;
 										}
-									}
+									}*/
 
 /************************************************************************/
 //Added in Final Frontier SDK: TC01

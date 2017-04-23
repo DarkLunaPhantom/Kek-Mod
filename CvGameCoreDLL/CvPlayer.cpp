@@ -5492,9 +5492,8 @@ void CvPlayer::findNewCapital()
 		}
 		FAssertMsg(!(pBestCity->getNumRealBuilding(eCapitalBuilding)), "(pBestCity->getNumRealBuilding(eCapitalBuilding)) did not return false as expected");
 		pBestCity->setNumRealBuilding(eCapitalBuilding, 1);
-		// DarkLunaPhantom FIXME - Is this necessary?
 //Added in Final Frontier SDK: TC01 (code from God-Emperor) to fix a bug with captured Capitals
-		//CvEventReporter::getInstance().buildingBuilt(pBestCity, eCapitalBuilding);
+		CvEventReporter::getInstance().buildingBuilt(pBestCity, eCapitalBuilding);
 //End of Final Frontier SDK
 	}
 }

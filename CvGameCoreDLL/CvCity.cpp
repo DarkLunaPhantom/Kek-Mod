@@ -12963,12 +12963,7 @@ void CvCity::doGrowth()
 
 	if (getFood() >= growthThreshold())
 	{
-		// DarkLunaPhantom begin - FIXME: check does this work and is this fix needed? Currently, the fix is not used.
-		//Change made in Final Frontier Plus: TC01 (courtesy of God-Emperor)
-		//Fix AI issues with avoid growth- namely, that it doesn't turn on.
 		if (AI_isEmphasizeAvoidGrowth())
-		//if ((isHuman() && AI_isEmphasizeAvoidGrowth()) || (!isHuman() && AI_avoidGrowth()))
-		// DarkLunaPhantom end
 		{
 			setFood(growthThreshold());
 		}
