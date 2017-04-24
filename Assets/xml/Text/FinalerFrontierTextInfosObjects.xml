@@ -1530,6 +1530,14 @@
 		<Spanish>The Arsenal</Spanish>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_BUILDING_THE_PANOPTICON</Tag><!-- untranslated -->
+		<English>The Panopticon</English>
+		<French>The Panopticon</French>
+		<German>The Panopticon</German>
+		<Italian>The Panopticon</Italian>
+		<Spanish>The Panopticon</Spanish>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_PROMOTION_WEAPONS_IV</Tag> <!-- Untranslated -->
 		<English>Fusion Weapons</English>
 		<French>Fusion Weapons</French>

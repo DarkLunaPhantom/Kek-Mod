@@ -858,6 +858,22 @@
 		<Spanish>The [COLOR_BUILDING_TEXT]Workers' Memorial[COLOR_REVERT] removes all unhappiness from the star system in which it is built. It also gives a small increase in the speed at which construction ships build improvements.</Spanish>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_BUILDING_THE_PANOPTICON_PEDIA</Tag><!-- Untranslated -->
+		<English>The Panopticon is the headquarters of a galaxy-wide surveillance system.</English>
+		<French>The Panopticon is the headquarters of a galaxy-wide surveillance system.</French>
+		<German>The Panopticon is the headquarters of a galaxy-wide surveillance system.</German>
+		<Italian>The Panopticon is the headquarters of a galaxy-wide surveillance system.</Italian>
+		<Spanish>The Panopticon is the headquarters of a galaxy-wide surveillance system.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_THE_PANOPTICON_STRATEGY</Tag><!-- Untranslated -->
+		<English>[COLOR_BUILDING_TEXT]The Panopticon[COLOR_REVERT] increases [ICON_ESPIONAGE] output, particularly when built in Star Systems with large amounts of Commerce.</English>
+		<French>[COLOR_BUILDING_TEXT]The Panopticon[COLOR_REVERT] increases [ICON_ESPIONAGE] output, particularly when built in Star Systems with large amounts of Commerce.</French>
+		<German>[COLOR_BUILDING_TEXT]The Panopticon[COLOR_REVERT] increases [ICON_ESPIONAGE] output, particularly when built in Star Systems with large amounts of Commerce.</German>
+		<Italian>[COLOR_BUILDING_TEXT]The Panopticon[COLOR_REVERT] increases [ICON_ESPIONAGE] output, particularly when built in Star Systems with large amounts of Commerce.</Italian>
+		<Spanish>[COLOR_BUILDING_TEXT]The Panopticon[COLOR_REVERT] increases [ICON_ESPIONAGE] output, particularly when built in Star Systems with large amounts of Commerce.</Spanish>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_BUILDING_GRANARY_PEDIA</Tag><!-- Override the regular definition --><!-- Untranslated -->
 		<English>A Cryogenic Granary expands on the functionality of an ordinary granary with the addition of a cooling system. Food that can be frozen without damaging it is frozen and stored at very low temperatures; other foodstuff is stored at higher temperatures, but still mostly cooled below the normal room temperature of human habitats. The efficiency of this sort of system is greatly improved by use of vacuum engineering technologies which make these large scale storage facilities possible. The system also includes refrigerated transports and widely distributed flash freezing systems allowing crops to be preserved shortly after they are harvested..</English>
 		<French>A Cryogenic Granary expands on the functionality of an ordinary granary with the addition of a cooling system. Food that can be frozen without damaging it is frozen and stored at very low temperatures; other foodstuff is stored at higher temperatures, but still mostly cooled below the normal room temperature of human habitats. The efficiency of this sort of system is greatly improved by use of vacuum engineering technologies which make these large scale storage facilities possible. The system also includes refrigerated transports and widely distributed flash freezing systems allowing crops to be preserved shortly after they are harvested.</French>

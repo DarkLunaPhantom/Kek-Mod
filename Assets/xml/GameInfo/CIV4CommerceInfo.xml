@@ -40,7 +40,7 @@
 			<iInitialHappiness>0</iInitialHappiness>
 			<iAIWeightPercent>25</iAIWeightPercent>
 			<bFlexiblePercent>1</bFlexiblePercent>
-			<Button>Art/Interface/Buttons/Process/ProcessCulture.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,16</Button>
+			<Button>,Art/Interface/Buttons/Process/ProcessEspionage.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,16</Button>
 		</CommerceInfo>
 	</CommerceInfos>
 </Civ4CommerceInfo>

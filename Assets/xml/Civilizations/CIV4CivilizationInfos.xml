@@ -1027,6 +1027,10 @@
 					<BuildingClassType>BUILDINGCLASS_AUDITOR_GENERAL</BuildingClassType>
 					<BuildingType>NONE</BuildingType>
 				</Building>
+				<Building>
+					<BuildingClassType>BUILDINGCLASS_THE_PANOPTICON</BuildingClassType>
+					<BuildingType>NONE</BuildingType>
+				</Building>
 			</Buildings>
 			<Units>
 				<Unit>
