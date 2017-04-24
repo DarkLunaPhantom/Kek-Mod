@@ -11,7 +11,8 @@
 	 name="BULL Core" 
 	 module="BugDll"
 	 author="EmperorFool" 
-	 date="02/18/2010">
+	 date="02/18/2010"
+	 dll="1">
 	
 	<export function="isBug" to="CvAppInterface"/>
 	

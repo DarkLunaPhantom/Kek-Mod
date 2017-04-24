@@ -5956,10 +5956,16 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 //Added in Final Frontier SDK: TC01
 	if (GC.getGoodyInfo(eGoody).isDamageUnit())
 	{
-		if (pUnit->getDamage() < 25)
+		// DarkLunaPhantom begin - Changed damage to be more consistent and it cannot damage non-combat units anymore.
+		/*if (pUnit->getDamage() < 25 and )
 		{
 			pUnit->setDamage(pUnit->getDamage()+5);
+		}*/
+		if (pUnit->baseCombatStr())
+		{
+			pUnit->setDamage(std::max(pUnit->getDamage(), std::min(pUnit->getDamage() + 5, 30)));
 		}
+		// DarkLunaPhantom end
 	}
 
 	if (GC.getGoodyInfo(eGoody).isNewCiv())
