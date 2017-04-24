@@ -3971,7 +3971,7 @@
 			<iBasePeaceWeight>3</iBasePeaceWeight>
 			<iPeaceWeightRand>3</iPeaceWeightRand>
 			<iWarmongerRespect>2</iWarmongerRespect>
-			<iEspionageWeight>130</iEspionageWeight>
+			<iEspionageWeight>150</iEspionageWeight>
 			<iRefuseToTalkWarThreshold>8</iRefuseToTalkWarThreshold>
 			<iNoTechTradeThreshold>5</iNoTechTradeThreshold>
 			<iTechTradeKnownPercent>100</iTechTradeKnownPercent>

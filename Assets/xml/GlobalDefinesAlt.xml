@@ -267,10 +267,6 @@
 		<fDefineFloatVal>-20.0</fDefineFloatVal>
 	</Define>
 	<Define>
-		<DefineName>CITY_SCREEN_CLICK_WILL_EXIT</DefineName>
-		<iDefineIntVal>0</iDefineIntVal>
-	</Define>
-	<Define>
 		<DefineName>WATER_POTENTIAL_CITY_WORK_FOR_AREA</DefineName>
 		<iDefineIntVal>1</iDefineIntVal>
 	</Define>
