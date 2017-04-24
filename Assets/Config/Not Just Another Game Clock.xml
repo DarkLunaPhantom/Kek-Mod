@@ -96,7 +96,7 @@
 					help="When checked, the in-game date and turns left in a Golden Age are displayed."/>
 			
 			<option id="AlternateText" key="Alternate Views" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isAlternateTimeText" set="setAlternateTimeText" dirtyBit="GameData" 
 					label="Alternate Game Clock" 
 					help="When checked, the game clock switches between two views: standard and alternate."/>

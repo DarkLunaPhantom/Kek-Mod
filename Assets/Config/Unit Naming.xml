@@ -15,7 +15,7 @@
 	<options id="UnitNaming" file="Unit Naming.ini">
 		<section id="UnitName">
 			<option id="Enabled" key="Enabled" 
-					type="boolean" default="True"/>
+					type="boolean" default="False"/>
 			<option id="UseAdvanced" key="UseAdvanced" 
 					type="boolean" default="False" 
 					get="isAdvanced" set="setAdvanced"/>
