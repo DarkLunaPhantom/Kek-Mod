@@ -365,12 +365,8 @@
 		<iDefineIntVal>1</iDefineIntVal>
 	</Define>
 	<Define>
-		<DefineName>ADVANCED_START_CITY_COST</DefineName>
-		<iDefineIntVal>0</iDefineIntVal>
-	</Define>
-	<Define>
-		<DefineName>ADVANCED_START_POPULATION_COST</DefineName>
-		<iDefineIntVal>0</iDefineIntVal>
+		<DefineName>ADVANCED_START_MAX_UNITS_PER_CITY</DefineName>
+		<iDefineIntVal>4</iDefineIntVal>
 	</Define>
 	<Define>
 		<DefineName>SCORE_LAND_FACTOR</DefineName>
