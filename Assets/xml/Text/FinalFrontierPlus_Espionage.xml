@@ -6,10 +6,10 @@
 	<TEXT>
 		<Tag>TXT_KEY_CIV_WATCHERS_DESC</Tag>
 		<English>Interstellar Intelligence</English>
-		<French>Interstellar Intel</French>
-		<German>Interstellar Intel</German>
-		<Italian>Interstellar Intel</Italian>
-		<Spanish>Interstellar Intel</Spanish>
+		<French>Interstellar Intelligence</French>
+		<German>Interstellar Intelligence</German>
+		<Italian>Interstellar Intelligence</Italian>
+		<Spanish>Interstellar Intelligence</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CIV_WATCHERS_SHORT_DESC</Tag>
@@ -288,7 +288,7 @@
 		<Spanish>System 12</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_CITY_WATCHERS_113</Tag>
+		<Tag>TXT_KEY_CITY_WATCHERS_12</Tag>
 		<English>System 13</English>
 		<French>System 13</French>
 		<German>System 13</German>
@@ -423,14 +423,14 @@
 		<Italian>Deploying a spy and the hardware they need to accomplish their mission into a hostile star system is harder than it sounds. While space is big, sensor technology is very good, and most incoming civilian ships will be routinely searched by security forces in even the most peaceful and democratic interstellar civilizations. To compensate, Interstellar Intelligence planners designed the Spy Ship, a version of the traditional stealth ship but with most of the offensive capability stripped out and replaced with better espionage and stealth hardware. The design was later adopted by the rest of the galaxy.</Italian>
 		<Spanish>Deploying a spy and the hardware they need to accomplish their mission into a hostile star system is harder than it sounds. While space is big, sensor technology is very good, and most incoming civilian ships will be routinely searched by security forces in even the most peaceful and democratic interstellar civilizations. To compensate, Interstellar Intelligence planners designed the Spy Ship, a version of the traditional stealth ship but with most of the offensive capability stripped out and replaced with better espionage and stealth hardware. The design was later adopted by the rest of the galaxy.</Spanish>
 	</TEXT>
-	<TEXT>
+	<!--<TEXT>
 		<Tag>TXT_KEY_UNIT_SPY_SHIP_STRATEGY</Tag>
 		<English>Unlike spies in Beyond the Sword, the Spy Ship is not invisible to all units. Its invisibility is only as good as that of the Stealth Ship, meaning that an opposing civilization has a chance to detect and stop a Spy Ship from being deployed into their territory. To compensate, Spy Ships have been given the ability to defend themselves (but not attack).</English>
 		<French>Unlike spies in Beyond the Sword, the Spy Ship is not invisible to all units. Its invisibility is only as good as that of the Stealth Ship, meaning that an opposing civilization has a chance to detect and stop a Spy Ship from being deployed into their territory. To compensate, Spy Ships have been given the ability to defend themselves (but not attack).</French>
 		<German>Unlike spies in Beyond the Sword, the Spy Ship is not invisible to all units. Its invisibility is only as good as that of the Stealth Ship, meaning that an opposing civilization has a chance to detect and stop a Spy Ship from being deployed into their territory. To compensate, Spy Ships have been given the ability to defend themselves (but not attack).</German>
 		<Italian>Unlike spies in Beyond the Sword, the Spy Ship is not invisible to all units. Its invisibility is only as good as that of the Stealth Ship, meaning that an opposing civilization has a chance to detect and stop a Spy Ship from being deployed into their territory. To compensate, Spy Ships have been given the ability to defend themselves (but not attack).</Italian>
 		<Spanish>Unlike spies in Beyond the Sword, the Spy Ship is not invisible to all units. Its invisibility is only as good as that of the Stealth Ship, meaning that an opposing civilization has a chance to detect and stop a Spy Ship from being deployed into their territory. To compensate, Spy Ships have been given the ability to defend themselves (but not attack).</Spanish>
-	</TEXT>
+	</TEXT>!-->
 	<TEXT>
 		<Tag>TXT_KEY_GAME_OPTION_NO_SPIES</Tag>
 		<English>No Spies</English>

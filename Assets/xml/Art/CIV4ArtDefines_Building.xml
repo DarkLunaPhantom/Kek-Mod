@@ -388,6 +388,16 @@
 			<Button>,Art/Interface/Buttons/Buildings/ForbiddenPalace.dds,Art/Interface/Buttons/Buildings_Atlas.dds,8,2</Button>
 		</BuildingArtInfo>
 		<BuildingArtInfo>
+			<Type>ART_DEF_BUILDING_PRISM_ARRAY</Type>
+			<LSystem>LSYSTEM_1x1</LSystem>
+			<bAnimated>1</bAnimated>
+			<fScale>0.8</fScale>
+			<fInterfaceScale>0.5</fInterfaceScale>
+			<NIF>Art/Empty.nif</NIF>
+			<KFM/>
+			<Button>,Art/Interface/Buttons/TechTree/Satellites.dds,Art/Interface/Buttons/TechTree_Atlas.dds,7,7</Button>
+		</BuildingArtInfo>
+		<BuildingArtInfo>
 			<Type>ART_DEF_BUILDING_GRANARY</Type>
 			<LSystem>LSYSTEM_1x1</LSystem>
 			<bAnimated>0</bAnimated>

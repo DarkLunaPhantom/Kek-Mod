@@ -102,6 +102,14 @@
 		</Spanish>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_BUILDING_PRISM_ARRAY</Tag><!-- untranslated -->
+		<English>Espionage Array</English>
+		<French>Espionage Array</French>
+		<German>Espionage Array</German>
+		<Italian>Espionage Array</Italian>
+		<Spanish>Espionage Array</Spanish>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_CITY_MARS</Tag>
 		<English>Mars</English>
 		<French>Mars</French>

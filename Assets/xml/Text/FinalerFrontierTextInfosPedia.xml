@@ -859,19 +859,19 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUILDING_THE_PANOPTICON_PEDIA</Tag><!-- Untranslated -->
-		<English>The Panopticon is the headquarters of a galaxy-wide surveillance system.</English>
-		<French>The Panopticon is the headquarters of a galaxy-wide surveillance system.</French>
-		<German>The Panopticon is the headquarters of a galaxy-wide surveillance system.</German>
-		<Italian>The Panopticon is the headquarters of a galaxy-wide surveillance system.</Italian>
-		<Spanish>The Panopticon is the headquarters of a galaxy-wide surveillance system.</Spanish>
+		<English>The Panopticon building servers as the headquaters of the galaxy's most feared intelligence agency.</English>
+		<French>The Panopticon building servers as the headquaters of the galaxy's most feared intelligence agency.</French>
+		<German>The Panopticon building servers as the headquaters of the galaxy's most feared intelligence agency.</German>
+		<Italian>The Panopticon building servers as the headquaters of the galaxy's most feared intelligence agency.</Italian>
+		<Spanish>The Panopticon building servers as the headquaters of the galaxy's most feared intelligence agency.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUILDING_THE_PANOPTICON_STRATEGY</Tag><!-- Untranslated -->
-		<English>[COLOR_BUILDING_TEXT]The Panopticon[COLOR_REVERT] increases [ICON_ESPIONAGE] output, particularly when built in Star Systems with large amounts of Commerce.</English>
-		<French>[COLOR_BUILDING_TEXT]The Panopticon[COLOR_REVERT] increases [ICON_ESPIONAGE] output, particularly when built in Star Systems with large amounts of Commerce.</French>
-		<German>[COLOR_BUILDING_TEXT]The Panopticon[COLOR_REVERT] increases [ICON_ESPIONAGE] output, particularly when built in Star Systems with large amounts of Commerce.</German>
-		<Italian>[COLOR_BUILDING_TEXT]The Panopticon[COLOR_REVERT] increases [ICON_ESPIONAGE] output, particularly when built in Star Systems with large amounts of Commerce.</Italian>
-		<Spanish>[COLOR_BUILDING_TEXT]The Panopticon[COLOR_REVERT] increases [ICON_ESPIONAGE] output, particularly when built in Star Systems with large amounts of Commerce.</Spanish>
+		<English>[COLOR_BUILDING_TEXT]The Panopticon[COLOR_REVERT] doubles enemy war weariness and makes its star system much safer from enemy spies. Also it slightly increases [ICON_ESPIONAGE] output.</English>
+		<French>[COLOR_BUILDING_TEXT]The Panopticon[COLOR_REVERT] doubles enemy war weariness and makes its star system much safer from enemy spies. Also it slightly increases [ICON_ESPIONAGE] output.</French>
+		<German>[COLOR_BUILDING_TEXT]The Panopticon[COLOR_REVERT] doubles enemy war weariness and makes its star system much safer from enemy spies. Also it slightly increases [ICON_ESPIONAGE] output.</German>
+		<Italian>[COLOR_BUILDING_TEXT]The Panopticon[COLOR_REVERT] doubles enemy war weariness and makes its star system much safer from enemy spies. Also it slightly increases [ICON_ESPIONAGE] output.</Italian>
+		<Spanish>[COLOR_BUILDING_TEXT]The Panopticon[COLOR_REVERT] doubles enemy war weariness and makes its star system much safer from enemy spies. Also it slightly increases [ICON_ESPIONAGE] output.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUILDING_GRANARY_PEDIA</Tag><!-- Override the regular definition --><!-- Untranslated -->
@@ -965,7 +965,7 @@
 		<Tag>TXT_KEY_BUILDING_WEST_POINT_STRATEGY</Tag><!-- Override the regular definition --><!-- Untranslated -->
 		<English>All military units built in the [COLOR_BUILDING_TEXT]War College's[COLOR_REVERT] star system begin with four additional prestige points. It can not be built until you have a level 5 unit.</English>
 		<French>All military units built in the [COLOR_BUILDING_TEXT]War College's[COLOR_REVERT] star system begin with four additional prestige points. It can not be built until you have a level 5 unit.</French>
-		<German>All military units built in the [COLOR_BUILDING_TEXT]War College's[COLOR_REVERT] star system begin with four additional prestige points. It can not be built until you have a level 5 unit</German>
+		<German>All military units built in the [COLOR_BUILDING_TEXT]War College's[COLOR_REVERT] star system begin with four additional prestige points. It can not be built until you have a level 5 unit.</German>
 		<Italian>All military units built in the [COLOR_BUILDING_TEXT]War College's[COLOR_REVERT] star system begin with four additional prestige points. It can not be built until you have a level 5 unit.</Italian>
 		<Spanish>All military units built in the [COLOR_BUILDING_TEXT]War College's[COLOR_REVERT] star system begin with four additional prestige points. It can not be built until you have a level 5 unit.</Spanish>
 	</TEXT>
@@ -976,6 +976,22 @@
 		<German>The [COLOR_BUILDING_TEXT]National Epic[COLOR_REVERT] starts a golden age when completed. It also increases happiness in the star system, gives it a large increase in [ICON_CULTURE], and reduces its maintenance cost.</German>
 		<Italian>The [COLOR_BUILDING_TEXT]National Epic[COLOR_REVERT] starts a golden age when completed. It also increases happiness in the star system, gives it a large increase in [ICON_CULTURE], and reduces its maintenance cost.</Italian>
 		<Spanish>The [COLOR_BUILDING_TEXT]National Epic[COLOR_REVERT] starts a golden age when completed. It also increases happiness in the star system, gives it a large increase in [ICON_CULTURE], and reduces its maintenance cost.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_PRISM_ARRAY_PEDIA</Tag><!-- Untranslated -->
+		<English>The Espionage Array is a massive array of satellites whose purpose is gathering signals intelligence from faraway worlds.</English>
+		<French>The Espionage Array is a massive array of satellites whose purpose is gathering signals intelligence from faraway worlds.</French>
+		<German>The Espionage Array is a massive array of satellites whose purpose is gathering signals intelligence from faraway worlds.</German>
+		<Italian>The Espionage Array is a massive array of satellites whose purpose is gathering signals intelligence from faraway worlds.</Italian>
+		<Spanish>The Espionage Array is a massive array of satellites whose purpose is gathering signals intelligence from faraway worlds.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_PRISM_ARRAY_STRATEGY</Tag><!-- Untranslated -->
+		<English>The [COLOR_BUILDING_TEXT]Espionage Array[COLOR_REVERT] doubles its star system's [ICON_ESPIONAGE] output.</English>
+		<French>The [COLOR_BUILDING_TEXT]Espionage Array[COLOR_REVERT] doubles  its star system's [ICON_ESPIONAGE] output.</French>
+		<German>The [COLOR_BUILDING_TEXT]Espionage Array[COLOR_REVERT] doubles  its star system's [ICON_ESPIONAGE] output.</German>
+		<Italian>The [COLOR_BUILDING_TEXT]Espionage Array[COLOR_REVERT] doubles  its star system's [ICON_ESPIONAGE] output.</Italian>
+		<Spanish>The [COLOR_BUILDING_TEXT]Espionage Array[COLOR_REVERT] doubles  its star system's [ICON_ESPIONAGE] output.</Spanish>
 	</TEXT>
 	<!-- <TEXT>
 		<Tag></Tag>

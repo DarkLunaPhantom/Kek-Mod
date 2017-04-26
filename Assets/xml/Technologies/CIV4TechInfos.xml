@@ -426,12 +426,6 @@
 			<iGridX>6</iGridX>
 			<iGridY>5</iGridY>
 			<DomainExtraMoves/>
-			<CommerceModifiers>
-				<iCommerce>0</iCommerce>
-				<iCommerce>0</iCommerce>
-				<iCommerce>0</iCommerce>
-				<iCommerce>10</iCommerce>
-			</CommerceModifiers>
 			<CommerceFlexible/>
 			<TerrainTrades/>
 			<bRiverTrade>0</bRiverTrade>

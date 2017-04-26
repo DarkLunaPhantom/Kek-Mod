@@ -1031,6 +1031,10 @@
 					<BuildingClassType>BUILDINGCLASS_THE_PANOPTICON</BuildingClassType>
 					<BuildingType>NONE</BuildingType>
 				</Building>
+				<Building>
+					<BuildingClassType>BUILDINGCLASS_PRISM_ARRAY</BuildingClassType>
+					<BuildingType>NONE</BuildingType>
+				</Building>
 			</Buildings>
 			<Units>
 				<Unit>

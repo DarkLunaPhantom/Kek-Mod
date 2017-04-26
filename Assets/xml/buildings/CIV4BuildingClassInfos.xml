@@ -452,6 +452,18 @@
 			<VictoryThresholds/>
 		</BuildingClassInfo>
 		<BuildingClassInfo>
+			<Type>BUILDINGCLASS_PRISM_ARRAY</Type>
+			<Description>TXT_KEY_BUILDING_PRISM_ARRAY</Description>
+			<iMaxGlobalInstances>-1</iMaxGlobalInstances>
+			<iMaxTeamInstances>-1</iMaxTeamInstances>
+			<iMaxPlayerInstances>1</iMaxPlayerInstances>
+			<iExtraPlayerInstances>0</iExtraPlayerInstances>
+			<bNoLimit>0</bNoLimit>
+			<bMonument>0</bMonument>
+			<DefaultBuilding>BUILDING_PRISM_ARRAY</DefaultBuilding>
+			<VictoryThresholds/>
+		</BuildingClassInfo>
+		<BuildingClassInfo>
 			<Type>BUILDINGCLASS_GRANARY</Type>
 			<Description>TXT_KEY_BUILDING_GRANARY</Description>
 			<iMaxGlobalInstances>-1</iMaxGlobalInstances>
