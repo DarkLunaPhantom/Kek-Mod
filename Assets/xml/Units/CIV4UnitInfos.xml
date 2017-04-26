@@ -16243,7 +16243,28 @@
 			<iGreatWorkCulture>0</iGreatWorkCulture>
 			<iEspionagePoints>0</iEspionagePoints>
 			<TerrainImpassables/>
-			<FeatureImpassables/>
+			<FeatureImpassables>
+				<FeatureImpassable>
+					<FeatureType>FEATURE_FALLOUT</FeatureType>
+					<bFeatureImpassable>1</bFeatureImpassable>
+				</FeatureImpassable>
+				<FeatureImpassable>
+					<FeatureType>FEATURE_JUNGLE</FeatureType>
+					<bFeatureImpassable>1</bFeatureImpassable>
+				</FeatureImpassable>
+				<FeatureImpassable>
+					<FeatureType>FEATURE_SUPERNOVA_AREA</FeatureType>
+					<bFeatureImpassable>1</bFeatureImpassable>
+				</FeatureImpassable>
+				<FeatureImpassable>
+					<FeatureType>FEATURE_OASIS</FeatureType>
+					<bFeatureImpassable>1</bFeatureImpassable>
+				</FeatureImpassable>
+				<FeatureImpassable>
+					<FeatureType>FEATURE_GRAV_FIELD</FeatureType>
+					<bFeatureImpassable>1</bFeatureImpassable>
+				</FeatureImpassable>
+			</FeatureImpassables>
 			<TerrainPassableTechs/>
 			<FeaturePassableTechs/>
 			<iCombat>0</iCombat>
