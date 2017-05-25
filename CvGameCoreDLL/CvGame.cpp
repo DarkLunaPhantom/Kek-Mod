@@ -754,7 +754,10 @@ void CvGame::initFreeUnits()
 	{
 		if (GET_PLAYER((PlayerTypes)iI).isAlive())
 		{
-			if ((GET_PLAYER((PlayerTypes)iI).getNumUnits() == 0) && (GET_PLAYER((PlayerTypes)iI).getNumCities() == 0))
+			// DarkLunaPhantom begin - Advanced Start option should work if there are some units/cities already.
+			//if ((GET_PLAYER((PlayerTypes)iI).getNumUnits() == 0) && (GET_PLAYER((PlayerTypes)iI).getNumCities() == 0))
+			if ((GET_PLAYER((PlayerTypes)iI).getNumUnits() == 0) && (GET_PLAYER((PlayerTypes)iI).getNumCities() == 0) || GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_START))
+			// DarkLunaPhantom end
 			{
 				GET_PLAYER((PlayerTypes)iI).initFreeUnits();
 			}

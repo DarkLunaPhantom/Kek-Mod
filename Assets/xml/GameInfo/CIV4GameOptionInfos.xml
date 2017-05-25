@@ -11,7 +11,7 @@
 			<Description>TXT_KEY_GAME_OPTION_ADVANCED_START</Description>
 			<Help>TXT_KEY_GAME_OPTION_ADVANCED_START_HELP</Help>
 			<bDefault>0</bDefault>
-			<bVisible>0</bVisible>
+			<bVisible>1</bVisible>
 		</GameOptionInfo>
 		<GameOptionInfo>
 			<Type>GAMEOPTION_NO_CITY_RAZING</Type>
