@@ -123,6 +123,11 @@
 				type="boolean" default="False"
 				get="isMinimizeAITurnSlices" dirtyBit="MiscButtons"/>
 			
+			<!-- Leoreth: graphics paging -->
+			<!-- Enable graphical paging -->
+			<option id="EnableGraphicalPaging" key="EnableGraphicalPaging"
+				type="boolean" default="False"
+				get="isEnableGraphicalPaging" dirtyBit="MiscButtons"/>
 		</section>
 	</options>
 	

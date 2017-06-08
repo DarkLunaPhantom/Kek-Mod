@@ -14089,6 +14089,13 @@ void CvCity::getVisibleBuildings(std::list<BuildingTypes>& kChosenVisible, int& 
 	int iNumBuildings;
 	BuildingTypes eCurType;
 	std::vector<BuildingTypes> kVisible;
+	
+	// Leoreth: graphics paging
+	if ( !plot()->shouldHaveFullGraphics() )
+	{
+		iChosenNumGenerics = 0;
+		return;
+	}
 
 	iNumBuildings = GC.getNumBuildingInfos();
 	for(int i = 0; i < iNumBuildings; i++)

@@ -528,6 +528,15 @@ public:
 
 	void read(FDataStreamBase* pStream);
 	void write(FDataStreamBase* pStream);
+	
+	// Leoreth: graphics paging
+	static void EvictGraphicsIfNecessary();
+	void pageGraphicsOut();
+	static void notePageRenderStart(int iRenderArea);
+	void setShouldHaveFullGraphics(bool bShouldHaveFullGraphics);
+	bool shouldHaveFullGraphics(void) const;
+	//bool shouldHaveGraphics(void) const;
+	void destroyGraphics();
 
 protected:
 
@@ -596,6 +605,9 @@ protected:
 
 	bool* m_abRiverCrossing;	// bit vector
 	bool* m_abRevealed;
+	
+	// Leoreth: graphics paging
+	short m_iGraphicsPageIndex;
 
 	short* /*ImprovementTypes*/ m_aeRevealedImprovementType;
 	short* /*RouteTypes*/ m_aeRevealedRouteType;
