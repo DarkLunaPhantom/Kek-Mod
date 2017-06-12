@@ -2815,13 +2815,15 @@ short CvPlayerAI::AI_foundValue_bulk(int iX, int iY, const CvFoundSettings& kSet
 
 	bool bAdvancedStart = (getAdvancedStartPoints() >= 0);
 
-	if (!kSet.bStartingLoc && !bAdvancedStart)
+	// DarkLunaPhantom - Is it necessary to force this? I would rather try to teach the AI to build a fort on the coast if necessary...
+	// This also unecessarily forces first barbarian city in each area to be on the coast.
+	/*if (!kSet.bStartingLoc && !bAdvancedStart)
 	{
 		if (!bIsCoastal && iNumAreaCities == 0)
 		{
 			return 0;
 		}
-	}
+	}*/
 
 	if (bAdvancedStart)
 	{

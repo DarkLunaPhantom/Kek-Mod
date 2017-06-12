@@ -7063,6 +7063,7 @@ void CvGame::createBarbarianUnits()
 				{
 					iNeededBarbs = ((iNeededBarbs / 4) + 1);
 
+					// DarkLunaPhantom - Disabled this change. Seems unnecessary and doesn't count ships in cities.
 					/********************************************************************************/
 					/* 	BETTER_BTS_AI_MOD						9/25/08				jdog5000	*/
 					/* 																			*/
@@ -7070,7 +7071,7 @@ void CvGame::createBarbarianUnits()
 					/********************************************************************************/
 					// Limit construction of barb ships based on player navies
 					// Keeps barb ship count in check in early game since generation is greatly increased for BTS 3.17
-					if( pLoopArea->isWater() )
+					/*if( pLoopArea->isWater() )
 					{
 						int iPlayerSeaUnits = 0;
 						for( int iI = 0; iI < MAX_CIV_PLAYERS; iI++ )
@@ -7088,7 +7089,7 @@ void CvGame::createBarbarianUnits()
 						{
 							iNeededBarbs = 0;
 						}
-					}
+					}*/
 					/********************************************************************************/
 					/* 	BETTER_BTS_AI_MOD						END								*/
 					/********************************************************************************/
