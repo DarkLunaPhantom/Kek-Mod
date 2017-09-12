@@ -3272,9 +3272,12 @@ bool CvUnit::canGift(bool bTestVisible, bool bTestTransport)
 	// an unbreakable (permanent or temporary) peace treaty.
 	for (int iTeam = 0; iTeam < MAX_CIV_TEAMS; ++iTeam)
 		{
-			if (canCombat() && GET_TEAM(pPlot->getTeam()).isAtWar((TeamTypes)iTeam) && !GET_TEAM(getTeam()).isAtWar((TeamTypes)iTeam) && !GET_TEAM(getTeam()).canDeclareWar((TeamTypes)iTeam))
+			if (GET_TEAM((TeamTypes)iTeam).isAlive() && GET_TEAM(getTeam()).isHasMet((TeamTypes)iTeam))
 			{
-				return false;
+				if (canCombat() && GET_TEAM(pPlot->getTeam()).isAtWar((TeamTypes)iTeam) && !GET_TEAM(getTeam()).isAtWar((TeamTypes)iTeam) && !GET_TEAM(getTeam()).canDeclareWar((TeamTypes)iTeam))
+				{
+					return false;
+				}
 			}
 		}
 
