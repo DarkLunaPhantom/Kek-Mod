@@ -16192,6 +16192,8 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 		}
 		break;
 	case ADVANCEDSTARTACTION_BUILDING:
+		// DarkLunaPhantom - Blocked players from placing buildings in advanced start since they are not placed on planets.
+		return;
 		{
 			if(pPlot == NULL)
 				return;

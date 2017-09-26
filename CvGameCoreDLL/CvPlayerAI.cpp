@@ -22934,7 +22934,9 @@ void CvPlayerAI::AI_doAdvancedStart(bool bNoExit)
 	
 	AI_advancedStartRouteTerritory();
 		
-	bool bDoneBuildings = (iLastPointsTotal - getAdvancedStartPoints()) > iCityPoints;
+	// DarkLunaPhantom - Blocked AI from placing buildings in advanced start since they are not placed on planets.
+	//bool bDoneBuildings = (iLastPointsTotal - getAdvancedStartPoints()) > iCityPoints;
+	bool bDoneBuildings = true;
 	for (int iPass = 0; iPass < 10 && !bDoneBuildings; ++iPass)
 	{
 		for (pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
