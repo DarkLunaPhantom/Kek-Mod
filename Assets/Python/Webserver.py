@@ -15,7 +15,7 @@ import string
 gc = CyGlobalContext()
 
 # Extra path for extra python modules
-pythonDir = os.path.join(gc.getAltrootDir(),'..','Python','v5')
+pythonDir = os.path.join(gc.getAltrootDir(),'..','Python','v7')
 execfile( os.path.join(pythonDir,'Webserver.py'))
 
 
