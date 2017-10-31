@@ -1026,7 +1026,8 @@ class FinalFrontierEvents(CvEventManager.CvEventManager):
 		
 		# War Stuff
 		if (not pPlayer.isHuman()):
-			self.doAIWarChance(iPlayer)
+			# DarkLunaPhantom - DLL can handle this?
+			#self.doAIWarChance(iPlayer)
 		
 	def doAIWarChance(self, iPlayer):
 		
