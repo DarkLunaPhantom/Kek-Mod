@@ -15990,7 +15990,8 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 				if (bPopChanged)
 				{
 					pCity->setHighestPopulation(pCity->getPopulation());
-					if (pCity->getPopulation() == 1)
+                    // DarkLunaPhantom - Removed additional food.
+					/*if (pCity->getPopulation() == 1)
 					{
 						pCity->setFood(0);
 						pCity->setFoodKept(0);
@@ -15999,7 +16000,7 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 					{
 						pCity->setFood(pCity->growthThreshold() / 2);
 						pCity->setFoodKept((pCity->getFood() * pCity->getMaxFoodKeptPercent()) / 100);
-					}
+					}*/
 				}
 			}
 		}
