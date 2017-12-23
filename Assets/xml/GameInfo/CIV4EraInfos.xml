@@ -216,7 +216,7 @@
 			<Strategy>TXT_KEY_ERA_RENAISSANCE_STRATEGY</Strategy>
 			<bNoGoodies>1</bNoGoodies>
 			<bNoAnimals>1</bNoAnimals>
-			<bNoBarbUnits>1</bNoBarbUnits>
+			<bNoBarbUnits>0</bNoBarbUnits>
 			<bNoBarbCities>0</bNoBarbCities>
 			<iAdvancedStartPoints>2700</iAdvancedStartPoints>
 			<iStartingUnitMultiplier>2</iStartingUnitMultiplier>
@@ -286,7 +286,7 @@
 			<Strategy>TXT_KEY_ERA_INDUSTRIAL_STRATEGY</Strategy>
 			<bNoGoodies>1</bNoGoodies>
 			<bNoAnimals>1</bNoAnimals>
-			<bNoBarbUnits>1</bNoBarbUnits>
+			<bNoBarbUnits>0</bNoBarbUnits>
 			<bNoBarbCities>0</bNoBarbCities>
 			<iAdvancedStartPoints>4000</iAdvancedStartPoints>
 			<iStartingUnitMultiplier>3</iStartingUnitMultiplier>
@@ -353,8 +353,8 @@
 			<Strategy>TXT_KEY_ERA_MODERN_STRATEGY</Strategy>
 			<bNoGoodies>1</bNoGoodies>
 			<bNoAnimals>1</bNoAnimals>
-			<bNoBarbUnits>1</bNoBarbUnits>
-			<bNoBarbCities>1</bNoBarbCities>
+			<bNoBarbUnits>0</bNoBarbUnits>
+			<bNoBarbCities>0</bNoBarbCities>
 			<iAdvancedStartPoints>5500</iAdvancedStartPoints>
 			<iStartingUnitMultiplier>3</iStartingUnitMultiplier>
 			<iStartingDefenseUnits>3</iStartingDefenseUnits>
@@ -418,8 +418,8 @@
 			<Strategy>TXT_KEY_ERA_FUTURE_STRATEGY</Strategy>
 			<bNoGoodies>1</bNoGoodies>
 			<bNoAnimals>1</bNoAnimals>
-			<bNoBarbUnits>1</bNoBarbUnits>
-			<bNoBarbCities>1</bNoBarbCities>
+			<bNoBarbUnits>0</bNoBarbUnits>
+			<bNoBarbCities>0</bNoBarbCities>
 			<iAdvancedStartPoints>7000</iAdvancedStartPoints>
 			<iStartingUnitMultiplier>3</iStartingUnitMultiplier>
 			<iStartingDefenseUnits>3</iStartingDefenseUnits>
