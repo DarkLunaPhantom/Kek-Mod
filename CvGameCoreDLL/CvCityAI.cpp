@@ -3461,6 +3461,7 @@ int CvCityAI::AI_buildingValue(BuildingTypes eBuilding, int iFocusFlags, int iTh
 	PROFILE_FUNC();
 
 	CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
+    CvTeamAI& kTeam = GET_TEAM(kOwner.getTeam()); // DarkLunaPhantom
 	CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 	BuildingClassTypes eBuildingClass = (BuildingClassTypes) kBuilding.getBuildingClassType();
 	int iLimitedWonderLimit = limitedWonderClassLimit(eBuildingClass);
@@ -3613,7 +3614,55 @@ int CvCityAI::AI_buildingValue(BuildingTypes eBuilding, int iFocusFlags, int iTh
 				iValue += iTemp;
 			}
 
-			iValue += -kBuilding.getNukeModifier() / (GC.getGameINLINE().isNukesValid() && !GC.getGameINLINE().isNoNukes() ? 4 : 40);
+            // DarkLunaPhantom begin - Bomb Shelters should be of much higher value, I copied and adjusted rough estimates from AI_projectValue().
+            int iNukeDefense = -kBuilding.getNukeModifier();
+            if (iNukeDefense > 0)
+            {
+                bool bForeignNukes = false; // we're going to cheat a little bit, by counting nukes that we probably shouldn't know about.
+                for (PlayerTypes i = (PlayerTypes)0; i < MAX_CIV_PLAYERS; i = (PlayerTypes)(i + 1))
+                {
+                    const CvPlayerAI& kLoopPlayer = GET_PLAYER(i);
+                    if (kLoopPlayer.getTeam() != kOwner.getTeam() && kTeam.isHasMet(kLoopPlayer.getTeam()))
+                    {
+                        if (kLoopPlayer.getNumNukeUnits() > 0)
+                        {
+                            bForeignNukes = true;
+                            break;
+                        }
+                    }
+                }
+                int iNukeEvasionProbability = 0;
+                int iNukeUnitTypes = 0;
+                for (UnitTypes i = (UnitTypes)0; i < GC.getNumUnitInfos(); i = (UnitTypes)(i+1))
+                {
+                    const CvUnitInfo& kLoopUnit = GC.getUnitInfo(i);
+                    if (kLoopUnit.getNukeRange() >= 0)
+                    {
+                        iNukeEvasionProbability += kLoopUnit.getEvasionProbability();
+                        iNukeUnitTypes++;
+                    }
+                }
+                iNukeEvasionProbability /= std::max(1, iNukeUnitTypes);
+                int iTargetValue = 10 + (getYieldRate(YIELD_PRODUCTION) * 5 + getYieldRate(YIELD_COMMERCE) * 3)/2; // DarkLunaPhantom - cf. iTargetValue in the SDI section of AI_projectValue() (K-Mod).
+                int iStackValue = 0; // DarkLunaPhantom - Lazy attempt to estimate the value of the strongest unit stack this shelter might defend.
+                for (PlayerTypes i = (PlayerTypes)0; i < MAX_CIV_PLAYERS; i = (PlayerTypes)(i + 1))
+                {
+                    if (GET_PLAYER(i).getTeam() == kOwner.getTeam())
+                    {
+                        iStackValue += area()->getPower(i);
+                    }
+                }
+                iStackValue *= 7;
+                iStackValue /= 20;
+                int iTempValue = iNukeDefense * (iStackValue + iTargetValue);
+                iTempValue /= 100;
+                iTempValue *= 10000 - kTeam.getNukeInterception()*(100 - iNukeEvasionProbability);
+                iTempValue /= 10000;
+                iTempValue /= (bForeignNukes || !GC.getGameINLINE().isNoNukes() ? 1 : 10);
+                iValue += iTempValue;
+            }
+			//iValue += -kBuilding.getNukeModifier() / (GC.getGameINLINE().isNukesValid() && !GC.getGameINLINE().isNoNukes() ? 4 : 40);
+            // DarkLunaPhantom end
 			// K-Mod end
 		}
 
@@ -5504,20 +5553,44 @@ int CvCityAI::AI_projectValue(ProjectTypes eProject)
 	{
 		int iForeignNukes = 0; // we're going to cheat a little bit, by counting nukes that we probably shouldn't know about.
 		int iTeamsMet = 0;
-		for (PlayerTypes i = (PlayerTypes)0; i < MAX_CIV_PLAYERS; i = (PlayerTypes)(i + 1))
+        // DarkLunaPhantom begin - iTeamsMet was previously counting players instead of teams, now it counts free teams (as vassal's nukes count for master's team in getNumNukeUnits()).
+		for (TeamTypes i = (TeamTypes)0; i < MAX_CIV_TEAMS; i = (TeamTypes)(i + 1))
 		{
-			const CvPlayerAI& kLoopPlayer = GET_PLAYER(i);
-			if (kLoopPlayer.getTeam() != kOwner.getTeam() && kTeam.isHasMet(kLoopPlayer.getTeam()))
+			const CvTeamAI& kLoopTeam = GET_TEAM(i);
+			if (i != kOwner.getTeam() && kTeam.isHasMet(i) && !kLoopTeam.isAVassal())
 			{
-				iForeignNukes += kLoopPlayer.getNumNukeUnits();
+				iForeignNukes += kLoopTeam.getNumNukeUnits() - (kTeam.isVassal(i) ? kTeam.getNumNukeUnits(): 0); //DarkLunaPhantom - Don't count own nukes as foreign.
+        // DarkLunaPhantom end
 				iTeamsMet++;
 			}
 		}
-		if (!GC.getGameINLINE().isNoNukes() || iForeignNukes > iTeamsMet)
+		//if (!GC.getGameINLINE().isNoNukes() || iForeignNukes > iTeamsMet)
+        if (!GC.getGameINLINE().isNoNukes() || iForeignNukes > 0) // DarkLunaPhantom - Being nuked hurts, so don't take chances.
 		{
+            // DarkLunaPhantom begin - Evasion probability is now used with assumption that all nuke units are roughly equally viable.
+            // Also added estimated unit value.
+            int iNukeEvasionProbability = 0;
+            int iNukeUnitTypes = 0;
+            for (UnitTypes i = (UnitTypes)0; i < GC.getNumUnitInfos(); i = (UnitTypes)(i+1))
+			{
+				const CvUnitInfo& kLoopUnit = GC.getUnitInfo(i);
+                if (kLoopUnit.getNukeRange() >= 0)
+                {
+                    iNukeEvasionProbability += kLoopUnit.getEvasionProbability();
+                    iNukeUnitTypes++;
+                }
+            }
+            iNukeEvasionProbability /= std::max(1, iNukeUnitTypes);
 			int iTargetValue = 10 + (getYieldRate(YIELD_PRODUCTION) * 5 + getYieldRate(YIELD_COMMERCE) * 3)/2; // a very rough estimate of the cost of being nuked
 			int iEstimatedNukeAttacks = iForeignNukes * (2 + iTeamsMet) / (2 + 2*iTeamsMet) + (GC.getGameINLINE().isNoNukes() ? 0 : 2 + GC.getGameINLINE().getNukesExploded() / (2 + iTeamsMet));
-			iValue += kProject.getNukeInterception() * iEstimatedNukeAttacks * iTargetValue / 100;
+            int iStackValue = (((GET_TEAM(getTeam()).getPower(false) * 7) / 20) * std::min(1, iEstimatedNukeAttacks)) / (iEstimatedNukeAttacks > 1 ? 1 : 2); // DarkLunaPhantom - Lazy attempt to estimate unit value.
+			//iValue += kProject.getNukeInterception() * iEstimatedNukeAttacks * iTargetValue / 100;
+            int iTempValue = kProject.getNukeInterception() * (iStackValue + iEstimatedNukeAttacks * iTargetValue);
+            iTempValue /= 100;
+            iTempValue *= 100 - iNukeEvasionProbability;
+            iTempValue /= 100;
+            iValue += iTempValue;
+            // DarkLunaPhantom end
 		}
 		//iValue += (GC.getProjectInfo(eProject).getNukeInterception() / 10);
 	}
