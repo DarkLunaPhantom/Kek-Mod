@@ -12704,9 +12704,9 @@ int CvPlayerAI::AI_missionaryValue(CvArea* pArea, ReligionTypes eReligion, Playe
 /************************************************************************************************/
 }
 
-// K-Mod note: the original BtS code for this was totally inconsistant with the calculation in AI_missionaryValue
+// K-Mod note: the original BtS code for this was totally inconsistent with the calculation in AI_missionaryValue
 // -- which is bad news since the results are compared directly.
-// I've rewritten most of this function so that it is more sane and more compariable to the missionary value.
+// I've rewritten most of this function so that it is more sane and more comparable to the missionary value.
 // The original code is deleted.
 // Currently, the return value has units of roughly (and somewhat arbitrarily) 1000 * commerce per turn.
 int CvPlayerAI::AI_executiveValue(CvArea* pArea, CorporationTypes eCorporation, PlayerTypes* peBestPlayer, bool bSpreadOnly) const
@@ -12816,11 +12816,11 @@ int CvPlayerAI::AI_executiveValue(CvArea* pArea, CorporationTypes eCorporation, 
 		*peBestPlayer = (PlayerTypes)iBestPlayer;
 	}
 	// I'm putting in a fudge-factor of 10 just to bring the value up to scale with AI_missionaryValue.
-	// This isn't something that i'm happy about, but it's easier than rewriting AI_missionaryValue.
+	// This isn't something that I'm happy about, but it's easier than rewriting AI_missionaryValue.
 	return 10 * iBestValue;
 }
 
-// This function has been completely rewriten for K-Mod. The original code has been deleted. (it was junk)
+// This function has been completely rewritten for K-Mod. The original code has been deleted. (it was junk)
 // Returns approximately 100 x gpt value of the corporation, for one city.
 int CvPlayerAI::AI_corporationValue(CorporationTypes eCorporation, const CvCity* pCity) const
 {
@@ -24143,7 +24143,7 @@ void CvPlayerAI::AI_ClearConstructionValueCache()
 	int iLoop;
 	for (pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
 	{
-		// Have I meantioned that the way the "AI" classes are used in this code is an abomination and an insult to OO programming?
+		// Have I mentioned that the way the "AI" classes are used in this code is an abomination and an insult to OO programming?
 		static_cast<CvCityAI*>(pLoopCity)->AI_ClearConstructionValueCache();
 	}
 }
