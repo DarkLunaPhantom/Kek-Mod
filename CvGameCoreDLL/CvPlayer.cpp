@@ -9728,6 +9728,10 @@ int CvPlayer::getTypicalUnitValue(UnitAITypes eUnitAI, DomainTypes eDomain) cons
 
 int CvPlayer::getGoldPerUnit() const																		
 {
+    if (isBarbarian()) // DarkLunaPhantom
+    {
+        return 0;
+    }
 	return m_iGoldPerUnit;
 }
 
@@ -9748,6 +9752,10 @@ void CvPlayer::changeGoldPerUnit(int iChange)
 
 int CvPlayer::getGoldPerMilitaryUnit() const
 {
+    if (isBarbarian()) // DarkLunaPhantom
+    {
+        return 0;
+    }
 	return m_iGoldPerMilitaryUnit;
 }
 
