@@ -7382,7 +7382,7 @@ int CvUnit::upgradePrice(UnitTypes eUnit) const
 
 	iPrice += (std::max(0, (GET_PLAYER(getOwnerINLINE()).getProductionNeeded(eUnit) - GET_PLAYER(getOwnerINLINE()).getProductionNeeded(getUnitType()))) * GC.getDefineINT("UNIT_UPGRADE_COST_PER_PRODUCTION"));
 
-	if (!isHuman() && !isBarbarian())
+	if (!isHuman()/* && !isBarbarian()*/) // DarkLunaPhantom
 	{
 		iPrice *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIUnitUpgradePercent();
 		iPrice /= 100;
@@ -8029,7 +8029,7 @@ int CvUnit::workRate(bool bMax) const
 	iRate *= std::max(0, (GET_PLAYER(getOwnerINLINE()).getWorkerSpeedModifier() + 100));
 	iRate /= 100;
 
-	if (!isHuman() && !isBarbarian())
+	if (!isHuman()/* && !isBarbarian()*/) // DarkLunaPhantom
 	{
 		iRate *= std::max(0, (GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIWorkRateModifier() + 100));
 		iRate /= 100;

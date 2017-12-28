@@ -6750,7 +6750,7 @@ int CvPlayer::getProductionNeeded(UnitTypes eUnit) const
 	iProductionNeeded *= GC.getEraInfo(GC.getGameINLINE().getStartEra()).getTrainPercent();
 	iProductionNeeded /= 100;
 
-	if (!isHuman() && !isBarbarian())
+	if (!isHuman()/* && !isBarbarian()*/) // DarkLunaPhantom
 	{
 		if (isWorldUnitClass(eUnitClass))
 		{
@@ -6804,7 +6804,7 @@ int CvPlayer::getProductionNeeded(BuildingTypes eBuilding) const
 	iProductionNeeded *= GC.getEraInfo(GC.getGameINLINE().getStartEra()).getConstructPercent();
 	iProductionNeeded /= 100;
 
-	if (!isHuman() && !isBarbarian())
+	if (!isHuman()/* && !isBarbarian()*/) // DarkLunaPhantom
 	{
 		if (isWorldWonderClass((BuildingClassTypes)(GC.getBuildingInfo(eBuilding).getBuildingClassType())))
 		{
@@ -6840,7 +6840,7 @@ int CvPlayer::getProductionNeeded(ProjectTypes eProject) const
 	iProductionNeeded *= GC.getEraInfo(GC.getGameINLINE().getStartEra()).getCreatePercent();
 	iProductionNeeded /= 100;
 
-	if (!isHuman() && !isBarbarian())
+	if (!isHuman()/* && !isBarbarian()*/) // DarkLunaPhantom
 	{
 		if (isWorldProject(eProject))
 		{
@@ -7369,7 +7369,7 @@ int CvPlayer::getUnitCostMultiplier() const
 	iMultiplier *= GC.getHandicapInfo(getHandicapType()).getUnitCostPercent();
 	iMultiplier /= 100;
 
-	if (!isHuman() && !isBarbarian())
+	if (!isHuman()/* && !isBarbarian()*/) // DarkLunaPhantom
 	{
 		iMultiplier *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIUnitCostPercent();
 		iMultiplier /= 100;
@@ -7486,7 +7486,7 @@ int CvPlayer::calculateUnitSupply(int& iPaidUnits, int& iBaseSupplyCost) const
 
 	iSupply = iBaseSupplyCost;
 
-	if (!isHuman() && !isBarbarian())
+	if (!isHuman()/* && !isBarbarian()*/) // DarkLunaPhantom
 	{
 		iSupply *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIUnitSupplyPercent();
 		iSupply /= 100;
@@ -7565,7 +7565,7 @@ void CvPlayer::updateInflationRate()
 	iInflationPerTurnTimes10000 /= 100;
 
 	int iModifier = m_iInflationModifier;
-	if (!isHuman() && !isBarbarian())
+	if (!isHuman()/* && !isBarbarian()*/) // DarkLunaPhantom
 	{
 		int iAIModifier = GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIInflationPercent();
 		iAIModifier *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * getCurrentEra()) + 100));
@@ -10244,7 +10244,7 @@ int CvPlayer::getModifiedWarWearinessPercentAnger(int iWarWearinessPercentAnger)
 	iWarWearinessPercentAnger *= std::max(0, (GC.getWorldInfo(GC.getMapINLINE().getWorldSize()).getWarWearinessModifier() + 100));
 	iWarWearinessPercentAnger /= 100;
 
-	if (!isHuman() && !isBarbarian() && !isMinorCiv())
+	if (!isHuman()/* && !isBarbarian() && !isMinorCiv()*/) // DarkLunaPhantom
 	{
 		iWarWearinessPercentAnger *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIWarWearinessPercent();
 		iWarWearinessPercentAnger /= 100;
@@ -13233,7 +13233,7 @@ int CvPlayer::getSingleCivicUpkeep(CivicTypes eCivic, bool bIgnoreAnarchy) const
 	iUpkeep *= GC.getHandicapInfo(getHandicapType()).getCivicUpkeepPercent();
 	iUpkeep /= 100;
 
-	if (!isHuman() && !isBarbarian())
+	if (!isHuman()/* && !isBarbarian()*/) // DarkLunaPhantom
 	{
 		iUpkeep *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAICivicUpkeepPercent();
 		iUpkeep /= 100;
@@ -22444,7 +22444,7 @@ int CvPlayer::getGrowthThreshold(int iPopulation) const
 	iThreshold *= GC.getEraInfo(GC.getGameINLINE().getStartEra()).getGrowthPercent();
 	iThreshold /= 100;
 
-	if (!isHuman() && !isBarbarian())
+	if (!isHuman()/* && !isBarbarian()*/) // DarkLunaPhantom
 	{
 		iThreshold *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIGrowthPercent();
 		iThreshold /= 100;
