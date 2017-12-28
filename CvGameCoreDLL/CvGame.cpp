@@ -7096,7 +7096,10 @@ void CvGame::createBarbarianUnits()
 
 					for (iI = 0; iI < iNeededBarbs; iI++)
 					{
-						pPlot = GC.getMapINLINE().syncRandPlot((RANDPLOT_NOT_VISIBLE_TO_CIV | RANDPLOT_ADJACENT_LAND | RANDPLOT_PASSIBLE), pLoopArea->getID(), GC.getDefineINT("MIN_BARBARIAN_STARTING_DISTANCE"));
+                        // DarkLunaPhantom - Tiles are now weighted by food on adjacent tiles. This is to stop barbarians from appearing where there's no food and encourage them in richer lands. See CvMap::syncRandPlot.
+                        // Idea from AdvCiv by f1rpo (advc.300), but implementation and details different.
+						//pPlot = GC.getMapINLINE().syncRandPlot((RANDPLOT_NOT_VISIBLE_TO_CIV | RANDPLOT_ADJACENT_LAND | RANDPLOT_PASSIBLE), pLoopArea->getID(), GC.getDefineINT("MIN_BARBARIAN_STARTING_DISTANCE"));
+                        pPlot = GC.getMapINLINE().syncRandPlot((RANDPLOT_NOT_VISIBLE_TO_CIV | RANDPLOT_ADJACENT_LAND_FOOD_WEIGHTED | RANDPLOT_PASSIBLE), pLoopArea->getID(), GC.getDefineINT("MIN_BARBARIAN_STARTING_DISTANCE"));
 
 						if (pPlot != NULL)
 						{

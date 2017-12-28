@@ -714,6 +714,30 @@ CvPlot* CvMap::syncRandPlot(int iFlags, int iArea, int iMinUnitDistance, int iTi
 					{
 						bValid = false;
 					}
+                    // DarkLunaPhantom begin - Adds 1 / (max(1, 2 * iMaxFood)) chance of plot being rejected. See CvGame::createBarbarianUnits. Idea from AdvCiv by f1rpo (advc.300), but implementation and details different.
+                    else
+                    {
+                        if(iFlags & RANDPLOT_ADJACENT_LAND_FOOD_WEIGHTED)
+                        {
+                            int iMaxFood = 0; // DarkLunaPhantom - Maximum food yield among 3x3 tiles around pTestPlot.
+                            for(int iDX = -1; iDX <= 1; iDX++)
+                            {
+                                for(int iDY = -1; iDY <= 1; iDY++)
+                                {
+                                    pLoopPlot = plotXY(pTestPlot->getX_INLINE(), pTestPlot->getY_INLINE(), iDX, iDY);
+                                    if(pLoopPlot != NULL)
+                                    {
+                                        iMaxFood = std::max(iMaxFood, pLoopPlot->getYield(YIELD_FOOD));
+                                    }
+                                }
+                            }
+                            if(iMaxFood == 0 || GC.getGameINLINE().getSorenRandNum(100, "RandPlot food weight") < 100 / (2 * iMaxFood))
+                            {
+                                bValid = false;
+                            }
+                        }
+                    }
+                    // DarkLunaPhantom end
 				}
 			}
 
