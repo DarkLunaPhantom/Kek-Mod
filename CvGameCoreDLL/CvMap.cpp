@@ -719,15 +719,18 @@ CvPlot* CvMap::syncRandPlot(int iFlags, int iArea, int iMinUnitDistance, int iTi
                     {
                         if(iFlags & RANDPLOT_ADJACENT_LAND_FOOD_WEIGHTED)
                         {
-                            int iMaxFood = 0; // DarkLunaPhantom - Maximum food yield among 3x3 tiles around pTestPlot.
-                            for(int iDX = -1; iDX <= 1; iDX++)
+                            int iMaxFood = 0; // DarkLunaPhantom - Maximum food yield among 3x3 land tiles around pTestPlot (if pTestPlot itself yields any food).
+                            if(pTestPlot->getYield(YIELD_FOOD) > 0)
                             {
-                                for(int iDY = -1; iDY <= 1; iDY++)
+                                for(int iDX = -1; iDX <= 1; iDX++)
                                 {
-                                    pLoopPlot = plotXY(pTestPlot->getX_INLINE(), pTestPlot->getY_INLINE(), iDX, iDY);
-                                    if(pLoopPlot != NULL)
+                                    for(int iDY = -1; iDY <= 1; iDY++)
                                     {
-                                        iMaxFood = std::max(iMaxFood, pLoopPlot->getYield(YIELD_FOOD));
+                                        pLoopPlot = plotXY(pTestPlot->getX_INLINE(), pTestPlot->getY_INLINE(), iDX, iDY);
+                                        if(pLoopPlot != NULL && !pLoopPlot->isWater())
+                                        {
+                                            iMaxFood = std::max(iMaxFood, pLoopPlot->getYield(YIELD_FOOD));
+                                        }
                                     }
                                 }
                             }
