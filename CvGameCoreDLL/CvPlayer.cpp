@@ -16542,6 +16542,18 @@ int CvPlayer::getAdvancedStartCityCost(bool bAdd, CvPlot* pPlot) const
 			iCost /= 100;
 		}
 	}
+    
+    // DarkLunaPhantom begin - Apply imperialistic trait settler cost reduction to advanced start cities. This assumes only one found unit exists.
+    for (UnitTypes i = (UnitTypes)0; i < GC.getNumUnitInfos(); i = (UnitTypes)(i+1))
+    {
+        if(GC.getUnitInfo(i).isFound())
+        {
+            iCost *= 100;
+            iCost /= std::max(1, 100 + getProductionModifier(i));
+            break;
+        }
+    }
+    // DarkLunaPhantom end
 	
 	return iCost;
 }
