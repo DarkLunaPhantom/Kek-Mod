@@ -6962,10 +6962,23 @@ void CvGame::createBarbarianCities()
 				
 					if (iTargetCitiesMultiplier > 100)
 					{
-						iValue *= pLoopPlot->area()->getNumOwnedTiles();
+                        // DarkLunaPhantom - Bugfix from AdvCiv by f1rpo.
+                        /*  advc300, advc.001:
+                            Also, the first city placed in a previously uninhabited area
+                            is placed randomly b/c each found value gets multiplied
+                            with 0, which is probably a bug. Let's instead use the projected number of
+                            owned tiles after placing the city (by adding 9). */
+						//iValue *= pLoopPlot->area()->getNumOwnedTiles();
+                        iValue *= 9 + pLoopPlot->area()->getNumOwnedTiles();
 					}
 
-					iValue += (100 + getSorenRandNum(50, "Barb City Found"));
+                    // DarkLunaPhantom - Bugfix from AdvCiv by f1rpo.
+                    /*  advc.300, advc.001: Looks like another bug.
+						Good spots have found values in the thousands; adding
+						between 0 and 50 is negligible. The division by 100
+						suggests that times 1 to 1.5 was intended. */
+					//iValue += (100 + getSorenRandNum(50, "Barb City Found"));
+                    iValue *= (100 + getSorenRandNum(50, "Barb City Found"));
 					iValue /= 100;
 
 					if (iValue > iBestValue)
