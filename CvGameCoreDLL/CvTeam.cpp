@@ -2397,7 +2397,7 @@ bool CvTeam::isAVassal() const
 			{
 				if (isVassal((TeamTypes)iI))
 				{
-					FAssert(iI != getID());
+					//FAssert(iI != getID()); DarkLunaPhantom - This will never ever happen.
 					return true;
 				}
 			}

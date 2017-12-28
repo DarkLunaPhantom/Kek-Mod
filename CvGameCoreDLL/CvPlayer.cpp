@@ -15763,7 +15763,7 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 			break;
 		default:
 			// The first action must be to place a city
-			// so players can lose by spending everything
+			// so players can't lose by spending everything
 			return;
 		}
 	}
@@ -16519,7 +16519,7 @@ int CvPlayer::getAdvancedStartCityCost(bool bAdd, CvPlot* pPlot) const
 			{
 				return -1;
 			}
-			//Only allow founding a city at someone elses start point if 
+			//Only allow founding a city at someone else's start point if 
 			//We have no cities and they have no cities.
 			if ((getID() != eClosestPlayer) && ((getNumCities() > 0) || (GET_PLAYER(eClosestPlayer).getNumCities() > 0)))
 			{
