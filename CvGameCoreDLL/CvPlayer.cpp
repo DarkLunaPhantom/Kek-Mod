@@ -6144,6 +6144,17 @@ void CvPlayer::found(int iX, int iY)
 				initUnit(eDefenderUnit, iX, iY, UNITAI_CITY_DEFENSE);
 			}
 		}
+        
+        // DarkLunaPhantom begin
+        if (GC.getGameINLINE().isOption(GAMEOPTION_RAGING_BARBARIANS))
+        {
+            UnitTypes eWorkerUnit = pCity->AI_bestUnitAI(UNITAI_WORKER);
+            if (eWorkerUnit != NO_UNIT)
+            {
+                initUnit(eWorkerUnit, iX, iY, UNITAI_WORKER);
+            }
+        }
+        // DarkLunaPhantom end
 	}
 
 	for (iI = 0; iI < GC.getNumBuildingClassInfos(); iI++)
