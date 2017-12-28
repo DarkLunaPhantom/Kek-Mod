@@ -3348,7 +3348,7 @@ short CvPlayerAI::AI_foundValue_bulk(int iX, int iY, const CvFoundSettings& kSet
 	//        Food is always great - unless we already have too much; and food already affects a bunch of other parts of the site evaluation...
 	if (kSet.bStartingLoc)
 		iResourceValue /= 4; // try not to make the value of strategic resources too overwhelming. (note: I removed a bigger value reduction from the original code higher up.)
-	iResourceValue += iSpecialFood * 20; // Note: iSpecialFood is whatever food happens to be asscioated with bonuses. Don't value it highly, because it's also counted in a bunch of other ways.
+	iResourceValue += iSpecialFood * 20; // Note: iSpecialFood is whatever food happens to be associated with bonuses. Don't value it highly, because it's also counted in a bunch of other ways.
 	iResourceValue += iSpecialProduction * 40;
 	iResourceValue += iSpecialCommerce * 35;
 	//
@@ -4220,7 +4220,7 @@ bool CvPlayerAI::AI_isCommercePlot(CvPlot* pPlot) const
 // K-Mod. The cache also needs to be reset when routes are destroyed, because distance 2 border danger only counts when there is a route.
 // Actually, the cache doesn't need to be cleared when war is declared; because false negatives have no impact with this cache.
 // The safe plot cache can be invalid if we kill an enemy unit. Currently this is unaccounted for, and so the cache doesn't always match the true state.
-// In general, I think this cache is a poorly planned idea. It's prone to subtle bugs if there are rule changes in seemingly independant parts of the games.
+// In general, I think this cache is a poorly planned idea. It's prone to subtle bugs if there are rule changes in seemingly independent parts of the games.
 //
 // I've done a bit of speed profiling and found that although the safe plot cache does shortcut around 50% of calls to AI_getAnyPlotDanger,
 // that only ends up saving a few milliseconds each turn anyway. I don't really think that's worth risking of getting problems from bad cache.
@@ -5056,7 +5056,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 	if (kTechInfo.isMapVisible())
 	{
 		iValue += (3*GC.getMapINLINE().getLandPlots() + GC.getMapINLINE().numPlots())/400; // (3 * 1100 + 4400)/400 = 14. ~3 commerce/turn
-		// Note, the world is usually thoroghly explored by the time of satilites. So this is low value.
+		// Note, the world is usually thoroughly explored by the time of satellites. So this is low value.
 		// If we wanted to evaluate this properly, we'd need to calculate at how much of the world is still unexplored.
 	}
 
@@ -5388,7 +5388,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 
 			/* original code
 			iTempValue += (GC.getImprovementInfo((ImprovementTypes)iJ).getTechYieldChanges(eTech, iK) * getImprovementCount((ImprovementTypes)iJ) * 50); */
-			// Often, an improvment only becomes viable after it gets the tech bonus.
+			// Often, an improvement only becomes viable after it gets the tech bonus.
 			// So it's silly to score the bonus proportionally to how many of the improvements we already have.
 			iTempValue += GC.getImprovementInfo((ImprovementTypes)iJ).getTechYieldChanges(eTech, iK)
 				* std::max(getImprovementCount((ImprovementTypes)iJ), 3*getNumCities()/2) * 4;

@@ -6008,7 +6008,7 @@ int CvCity::calculateNumCitiesMaintenanceTimes100() const
 	iNumVassalCities /= std::max(1, GET_TEAM(getTeam()).getNumMembers());
 /*
 ** K-Mod, 04/sep/10, karadoc
-** Reduced vassal maintenace and removed maintenace cap
+** Reduced vassal maintenance and removed maintenance cap
 */
 	/* original BTS code
 	int iNumCitiesMaintenance = (GET_PLAYER(getOwnerINLINE()).getNumCities() + iNumVassalCities) * iNumCitiesPercent;
@@ -9239,7 +9239,7 @@ int CvCity::getBuildingCommerceByBuilding(CommerceTypes eIndex, BuildingTypes eB
 			GC.getGameINLINE().getGameTurnYear() - getBuildingOriginalTime(eBuilding) >= kBuilding.getCommerceChangeDoubleTime(eIndex)
 			? 2 : 1;
 		// there are just two components which get multiplied by the time factor: the standard commerce, and the "safe" commerce.
-		// the rest of the compontents are bonuses which should not be doubled.
+		// the rest of the components are bonuses which should not be doubled.
 
 		if (!kBuilding.isCommerceChangeOriginalOwner(eIndex) || getBuildingOriginalOwner(eBuilding) == getOwnerINLINE())
 		{
@@ -10316,7 +10316,7 @@ void CvCity::setName(const wchar* szNewValue, bool bFound)
 {
 	CvWString szName(szNewValue);
 	gDLL->stripSpecialCharacters(szName);
-	// K-Mod. stripSpecialCharacters apparently doesn't count '%' as a special characater
+	// K-Mod. stripSpecialCharacters apparently doesn't count '%' as a special character
 	// however, strings with '%' in them will cause the game to crash. So I'm going to strip them out.
 	for (CvWString::iterator it = szName.begin(); it != szName.end(); )
 	{
@@ -12904,7 +12904,7 @@ void CvCity::doCulture()
 }
 
 
-// This function has essentially been rewriten for K-Mod. (and it use to not be 'times 100')
+// This function has essentially been rewritten for K-Mod. (and it use to not be 'times 100')
 // A note about scale: the city plot itself gets roughly 10x culture. The outer edges of the cultural influence get 1x culture (ie. the influence that extends beyond the borders).
 void CvCity::doPlotCultureTimes100(bool bUpdate, PlayerTypes ePlayer, int iCultureRateTimes100, bool bCityCulture)
 {
