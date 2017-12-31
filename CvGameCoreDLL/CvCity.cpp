@@ -12424,9 +12424,13 @@ void CvCity::popOrder(int iNum, bool bFinish, bool bChoose)
 				GET_PLAYER(getOwnerINLINE()).removeBuildingClass((BuildingClassTypes)(GC.getBuildingInfo(eConstructBuilding).getBuildingClassType()));
 			}
 
-			setNumRealBuilding(eConstructBuilding, getNumRealBuilding(eConstructBuilding) + 1);
-
+// DarkLunaPhantom - Order is changed so that it works with mods which allow multiple buildings of same type and increase cost for each building already built.
+//Changed in Final Frontier SDK: TC01, thanks to T-hawk
+//A fix needed to make building production overflow work
 			iProductionNeeded = getProductionNeeded(eConstructBuilding);
+			setNumRealBuilding(eConstructBuilding, getNumRealBuilding(eConstructBuilding) + 1);
+//End of Final Frontier SDK
+
 			// max overflow is the value of the item produced (to eliminate prebuild exploits)
 			int iOverflow = getBuildingProduction(eConstructBuilding) - iProductionNeeded;
 			int iMaxOverflow = std::max(iProductionNeeded, getCurrentProductionDifference(false, false));
