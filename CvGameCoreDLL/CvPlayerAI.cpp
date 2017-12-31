@@ -19033,7 +19033,7 @@ int CvPlayerAI::AI_calculateCultureVictoryStage() const
 
 	// K-Mod, disabling some stuff.
 	// It is still possible to get a cultural victory in advanced start games.
-	// and moving your captial city certainly does not indicate that you shouldn't go for a cultural victory!
+	// and moving your capital city certainly does not indicate that you shouldn't go for a cultural victory!
 	// ... and colonies don't get their capital on turn 1 anyway.
 	/* original code
 	if (GC.getGame().getStartEra() > 1)
@@ -19640,7 +19640,7 @@ int CvPlayerAI::AI_calculateDiplomacyVictoryStage() const
 		return 0;
 	}
 
-	// Check for whether we are elligible for election
+	// Check for whether we are eligible for election
 	bool bVoteEligible = false;
 	for( int iVoteSource = 0; iVoteSource < GC.getNumVoteSourceInfos(); iVoteSource++ )
 	{
@@ -19702,7 +19702,7 @@ int CvPlayerAI::AI_calculateDiplomacyVictoryStage() const
 ///
 /// Victory strategies are computed on demand once per turn and stored for the rest
 /// of the turn.  Each victory strategy type has 4 levels, the first two are
-/// determined largely from AI tendencies and randomn dice rolls.  The second
+/// determined largely from AI tendencies and random dice rolls.  The second
 /// two are based on measurables and past actions, so the AI can use them to
 /// determine what other players (including the human player) are doing.
 bool CvPlayerAI::AI_isDoVictoryStrategy(int iVictoryStrategy) const

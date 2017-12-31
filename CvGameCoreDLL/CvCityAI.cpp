@@ -2157,7 +2157,7 @@ void CvCityAI::AI_chooseProduction()
 			}
 		}
 	} */
-	// K-Mod. Roughly the same conditions for builing a nuke, but with a few adjustments for flavour and strategy
+	// K-Mod. Roughly the same conditions for building a nuke, but with a few adjustments for flavour and strategy
 	if (!bAlwaysPeace && !bLandWar && !bUnitExempt && !bFinancialTrouble)
 	{
 		if ((kPlayer.AI_isDoStrategy(AI_STRATEGY_OWABWNW) || GC.getGame().getSorenRandNum(1200, "AI consider Nuke") < std::min(400, iNukeWeight))
@@ -2225,7 +2225,7 @@ void CvCityAI::AI_chooseProduction()
 				}
 			}
 
-			// K-Mod - get more seige units for crush
+			// K-Mod - get more siege units for crush
 			if (bCrushStrategy && GC.getGameINLINE().getSorenRandNum(100, "City AI extra crush bombard") < iTrainInvaderChance)
 			{
 				UnitTypes eCityAttackUnit = NO_UNIT;
@@ -3035,7 +3035,7 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
 		iValue *= (getProductionExperience(eLoopUnit) + 10);
 		iValue /= 10;
 
-		// Take into account free promotions, and avaiable promotions that suit the AI type.
+		// Take into account free promotions, and available promotions that suit the AI type.
 		// Note: it might be better if this was in AI_unitValue rather than here, but the
 		// advantage of doing it here is that we can check city promotions at the same time.
         int iPromotionValue = 0;
@@ -5544,7 +5544,7 @@ ProjectTypes CvCityAI::AI_bestProject(int* piBestValue)
 	return eBestProject;
 }
 
-// This function has been completely rewriten for K-Mod
+// This function has been completely rewritten for K-Mod
 // The return value is roughly in units of 4 * commerce per turn, to match AI_buildingValue.
 // However, note that most projects don't actually give commerce per turn - so the evaluation is quite rough.
 int CvCityAI::AI_projectValue(ProjectTypes eProject)
@@ -5721,7 +5721,7 @@ int CvCityAI::AI_projectValue(ProjectTypes eProject)
 	// this is going to be very arbitrary...  -- and it will be based on the original BtS code!
 	int iSpaceValue = 0;
 
-	// a project which enables other projects... We're talking about the Apolo Program
+	// a project which enables other projects... We're talking about the Apollo Program
 	for (int iI = 0; iI < GC.getNumProjectInfos(); iI++)
 	{
 		iSpaceValue += (std::max(0, (GC.getProjectInfo((ProjectTypes)iI).getProjectsNeeded(eProject) - GET_TEAM(getTeam()).getProjectCount(eProject))) * 8); // was *10

@@ -837,7 +837,7 @@ void CvTeam::shareItems(TeamTypes eTeam)
 	}
 }
 
-// K-Mod. I've editted this function quite a lot. (for reasons that have been lost in the sands of time)
+// K-Mod. I've edited this function quite a lot. (for reasons that have been lost in the sands of time)
 void CvTeam::shareCounters(TeamTypes eTeam)
 {
 	CvTeamAI& kShareTeam = GET_TEAM(eTeam); // K-Mod
