@@ -1953,7 +1953,8 @@ void CvCityAI::AI_chooseProduction()
 				return;
 			}
 
-			if (iUnitSpending < (iMaxUnitSpending))
+			// DarkLunaPhantom - Moved this out of assault only case to the place further down where where planes for carriers are built.
+			/*if (iUnitSpending < (iMaxUnitSpending))
 			{
 				int iMissileCarriers = kPlayer.AI_totalUnitAIs(UNITAI_MISSILE_CARRIER_SEA);
 			
@@ -1969,9 +1970,11 @@ void CvCityAI::AI_chooseProduction()
 							
 							int iMissileCarrierAirNeeded = iMissileCarriers * GC.getUnitInfo(eBestMissileCarrierUnit).getCargoSpace();
 							
+                            // DarkLunaPhantom - That inequality should go the other way around.
 							if ((kPlayer.AI_totalUnitAIs(UNITAI_MISSILE_AIR) < iMissileCarrierAirNeeded) || 
-								(bPrimaryArea && (kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_MISSILE_CARRIER_SEA) * GC.getUnitInfo(eBestMissileCarrierUnit).getCargoSpace() < kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_MISSILE_AIR))))
-							{
+							//	(bPrimaryArea && (kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_MISSILE_CARRIER_SEA) * GC.getUnitInfo(eBestMissileCarrierUnit).getCargoSpace() < kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_MISSILE_AIR))))
+                                (bPrimaryArea && (kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_MISSILE_CARRIER_SEA) * GC.getUnitInfo(eBestMissileCarrierUnit).getCargoSpace() > kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_MISSILE_AIR))))
+                            {
 								// Don't always build missiles, more likely if really low
 								if (AI_chooseUnit(UNITAI_MISSILE_AIR, (kPlayer.AI_totalUnitAIs(UNITAI_MISSILE_AIR) < iMissileCarrierAirNeeded/2) ? 50 : 20))
 								{
@@ -1982,7 +1985,7 @@ void CvCityAI::AI_chooseProduction()
 						}
 					}
 				}
-			}
+			}*/
 		}
 	}
 	
@@ -2072,6 +2075,7 @@ void CvCityAI::AI_chooseProduction()
 	}
 
 	// Check for whether to produce planes to fill carriers
+    // DarkLunaPhantom - Or missiles to fill missile carriers.
 	if ( (bLandWar || bAssault) && iUnitSpending < (iMaxUnitSpending))
 	{			
 		if (iCarriers > 0 && !bImportantCity)
@@ -2095,6 +2099,38 @@ void CvCityAI::AI_chooseProduction()
 				}
 			}
 		}
+		
+		// DarkLunaPhantom begin - Moved out of assault only case above. (K-Mod made similar change for planes for carriers.)
+		int iMissileCarriers = kPlayer.AI_totalUnitAIs(UNITAI_MISSILE_CARRIER_SEA);
+	
+		if (!bFinancialTrouble && iMissileCarriers > 0 && !bImportantCity)
+		{
+			if( (iProductionRank <= ((kPlayer.getNumCities() / 2) + 1)) )
+			{
+				UnitTypes eBestMissileCarrierUnit = NO_UNIT;  
+				kPlayer.AI_bestCityUnitAIValue(UNITAI_MISSILE_CARRIER_SEA, NULL, &eBestMissileCarrierUnit);
+				if (eBestMissileCarrierUnit != NO_UNIT)
+				{
+					FAssert(GC.getUnitInfo(eBestMissileCarrierUnit).getDomainCargo() == DOMAIN_AIR);
+					
+					int iMissileCarrierAirNeeded = iMissileCarriers * GC.getUnitInfo(eBestMissileCarrierUnit).getCargoSpace();
+					
+                    // DarkLunaPhantom - That inequality should go the other way around.
+					if ((kPlayer.AI_totalUnitAIs(UNITAI_MISSILE_AIR) < iMissileCarrierAirNeeded) || 
+					//	(bPrimaryArea && (kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_MISSILE_CARRIER_SEA) * GC.getUnitInfo(eBestMissileCarrierUnit).getCargoSpace() < kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_MISSILE_AIR))))
+                    (bPrimaryArea && (kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_MISSILE_CARRIER_SEA) * GC.getUnitInfo(eBestMissileCarrierUnit).getCargoSpace() > kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_MISSILE_AIR))))
+					{
+						// Don't always build missiles, more likely if really low
+						if (AI_chooseUnit(UNITAI_MISSILE_AIR, (kPlayer.AI_totalUnitAIs(UNITAI_MISSILE_AIR) < iMissileCarrierAirNeeded/2) ? 50 : 20))
+						{
+							if( gCityLogLevel >= 2 ) logBBAI("      City %S uses build missile", getName().GetCString());
+							return;
+						}
+					}
+				}
+			}
+		}
+		// DarkLunaPhantom end
 	}
 
 	/* original code
