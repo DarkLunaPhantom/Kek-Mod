@@ -5431,8 +5431,9 @@ ProjectTypes CvCityAI::AI_bestProject(int* piBestValue)
 		int iTurnsLeft = getProductionTurnsLeft(i, 0);
 		int iRelativeTurns = (100 * iTurnsLeft + 50) / GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getCreatePercent();
 
-		if (iRelativeTurns > 10 && kLoopProject.getMaxTeamInstances() > 0 && GET_TEAM(getTeam()).isHuman())
-			continue; // not fast enough to risk blocking our human allies from building it.
+        // DarkLunaPhantom - Building projects (or wonders or limited units) doesn't block team members from building them anymore so unnecessary.
+		//if (iRelativeTurns > 10 && kLoopProject.getMaxTeamInstances() > 0 && GET_TEAM(getTeam()).isHuman())
+		//	continue; // not fast enough to risk blocking our human allies from building it.
 
 		if (iRelativeTurns > 20 && iProductionRank > std::max(3, GET_PLAYER(getOwnerINLINE()).getNumCities()/2))
 			continue; // not fast enough to risk blocking our more productive cities from building it.
