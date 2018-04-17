@@ -56,7 +56,7 @@
 #define RANDPLOT_ADJACENT_LAND_FOOD_WEIGHTED                (0x00000088) // DarkLunaPhantom
 
 #ifdef _USRDLL
-#define MAX_CIV_PLAYERS												(18) // note: default is 18, some people like 48. They are not compatible
+#define MAX_CIV_PLAYERS												(48) // note: default is 18, some people like 48. They are not compatible // DarkLunaPhantom - Changed to 48.
 #else
 #define MAX_CIV_PLAYERS												(CvGlobals::getInstance().getMaxCivPlayers())
 #endif
