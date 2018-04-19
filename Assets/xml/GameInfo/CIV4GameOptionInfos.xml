@@ -112,6 +112,13 @@
 			<bVisible>1</bVisible>
 		</GameOptionInfo>
 		<GameOptionInfo>
+			<Type>GAMEOPTION_UNLIMITED_PERMANENT_ALLIANCES</Type>
+			<Description>TXT_KEY_GAME_OPTION_UNLIMITED_PERMANENT_ALLIANCES</Description>
+			<Help>TXT_KEY_GAME_OPTION_UNLIMITED_PERMANENT_ALLIANCES_HELP</Help>
+			<bDefault>0</bDefault>
+			<bVisible>1</bVisible>
+		</GameOptionInfo>
+		<GameOptionInfo>
 			<Type>GAMEOPTION_ALWAYS_WAR</Type>
 			<Description>TXT_KEY_GAME_OPTION_ALWAYS_WAR</Description>
 			<Help>TXT_KEY_GAME_OPTION_ALWAYS_WAR_HELP</Help>
