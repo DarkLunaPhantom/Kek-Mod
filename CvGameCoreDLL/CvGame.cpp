@@ -167,6 +167,138 @@ void CvGame::init(HandicapTypes eHandicap)
 			}
 		}
 	}
+    
+    // DarkLunaPhantom begin - This is a reimplementation of Unrestricted Leaders game option originally located in exe.
+    // There is a bug in exe, that option is hardcoded in the 8th place in list of options. Doing this here preempts the triggering of that bug.
+    // Idea from FfH2 by Kael, but implementation and details different.
+    std::set<CivilizationTypes> unused_civs;
+    std::set<LeaderHeadTypes> unused_leaders;
+    bool bUnrestricted = GC.getGameINLINE().isOption(GAMEOPTION_LEAD_ANY_CIV);
+    // Find all possible civs and leaders.
+    for (int iCiv = 0; iCiv < GC.getNumCivilizationInfos(); ++iCiv)
+    {
+        if (GC.getCivilizationInfo((CivilizationTypes)iCiv).isPlayable())
+        {
+            unused_civs.insert((CivilizationTypes)iCiv);
+            for (int iLeader = 0; iLeader < GC.getNumLeaderHeadInfos(); ++iLeader)
+            {
+                if (GC.getCivilizationInfo((CivilizationTypes)iCiv).isLeaders(iLeader))
+                {
+                    unused_leaders.insert((LeaderHeadTypes)iLeader);
+                }
+            }
+        }
+    }
+    // Remove used civs and leaders.
+    for (int iPlayer = 0; iPlayer < MAX_CIV_PLAYERS; ++iPlayer)
+    {
+        SlotStatus eSlot = GC.getInitCore().getSlotStatus((PlayerTypes)iPlayer);
+        if (eSlot == SS_TAKEN || eSlot == SS_COMPUTER)
+        {
+            unused_civs.erase(GC.getInitCore().getCiv((PlayerTypes)iPlayer));
+            unused_leaders.erase(GC.getInitCore().getLeader((PlayerTypes)iPlayer));
+        }
+    }
+    
+    for (int iPlayer = 0; iPlayer < MAX_CIV_PLAYERS; ++iPlayer)
+    {
+        SlotStatus eSlot = GC.getInitCore().getSlotStatus((PlayerTypes)iPlayer);
+        if (eSlot == SS_TAKEN || eSlot == SS_COMPUTER)
+        {
+            CivilizationTypes eCiv = GC.getInitCore().getCiv((PlayerTypes)iPlayer);
+            LeaderHeadTypes eLeader = GC.getInitCore().getLeader((PlayerTypes)iPlayer);
+            if (eCiv == NO_CIVILIZATION || eLeader == NO_LEADER)
+            {
+                if (eLeader == NO_LEADER)
+                {
+                    if (eCiv == NO_CIVILIZATION)
+                    {
+                        std::vector<CivilizationTypes> civs;
+                        // Pick all valid unused civs.
+                        for (std::set<CivilizationTypes>::iterator it = unused_civs.begin(); it != unused_civs.end(); ++it)
+                        {
+                            if (eSlot != SS_COMPUTER || GC.getCivilizationInfo(*it).isAIPlayable())
+                            {
+                                civs.push_back(*it);
+                            }
+                        }
+                        // Add all valid civs if necessary.
+                        if (civs.empty())
+                        {
+                            for (int iCiv = 0; iCiv < GC.getNumCivilizationInfos(); ++iCiv)
+                            {
+                                if (GC.getCivilizationInfo((CivilizationTypes)iCiv).isPlayable() && (eSlot != SS_COMPUTER || GC.getCivilizationInfo((CivilizationTypes)iCiv).isAIPlayable()))
+                                {
+                                    civs.push_back((CivilizationTypes)iCiv);
+                                }
+                            }
+                        }
+                        eCiv = civs[GC.getGameINLINE().getSorenRandNum(civs.size(), "Civilization")];
+                        unused_civs.erase(eCiv);
+                    }
+                    
+                    std::vector<LeaderHeadTypes> leaders;
+                    // Pick all valid unused leaders.
+                    for (std::set<LeaderHeadTypes>::iterator it = unused_leaders.begin(); it != unused_leaders.end(); ++it)
+                    {
+                        if (isOption(GAMEOPTION_LEAD_ANY_CIV) || GC.getCivilizationInfo(eCiv).isLeaders((int)(*it)))
+                        {
+                            leaders.push_back(*it);
+                        }
+                    }
+                    // Add all valid leaders if necessary.
+                    if (leaders.empty())
+                    {
+                        for (int iCiv = 0; iCiv < GC.getNumCivilizationInfos(); ++iCiv)
+                        {
+                            if (GC.getCivilizationInfo((CivilizationTypes)iCiv).isPlayable())
+                            {
+                                for (int iLeader = 0; iLeader < GC.getNumLeaderHeadInfos(); ++iLeader)
+                                {
+                                    if (GC.getCivilizationInfo((CivilizationTypes)iCiv).isLeaders(iLeader))
+                                    {
+                                        leaders.push_back((LeaderHeadTypes)iLeader);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    eLeader = leaders[GC.getGameINLINE().getSorenRandNum(leaders.size(), "Leader")];
+                    unused_leaders.erase(eLeader);
+                }
+                
+                else
+                {
+                    std::vector<CivilizationTypes> civs;
+                    // Pick all valid unused civs.
+                    for (std::set<CivilizationTypes>::iterator it = unused_civs.begin(); it != unused_civs.end(); ++it)
+                    {
+                        if ((isOption(GAMEOPTION_LEAD_ANY_CIV) || GC.getCivilizationInfo(*it).isLeaders((int)eLeader)) && (eSlot != SS_COMPUTER || GC.getCivilizationInfo(*it).isAIPlayable()))
+                        {
+                            civs.push_back(*it);
+                        }
+                    }
+                    // Add all valid civs if necessary.
+                    if (civs.empty())
+                    {
+                        for (int iCiv = 0; iCiv < GC.getNumCivilizationInfos(); ++iCiv)
+                        {
+                            if (GC.getCivilizationInfo((CivilizationTypes)iCiv).isPlayable() && (eSlot != SS_COMPUTER || GC.getCivilizationInfo((CivilizationTypes)iCiv).isAIPlayable()))
+                            {
+                                civs.push_back((CivilizationTypes)iCiv);
+                            }
+                        }
+                    }
+                        eCiv = civs[GC.getGameINLINE().getSorenRandNum(civs.size(), "Civilization")];
+                        unused_civs.erase(eCiv);
+                }
+                
+            GC.getInitCore().setCiv((PlayerTypes)iPlayer, eCiv);
+            GC.getInitCore().setLeader((PlayerTypes)iPlayer, eLeader);
+            }
+        }
+    }
+    // DarkLunaPhantom end
 
 	if (isOption(GAMEOPTION_LOCK_MODS))
 	{

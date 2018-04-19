@@ -55,6 +55,13 @@
 			<bDefault>0</bDefault>
 			<bVisible>1</bVisible>
 		</GameOptionInfo>
+		<GameOptionInfo> <!-- DarkLunaPhantom - This should always be on the 8th place. (cf. with CvInitCore::getOption) -->
+			<Type>GAMEOPTION_DUMMY</Type>
+			<Description>TXT_KEY_GAME_OPTION_DUMMY</Description>
+			<Help>TXT_KEY_GAME_OPTION_DUMMY_HELP</Help>
+			<bDefault>0</bDefault>
+			<bVisible>1</bVisible>
+		</GameOptionInfo>
 		<GameOptionInfo>
 			<Type>GAMEOPTION_AGGRESSIVE_AI</Type>
 			<Description>TXT_KEY_GAME_OPTION_AGGRESSIVE_AI</Description>
