@@ -271,7 +271,8 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 	setGameTurnFounded(GC.getGameINLINE().getGameTurn());
 	setGameTurnAcquired(GC.getGameINLINE().getGameTurn());
 
-	changePopulation(GC.getDefineINT("INITIAL_CITY_POPULATION") + GC.getEraInfo(GC.getGameINLINE().getStartEra()).getFreePopulation());
+	//changePopulation(GC.getDefineINT("INITIAL_CITY_POPULATION") + GC.getEraInfo(GC.getGameINLINE().getStartEra()).getFreePopulation());
+    changePopulation(GC.getDefineINT("INITIAL_CITY_POPULATION") + GC.getEraInfo(GC.getGameINLINE().getStartEra(getOwnerINLINE())).getFreePopulation()); // DarkLunaPhantom - Adjusted for Advanced Settlers game option.
 
 	changeAirUnitCapacity(GC.getDefineINT("CITY_AIR_UNIT_CAPACITY"));
 

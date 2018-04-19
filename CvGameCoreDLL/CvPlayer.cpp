@@ -279,7 +279,8 @@ void CvPlayer::init(PlayerTypes eID)
 			resetTriggerFired((EventTriggerTypes)iI);
 		}
 
-		for (iI = 0; iI < GC.getNumUnitClassInfos(); ++iI)
+        // DarkLunaPhantom - This is not cached anymore.
+		/*for (iI = 0; iI < GC.getNumUnitClassInfos(); ++iI)
 		{
 			UnitTypes eUnit = ((UnitTypes)(GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(iI)));
 
@@ -290,7 +291,7 @@ void CvPlayer::init(PlayerTypes eID)
 					setUnitExtraCost((UnitClassTypes)iI, getNewCityProductionValue());
 				}
 			}
-		}
+		}*/
 	}
 
 	AI_init();
@@ -518,7 +519,8 @@ void CvPlayer::initInGame(PlayerTypes eID)
 			resetEventOccured((EventTypes)iI, false);
 		}
 
-		for (iI = 0; iI < GC.getNumUnitClassInfos(); ++iI)
+        // DarkLunaPhantom - This is not cached anymore.
+		/*for (iI = 0; iI < GC.getNumUnitClassInfos(); ++iI)
 		{
 			UnitTypes eUnit = ((UnitTypes)(GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(iI)));
 
@@ -529,7 +531,7 @@ void CvPlayer::initInGame(PlayerTypes eID)
 					setUnitExtraCost((UnitClassTypes)iI, getNewCityProductionValue());
 				}
 			}
-		}
+		}*/
 	}
 
 	resetPlotAndCityData();
@@ -1007,7 +1009,7 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		m_aFreeUnitCombatPromotions.clear();
 		m_aFreeUnitClassPromotions.clear();
 		m_aVote.clear();
-		m_aUnitExtraCosts.clear();
+		//m_aUnitExtraCosts.clear(); // DarkLunaPhantom - Not used anymore.
 		m_triggersFired.clear();
 	}
 
@@ -1242,7 +1244,8 @@ void CvPlayer::resetCivTypeEffects( )
 		}
 	}
 
-	for (iI = 0; iI < GC.getNumUnitClassInfos(); ++iI)
+    // DarkLunaPhantom - This is not cached anymore.
+	/*for (iI = 0; iI < GC.getNumUnitClassInfos(); ++iI)
 	{
 		UnitTypes eUnit = ((UnitTypes)(GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(iI)));
 
@@ -1253,7 +1256,7 @@ void CvPlayer::resetCivTypeEffects( )
 				setUnitExtraCost((UnitClassTypes)iI, getNewCityProductionValue());
 			}
 		}
-	}
+	}*/
 }
 /************************************************************************************************/
 /* CHANGE_PLAYER                           END                                                  */
@@ -6165,7 +6168,8 @@ void CvPlayer::found(int iX, int iY)
 		{
 			if (GC.getBuildingInfo(eLoopBuilding).getFreeStartEra() != NO_ERA)
 			{
-				if (GC.getGameINLINE().getStartEra() >= GC.getBuildingInfo(eLoopBuilding).getFreeStartEra())
+				//if (GC.getGameINLINE().getStartEra() >= GC.getBuildingInfo(eLoopBuilding).getFreeStartEra())
+                if (GC.getGameINLINE().getStartEra(getID()) >= GC.getBuildingInfo(eLoopBuilding).getFreeStartEra()) // DarkLunaPhantom - Adjusted for Advanced Settlers game option.
 				{
 					if (pCity->canConstruct(eLoopBuilding))
 					{
@@ -16604,7 +16608,8 @@ int CvPlayer::getAdvancedStartPopCost(bool bAdd, CvCity* pCity) const
 		{
 			--iPopulation;
 
-			if (iPopulation < GC.getDefineINT("INITIAL_CITY_POPULATION") + GC.getEraInfo(GC.getGameINLINE().getStartEra()).getFreePopulation())
+			//if (iPopulation < GC.getDefineINT("INITIAL_CITY_POPULATION") + GC.getEraInfo(GC.getGameINLINE().getStartEra()).getFreePopulation())
+            if (iPopulation < GC.getDefineINT("INITIAL_CITY_POPULATION") + GC.getEraInfo(GC.getGameINLINE().getStartEra(getID())).getFreePopulation()) // DarkLunaPhantom - Adjusted for Advanced Settlers game option.
 			{
 				return -1;
 			}
@@ -17890,7 +17895,8 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		}
 	}
 
-	{
+    // DarkLunaPhantom - Not used anymore.
+	/*{
 		m_aUnitExtraCosts.clear();
 		uint iSize;
 		pStream->Read(&iSize);
@@ -17902,7 +17908,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			pStream->Read(&iCost);
 			m_aUnitExtraCosts.push_back(std::make_pair(eUnit, iCost));
 		}
-	}
+	}*/
 
 	if (uiFlag > 0)
 	{
@@ -18343,7 +18349,8 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		}
 	}
 
-	{
+    // DarkLunaPhantom - Not used anymore.
+	/*{
 		uint iSize = m_aUnitExtraCosts.size();
 		pStream->Write(iSize);
 		std::vector< std::pair<UnitClassTypes, int> >::iterator it;
@@ -18352,7 +18359,7 @@ void CvPlayer::write(FDataStreamBase* pStream)
 			pStream->Write((*it).first);
 			pStream->Write((*it).second);
 		}
-	}
+	}*/
 
 	{
 		uint iSize = m_triggersFired.size();
@@ -21696,18 +21703,30 @@ void CvPlayer::setVote(int iId, PlayerVoteTypes ePlayerVote)
 
 int CvPlayer::getUnitExtraCost(UnitClassTypes eUnitClass) const
 {
-	for (std::vector< std::pair<UnitClassTypes, int> >::const_iterator it = m_aUnitExtraCosts.begin(); it != m_aUnitExtraCosts.end(); ++it)
+    // DarkLunaPhantom begin - This is now always recalculated instead of being cached.
+	/*for (std::vector< std::pair<UnitClassTypes, int> >::const_iterator it = m_aUnitExtraCosts.begin(); it != m_aUnitExtraCosts.end(); ++it)
 	{
 		if ((*it).first == eUnitClass)
 		{
 			return ((*it).second);
 		}
-	}
+	}*/
+    UnitTypes eUnit = ((UnitTypes)(GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(eUnitClass)));
 
-	return 0;
+	if (NO_UNIT != eUnit)
+	{
+		if (GC.getUnitInfo(eUnit).isFound())
+		{
+			return getNewCityProductionValue();
+		}
+	}
+    // DarkLunaPhantom end
+    
+    return 0;
 }
 
-void CvPlayer::setUnitExtraCost(UnitClassTypes eUnitClass, int iCost)
+// DarkLunaPhantom - This cache is not used anymore.
+/*void CvPlayer::setUnitExtraCost(UnitClassTypes eUnitClass, int iCost)
 {
 	for (std::vector< std::pair<UnitClassTypes, int> >::iterator it = m_aUnitExtraCosts.begin(); it != m_aUnitExtraCosts.end(); ++it)
 	{
@@ -21729,7 +21748,7 @@ void CvPlayer::setUnitExtraCost(UnitClassTypes eUnitClass, int iCost)
 	{
 		m_aUnitExtraCosts.push_back(std::make_pair(eUnitClass, iCost));
 	}
-}
+}*/
 
 // CACHE: cache frequently used values
 ///////////////////////////////////////
@@ -22418,7 +22437,8 @@ int CvPlayer::getNewCityProductionValue() const
 		{
 			if (GC.getBuildingInfo(eBuilding).getFreeStartEra() != NO_ERA)
 			{
-				if (GC.getGameINLINE().getStartEra() >= GC.getBuildingInfo(eBuilding).getFreeStartEra())
+				//if (GC.getGameINLINE().getStartEra() >= GC.getBuildingInfo(eBuilding).getFreeStartEra())
+                if (GC.getGameINLINE().getStartEra(getID()) >= GC.getBuildingInfo(eBuilding).getFreeStartEra()) // DarkLunaPhantom - Adjusted for Advanced Settlers game option.
 				{
 					iValue += (100 * getProductionNeeded(eBuilding)) / std::max(1, 100 + getProductionModifier(eBuilding));
 				}
@@ -22431,7 +22451,8 @@ int CvPlayer::getNewCityProductionValue() const
 
 	iValue += (GC.getDefineINT("ADVANCED_START_CITY_COST") * GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getGrowthPercent()) / 100;
 
-	int iPopulation = GC.getDefineINT("INITIAL_CITY_POPULATION") + GC.getEraInfo(GC.getGameINLINE().getStartEra()).getFreePopulation();
+	//int iPopulation = GC.getDefineINT("INITIAL_CITY_POPULATION") + GC.getEraInfo(GC.getGameINLINE().getStartEra()).getFreePopulation();
+    int iPopulation = GC.getDefineINT("INITIAL_CITY_POPULATION") + GC.getEraInfo(GC.getGameINLINE().getStartEra(getID())).getFreePopulation(); // DarkLunaPhantom - Adjusted for Advanced Settlers game option.
 	for (int i = 1; i <= iPopulation; ++i)
 	{
 		iValue += (getGrowthThreshold(i) * GC.getDefineINT("ADVANCED_START_POPULATION_COST")) / 100;

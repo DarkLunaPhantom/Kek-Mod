@@ -3551,7 +3551,8 @@ EraTypes CvGame::getCurrentEra() const
 
 	if (iCount > 0)
 	{
-		return ((EraTypes)(iEra / iCount));
+        //return ((EraTypes)(iEra / iCount));
+		return (EraTypes)((int)((iEra + 0.5) / iCount)); // DarkLunaPhantom - Changed to round from round down.
 	}
 
 	return NO_ERA;
@@ -5246,10 +5247,19 @@ GameSpeedTypes CvGame::getGameSpeedType() const
 	return GC.getInitCore().getGameSpeed();
 }
 
-
-EraTypes CvGame::getStartEra() const
+// DarkLunaPhantom begin - Adjusted for Advanced Settlers game option.
+//EraTypes CvGame::getStartEra() const
+EraTypes CvGame::getStartEra(PlayerTypes ePlayer) const
 {
-	return GC.getInitCore().getEra();
+    if (ePlayer != NO_PLAYER)
+    {
+        if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_SETTLERS))
+        {
+            return std::min(GET_PLAYER(ePlayer).getCurrentEra(), GC.getGameINLINE().getCurrentEra());
+        }
+    }
+// DarkLunaPhantom end
+    return GC.getInitCore().getEra();
 }
 
 

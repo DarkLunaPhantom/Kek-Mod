@@ -1024,7 +1024,7 @@ public:
 	void setVote(int iId, PlayerVoteTypes ePlayerVote);
 
 	int getUnitExtraCost(UnitClassTypes eUnitClass) const;
-	void setUnitExtraCost(UnitClassTypes eUnitClass, int iCost);
+	//void setUnitExtraCost(UnitClassTypes eUnitClass, int iCost); // DarkLunaPhantom - This is not used anymore.
 
 	DllExport bool splitEmpire(int iAreaId);
 	bool canSplitEmpire() const;
@@ -1350,7 +1350,7 @@ protected:
 	UnitClassPromotionArray m_aFreeUnitClassPromotions;
 
 	std::vector< std::pair<int, PlayerVoteTypes> > m_aVote;
-	std::vector< std::pair<UnitClassTypes, int> > m_aUnitExtraCosts;
+	//std::vector< std::pair<UnitClassTypes, int> > m_aUnitExtraCosts; // DarkLunaPhantom - Not used anymore.
 
 	CvMessageQueue m_listGameMessages; 
 	CvPopupQueue m_listPopups;
