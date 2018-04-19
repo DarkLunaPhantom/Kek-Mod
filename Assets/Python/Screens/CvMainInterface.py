@@ -5043,6 +5043,7 @@ class CvMainInterface:
 											if (bAlignIcons):
 												scores.setName(szPlayerName)
 												scores.setID(u"<color=%d,%d,%d,%d>%d</color>" %(gc.getPlayer(ePlayer).getPlayerTextColorR(), gc.getPlayer(ePlayer).getPlayerTextColorG(), gc.getPlayer(ePlayer).getPlayerTextColorB(), gc.getPlayer(ePlayer).getPlayerTextColorA(), ePlayer))
+												scores.setTeam(u"<color=%d,%d,%d,%d>(%d)</color>" %(gc.getPlayer(ePlayer).getPlayerTextColorR(), gc.getPlayer(ePlayer).getPlayerTextColorG(), gc.getPlayer(ePlayer).getPlayerTextColorB(), gc.getPlayer(ePlayer).getPlayerTextColorA(), gc.getPlayer(ePlayer).getTeam() + 1)) # DarkLunaPhantom
 											
 											if (gc.getPlayer(ePlayer).isAlive()):
 												if (bAlignIcons):
