@@ -10013,7 +10013,7 @@ bool CvCity::canCultureFlip(PlayerTypes eToPlayer) const
 
 	return !GC.getGameINLINE().isOption(GAMEOPTION_NO_CITY_FLIPPING) &&
 		(GC.getGameINLINE().isOption(GAMEOPTION_FLIPPING_AFTER_CONQUEST) || getPreviousOwner() == NO_PLAYER || GET_PLAYER(getPreviousOwner()).getTeam() != GET_PLAYER(eToPlayer).getTeam()) &&
-		getNumRevolts(eToPlayer) >= GC.getDefineINT("NUM_WARNING_REVOLTS");
+		getNumRevolts(eToPlayer) >= GC.getDefineINT("NUM_WARNING_REVOLTS") && !GET_TEAM(GET_PLAYER(eToPlayer).getTeam()).isVassal(getTeam()); // DarkLunaPhantom - Blocked flips from master to vassal.
 }
 // K-Mod end
 
