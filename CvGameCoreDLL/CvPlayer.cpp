@@ -6447,6 +6447,18 @@ bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestV
 			return false;
 		}
 	}
+    
+    // DarkLunaPhantom - Blocked moving of capital while spaceship is underway.
+    if (eBuilding == (BuildingTypes)(GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuildings(GC.getDefineINT("CAPITAL_BUILDINGCLASS"))))
+    {
+        for (int iI = 0; iI < GC.getNumVictoryInfos(); ++iI)
+        {
+            if (currentTeam.getVictoryCountdown((VictoryTypes)iI) >= 0 && GC.getGameINLINE().getGameState() == GAMESTATE_ON)
+            {
+                return false;
+            }
+        }
+    }
 
 	if (GC.getBuildingInfo(eBuilding).getMaxStartEra() != NO_ERA)
 	{
