@@ -3129,9 +3129,15 @@ class CvMainInterface:
 # BUG - NJAGC - start
 				if (ClockOpt.isEnabled()
 				and ClockOpt.isShowEra()):
-					szText = localText.getText("TXT_KEY_BUG_ERA", (gc.getEraInfo(gc.getPlayer(ePlayer).getCurrentEra()).getDescription(), ))
+					# DarkLunaPhantom - Added game era.
+					playerEra = gc.getPlayer(ePlayer).getCurrentEra()
+					gameEra = gc.getGame().getCurrentEra()
+					if (playerEra == gameEra):
+						szText = localText.getText("TXT_KEY_BUG_ERA", (gc.getEraInfo(playerEra).getDescription(), ))
+					else:
+						szText = localText.getText("TXT_KEY_BUG_ERAS", (gc.getEraInfo(playerEra).getDescription(), gc.getEraInfo(gameEra).getDescription()))
 					if(ClockOpt.isUseEraColor()):
-						iEraColor = ClockOpt.getEraColor(gc.getEraInfo(gc.getPlayer(ePlayer).getCurrentEra()).getType())
+						iEraColor = ClockOpt.getEraColor(gc.getEraInfo(playerEra).getType())
 						if (iEraColor >= 0):
 							szText = localText.changeTextColor(szText, iEraColor)
 					screen.setLabel( "EraText", "Background", szText, CvUtil.FONT_RIGHT_JUSTIFY, 250, 6, -0.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )

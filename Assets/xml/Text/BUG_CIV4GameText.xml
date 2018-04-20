@@ -173,6 +173,14 @@
 		<Italian>Era %s1</Italian>
 		<Spanish>%s1</Spanish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_ERAS</Tag>
+		<English>%s1 (%s2) Era</English>
+		<French>%s1 (%s2) Era</French>
+		<German>%s1 (%s2) </German>
+		<Italian>Era %s1 (%s2)</Italian>
+		<Spanish>%s1 (%s2)</Spanish>
+	</TEXT>
 	
 	<!-- Great Person / General Bars -->
 	
