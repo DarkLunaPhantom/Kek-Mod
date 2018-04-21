@@ -26,6 +26,10 @@
 		<iDefineIntVal>2</iDefineIntVal>
 	</Define> <!-- increased from 1 -->
 	<Define>
+		<DefineName>GIFTED_UNIT_IMMOBILE_TURNS</DefineName>
+		<iDefineIntVal>2</iDefineIntVal>
+	</Define> <!-- DarkLunaPhantom -->
+	<Define>
 		<DefineName>EVENT_MESSAGE_STAGGER_TIME</DefineName>
 		<iDefineIntVal>2</iDefineIntVal> <!-- decreased from 3 -->
 	</Define>
