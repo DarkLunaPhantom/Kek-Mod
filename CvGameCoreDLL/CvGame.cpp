@@ -419,7 +419,8 @@ void CvGame::setInitialItems()
 			}
 		}
 		if (iHumanPlayers > 0)
-			setHandicapType((HandicapTypes)(iTotal/iHumanPlayers));
+			//setHandicapType((HandicapTypes)(iTotal/iHumanPlayers));
+            setHandicapType((HandicapTypes)((int)((iTotal + 0.5) / iHumanPlayers))); // DarkLunaPhantom - Changed from round down to round.
 		else
 			FAssert(false); // all AI game. Not necessary wrong - but unexpected.
 	}
