@@ -23497,7 +23497,7 @@ void CvPlayer::getCultureLayerColors(std::vector<NiColorA>& aColors, std::vector
 		if (iTotalCulture == 0)
 			continue;
 		// K-Mod end
-		for (int iPlayer = 0; iPlayer < MAX_CIV_PLAYERS; iPlayer++)
+		for (int iPlayer = 0; iPlayer < MAX_PLAYERS; iPlayer++) // DarkLunaPhantom - Changed MAX_CIV_PLAYERS to MAX_PLAYERS to include barbarians.
 		{
 			if (GET_PLAYER((PlayerTypes)iPlayer).isAlive())
 			{
