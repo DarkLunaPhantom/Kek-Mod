@@ -7651,13 +7651,17 @@ void CvCity::changeForeignTradeRouteModifier(int iChange)
 **/
 int CvCity::getTradeCultureRateTimes100(int iLevel) const
 {
-	// int iPercent = std::min((int)getCultureLevel(), iLevel) - 1;
-	// I've disabled the cap since trade culture isn't added to city culture now, 11/dec/10
-	int iPercent = (int)getCultureLevel();
+	// Note: iLevel currently isn't used.
+
+	//int iPercent = (int)getCultureLevel();
+
+	// Note: GC.getNumCultureLevelInfos() is 7 with the standard xml, which means legendary culture is level 6.
+	// So we have 3, 4, 4, 5, 5, 6, 6
+	int iPercent = (GC.getNumCultureLevelInfos()+(int)getCultureLevel())/2;
 
 	if (iPercent > 0)
 	{
-		// 1% of culture rate for each culture level.
+		// (originally this was 1% of culture rate for each culture level.)
 		return (m_aiCommerceRate[COMMERCE_CULTURE] * iPercent)/100;
 	}
 	return 0;
@@ -12958,12 +12962,14 @@ void CvCity::doPlotCultureTimes100(bool bUpdate, PlayerTypes ePlayer, int iCultu
 	// (original bts code deleted)
 
 	// Experimental culture profile...
-	// Ae^(-bx). A = 10 (no effect), b = log(full_range_ratio)/range
+	// Ae^(-bx). A = 10 (no effect), b = log(full_range_ratio)/range, x = distance from centre
+	//
 	// (iScale-1)(iDistance - iRange)^2/(iRange^2) + 1   // This approximates the exponential pretty well
+	// In our case, 10^(-x/R), where x is distance, and R is max range. So it's 10 times culture at the centre compared to the edge.
 	const int iScale = 10;
 	const int iCultureRange = eCultureLevel + 3;
 
-	//const int iOuterRatio = 10;
+	//const int iOuterRatio = 10; // Ratio of culture added at centre vs culture added at max range.
 	//const double iB = log((double)iOuterRatio)/iCultureRange;
 
 	// free culture bonus for cities
@@ -12986,12 +12992,12 @@ void CvCity::doPlotCultureTimes100(bool bUpdate, PlayerTypes ePlayer, int iCultu
 					{
 						if (pLoopPlot->isPotentialCityWorkForArea(area()))
 						{
-							/* int iCultureToAdd =
-								(iInnerFactor * iCultureRange - iDistance * (iInnerFactor - iOuterFactor))
-								* iCultureRateTimes100 / (iCultureRange * 100); */
 							//int iCultureToAdd = (int)(iScale*iCultureRateTimes100*exp(-iB*iDistance)/100);
-							int iCultureToAdd =
-								iCultureRateTimes100*((iScale-1)*(iDistance-iCultureRange)*(iDistance-iCultureRange) + iCultureRange*iCultureRange)/(100*iCultureRange*iCultureRange);
+							// approxately = culture * ( (iScale-1)(iDistance - iRange)^2/(iRange^2) + 1 )
+
+							// Cast to double to avoid overflow. (The world-builder can add a lot of culture in one hit.)
+                            int delta = iDistance-iCultureRange;
+							int iCultureToAdd = static_cast<int>(iCultureRateTimes100 * static_cast<double>((iScale-1)*delta*delta + iCultureRange*iCultureRange) / (100.0*iCultureRange*iCultureRange));
 
 							pLoopPlot->changeCulture(ePlayer, iCultureToAdd, (bUpdate || !(pLoopPlot->isOwned())));
 						}

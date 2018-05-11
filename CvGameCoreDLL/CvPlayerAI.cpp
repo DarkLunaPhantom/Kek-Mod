@@ -27,6 +27,10 @@
 
 #include "BetterBTSAI.h"
 
+#include <vector>
+#include <set>
+#include <queue>
+
 //#define GREATER_FOUND_RANGE			(5)
 #define CIVIC_CHANGE_DELAY			(20) // was 25
 #define RELIGION_CHANGE_DELAY		(15)
@@ -2300,11 +2304,11 @@ int CvPlayerAI::AI_commerceWeight(CommerceTypes eCommerce, const CvCity* pCity) 
 		}
 		break;
 	case COMMERCE_GOLD:
-		if (getCommercePercent(COMMERCE_GOLD) > 80) // originally == 100
+		if (getCommercePercent(COMMERCE_GOLD) >= 80) // originally == 100
 		{
 			//avoid strikes
 			//if (getGoldPerTurn() < -getGold()/100)
-			if (calculateGoldRate() < -getGold()/100) // K-Mod
+			if (getGold()+80*calculateGoldRate() < 0) // K-Mod
 			{
 				iWeight += 15;
 			}
@@ -2529,6 +2533,26 @@ void CvPlayerAI::AI_updateCommerceWeights()
 	// Espionage weight
 	//
 	{
+		int iWeightThreshold = 0; // For human players, what amount of espionage weight indicates that we care about a civ?
+		if (isHuman())
+		{
+			int iTotalWeight = 0;
+			int iTeamCount = 0;
+			for (int iTeam = 0; iTeam < MAX_CIV_TEAMS; ++iTeam)
+			{
+				if (GET_TEAM(getTeam()).isHasMet((TeamTypes)iTeam) && GET_TEAM((TeamTypes)iTeam).isAlive())
+				{
+					iTotalWeight += getEspionageSpendingWeightAgainstTeam((TeamTypes)iTeam);
+					iTeamCount++;
+				}
+			}
+
+			if (iTeamCount > 0)
+			{
+				iWeightThreshold = iTotalWeight / (iTeamCount +  8); // pretty arbitrary. But as an example, 90 points on 1 player out of 10 -> threshold is 5.
+			}
+		}
+
 		int iWeight = GC.getCommerceInfo(COMMERCE_ESPIONAGE).getAIWeightPercent();
 
 		int iEspBehindWeight = 0;
@@ -2552,7 +2576,7 @@ void CvPlayerAI::AI_updateCommerceWeights()
 				int iAttitude = range(GET_TEAM(getTeam()).AI_getAttitudeVal((TeamTypes)iTeam), -12, 12);
 				iTheirPoints -= (iTheirPoints*iAttitude)/(2*12);
 
-				if (iTheirPoints > iOurPoints && (!isHuman() || getEspionageSpendingWeightAgainstTeam((TeamTypes)iTeam) > 0))
+				if (iTheirPoints > iOurPoints && (!isHuman() || getEspionageSpendingWeightAgainstTeam((TeamTypes)iTeam) > iWeightThreshold))
 				{
 					iEspBehindWeight += 1;
 					if (kLoopTeam.AI_getAttitude(getTeam()) <= ATTITUDE_CAUTIOUS
@@ -4224,7 +4248,7 @@ bool CvPlayerAI::AI_isCommercePlot(CvPlot* pPlot) const
 //
 // I've done a bit of speed profiling and found that although the safe plot cache does shortcut around 50% of calls to AI_getAnyPlotDanger,
 // that only ends up saving a few milliseconds each turn anyway. I don't really think that's worth risking of getting problems from bad cache.
-// So even though I've put a bit of work into make the cache work better, I'm not just going to disable it.
+// So even though I've put a bit of work into make the cache work better, I'm just going to disable it.
 
 bool CvPlayerAI::isSafeRangeCacheValid() const
 {
@@ -4909,21 +4933,41 @@ int CvPlayerAI::AI_goldTarget(bool bUpgradeBudgetOnly) const
 	return iGold + AI_getExtraGoldTarget();
 }
 
-// edited by K-Mod and BBAI
-TechTypes CvPlayerAI::AI_bestTech(int iMaxPathLength, bool bIgnoreCost, bool bAsync, TechTypes eIgnoreTech, AdvisorTypes eIgnoreAdvisor) const
+// Functors used by AI_bestTech. (I wish we had lambdas.)
+template <typename A, typename B>
+struct PairSecondEq : public std::binary_function<std::pair<A, B>,std::pair<A, B>,bool>
+{
+	PairSecondEq(B t) : _target(t) {}
+
+    bool operator()(const std::pair<A, B>& o1)
+    {
+        return o1.second == _target;
+    }
+private:
+	B _target;
+};
+
+template <typename A, typename B>
+struct PairFirstLess : public std::binary_function<std::pair<A, B>,std::pair<A, B>,bool>
+{
+    bool operator()(const std::pair<A, B>& o1, const std::pair<A, B>& o2)
+    {
+        return o1.first < o2.first;
+    }
+};
+
+// Written for K-Mod
+TechTypes CvPlayerAI::AI_bestTech(int iMaxPathLength, bool bFreeTech, bool bAsync, TechTypes eIgnoreTech, AdvisorTypes eIgnoreAdvisor) const
 {
 	PROFILE("CvPlayerAI::AI_bestTech");
 
-	int iValue;
-	int iBestValue = 0;
-	TechTypes eBestTech = NO_TECH;
-	int iPathLength;
 	CvTeam& kTeam = GET_TEAM(getTeam());
 
 	std::vector<int> viBonusClassRevealed(GC.getNumBonusClassInfos(), 0);
 	std::vector<int> viBonusClassUnrevealed(GC.getNumBonusClassInfos(), 0);
 	std::vector<int> viBonusClassHave(GC.getNumBonusClassInfos(), 0);
 
+	// Find make lists of which bonuses we have / don't have / can see. This is used for tech evaluation
 	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
 	{
 	    TechTypes eRevealTech = (TechTypes)GC.getBonusInfo((BonusTypes)iI).getTechReveal();
@@ -4955,6 +4999,7 @@ TechTypes CvPlayerAI::AI_bestTech(int iMaxPathLength, bool bIgnoreCost, bool bAs
 	DEBUGLOG("AI_bestTech:%S\n", szPlayerName.GetCString());
 #endif
 
+	/* original code
 	for (int iI = 0; iI < GC.getNumTechInfos(); iI++)
 	{
 		if ((eIgnoreTech == NO_TECH) || (iI != eIgnoreTech))
@@ -4989,28 +5034,455 @@ TechTypes CvPlayerAI::AI_bestTech(int iMaxPathLength, bool bIgnoreCost, bool bAs
 				}
 			}
 		}
-	}
+	} */
+	// K-Mod
+	// Instead of choosing a tech anywhere inside the max path length with no adjustments for how deep the tech is,
+	// We'll evaluate all techs inside the max path length; but instead of just picking the highest value one irrespective of depth,
+	// well use the evaluatations to add value to the prereq techs, and then choose the best depth 1 tech at the end.
+	std::vector<std::pair<int, TechTypes> > techs; // (value, tech) pairs)
+	//std::vector<TechTypes> techs;
+	//std::vector<int> values;
+	std::vector<int> techs_to_depth; // cumulative number of techs for each depth of the search. (techs_to_depth[0] == 0)
 
-	if( gPlayerLogLevel >= 1 && eBestTech != NO_TECH )
+	int iTechCount = 0;
+	for (int iDepth = 0; iDepth < iMaxPathLength; ++iDepth)
 	{
-		logBBAI("  Player %d (%S) selects tech %S with value %d", getID(), getCivilizationDescription(0), GC.getTechInfo(eBestTech).getDescription(), iBestValue );
+		techs_to_depth.push_back(iTechCount);
+
+		for (TechTypes eTech = (TechTypes)0; eTech < GC.getNumTechInfos(); eTech=(TechTypes)(eTech+1))
+		{
+			const CvTechInfo& kTech = GC.getTechInfo(eTech);
+			const std::vector<std::pair<int, TechTypes> >::iterator tech_search_end = techs.begin()+techs_to_depth[iDepth]; // Evaluated techs before the current depth
+
+			if (eTech == eIgnoreTech)
+				continue;
+			if (eIgnoreAdvisor != NO_ADVISOR && kTech.getAdvisorType() == eIgnoreAdvisor)
+				continue;
+			if (!canEverResearch(eTech))
+				continue;
+			if (kTeam.isHasTech(eTech))
+				continue;
+
+			if (GC.getTechInfo(eTech).getEra() > (getCurrentEra() + 1))
+				continue; // too far in the future to consider. (This condition is only for efficiency.)
+
+			if (std::find_if(techs.begin(), tech_search_end, PairSecondEq<int, TechTypes>(eTech)) != tech_search_end)
+				continue; // already evaluated
+
+			// Check "or" prereqs
+			bool bMissingPrereq = false;
+			for (int p = 0; p < GC.getNUM_OR_TECH_PREREQS(); ++p)
+			{
+				TechTypes ePrereq = (TechTypes)kTech.getPrereqOrTechs(p);
+				if (ePrereq != NO_TECH)
+				{
+					if (kTeam.isHasTech(ePrereq) || std::find_if(techs.begin(), tech_search_end, PairSecondEq<int, TechTypes>(ePrereq)) != tech_search_end)
+					{
+						bMissingPrereq = false; // we have a prereq
+						break;
+					}
+					bMissingPrereq = true; // A prereq exists, and we don't have it.
+				}
+			}
+			if (bMissingPrereq)
+				continue; // We don't have any of the "or" prereqs
+
+			// Check "and" prereqs
+			for (int p = 0; p < GC.getNUM_AND_TECH_PREREQS(); ++p)
+			{
+				TechTypes ePrereq = (TechTypes)kTech.getPrereqAndTechs(p);
+				if (ePrereq != NO_TECH)
+				{
+					if (!GET_TEAM(getTeam()).isHasTech(ePrereq) && std::find_if(techs.begin(), tech_search_end, PairSecondEq<int, TechTypes>(ePrereq)) == tech_search_end)
+					{
+						bMissingPrereq = true;
+						break;
+					}
+				}
+			}
+			if (bMissingPrereq)
+				continue; // We're missing at least one "and" prereq
+			//
+
+			// Otherwise, all the prereqs are either researched, or on our list from lower depths.
+			// We're ready to evaluate this tech and add it to the list.
+			int iValue = AI_techValue(eTech, iDepth+1, iDepth == 0 && bFreeTech, bAsync, viBonusClassRevealed, viBonusClassUnrevealed, viBonusClassHave);
+
+			techs.push_back(std::make_pair(iValue, eTech));
+			//techs.push_back(eTech);
+			//values.push_back(iValue);
+			++iTechCount;
+
+			if (iDepth == 0 && gPlayerLogLevel >= 3)
+			{
+				logBBAI("      Player %d (%S) consider tech %S with value %d", getID(), getCivilizationDescription(0), GC.getTechInfo(eTech).getDescription(), iValue );
+			}
+		}
+	}
+	techs_to_depth.push_back(iTechCount); // We need this to ensure techs_to_depth[1] exists.
+
+	FAssert(techs_to_depth.size() == iMaxPathLength+1);
+	//FAssert(techs.size() == values.size());
+
+#ifdef USE_OLD_TECH_STUFF
+	bool bPathways = false && getID() < GC.getGameINLINE().countCivPlayersEverAlive()/2; // testing (temp)
+	bool bNewWays = true || getID() < GC.getGameINLINE().countCivPlayersEverAlive()/2; // testing (temp)
+
+	if (!bPathways)
+	{
+	// Ok. All techs have been evaluated up to the given search depth. Now we just have to add a percentage the deep tech values to their prereqs.
+	// First, lets calculate what the percentage should be!
+	// Note: the fraction compounds for each depth level. eg. 1, 1/3, 1/9, 1/27, etc.
+	if (iMaxPathLength > 1 && iTechCount > techs_to_depth[1])
+	{
+		int iPrereqPercent = bNewWays ? 50 : 0;
+		iPrereqPercent += (AI_getFlavorValue(FLAVOR_SCIENCE) > 0) ? 5 + AI_getFlavorValue(FLAVOR_SCIENCE) : 0;
+		iPrereqPercent += AI_isDoStrategy(AI_STRATEGY_ECONOMY_FOCUS) ? 10 : 0;
+		iPrereqPercent += AI_isDoVictoryStrategy(AI_VICTORY_SPACE1) ? 5 : 0;
+		iPrereqPercent += AI_isDoVictoryStrategy(AI_VICTORY_SPACE2) ? 10 : 0;
+		iPrereqPercent += AI_isDoStrategy(AI_STRATEGY_BIG_ESPIONAGE) ? -5 : 0;
+		iPrereqPercent += kTeam.getAnyWarPlanCount(true) > 0 ? -10 : 0;
+		// more modifiers to come?
+
+		iPrereqPercent = range(iPrereqPercent, 0, 80);
+
+		// I figure that if I go through the techs in reverse order to add value to their prereqs, I don't double-count or miss anything.
+		// Is that correct?
+		int iDepth = iMaxPathLength-1;
+		for (int i = iTechCount-1; i >= techs_to_depth[1]; --i)
+		{
+			const CvTechInfo& kTech = GC.getTechInfo(techs[i].second);
+
+			if (i < techs_to_depth[iDepth])
+			{
+				--iDepth;
+			}
+			FAssert(iDepth > 0);
+
+			// We only want to award points to the techs directly below this level.
+			// We don't want, for example, Chemestry getting points from Biology when we haven't researched scientific method.
+			const std::vector<std::pair<int, TechTypes> >::iterator prereq_search_begin = techs.begin()+techs_to_depth[iDepth-1];
+			const std::vector<std::pair<int, TechTypes> >::iterator prereq_search_end = techs.begin()+techs_to_depth[iDepth];
+
+			// Also; for the time being, I only want to add value to prereqs from the best following tech, rather than from all following techs.
+			// (The logic is that we will only research one thing at a time anyway; so although opening lots of options is good, we shouldn't overvalue it.)
+			std::vector<int> prereq_bonus(techs.size(), 0);
+
+			FAssert(techs[i].first*iPrereqPercent/100 > 0 && techs[i].first*iPrereqPercent/100 < 100000);
+
+			for (int p = 0; p < GC.getNUM_OR_TECH_PREREQS(); ++p)
+			{
+				TechTypes ePrereq = (TechTypes)kTech.getPrereqOrTechs(p);
+				if (ePrereq != NO_TECH)
+				{
+					std::vector<std::pair<int, TechTypes> >::iterator tech_it = std::find_if(prereq_search_begin, prereq_search_end, PairSecondEq<int, TechTypes>(ePrereq));
+					if (tech_it != prereq_search_end)
+					{
+						const size_t prereq_i = tech_it - techs.begin();
+						//values[index] += values[i]*iPrereqPercent/100;
+						prereq_bonus[prereq_i] = std::max(prereq_bonus[prereq_i], techs[i].first*iPrereqPercent/100);
+
+						if (gPlayerLogLevel >= 3)
+						{
+							logBBAI("      %S adds %d to %S (depth %d)", GC.getTechInfo(techs[i].second).getDescription(), techs[i].first*iPrereqPercent/100, GC.getTechInfo(techs[prereq_i].second).getDescription(), iDepth-1);
+						}
+					}
+				}
+			}
+			for (int p = 0; p < GC.getNUM_AND_TECH_PREREQS(); ++p)
+			{
+				TechTypes ePrereq = (TechTypes)kTech.getPrereqAndTechs(p);
+				if (ePrereq != NO_TECH)
+				{
+					std::vector<std::pair<int, TechTypes> >::iterator tech_it = std::find_if(prereq_search_begin, prereq_search_end, PairSecondEq<int, TechTypes>(ePrereq));
+					if (tech_it != prereq_search_end)
+					{
+						const size_t prereq_i = tech_it - techs.begin();
+
+						//values[prereq_i] += values[i]*iPrereqPercent/100;
+						prereq_bonus[prereq_i] = std::max(prereq_bonus[prereq_i], techs[i].first*iPrereqPercent/100);
+
+						if (gPlayerLogLevel >= 3)
+						{
+							logBBAI("      %S adds %d to %S (depth %d)", GC.getTechInfo(techs[i].second).getDescription(), techs[i].first*iPrereqPercent/100, GC.getTechInfo(techs[prereq_i].second).getDescription(), iDepth-1);
+						}
+					}
+				}
+			}
+
+			// Apply the prereq_bonuses
+			for (size_t p = 0; p < prereq_bonus.size(); ++p)
+			{
+				// Kludge: Under this system, dead-end techs (such as rifling) can be avoided due to the high value of
+				// follow-on techs. So here's what we're going to do...
+				techs[p].first += std::max(prereq_bonus[p], (techs[p].first - 80)*iPrereqPercent*3/400);
+				// Note, the "-80" is meant to represent removing the random value bonus. cf. AI_techValue (divided by ~5 turns). (bonus is 0-80*cities)
+			}
+		}
+	}
+	// All the evaluations are now complete. Now we just have to find the best tech.
+	std::vector<std::pair<int, TechTypes> >::iterator tech_it = std::max_element(techs.begin(), (bNewWays ? techs.begin()+techs_to_depth[1] : techs.end()),PairFirstLess<int, TechTypes>());
+	if (tech_it == (bNewWays ? techs.begin()+techs_to_depth[1] : techs.end()))
+	{
+		FAssert(iTechCount == 0);
+		return NO_TECH;
+	}
+	TechTypes eBestTech = tech_it->second;
+	FAssert(canResearch(eBestTech));
+
+	if (gPlayerLogLevel >= 1)
+	{
+		logBBAI("  Player %d (%S) selects tech %S with value %d", getID(), getCivilizationDescription(0), GC.getTechInfo(eBestTech).getDescription(), tech_it->first );
 	}
 
+	return eBestTech;
+	}
+#endif
+
+	// Yet another version!
+	// pathways version
+	// We've evaluated all the techs up to the given depth. Now we want to choose the highest value pathway.
+	// eg. suppose iMaxPathLength = 3; we will then look for the best three techs to research, in order.
+	// It could be three techs for which we already have all prereqs, or it could be techs leading to new techs.
+
+	// Algorithm:
+	// * Build list of techs at each depth.
+	// * Sort lists by value at each depth.
+	// We don't want to consider every possible set of three techs. Many combos can be disregarded easily.
+	// For explanation purposes, assume a depth of 3.
+	// * The 3rd highest value at depth = 0 is a threshold for the next depth.
+	//   No techs lower than the threshold need to be considered in any combo.
+	// * The max of the old threshold and the (max_depth-cur_depth)th value becomes the new threshold.
+	//   eg. at depth=1, the 2nd highest value becomes the new threshold (if it is higher than the old).
+	// * All techs above the threshold are viable end points.
+	// * For each end point, pick the highest value prereqs which allow us to reach the endpoint.
+	// * If there that doesn't fill all the full path, pick the highest value avaiable techs.
+	//  (eg. if our end-point is not a the max depth, we can pick an arbitrary tech at depth=0)
+
+
+	// Sort the techs at each depth:
+	FAssert(techs_to_depth[0] == 0); // No techs before depth 0.
+	FAssert(techs.size() == techs_to_depth[techs_to_depth.size()-1]); // max depth is after all techs
+	for (size_t i = 1; i < techs_to_depth.size(); ++i)
+	{
+		std::sort(techs.begin()+techs_to_depth[i-1], techs.begin()+techs_to_depth[i], std::greater<std::pair<int, TechTypes> >());
+	}
+
+	// First deal with the trivial cases...
+	// no Techs
+	if (techs.empty())
+		return NO_TECH;
+	// path length of 1.
+	if (iMaxPathLength < 2)
+	{
+		FAssert(techs.size() > 0);
+		return techs[0].second;
+	}
+	// ... and the case where there are not enough techs in the list.
+	if ((int)techs.size() < iMaxPathLength)
+	{
+		return techs[0].second;
+	}
+
+	// Create a list of possible tech paths.
+	std::vector<std::pair<int, std::vector<int> > > tech_paths; // (total_value, path)
+	// Note: paths are a vector of indices referring to `techs`.
+	// Paths are in reverse order, for convinence in constructive them. (ie. the first tech to research is at the end of the list.)
+
+	// Initial threshold
+	FAssert(techs_to_depth.size() > 1);
+	int iThreshold = techs[std::min(iMaxPathLength-1, (int)techs.size()-1)].first;
+	// Note: this works even if depth=0 isn't big enough.
+
+	double fDepthRate = 0.8;
+
+	for (int end_depth = 0; end_depth < iMaxPathLength; ++end_depth)
+	{
+		// Note: at depth == 0, there are no prereqs, so we only need to consider the best option.
+		for (int i = (end_depth == 0? iMaxPathLength-1 : techs_to_depth[end_depth]); i < techs_to_depth[end_depth+1]; ++i)
+		{
+			if (techs[i].first < iThreshold)
+				break; // Note: the techs are sorted, so if we're below the threshold, we're done.
+
+			// This is a valid end point. So start a new tech path.
+			tech_paths.push_back(std::make_pair(techs[i].first, std::vector<int>()));
+			tech_paths.back().second.push_back(i);
+			std::set<TechTypes> techs_in_path; // A set of techs that will be in our path
+			std::queue<TechTypes> techs_to_check; // A queue of techs that we still need to check prereqs for
+
+			techs_in_path.insert(techs[i].second);
+			if (end_depth != 0)
+			{
+				techs_to_check.push(techs[i].second);
+			}
+
+			while (!techs_to_check.empty() && (int)techs_in_path.size() <= iMaxPathLength)
+			{
+				bool bMissingPrereq = false;
+
+				// AndTech prereqs:
+				for (int p = 0; p < GC.getNUM_AND_TECH_PREREQS() && !bMissingPrereq; ++p)
+				{
+					TechTypes ePrereq = (TechTypes)GC.getTechInfo(techs_to_check.front()).getPrereqAndTechs(p);
+					if (!kTeam.isHasTech(ePrereq) && techs_in_path.find(ePrereq) == techs_in_path.end())
+					{
+						bMissingPrereq = true;
+						// find the tech. (Lambda would be nice...)
+						//std::find_if(techs.begin(), techs.end(), [](std::pair<int, TechTypes> &t){return t.second == ePrereq;});
+						for (int j = 0; j < techs_to_depth[end_depth]; ++j) // really we should use current depth instead of end_depth; but that's harder...
+						{
+							if (techs[j].second == ePrereq)
+							{
+								// add it to the path.
+								tech_paths.back().first = (int)(fDepthRate * tech_paths.back().first);
+								tech_paths.back().first += techs[j].first;
+								tech_paths.back().second.push_back(j);
+								techs_in_path.insert(ePrereq);
+								techs_to_check.push(ePrereq);
+								bMissingPrereq = false;
+								break;
+							}
+						}
+					}
+				}
+				if (bMissingPrereq)
+				{
+					break; // This path is invalid, because we can't get the prereqs.
+				}
+
+				// OrTechs:
+				int iBestOrIndex = -1;
+				int iBestOrValue = -1;
+				for (int p = 0; p < GC.getNUM_OR_TECH_PREREQS(); ++p)
+				{
+					TechTypes ePrereq = (TechTypes)GC.getTechInfo(techs_to_check.front()).getPrereqOrTechs(p);
+					if (ePrereq == NO_TECH)
+						continue;
+
+					if (!kTeam.isHasTech(ePrereq) && techs_in_path.find(ePrereq) == techs_in_path.end())
+					{
+						bMissingPrereq = true;
+						// find the tech.
+						for (int j = 0; j < techs_to_depth[end_depth]; ++j)
+						{
+							if (techs[j].second == ePrereq)
+							{
+								if (techs[j].first > iBestOrValue)
+								{
+									iBestOrIndex = j;
+									iBestOrValue = techs[j].first;
+								}
+							}
+						}
+					}
+					else
+					{
+						// We have one of the orPreqs.
+						iBestOrIndex = -1;
+						iBestOrValue = -1;
+						bMissingPrereq = false;
+						break;
+					}
+				}
+				// Add the best OrPrereq to the path
+				if (iBestOrIndex >= 0)
+				{
+					FAssert(bMissingPrereq);
+
+					tech_paths.back().first = (int)(fDepthRate * tech_paths.back().first);
+					tech_paths.back().first += techs[iBestOrIndex].first;
+					tech_paths.back().second.push_back(iBestOrIndex);
+					techs_in_path.insert(techs[iBestOrIndex].second);
+					techs_to_check.push(techs[iBestOrIndex].second);
+					bMissingPrereq = false;
+				}
+
+				if (bMissingPrereq)
+				{
+					break; // failured to add prereqs to the path
+				}
+				else
+				{
+					techs_to_check.pop(); // prereqs are satisfied
+				}
+			} // end techs_to_check (prereqs loop)
+
+			// If we couldn't add all the prereqs (eg. too many), abort the path.
+			if ((int)techs_in_path.size() > iMaxPathLength || !techs_to_check.empty())
+			{
+				tech_paths.pop_back();
+				continue;
+			}
+
+			// If we haven't already filled the path with prereqs, fill the remaining slots with the highest value unused techs.
+			if (((int)techs_in_path.size() < iMaxPathLength))
+			{
+				// todo: consider backfilling the list with deeper techs if we've matched their prereqs already.
+				for (int j = 0; j < techs_to_depth[1] && (int)techs_in_path.size() < iMaxPathLength; ++j)
+				{
+					if (techs_in_path.count(techs[j].second) == 0)
+					{
+						techs_in_path.insert(techs[j].second);
+						// Note: since this tech isn't a prereqs, it can go anywhere in our path. Try to research highest values first.
+						for (int k = 0; k < (int)tech_paths.back().second.size(); ++k)
+						{
+							if (techs[j].first < techs[tech_paths.back().second[k]].first)
+							{
+								// Note: we'll need to recalculate the total value.
+								tech_paths.back().second.insert(tech_paths.back().second.begin()+k, j);
+								break;
+							}
+						}
+						if (k == tech_paths.back().second.size())
+						{
+							// haven't added it yet
+							tech_paths.back().second.push_back(j);
+						}
+					}
+				}
+				// Recalculate total value;
+				tech_paths.back().first = 0;
+				for (int k = 0; k < (int)tech_paths.back().second.size(); ++k)
+				{
+					tech_paths.back().first = (int)(fDepthRate * tech_paths.back().first);
+					tech_paths.back().first += techs[tech_paths.back().second[k]].first;
+				}
+			}
+		} // end loop through techs at given end depth
+
+		// TODO: at this point we should update the threshold for the next depth...
+		// But I don't want to do that until the back-fill stage is fixed to consider deeper techs.
+	} // end loop through possible end depths
+
+	// Return the tech corresponding to the back (first step) of the tech path with the highest value.
+	std::vector<std::pair<int, std::vector<int> > >::iterator best_path_it = std::max_element(tech_paths.begin(), tech_paths.end(), PairFirstLess<int, std::vector<int> >());
+
+	if (best_path_it == tech_paths.end())
+	{
+		FAssertMsg(0, "Failed to create a tech path.");
+		return NO_TECH;
+	}
+
+	TechTypes eBestTech = techs[best_path_it->second.back()].second;
+	if (gPlayerLogLevel >= 1)
+	{
+		logBBAI("  Player %d (%S) selects tech %S with value %d. (Aiming for %S)",
+			getID(), getCivilizationDescription(0), GC.getTechInfo(eBestTech).getDescription(), techs[best_path_it->second.back()].first, GC.getTechInfo(techs[best_path_it->second.front()].second).getDescription());
+	}
+	FAssert(!isResearch() || getAdvancedStartPoints() < 0 || canResearch(eBestTech, false, bFreeTech));
 	return eBestTech;
 }
 
 // This function has been mostly rewritten for K-Mod.
 // Note: many of the values used in this function are arbitrary; but I've adjusted them to get closer to having a common scale.
-// The scale is roughly 4 = 1 commerce per turn.
+// The scale before research time is taken into account is roughly 4 = 1 commerce per turn. Afterwards it is arbitrary.
 // (Compared to the original numbers, this is * 1/100 * 7 * 4. 28/100)
-int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost, bool bAsync, const std::vector<int>& viBonusClassRevealed, const std::vector<int>& viBonusClassUnrevealed, const std::vector<int>& viBonusClassHave) const
+int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bFreeTech, bool bAsync, const std::vector<int>& viBonusClassRevealed, const std::vector<int>& viBonusClassUnrevealed, const std::vector<int>& viBonusClassHave) const
 {
 	PROFILE_FUNC();
 	FAssert(viBonusClassRevealed.size() == GC.getNumBonusClassInfos());
 	FAssert(viBonusClassUnrevealed.size() == GC.getNumBonusClassInfos());
 	FAssert(viBonusClassHave.size() == GC.getNumBonusClassInfos());
-
-	long iValue; // K-Mod. (the int was overflowing in parts of the calculation)
 
 	CvCity* pCapitalCity = getCapitalCity();
 	const CvTeamAI& kTeam = GET_TEAM(getTeam());
@@ -5026,13 +5498,21 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 	int iCityCount = getNumCities();
 	int iCityTarget = GC.getWorldInfo(GC.getMapINLINE().getWorldSize()).getTargetNumCities();
 
-	iValue = 1;
+	long iValue = 1; // K-Mod. (the int was overflowing in parts of the calculation)
+	int iRandomFactor = 0;// Amount of random value in the answer.
+	int iRandomMax = 0;   // Max random value. (These randomness trackers aren't actually used, and may not even be accurate.)
 
-	int iRandomFactor = ((bAsync) ? GC.getASyncRand().get(80*iCityCount, "AI Research ASYNC") : GC.getGameINLINE().getSorenRandNum(80*iCityCount, "AI Research"));
-	int iRandomMax = 80*iCityCount;
-	iValue += iRandomFactor;
+	//if (iPathLength <= 1) // K-Mod. Don't include random bonus for follow-on tech values.
+	{
+		iRandomFactor = ((bAsync) ? GC.getASyncRand().get(80*iCityCount, "AI Research ASYNC") : GC.getGameINLINE().getSorenRandNum(80*iCityCount, "AI Research"));
+		iRandomMax = 80*iCityCount;
+		iValue += iRandomFactor;
+	}
 
-	iValue += kTeam.getResearchProgress(eTech)/4;
+	if (!bFreeTech) // K-Mod.
+	{
+		iValue += kTeam.getResearchProgress(eTech)/4;
+	}
 
 	// Map stuff
 	if (kTechInfo.isExtraWaterSeeFrom())
@@ -5128,8 +5608,8 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 	{
 		// K-Mod. The key value of gold trading is to facilitate tech trades.
 		int iBaseValue =  (!GC.getGameINLINE().isOption(GAMEOPTION_NO_TECH_TRADING) && !kTeam.isTechTrading())
-			? getTotalPopulation()
-			: getTotalPopulation()/3;
+			? (getTotalPopulation()+10)
+			: (getTotalPopulation()/3 + 3);
 		int iNewTrade = 0;
 		int iExistingTrade = 0;
 		for (TeamTypes i = (TeamTypes)0; i < MAX_CIV_TEAMS; i = (TeamTypes)(i+1))
@@ -5145,7 +5625,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 			else
 				iExistingTrade += kLoopTeam.getAliveCount();
 		}
-		iValue += iBaseValue * std::max(0, 3*iNewTrade - iExistingTrade);
+		iValue += iBaseValue * std::max(iNewTrade, 3*iNewTrade - iExistingTrade);
 	}
 
 	if (kTechInfo.isOpenBordersTrading())
@@ -5199,13 +5679,13 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 
 	if (kTechInfo.isPermanentAllianceTrading() && (GC.getGameINLINE().isOption(GAMEOPTION_PERMANENT_ALLIANCES)))
 	{
-		iValue += 56;
+		iValue += 8*iCityTarget;
 		// todo: check for friendly civs
 	}
 
 	if (kTechInfo.isVassalStateTrading() && !(GC.getGameINLINE().isOption(GAMEOPTION_NO_VASSAL_STATES)))
 	{
-		iValue += 56;
+		iValue += 8*iCityCount;
 		// todo: check anyone is small enough to vassalate. Check for conquest / domination strategies.
 	}
 
@@ -5322,7 +5802,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 		if (kTechInfo.isCommerceFlexible(i))
 		{
 
-			iCommerceValue += 80 + 4 * iCityCount;
+			iCommerceValue += 40 + 4 * iCityCount;
 			/* original
 			iValue += 4 * iCityCount * (3*AI_averageCulturePressure()-200) / 100;
 			if (i == COMMERCE_CULTURE && AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2))
@@ -5391,7 +5871,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 			// Often, an improvement only becomes viable after it gets the tech bonus.
 			// So it's silly to score the bonus proportionally to how many of the improvements we already have.
 			iTempValue += GC.getImprovementInfo((ImprovementTypes)iJ).getTechYieldChanges(eTech, iK)
-				* std::max(getImprovementCount((ImprovementTypes)iJ), 3*getNumCities()/2) * 4;
+				* std::max(getImprovementCount((ImprovementTypes)iJ)+iCityCount, 3*iCityCount/2) * 4;
 			// This new version is still bork, but at least it won't be worthless.
 			iTempValue *= AI_averageYieldMultiplier((YieldTypes)iK);
 			iTempValue /= 100;
@@ -5663,12 +6143,15 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 
 		if (bIsFeatureRemove)
 		{
-			int iChopValue = iChopProduction / 8;
+			int iChopValue = iChopProduction / 4; // was 8
 
 			if ((GC.getFeatureInfo(FeatureTypes(iJ)).getHealthPercent() < 0) ||
 				((GC.getFeatureInfo(FeatureTypes(iJ)).getYieldChange(YIELD_FOOD) + GC.getFeatureInfo(FeatureTypes(iJ)).getYieldChange(YIELD_PRODUCTION) + GC.getFeatureInfo(FeatureTypes(iJ)).getYieldChange(YIELD_COMMERCE)) < 0))
 			{
-				iChopValue += 6;
+				iChopValue += 8;
+				// I want to add value for the new city sites which become available due to this tech - but it isn't easy to evaluate.
+				// Perhaps we should go as far as counting features at our planned sites - but even that isn't exactly what we want.
+				iBuildValue += 40;
 			}
 			iBuildValue += 4 + iChopValue * (countCityFeatures((FeatureTypes)iJ) + 4);
 		}
@@ -5742,13 +6225,14 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 	bool bEnablesUnitWonder;
 	iValue += AI_techUnitValue( eTech, iPathLength, bEnablesUnitWonder );
 	
-	if (bEnablesUnitWonder)
+	if (bEnablesUnitWonder && getTotalPopulation() > 5)
 	{
-		int iWonderRandom = ((bAsync) ? GC.getASyncRand().get(112, "AI Research Wonder Unit ASYNC") : GC.getGameINLINE().getSorenRandNum(112, "AI Research Wonder Unit"));
+		const int iBaseRand = std::max(10, 110-30*iPathLength); // 80, 50, 20, 10
+		int iWonderRandom = ((bAsync) ? GC.getASyncRand().get(iBaseRand, "AI Research Wonder Unit ASYNC") : GC.getGameINLINE().getSorenRandNum(iBaseRand, "AI Research Wonder Unit"));
 		int iFactor = 100 * std::min(iCityCount, iCityTarget) / std::max(1, iCityTarget);
-		iValue += (iWonderRandom + (bCapitalAlone ? 56 : 0)) * iFactor / 100;
+		iValue += (iWonderRandom + (bCapitalAlone ? 50 : 0)) * iFactor / 100;
 
-		iRandomMax += 112 * iFactor / 100;
+		iRandomMax += iBaseRand * iFactor / 100;
 		iRandomFactor += iWonderRandom * iFactor / 100;
 	}
 
@@ -5759,16 +6243,19 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 	iValue -= AI_obsoleteBuildingPenalty(eTech, bAsync); // K-Mod!
 
 	// K-Mod. Scale the random wonder bonus based on leader personality.
-	if (bEnablesWonder && iPathLength <= 1 && getTotalPopulation() > 5)
+	// Note: the value of the building itself was already counted by AI_techBuildingValue. This extra value is just because we like wonders.
+	if (bEnablesWonder && getTotalPopulation() > 5)
 	{
-		const int iBaseRand = 300;
+		const int iBaseRand = std::max(10, 110-30*iPathLength); // 80, 50, 20, 10
 		int iWonderRandom = ((bAsync) ? GC.getASyncRand().get(iBaseRand, "AI Research Wonder Building ASYNC") : GC.getGameINLINE().getSorenRandNum(iBaseRand, "AI Research Wonder Building"));
 		int iFactor = 10 + GC.getLeaderHeadInfo(getPersonalityType()).getWonderConstructRand(); // note: highest value of iWonderConstructRand 50 in the default xml.
 		iFactor += AI_isDoVictoryStrategy(AI_VICTORY_CULTURE1) ? 15 : 0;
 		iFactor += AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2) ? 10 : 0;
 		iFactor /= bAdvancedStart ? 4 : 1;
 		iFactor = iFactor * std::min(iCityCount, iCityTarget) / std::max(1, iCityTarget);
-		iValue += (200 + iWonderRandom) * iFactor / 100;
+		iFactor += 50; // This puts iFactor around 100, roughly.
+
+		iValue += (40 + iWonderRandom) * iFactor / 100;
 
 		iRandomMax += iBaseRand * iFactor / 100;
 		iRandomFactor += iWonderRandom * iFactor / 100;
@@ -5776,62 +6263,8 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 	// K-Mod end
 
 	/* ------------------ Project Value  ------------------ */
-	bool bEnablesProjectWonder = false;
-	for (int iJ = 0; iJ < GC.getNumProjectInfos(); iJ++)
-	{
-		const CvProjectInfo& kProjectInfo = GC.getProjectInfo((ProjectTypes)iJ); // K-Mod
-
-		if (kProjectInfo.getTechPrereq() == eTech)
-		{
-			iValue += 280;
-
-			if( (VictoryTypes)kProjectInfo.getVictoryPrereq() != NO_VICTORY )
-			{
-				if( !(kProjectInfo.isSpaceship()) )
-				{
-					// Apollo
-					iValue += (AI_isDoVictoryStrategy(AI_VICTORY_SPACE2) ? 580 : 28);
-				}
-				else
-				{
-					// Space ship parts (changed by K-Mod)
-					// Note: ideally this would take into account the production cost of each item,
-					//       and the total number / production of a completed space-ship, and a
-					//       bunch of other things. But I think this is good enough for now.
-					if (AI_isDoVictoryStrategy(AI_VICTORY_SPACE2))
-					{
-						iValue += 336;
-						if (AI_isDoVictoryStrategy(AI_VICTORY_SPACE3))
-						{
-							iValue += 336; // (additional)
-							iValue += kProjectInfo.getMaxTeamInstances() > 0
-								? kProjectInfo.getMaxTeamInstances() * 84
-								: 112;
-						}
-					}
-				}
-			}
-
-			if (iPathLength <= 1)
-			{
-				if (getTotalPopulation() > 5)
-				{
-					if (isWorldProject((ProjectTypes)iJ))
-					{
-						if (!(GC.getGameINLINE().isProjectMaxedOut((ProjectTypes)iJ)))
-						{
-							bEnablesProjectWonder = true;
-
-							if (bCapitalAlone)
-							{
-								iValue += 28;
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+	bool bEnablesProjectWonder;
+	iValue += AI_techProjectValue(eTech, iPathLength, bEnablesProjectWonder);
 	if (bEnablesProjectWonder)
 	{
 		int iWonderRandom = ((bAsync) ? GC.getASyncRand().get(56, "AI Research Wonder Project ASYNC") : GC.getGameINLINE().getSorenRandNum(56, "AI Research Wonder Project"));
@@ -5868,7 +6301,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 				}
 				else if ((iK == COMMERCE_CULTURE) && AI_isDoVictoryStrategy(AI_VICTORY_CULTURE1))
 				{
-					iTempValue *= 3;
+					iTempValue *= 2; // was 3
 				}
 
 				iValue += iTempValue * iCityCount / 100;
@@ -5892,14 +6325,14 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 		}
 		if (!bHaveGoodProcess)
 		{
-			iValue += 6*iCityCount;
+			iValue += 8*iCityCount;
 		}
 	}
 
 	/* ------------------ Civic Value  ------------------ */
 	for (int iJ = 0; iJ < GC.getNumCivicInfos(); iJ++)
 	{
-		if (GC.getCivicInfo((CivicTypes)iJ).getTechPrereq() == eTech)
+		if (GC.getCivicInfo((CivicTypes)iJ).getTechPrereq() == eTech && !canDoCivics((CivicTypes)iJ))
 		{
 			CivicTypes eCivic = getCivics((CivicOptionTypes)(GC.getCivicInfo((CivicTypes)iJ).getCivicOptionType()));
 
@@ -5909,11 +6342,12 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 			if (iNewCivicValue > iCurrentCivicValue)
 			{
 				//iValue += std::min(2400, (2400 * (iNewCivicValue - iCurrentCivicValue)) / std::max(1, iCurrentCivicValue));
-				iValue += 3 * (iNewCivicValue - iCurrentCivicValue);
+				iValue += 5 * (iNewCivicValue - iCurrentCivicValue); // This should be 4 *, but situational values like civics are more interesting than static values
+				iValue += 4 * std::min(iCityCount, iCityTarget); // just a little something extra for the early game... to indicate that we may have undervalued the civic's long term appeal.
 			}
 
 			if (eCivic == GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic())
-				iValue += 20*iCityCount;
+				iValue += 6*iCityCount; // Note: favourite civic is already taken into account in the civic evaluation above.
 			else
 				iValue += 4*iCityCount;
 		}
@@ -6073,7 +6507,8 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 				{
 					if (!(GC.getGameINLINE().isReligionSlotTaken((ReligionTypes)iJ)))
 					{
-						int iRoll = 400;
+						//int iRoll = 300;
+						int iRoll = 150;
 
 						if (!GC.getGame().isOption(GAMEOPTION_PICK_RELIGION))
 						{
@@ -6103,11 +6538,13 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 			{
 				if (AI_isDoVictoryStrategy(AI_VICTORY_CULTURE1))
 				{
-					iReligionValue += 100;
+					//iReligionValue += 100;
+					iReligionValue += 50;
 
 					if (countHolyCities() < 1)
 					{
-						iReligionValue += 200;
+						//iReligionValue += 200;
+						iReligionValue += iCityCount > 1 ? 100 : 0;
 					}
 				}
 				else
@@ -6174,20 +6611,47 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 			}
 
 			//iValue += (kTechInfo.getFirstFreeTechs() * (200 + ((bCapitalAlone) ? 400 : 0) + ((bAsync) ? GC.getASyncRand().get(3200, "AI Research Free Tech ASYNC") : GC.getGameINLINE().getSorenRandNum(3200, "AI Research Free Tech"))));
-			// K-Mod
+			// K-Mod. Very rough evaluation of free tech.
 			if (kTechInfo.getFirstFreeTechs() > 0)
 			{
-				int iRoll = 1600;
-				iRoll *= 200 + iRaceModifier + (AI_getFlavorValue(FLAVOR_SCIENCE) ? 50 : 0);
-				iRoll /= 200;
-				if (iRaceModifier > 30 && iRaceModifier < 100) // save the free tech if we have no competition!
-					iValue += iRoll * (iRaceModifier-20) / 400; // this is potentially big.
+				//int iRoll = 1600; // previous base value - which we'll now calculate based on costs of currently researchable tech
+				int iBase = 100;
 
-				int iTempValue = (iRaceModifier >= 0 ? 196 : 98) + (bCapitalAlone ? 28 : 0); // some value regardless of race or random.
+				{ // cf. free tech in AI_buildingValue
+					int iTotalTechCost = 0;
+					int iMaxTechCost = 0;
+					int iTechCount = 0;
 
-				iTempValue += bAsync ? GC.getASyncRand().get(iRoll, "AI Research Free Tech ASYNC") : GC.getGameINLINE().getSorenRandNum(iRoll, "AI Research Free Tech");
+					for (TechTypes iI = (TechTypes)0; iI < GC.getNumTechInfos(); iI=(TechTypes)(iI+1))
+					{
+						if (canResearch(iI, false, true))
+						{
+							int iTechCost = kTeam.getResearchCost(iI);
+							iTotalTechCost += iTechCost;
+							iTechCount++;
+							iMaxTechCost = std::max(iMaxTechCost, iTechCost);
+						}
+					}
+					if (iTechCount > 0)
+					{
+						int iTechValue =  ((iTotalTechCost / iTechCount) + iMaxTechCost)/2;
+
+						iBase += iTechValue * 20 / GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getResearchPercent();
+					}
+				} // I'm expecting iRoll to be ~600.
+
+				iBase *= 200 + iRaceModifier + (AI_getFlavorValue(FLAVOR_SCIENCE) ? 50 : 0);
+				iBase /= 200;
+
+				int iTempValue = iBase; // value for each free tech
+				if (iRaceModifier > 20 && iRaceModifier < 100) // save the free tech if we have no competition!
+					iTempValue += iBase * (iRaceModifier-20) / 200;
+
+				//int iTempValue = (iRaceModifier >= 0 ? 196 : 98) + (bCapitalAlone ? 28 : 0); // some value regardless of race or random.
+				iTempValue += bAsync ? GC.getASyncRand().get(iBase, "AI Research Free Tech ASYNC") : GC.getGameINLINE().getSorenRandNum(iBase, "AI Research Free Tech");
+
 				iValue += iTempValue * kTechInfo.getFirstFreeTechs();
-				iRandomMax += iRoll * kTechInfo.getFirstFreeTechs();
+				iRandomMax += iBase * kTechInfo.getFirstFreeTechs();
 			}
 			// K-Mod end
 		}
@@ -6210,10 +6674,11 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 		iValue /= 4;
 	}
 
-	if (bIgnoreCost)
+	if (bFreeTech)
 	{
-		iValue *= (1 + (getResearchTurnsLeft((eTech), false)));
-		iValue /= 10;
+		iValue += getResearchTurnsLeft(eTech, false) / 5;
+		iValue *= 1000; // roughly normalise with usual value. (cf. code below)
+		iValue /= 10 * GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getResearchPercent();
 	}
 	else
 	{
@@ -6227,51 +6692,19 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 			bool bCheapBooster = ((iTurnsLeft < (2 * iAdjustment)) && (0 == ((bAsync) ? GC.getASyncRand().get(5, "AI Choose Cheap Tech") : GC.getGameINLINE().getSorenRandNum(5, "AI Choose Cheap Tech"))));
 
 			//iValue *= 100000;
-			iValue *= 2000; // K-Mod
+			iValue *= 1000; // K-Mod
 
             iValue /= (iTurnsLeft + (bCheapBooster ? 1 : 5) * iAdjustment);
 		}
 	}
-	
-	//Tech Whore								
+
+	//Tech Groundbreaker
 	//if (!GC.getGameINLINE().isOption(GAMEOPTION_NO_TECH_TRADING))
-	if (!GC.getGameINLINE().isOption(GAMEOPTION_NO_TECH_TRADING) && !isBarbarian()) // K-Mod
+	if (!GC.getGameINLINE().isOption(GAMEOPTION_NO_TECH_TRADING) && !isBarbarian() && iPathLength <= 1) // K-Mod
 	{
 		if (kTechInfo.isTechTrading() || kTeam.isTechTrading())
 		{
-			/* original bts code
-			if (((bAsync) ? GC.getASyncRand().get(100, "AI Tech Whore ASYNC") : GC.getGameINLINE().getSorenRandNum(100, "AI Tech Whore")) < (GC.getGameINLINE().isOption(GAMEOPTION_NO_TECH_BROKERING) ? 20 : 10))
-			{
-				int iKnownCount = 0;
-				int iPossibleKnownCount = 0;
-
-				for (int iTeam = 0; iTeam < MAX_CIV_TEAMS; iTeam++)
-				{
-					if (GET_TEAM((TeamTypes)iTeam).isAlive())
-					{
-						if (GET_TEAM(getTeam()).isHasMet((TeamTypes)iTeam))
-						{
-							if (GET_TEAM((TeamTypes)iTeam).isHasTech(eTech))
-							{
-								iKnownCount++;
-							}
-						}
-
-						iPossibleKnownCount++;
-					}
-				}
-				
-				if (iKnownCount == 0)
-				{
-					if (iPossibleKnownCount > 2)
-					{
-						int iTradeModifier = std::min(150, 25 * (iPossibleKnownCount - 2));
-						iValue *= 100 + iTradeModifier;
-						iValue /= 100;
-					}
-				}
-			}*/
-			// K-Mod. We should either consider 'tech whoring' for all techs this turn, or none at all - otherwise it will just mess things up.
+			// K-Mod. We should either consider 'tech ground-breaking' for all techs this turn, or none at all - otherwise it will just mess things up.
 			// Also, if the value adjustment isn't too big, it should be ok to do this most of the time.
 			if (AI_getStrategyRand(GC.getGameINLINE().getGameTurn()) % std::max(1, GC.getLeaderHeadInfo(getPersonalityType()).getContactRand(CONTACT_TRADE_TECH)) == 0)
 			{
@@ -6289,7 +6722,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 					}
 				}
 
-				int iTradeModifier = iPotentialTrade * (GC.getGameINLINE().isOption(GAMEOPTION_NO_TECH_BROKERING) ? 20 : 12);
+				int iTradeModifier = iPotentialTrade * (GC.getGameINLINE().isOption(GAMEOPTION_NO_TECH_BROKERING) ? 30 : 15);
 				iTradeModifier *= 200 - GC.getLeaderHeadInfo(getPersonalityType()).getTechTradeKnownPercent();
 				iTradeModifier /= 150;
 				iTradeModifier /= 1 + 2 * iAlreadyKnown;
@@ -6316,8 +6749,8 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 **** K-Mod, 12/sep/10, Karadoc
 **** Use a random _factor_ at the end.
 ***/
-	iRandomFactor = ((bAsync) ? GC.getASyncRand().get(100, "AI Research factor ASYNC") : GC.getGameINLINE().getSorenRandNum(100, "AI Research factor"));
-	iValue *= (950 + iRandomFactor); // between 95% and 105%
+	iRandomFactor = ((bAsync) ? GC.getASyncRand().get(200, "AI Research factor ASYNC") : GC.getGameINLINE().getSorenRandNum(200, "AI Research factor"));
+	iValue *= (900 + iRandomFactor); // between 90% and 110%
 	iValue /= 1000;
 /***
 **** END
@@ -6381,6 +6814,7 @@ int CvPlayerAI::AI_obsoleteBuildingPenalty(TechTypes eTech, bool bConstCache) co
 // one another, their individual evaluation will greatly undervalue them. Another example: catherals can't
 // be built in every city, but this function will evaluate them as if they could, thus overvaluing them.
 // But still, the original code was far worse - so I think I'll just tolerate such flaws for now.
+// The scale is roughly 4 = 1 commerce per turn.
 int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, bool bConstCache, bool& bEnablesWonder) const
 {
 	PROFILE_FUNC();
@@ -6511,6 +6945,7 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, bool bConstCache, bool& bE
 // K-Mod end
 
 // This function has been mostly rewriten for K-Mod
+// The final scale is roughly 4 = 1 commerce per turn.
 int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnablesUnitWonder) const
 {
 	PROFILE_FUNC();
@@ -6525,6 +6960,35 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 			bWarPlan = true;
 		}
 	}
+
+	// K-Mod. Get some basic info.
+	bool bLandWar = false;
+	bool bIsAnyAssault = false;
+	{
+		int iLoop;
+		for (CvArea* pLoopArea = GC.getMapINLINE().firstArea(&iLoop); pLoopArea != NULL; pLoopArea = GC.getMapINLINE().nextArea(&iLoop))
+		{
+			if (AI_isPrimaryArea(pLoopArea))
+			{
+				switch (pLoopArea->getAreaAIType(getTeam()))
+				{
+					case AREAAI_OFFENSIVE:
+					case AREAAI_DEFENSIVE:
+					case AREAAI_MASSING:
+						bLandWar = true;
+						break;
+					case AREAAI_ASSAULT:
+					case AREAAI_ASSAULT_MASSING:
+					case AREAAI_ASSAULT_ASSIST:
+						bIsAnyAssault = true;
+						break;
+					default:
+						break;
+				};
+			}
+		}
+	}
+	//
 
 	bool bCapitalAlone = (GC.getGameINLINE().getElapsedGameTurns() > 0) ? AI_isCapitalAreaAlone() : false;
 	int iHasMetCount = kTeam.getHasMetCivCount(true);
@@ -6542,14 +7006,14 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 			continue;
 
 		CvUnitInfo& kLoopUnit = GC.getUnitInfo(eLoopUnit);
-		iValue += 200;
-		int iTotalUnitValue = 0;
+		//iValue += 200;
+		int iTotalUnitValue = 200; // Raw value moved here, so that it is adjusted by missing techs / resources
 
 		int iNavalValue = 0;
 		int iOffenceValue = 0;
 		int iDefenceValue = 0;
+		int iMilitaryValue = 0; // Total military value. Offence and defence are added to this after all roles have been considered.
 		int iUtilityValue = 0;
-		// iMilitaryValue = iAttackValue + iDefenceValue;
 
 		if (GC.getUnitClassInfo(eLoopClass).getDefaultUnitIndex() != GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(eLoopClass))
 		{
@@ -6560,14 +7024,13 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 		if (kLoopUnit.getPrereqAndTech() == eTech || kTeam.isHasTech((TechTypes)kLoopUnit.getPrereqAndTech()) || canResearch((TechTypes)kLoopUnit.getPrereqAndTech()))
 		{
 			// (note, we already checked that this tech is required for the unit.)
-
 			for (UnitAITypes eAI = (UnitAITypes)0; eAI < NUM_UNITAI_TYPES; eAI = (UnitAITypes)(eAI+1))
 			{
 				int iWeight = 0;
 				if (eAI == kLoopUnit.getDefaultUnitAIType())
 				{
 					// Score the default AI type as a direct competitor to the current best.
-					iWeight = std::min(100, 100 * AI_unitValue(eLoopUnit, eAI, 0) / std::max(1, AI_bestAreaUnitAIValue(eAI, 0)));
+					iWeight = std::min(250, 70 * AI_unitValue(eLoopUnit, eAI, 0) / std::max(1, AI_bestAreaUnitAIValue(eAI, 0)));
 				}
 				else if (kLoopUnit.getUnitAIType(eAI)) // only consider types which are flagged in the xml. (??)
 				{
@@ -6576,12 +7039,12 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 					if (iTypeValue > 0)
 					{
 						int iOldValue = AI_bestAreaUnitAIValue(eAI, 0);
-						iWeight = std::min(100, 100 * (iTypeValue - iOldValue) / std::max(1, iOldValue));
+						iWeight = std::min(150, 100 * (iTypeValue - iOldValue) / std::max(1, iOldValue));
 					}
 				}
 				if (iWeight <= 0)
 					continue;
-				FAssert(iWeight <= 100);
+				FAssert(iWeight <= 250);
 
 				switch (eAI)
 				{
@@ -6599,29 +7062,33 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 
 				case UNITAI_ATTACK:
 					iOffenceValue = std::max(iOffenceValue, (bWarPlan ? 7 : 4)*iWeight + (AI_isDoStrategy(AI_STRATEGY_DAGGER) ? 5*iWeight : 0));
-					iTotalUnitValue += 1*iWeight;
+					iMilitaryValue += (bWarPlan ? 3 : 1)*iWeight;
 					break;
 
 				case UNITAI_ATTACK_CITY:
 					iOffenceValue = std::max(iOffenceValue, (bWarPlan ? 8 : 4)*iWeight + (AI_isDoStrategy(AI_STRATEGY_DAGGER) ? 6*iWeight : 0));
-					iTotalUnitValue += 1*iWeight;
+					iMilitaryValue += (bWarPlan ? 1 : 0)*iWeight;
 					break;
 
 				case UNITAI_COLLATERAL:
-					iDefenceValue = std::max(iDefenceValue, (bWarPlan ? 6 : 4)*iWeight + (AI_isDoStrategy(AI_STRATEGY_ALERT1) ? 2 : 0)*iWeight);
+					iDefenceValue = std::max(iDefenceValue, (bWarPlan ? 6 : 3)*iWeight + (AI_isDoStrategy(AI_STRATEGY_ALERT1) ? 2 : 0)*iWeight);
+					iMilitaryValue += (bWarPlan ? 1 : 0)*iWeight + (bLandWar ? 2 : 0)*iWeight;
 					break;
 
 				case UNITAI_PILLAGE:
-					iOffenceValue = std::max(iOffenceValue, (bWarPlan ? 2 : 1)*iWeight);
+					iOffenceValue = std::max(iOffenceValue, (bWarPlan ? 4 : 1)*iWeight);
+					iMilitaryValue += (bWarPlan ? 2 : 0)*iWeight + (bLandWar ? 2 : 0)*iWeight;
 					break;
 
 				case UNITAI_RESERVE:
-					iDefenceValue = std::max(iDefenceValue, (bWarPlan ? 2 : 1)*iWeight);
+					iDefenceValue = std::max(iDefenceValue, (bWarPlan ? 4 : 3)*iWeight);
+					iMilitaryValue += (iHasMetCount > 0 ? 2 : 1)*iWeight + (bWarPlan ? 2 : 0);
 					break;
 
 				case UNITAI_COUNTER:
-					iDefenceValue = std::max(iDefenceValue, (bWarPlan ? 5 : 3)*iWeight);
-					iOffenceValue = std::max(iOffenceValue, (bWarPlan ? 2 : 1)*iWeight + (AI_isDoStrategy(AI_STRATEGY_DAGGER) ? 3*iWeight : 0));
+					iDefenceValue = std::max(iDefenceValue, (bWarPlan ? 6 : 3)*iWeight + (AI_isDoStrategy(AI_STRATEGY_ALERT1) ? 2 : 0)*iWeight);
+					iOffenceValue = std::max(iOffenceValue, (bWarPlan ? 4 : 1)*iWeight + (AI_isDoStrategy(AI_STRATEGY_DAGGER) ? 3*iWeight : 0));
+					iMilitaryValue += (AI_isDoStrategy(AI_STRATEGY_ALERT1) || bWarPlan ? 1 : 0)*iWeight + (bLandWar ? 1 : 0)*iWeight;
 					break;
 
 				case UNITAI_PARADROP:
@@ -6629,12 +7096,12 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 					break;
 
 				case UNITAI_CITY_DEFENSE:
-					iDefenceValue = std::max(iDefenceValue, (bWarPlan ? 7 : 4)*iWeight + (bCapitalAlone ? 2 : 4)*iWeight);
-					iTotalUnitValue += (iHasMetCount > 0 ? 4 : 0)*iWeight;
+					iDefenceValue = std::max(iDefenceValue, (bWarPlan ? 8 : 6)*iWeight + (bCapitalAlone ? 0 : 2)*iWeight);
+					iMilitaryValue += (iHasMetCount > 0 ? 4 : 1)*iWeight + (AI_isDoStrategy(AI_STRATEGY_ALERT1) || bWarPlan ? 3 : 0)*iWeight;
 					break;
 
 				case UNITAI_CITY_COUNTER:
-					iDefenceValue = std::max(iDefenceValue, (bWarPlan ? 8 : 4)*iWeight);
+					iDefenceValue = std::max(iDefenceValue, (bWarPlan ? 8 : 5)*iWeight);
 					break;
 
 				case UNITAI_CITY_SPECIAL:
@@ -6673,7 +7140,7 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 					//iMilitaryValue += (bWarPlan ? 100 : 50);
 					// K-Mod
 					if (iHasMetCount > 0)
-						iUtilityValue = std::max(iUtilityValue, (bCapitalAlone ? 1 : 2)*iWeight/2);
+						iUtilityValue = std::max(iUtilityValue, (bCapitalAlone ? 1 : 2)*iWeight/2 + (AI_isDoStrategy(AI_STRATEGY_BIG_ESPIONAGE) ? 2 : 0)*iWeight);
 					// K-Mod end
 					break;
 
@@ -6727,7 +7194,7 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 					if (iCoastalCities > 0)
 					{
 						//iTotalUnitValue += (bCapitalAlone ? 18 : 6)*iWeight;
-						iUtilityValue = std::max(iUtilityValue, (6 + (bCapitalAlone ? 4 : 0) + (iHasMetCount > 0 ? 0 : 6))*iWeight);
+						iUtilityValue = std::max(iUtilityValue, (4 + (bCapitalAlone ? 4 : 0) + (iHasMetCount > 0 ? 0 : 4))*iWeight);
 					}
 					break;
 
@@ -6742,7 +7209,7 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 				case UNITAI_SETTLER_SEA:
 					if (iCoastalCities > 0)
 					{
-						iUtilityValue = std::max(iUtilityValue, (bWarPlan || bCapitalAlone ? 1 : 2)*iWeight);
+						iUtilityValue = std::max(iUtilityValue, (bWarPlan ? 0 : 1)*iWeight + (bCapitalAlone ? 1 : 0)*iWeight);
 					}
 					iNavalValue = std::max(iNavalValue, 2*iWeight);
 					break;
@@ -6813,14 +7280,14 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 			}
 			iTotalUnitValue += iUtilityValue;
 
-			int iMilitaryValue = iOffenceValue + iDefenceValue;
-			if (kLoopUnit.getBombardRate() > 0) // block moved from UNITAI_ATTACK_CITY:
+			iMilitaryValue += iOffenceValue + iDefenceValue;
+			if (kLoopUnit.getBombardRate() > 0 && !AI_isDoStrategy(AI_STRATEGY_ECONOMY_FOCUS)) // block moved from UNITAI_ATTACK_CITY:
 			{
-				iMilitaryValue += 200;
+				iMilitaryValue += std::min(iOffenceValue, 100); // was straight 200
 
 				if (AI_calculateTotalBombard(DOMAIN_LAND) == 0)
 				{
-					iMilitaryValue += 800;
+					iMilitaryValue += 600; // was 800
 					if (AI_isDoStrategy(AI_STRATEGY_DAGGER))
 					{
 						iMilitaryValue += 400; // was 1000
@@ -6828,59 +7295,26 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 				}
 			}
 
-			/* if (kLoopUnit.getUnitAIType(UNITAI_COLLATERAL) && kLoopUnit.getCollateralDamage() > 0)
-			{
-				// note: the following boost is for land units only.
-				// Sea and air units get their collateral bonus in the switch section above.
-				int iOldValue = getTypicalUnitValue(UNITAI_COLLATERAL);
-				if (iOldValue > 0)
-				{
-					int iDelta = std::max(0, GC.getGameINLINE().AI_combatValue(eLoopUnit) - iOldValue);
-					iMilitaryValue += 150 * iDelta / iOldValue;
-					// this boost is a bit ad hoc. But so is the rest of the stuff in here!
-					// my goal with this component is to boost the value of canons.
-				}
-				else if (kLoopUnit.getDefaultUnitAIType() == getTypicalUnitValue(UNITAI_COLLATERAL))
-				{
-					// currently there are no units with this default AI; but anyway...
-					iMilitaryValue += 150;
-				}
-			} */ // I don't think we'll need this anymore.
-
 			if (kLoopUnit.getUnitAIType(UNITAI_ASSAULT_SEA) && iCoastalCities > 0)
 			{
 				int iAssaultValue = 0;
 				UnitTypes eExistingUnit = NO_UNIT;
 				if (AI_bestAreaUnitAIValue(UNITAI_ASSAULT_SEA, NULL, &eExistingUnit) == 0)
 				{
-					iAssaultValue += 250;
+					iAssaultValue += 100; // was 250
 				}
 				else if( eExistingUnit != NO_UNIT )
 				{
-					iAssaultValue += 1000 * std::max(0, AI_unitImpassableCount(eLoopUnit) - AI_unitImpassableCount(eExistingUnit));
+					iAssaultValue += 500 * std::max(0, AI_unitImpassableCount(eLoopUnit) - AI_unitImpassableCount(eExistingUnit)); // was 1000*
 
 					int iNewCapacity = kLoopUnit.getMoves() * kLoopUnit.getCargoSpace();
 					int iOldCapacity = GC.getUnitInfo(eExistingUnit).getMoves() * GC.getUnitInfo(eExistingUnit).getCargoSpace();
 
-					iAssaultValue += (800 * (iNewCapacity - iOldCapacity)) / std::max(1, iOldCapacity);
+					iAssaultValue += (200 * (iNewCapacity - iOldCapacity)) / std::max(1, iOldCapacity); // was 800*
 				}
 
 				if (iAssaultValue > 0)
 				{
-					int iLoop;
-					CvArea* pLoopArea;
-					bool bIsAnyAssault = false;
-					for(pLoopArea = GC.getMapINLINE().firstArea(&iLoop); pLoopArea != NULL; pLoopArea = GC.getMapINLINE().nextArea(&iLoop))
-					{
-						if (AI_isPrimaryArea(pLoopArea))
-						{
-							if (pLoopArea->getAreaAIType(getTeam()) == AREAAI_ASSAULT)
-							{
-								bIsAnyAssault = true;
-								break;
-							}
-						}
-					}
 					if (bIsAnyAssault)
 					{
 						iTotalUnitValue += iAssaultValue * 4;
@@ -6904,7 +7338,7 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 				}
 			}
 
-			if (AI_totalUnitAIs((UnitAITypes)kLoopUnit.getDefaultUnitAIType()) == 0)
+			/* if (AI_totalUnitAIs((UnitAITypes)kLoopUnit.getDefaultUnitAIType()) == 0)
 			{
 				// do not give bonus to seagoing units if they are worthless
 				if (iTotalUnitValue > 0)
@@ -6925,7 +7359,7 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 					iTotalUnitValue += 400;
 					iTotalUnitValue += ((GC.getGameINLINE().countCivTeamsAlive() - iHasMetCount) * 200);
 				}
-			}
+			} */ // Disabled by K-Mod
 
 			if (kLoopUnit.getUnitAIType(UNITAI_SETTLER_SEA))
 			{
@@ -6944,7 +7378,7 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 							int iBestOtherValue = 0;
 							AI_getNumAdjacentAreaCitySites(pWaterArea->getID(), getCapitalCity()->getArea(), iBestOtherValue);
 
-							if (iBestAreaValue == 0)
+							if (iBestAreaValue == 0 && GC.getGameINLINE().getElapsedGameTurns() > 20) // Give us a chance to see our land first.
 							{
 								iTotalUnitValue += 2000;
 							}
@@ -7027,19 +7461,14 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 			}
 		}
 
-		if (iPathLength <= 1)
+		if (isWorldUnitClass(eLoopClass))
 		{
-			if (getTotalPopulation() > 5)
+			if (!GC.getGameINLINE().isUnitClassMaxedOut(eLoopClass))
 			{
-				if (isWorldUnitClass(eLoopClass))
-				{
-					if (!GC.getGameINLINE().isUnitClassMaxedOut(eLoopClass))
-					{
-						bEnablesUnitWonder = true;
-					}
-				}
+				bEnablesUnitWonder = true;
 			}
 		}
+
 		// K-Mod
 		// Decrease the value if we are missing other prereqs.
 		{
@@ -7063,6 +7492,7 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 		// Decrease the value if we don't have the resources
 		bool bMaybeMissing = false; // if we don't know if we have the bonus or not
 		bool bDefinitelyMissing = false; // if we can see the bonuses, and we know we don't have any.
+		bool bWillReveal = false; // if the 'maybe missing' resource is revealed by eTech
 
 		for (int iI = 0; iI < GC.getNUM_UNIT_PREREQ_OR_BONUSES(); ++iI)
 		{
@@ -7083,7 +7513,12 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 					}
 					else
 					{
+						bDefinitelyMissing = false;
 						bMaybeMissing = true;
+						if (GC.getBonusInfo(ePrereqBonus).getTechReveal() == eTech)
+						{
+							bWillReveal = true;
+						}
 					}
 				}
 			}
@@ -7099,6 +7534,10 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 			else
 			{
 				bMaybeMissing = true;
+				if (GC.getBonusInfo(ePrereqBonus).getTechReveal() == eTech)
+				{
+					bWillReveal = true; // assuming that we aren't also missing an "or" prereq.
+				}
 			}
 		}
 		if (bDefinitelyMissing)
@@ -7107,8 +7546,17 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 		}
 		else if (bMaybeMissing)
 		{
-			iTotalUnitValue *= 2;
-			iTotalUnitValue /= 3;
+			if (bWillReveal)
+			{
+				// We're quite optimistic... mostly because otherwise we'd risk undervaluing axemen in the early game! (Kludge, sorry.)
+				iTotalUnitValue *= 4;
+				iTotalUnitValue /= 5;
+			}
+			else
+			{
+				//iTotalUnitValue = 2*iTotalUnitValue/3;
+				iTotalUnitValue = iTotalUnitValue/2; // better get the reveal tech first
+			}
 		}
 		// K-Mod end
 
@@ -7116,9 +7564,84 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 	}
 
 	// K-Mod. Rescale to match AI_techValue
-	iValue *= 4 * getNumCities();
-	iValue /= 100;
+	iValue *= 4 * (getNumCities()+2);
+	iValue /= 120; // (was 100.) This entire calculation is quite arbitrary. :(
 	//
+	return iValue;
+}
+
+// K-Mod. A (very rough) estimate of the value of projects enabled by eTech.
+// Note: not a lot of thought has gone into this. I've basically just copied the original code and tweaked it a little bit.
+// The scale is roughly 4 = 1 commerce per turn.
+int CvPlayerAI::AI_techProjectValue(TechTypes eTech, int iPathLength, bool& bEnablesProjectWonder) const
+{
+	int iValue = 0;
+	bEnablesProjectWonder = false;
+
+	for (int iJ = 0; iJ < GC.getNumProjectInfos(); iJ++)
+	{
+		const CvProjectInfo& kProjectInfo = GC.getProjectInfo((ProjectTypes)iJ); // K-Mod
+
+		if (kProjectInfo.getTechPrereq() == eTech)
+		{
+			iValue += 280;
+
+			if( (VictoryTypes)kProjectInfo.getVictoryPrereq() != NO_VICTORY )
+			{
+				// Victory condition values need to be scaled by number of cities to compete with other tech.
+				// Total value with be roughly iBaseValue * cities.
+				int iBaseValue = 0;
+
+				if( !(kProjectInfo.isSpaceship()) )
+				{
+					// Apollo
+					iBaseValue += (AI_isDoVictoryStrategy(AI_VICTORY_SPACE2) ? 50 : 2);
+				}
+				else
+				{
+					// Space ship parts (changed by K-Mod)
+					// Note: ideally this would take into account the production cost of each item,
+					//       and the total number / production of a completed space-ship, and a
+					//       bunch of other things. But I think this is good enough for now.
+					if (AI_isDoVictoryStrategy(AI_VICTORY_SPACE2))
+					{
+						iBaseValue += 40;
+						if (AI_isDoVictoryStrategy(AI_VICTORY_SPACE3))
+						{
+							iBaseValue += 40;
+							if (kProjectInfo.getMaxTeamInstances() > 0)
+							{
+								iBaseValue += (kProjectInfo.getMaxTeamInstances()-1) * 10;
+							}
+						}
+					}
+				}
+				if (iBaseValue > 0)
+				{
+					iValue += iBaseValue * (3 + std::max(getNumCities(), GC.getWorldInfo(GC.getMapINLINE().getWorldSize()).getTargetNumCities()));
+				}
+			}
+
+			//if (iPathLength <= 1)
+			{
+				if (getTotalPopulation() > 5)
+				{
+					if (isWorldProject((ProjectTypes)iJ))
+					{
+						if (!(GC.getGameINLINE().isProjectMaxedOut((ProjectTypes)iJ)))
+						{
+							bEnablesProjectWonder = true;
+
+							/*if (bCapitalAlone)
+							{
+								iValue += 28;
+							}*/
+						}
+					}
+				}
+			}
+		}
+	}
 	return iValue;
 }
 
@@ -7280,18 +7803,11 @@ void CvPlayerAI::AI_chooseResearch()
 
 		if (eBestTech == NO_TECH)
 		{
-			int iAIResearchDepth;
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                      03/08/10                                jdog5000      */
-/*                                                                                              */
-/* Victory Strategy AI                                                                          */
-/************************************************************************************************/
-			iAIResearchDepth = AI_isDoVictoryStrategy(AI_VICTORY_CULTURE3) ? 1 : 3;
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                       END                                                  */
-/************************************************************************************************/
-			
-			eBestTech = AI_bestTech((isHuman()) ? 1 : iAIResearchDepth);
+			int iResearchDepth = (isHuman() || isBarbarian() || AI_isDoVictoryStrategy(AI_VICTORY_CULTURE3) || AI_isDoStrategy(AI_STRATEGY_ESPIONAGE_ECONOMY))
+				? 1
+				: 3;
+
+			eBestTech = AI_bestTech(iResearchDepth);
 		}
 
 		if (eBestTech != NO_TECH)
@@ -7535,15 +8051,25 @@ void CvPlayerAI::AI_updateAttitudeCache(PlayerTypes ePlayer)
 		return;
 	}
 
-	int iAttitude = GC.getLeaderHeadInfo(getPersonalityType()).getBaseAttitude();
+	// K-Mod. The AI sometimes likes to consider the attitude of their rivals when making decisions.
+	// For this reason, I'm going to make a few tweaks to the (perceived) attitude of human players.
+	int iAttitude = isHuman() ? -1 : GC.getLeaderHeadInfo(getPersonalityType()).getBaseAttitude();
 
-	iAttitude += GC.getHandicapInfo(kPlayer.getHandicapType()).getAttitudeChange();
-
-	if (!(kPlayer.isHuman()))
+	if (isHuman())
 	{
-		iAttitude += (4 - abs(AI_getPeaceWeight() - kPlayer.AI_getPeaceWeight()));
-		iAttitude += std::min(GC.getLeaderHeadInfo(getPersonalityType()).getWarmongerRespect(), GC.getLeaderHeadInfo(kPlayer.getPersonalityType()).getWarmongerRespect());
+		iAttitude += GC.getHandicapInfo(getHandicapType()).getAttitudeChange();
 	}
+	else
+	{
+		iAttitude += GC.getHandicapInfo(kPlayer.getHandicapType()).getAttitudeChange();
+
+		if (!kPlayer.isHuman())
+		{
+			iAttitude += (4 - abs(AI_getPeaceWeight() - kPlayer.AI_getPeaceWeight()));
+			iAttitude += std::min(GC.getLeaderHeadInfo(getPersonalityType()).getWarmongerRespect(), GC.getLeaderHeadInfo(kPlayer.getPersonalityType()).getWarmongerRespect());
+		}
+	}
+	//
 
 	iAttitude -= std::max(0, (GET_TEAM(kPlayer.getTeam()).getNumMembers() - GET_TEAM(getTeam()).getNumMembers()));
 
@@ -11636,7 +12162,8 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		iValue += (iCombatValue / 2);
 		for (iI = 0; iI < GC.getNumUnitClassInfos(); iI++)
 		{
-			iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getUnitClassAttackModifier(iI) * AI_getUnitClassWeight((UnitClassTypes)iI)) / 7500);
+			iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getUnitClassAttackModifier(iI) * AI_getUnitClassWeight((UnitClassTypes)iI)) / 10000); // was 7500
+			iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getUnitClassDefenseModifier(iI) * AI_getUnitClassWeight((UnitClassTypes)iI)) / 10000); // K-Mod
 			iValue += ((iCombatValue * (GC.getUnitInfo(eUnit).getTargetUnitClass(iI) ? 50 : 0)) / 100);
 		}
 		for (iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
@@ -11644,7 +12171,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 //			int iCombatModifier = GC.getUnitInfo(eUnit).getUnitCombatModifier(iI);
 //			iCombatModifier = (iCombatModifier < 40) ? iCombatModifier : (40 + (iCombatModifier - 40) / 2);
 //			iValue += ((iCombatValue * iCombatModifier) / 100);
-			iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getUnitCombatModifier(iI) * AI_getUnitCombatWeight((UnitCombatTypes)iI)) / 10000);
+			iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getUnitCombatModifier(iI) * AI_getUnitCombatWeight((UnitCombatTypes)iI)) / 7500); // was 10000
 			iValue += ((iCombatValue * (GC.getUnitInfo(eUnit).getTargetUnitCombat(iI) ? 50 : 0)) / 100);
 		}
 		for (iI = 0; iI < GC.getNumUnitInfos(); iI++)
@@ -11666,7 +12193,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		// K-Mod
 		if (GC.getUnitInfo(eUnit).getMoves() > 1)
 		{
-			iValue += iCombatValue * GC.getUnitInfo(eUnit).getMoves() / 6;
+			iValue += iCombatValue * GC.getUnitInfo(eUnit).getMoves() / 8;
 		}
 		// K-Mod end
 
@@ -11703,6 +12230,8 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 				break;
 			}
 		}
+		// Other bonuses
+		iValue += iCombatValue * GC.getUnitInfo(eUnit).getHillsDefenseModifier() / 200;
 		// K-Mod end
 		break;
 
@@ -21253,7 +21782,7 @@ int CvPlayerAI::AI_estimateBreakEvenGoldPercent() const
 	iExpenses -= getCommerceRate(COMMERCE_GOLD) - iTotalRaw * AI_averageCommerceMultiplier(COMMERCE_GOLD) * getCommercePercent(COMMERCE_GOLD) / 10000;
 
 	// divide what's left to determine what our gold slider would need to be to break even.
-	int iGoldCommerceRate = 10000 * iExpenses / (iTotalRaw * AI_averageCommerceMultiplier(COMMERCE_GOLD));
+	int iGoldCommerceRate = 10000 * iExpenses / std::max(1, iTotalRaw * AI_averageCommerceMultiplier(COMMERCE_GOLD));
 
 	iGoldCommerceRate = range(iGoldCommerceRate, 0, 100); // (perhaps it would be useful to just return the unbounded value?)
 
@@ -23192,7 +23721,7 @@ int CvPlayerAI::AI_bestCityUnitAIValue(UnitAITypes eUnitAI, CvCity* pCity, UnitT
 		{
 			//if (!isHuman() || (GC.getUnitInfo(eLoopUnit).getDefaultUnitAIType() == eUnitAI)) // disabled by K-Mod
 			{
-				if (NULL == pCity ? canTrain(eLoopUnit) : pCity->canTrain(eLoopUnit))
+				if (NULL == pCity ? (canTrain(eLoopUnit) && haveResourcesToTrain(eLoopUnit)) : pCity->canTrain(eLoopUnit))
 				{
 					iValue = AI_unitValue(eLoopUnit, eUnitAI, (pCity == NULL) ? NULL : pCity->area());
 					if (iValue > iBestValue)
