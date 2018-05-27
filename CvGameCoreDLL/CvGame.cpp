@@ -8224,7 +8224,8 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
-					GET_PLAYER(kData.kVoteOption.eOtherPlayer).acquireCity(pCity, false, true, true);
+					//GET_PLAYER(kData.kVoteOption.eOtherPlayer).acquireCity(pCity, false, true, true);
+                    GET_PLAYER(kData.kVoteOption.eOtherPlayer).acquireCity(pCity, false, false, true); // DarkLunaPhantom - As this might be involuntary, it will not be considered as "trade".
 				}
 			}
 

@@ -2292,9 +2292,11 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 
 	bRecapture = ((eHighestCulturePlayer != NO_PLAYER) ? (GET_PLAYER(eHighestCulturePlayer).getTeam() == getTeam()) : false);
 
-	pOldCity->kill(false);
+	//pOldCity->kill(false);
+    pOldCity->kill(false, false); // DarkLunaPhantom - In this case, the plot culture of old city shouldn't be removed.
 
-	if (bTrade)
+    // DarkLunaPhantom - Plot culture is dealt with further down.
+	/*if (bTrade)
 	{
 		for (iDX = -1; iDX <= 1; iDX++)
 		{
@@ -2308,7 +2310,7 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 				}
 			}
 		}
-	}
+	}*/
 
 	pNewCity = initCity(pCityPlot->getX_INLINE(), pCityPlot->getY_INLINE(), !bConquest, false);
 
@@ -2328,6 +2330,15 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 		pNewCity->setEverOwned(((PlayerTypes)iI), abEverOwned[iI]);
 		pNewCity->setCultureTimes100(((PlayerTypes)iI), aiCulture[iI], false, false);
 	}
+    
+    // DarkLunaPhantom begin - An attempt to get more consistent and sane plot/city culture effects related to city trades.
+    // Now in case of trade, all old owner's city culture and (most) plot culture is transferred to the new owner.
+    if (bTrade)
+    {
+        pNewCity->setCultureTimes100((PlayerTypes)getID(), pNewCity->getCultureTimes100((PlayerTypes)getID()) + pNewCity->getCultureTimes100(eOldOwner), true, false);
+        pNewCity->setCultureTimes100(eOldOwner, 0, true, false);
+    }
+    // DarkLunaPhantom end
 
 	for (iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 	{

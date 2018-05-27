@@ -696,7 +696,7 @@ void CvCity::setupGraphical()
 	setLayoutDirty(true);
 }
 
-void CvCity::kill(bool bUpdatePlotGroups)
+void CvCity::kill(bool bUpdatePlotGroups, bool bRemoveCulture) // DarkLunaPhantom - Added bRemoveCulture to erase (most) plot culture of destroyed cities.
 {
 	CvPlot* pPlot;
 	CvPlot* pAdjacentPlot;
@@ -725,7 +725,19 @@ void CvCity::kill(bool bUpdatePlotGroups)
 		}
 	}
 
-	setCultureLevel(NO_CULTURELEVEL, false);
+    // DarkLunaPhantom - Erase (most) plot culture of destroyed cities.
+    //setCultureLevel(NO_CULTURELEVEL, false);
+    if (bRemoveCulture)
+    {
+        for (int iI; iI < MAX_PLAYERS; ++iI)
+        {
+            setCultureTimes100((PlayerTypes)iI, 0, true, false);
+        }
+    }
+    else
+    {
+        setCultureLevel(NO_CULTURELEVEL, false);
+    }
 
 	for (iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 	{
@@ -15422,22 +15434,24 @@ void CvCity::liberate(bool bConquest)
 			GET_TEAM(GET_PLAYER(ePlayer).getTeam()).setVassalPower(GET_TEAM(GET_PLAYER(ePlayer).getTeam()).getVassalPower() + iNewVassalLand - iOldVassalLand);
 		}
 
-		if (NULL != pPlot)
+        // DarkLunaPhantom begin - Liberation will now give all previous owner's culture to the new one, but it will be handled elsewhere. (cf. CvCity::acquireCity)
+        // Also, I don't see the need for free units in case of a vassal new owner.
+		/*if (NULL != pPlot)
 		{
 			CvCity* pCity = pPlot->getPlotCity();
 			if (NULL != pCity)
-			{
+			{*/
 /*
 ** K-Mod, 7/jan/11, karadoc
 ** This mechanic was exploitable. Players could increase their culture indefinitely in a single turn by gifting cities backwards and forwards.
 ** I've attempted to close the exploit.
 */
-				if (!bPreviouslyOwned) // K-Mod
-					pCity->setCultureTimes100(ePlayer, pCity->getCultureTimes100(ePlayer) + iOldOwnerCulture / 2, true, true);
+				//if (!bPreviouslyOwned) // K-Mod
+				//	pCity->setCultureTimes100(ePlayer, pCity->getCultureTimes100(ePlayer) + iOldOwnerCulture / 2, true, true);
 /*
 ** K-Mod end
 */
-			}
+			/*}
 
 			if (GET_TEAM(GET_PLAYER(ePlayer).getTeam()).isAVassal())
 			{
@@ -15446,7 +15460,8 @@ void CvCity::liberate(bool bConquest)
 					pCity->initConscriptedUnit();
 				}
 			}
-		}
+		}*/
+        // DarkLunaPhantom end
 	}
 }
 
