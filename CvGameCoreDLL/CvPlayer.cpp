@@ -11114,6 +11114,20 @@ void CvPlayer::setAlive(bool bNewValue)
 			{
 				gDLL->closeSlot(getID());
 			}
+            
+            // DarkLunaPhantom - Turn all dead civ's culture to barbarian.
+            for (int iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); ++iI)
+            {
+                CvPlot* pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
+                pLoopPlot->changeCulture(BARBARIAN_PLAYER, pLoopPlot->getCulture((PlayerTypes)getID()), true);
+                pLoopPlot->setCulture((PlayerTypes)getID(), 0, false, false);
+                CvCity* pCity = pLoopPlot->getPlotCity();
+                if (pCity != NULL)
+                {
+                    pCity->changeCultureTimes100(BARBARIAN_PLAYER, pCity->getCultureTimes100((PlayerTypes)getID()), false, true);
+                    pCity->setCultureTimes100((PlayerTypes)getID(), 0, false, false);
+                }
+            }
 
 			if (GC.getGameINLINE().getElapsedGameTurns() > 0)
 			{
