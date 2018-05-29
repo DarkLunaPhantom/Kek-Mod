@@ -727,6 +727,7 @@ void CvCity::kill(bool bUpdatePlotGroups, bool bRemoveCulture) // DarkLunaPhanto
 
     // DarkLunaPhantom - Erase (most) plot culture of destroyed cities.
     //setCultureLevel(NO_CULTURELEVEL, false);
+    int iCultureLevel = std::max(0, (int)getCultureLevel());
     if (bRemoveCulture)
     {
         for (int iI; iI < MAX_PLAYERS; ++iI)
@@ -784,9 +785,11 @@ void CvCity::kill(bool bUpdatePlotGroups, bool bRemoveCulture) // DarkLunaPhanto
 
 	// remember the visibility before we take away the city from the plot below
 	std::vector<bool> abEspionageVisibility;
+    bool* pabCityRevealed = new bool[MAX_TEAMS]; // DarkLunaPhantom
 	for (iI = 0; iI < MAX_TEAMS; iI++)
 	{
 		abEspionageVisibility.push_back(getEspionageVisibility((TeamTypes)iI));
+        pabCityRevealed[iI] = isRevealed((TeamTypes)iI, false); // DarkLunaPhantom
 	}
 
 /************************************************************************************************/
@@ -807,8 +810,9 @@ void CvCity::kill(bool bUpdatePlotGroups, bool bRemoveCulture) // DarkLunaPhanto
 /*                                                                                              */
 /* Bugfix                                                                                       */
 /************************************************************************************************/
+    // DarkLunaPhantom - No.
 	// Replace floodplains after city is removed
-	if (pPlot->getBonusType() == NO_BONUS)
+	/*if (pPlot->getBonusType() == NO_BONUS)
 	{
 		for (int iJ = 0; iJ < GC.getNumFeatureInfos(); iJ++)
 		{
@@ -824,7 +828,7 @@ void CvCity::kill(bool bUpdatePlotGroups, bool bRemoveCulture) // DarkLunaPhanto
 				}
 			}
 		}
-	}
+	}*/
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
@@ -881,6 +885,40 @@ void CvCity::kill(bool bUpdatePlotGroups, bool bRemoveCulture) // DarkLunaPhanto
 			pPlot->changeAdjacentSight((TeamTypes)iI, GC.getDefineINT("PLOT_VISIBILITY_RANGE"), false, NULL, false);
 		}
 	}
+    
+    // DarkLunaPhantom begin - "Reveal" lack of plot culture after the city is removed. (cf. CvCity::acquireCity).
+    if (bRemoveCulture)
+    {
+        for (int iI = 0; iI < MAX_TEAMS; ++iI)
+        {
+            if (pabCityRevealed[iI])
+            {
+                for (int iDX = -(iCultureLevel); iDX <= iCultureLevel; iDX++)
+                {
+                    for (int iDY = -(iCultureLevel); iDY <= iCultureLevel; iDY++)
+                    {
+                        if (plotDistance(0, 0, iDX, iDY) <= iCultureLevel)
+                        {
+                            pLoopPlot = plotXY(pPlot->getX_INLINE(), pPlot->getY_INLINE(), iDX, iDY);
+
+                            if (pLoopPlot != NULL)
+                            {
+                                if (pLoopPlot->getRevealedOwner((TeamTypes)iI, false) == eOwner && pLoopPlot->getOwnerINLINE() != eOwner)
+                                {
+                                    pLoopPlot->setRevealedOwner((TeamTypes)iI, NO_PLAYER);
+                                }
+                            }
+                        }
+                    }
+                }
+            
+                pPlot->setRevealedImprovementType((TeamTypes)iI, pPlot->getImprovementType());
+            }
+        }
+    }
+    
+    SAFE_DELETE_ARRAY(pabCityRevealed);
+    // DarkLunaPhantom end
 
 	GET_PLAYER(eOwner).updateMaintenance();
 

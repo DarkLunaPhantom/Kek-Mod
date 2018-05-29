@@ -2292,6 +2292,14 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 
 	bRecapture = ((eHighestCulturePlayer != NO_PLAYER) ? (GET_PLAYER(eHighestCulturePlayer).getTeam() == getTeam()) : false);
 
+    // DarkLunaPhantom - Preserve some more old city data for later use.
+    int iCultureLevel = std::max(0, (int)pOldCity->getCultureLevel());
+    bool* pabCityRevealed = new bool[MAX_TEAMS];
+    for (int iI = 0; iI < MAX_TEAMS; ++iI)
+    {
+        pabCityRevealed[iI] = pOldCity->isRevealed((TeamTypes)iI, false);
+    }
+    
 	//pOldCity->kill(false);
     pOldCity->kill(false, false); // DarkLunaPhantom - In this case, the plot culture of old city shouldn't be removed.
 
@@ -2351,6 +2359,12 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 			{
 				eBuilding = (BuildingTypes)iI;
 			}
+            // DarkLunaPhantom begin - National wonders should be destroyed when changing hands.
+            else if (::isNationalWonderClass(eBuildingClass) || ::isTeamWonderClass(eBuildingClass))
+            {
+                eBuilding = NO_BUILDING;
+            }
+            // DarkLunaPhantom end
 			else
 			{
 				eBuilding = (BuildingTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuildings(eBuildingClass);
@@ -2456,7 +2470,8 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 		GC.getMapINLINE().verifyUnitValidPlot();
 	}
 
-	pCityPlot->setRevealed(GET_PLAYER(eOldOwner).getTeam(), true, false, NO_TEAM, false);
+    // DarkLunaPhantom - Changed and moved further down.
+    //pCityPlot->setRevealed(GET_PLAYER(eOldOwner).getTeam(), true, false, NO_TEAM, false);
 
 	pNewCity->updateEspionageVisibility(false);
 
@@ -2487,6 +2502,47 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 	SAFE_DELETE_ARRAY(paiNumRealBuilding);
 	SAFE_DELETE_ARRAY(paiBuildingOriginalOwner);
 	SAFE_DELETE_ARRAY(paiBuildingOriginalTime);
+    
+    // DarkLunaPhantom begin - Reveal the city and surrounding plot ownership to those who saw them before.
+    // This is done before the city is maybe razed, so analogous procedure is also performed in CvCity::kill.
+    int iNewCultureLevel = std::max(0, (int)pNewCity->getCultureLevel());
+    
+    for (int iI = 0; iI < MAX_TEAMS; ++iI)
+    {
+        if (pabCityRevealed[iI])
+        {
+            for (iDX = -(iCultureLevel); iDX <= iCultureLevel; iDX++)
+            {
+                for (iDY = -(iCultureLevel); iDY <= iCultureLevel; iDY++)
+                {
+                    if (plotDistance(0, 0, iDX, iDY) <= iCultureLevel)
+                    {
+                        pLoopPlot = plotXY(pCityPlot->getX_INLINE(), pCityPlot->getY_INLINE(), iDX, iDY);
+
+                        if (pLoopPlot != NULL)
+                        {
+                            if (pLoopPlot->getRevealedOwner((TeamTypes)iI, false) == eOldOwner && pLoopPlot->getOwnerINLINE() != eOldOwner)
+                            {
+                                if (pLoopPlot->getOwnerINLINE() == getID() && plotDistance(0, 0, iDX, iDY) <= iNewCultureLevel)
+                                {
+                                    pLoopPlot->setRevealedOwner((TeamTypes)iI, getID());
+                                }
+                                else
+                                {
+                                    pLoopPlot->setRevealedOwner((TeamTypes)iI, NO_PLAYER);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            pNewCity->setRevealed((TeamTypes)iI, true);
+        }
+    }
+    
+    SAFE_DELETE_ARRAY(pabCityRevealed);
+    // DarkLunaPhantom end
 
 	if (bConquest)
 	{
@@ -21413,12 +21469,13 @@ bool CvPlayer::splitEmpire(int iAreaId)
 		AI_updateBonusValue();
 	}
 
-	std::vector< std::pair<int, int> > aCultures;
+    // DarkLunaPhantom - Culture is dealt with in CvCity::acquireCity so those parts are disabled here.
+	//std::vector< std::pair<int, int> > aCultures;
 	for (int iPlot = 0; iPlot < GC.getMapINLINE().numPlotsINLINE(); ++iPlot)
 	{
 		CvPlot* pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iPlot);
 
-		bool bTranferPlot = false;
+		/*bool bTranferPlot = false;
 
 		if (!bTranferPlot && pLoopPlot->area() == pArea)
 		{
@@ -21449,7 +21506,7 @@ bool CvPlayer::splitEmpire(int iAreaId)
 			}
 
 			aCultures.push_back(std::make_pair(iPlot, iCulture));
-		}
+		}*/
 
 		if (pLoopPlot->isRevealed(getTeam(), false))
 		{
@@ -21462,7 +21519,7 @@ bool CvPlayer::splitEmpire(int iAreaId)
 	{
 		if (pLoopCity->area() == pArea)
 		{
-			int iCulture = pLoopCity->getCultureTimes100(getID());
+			//int iCulture = pLoopCity->getCultureTimes100(getID());
 			CvPlot* pPlot = pLoopCity->plot();
 
 			GET_PLAYER(eNewPlayer).acquireCity(pLoopCity, false, true, false);
@@ -21472,18 +21529,19 @@ bool CvPlayer::splitEmpire(int iAreaId)
 				CvCity* pCity = pPlot->getPlotCity();
 				if (NULL != pCity)
 				{
-					pCity->setCultureTimes100(eNewPlayer, iCulture, false, false);
-				}
+					//pCity->setCultureTimes100(eNewPlayer, iCulture, false, false);
+				//}
 
-				for (int i = 0; i < GC.getDefineINT("COLONY_NUM_FREE_DEFENDERS"); ++i)
-				{
-					pCity->initConscriptedUnit();
-				}
+                    for (int i = 0; i < GC.getDefineINT("COLONY_NUM_FREE_DEFENDERS"); ++i) // DarkLunaPhantom - Moved inside if clause.
+                    {
+                        pCity->initConscriptedUnit();
+                    }
+                }
 			}
 		}
 	}
 
-	for (uint i = 0; i < aCultures.size(); ++i)
+	/*for (uint i = 0; i < aCultures.size(); ++i)
 	{
 		CvPlot* pPlot = GC.getMapINLINE().plotByIndexINLINE(aCultures[i].first);
 		pPlot->setCulture(eNewPlayer, aCultures[i].second, true, false);
@@ -21496,7 +21554,8 @@ bool CvPlayer::splitEmpire(int iAreaId)
 				pPlot->setRevealedOwner((TeamTypes)iTeam, eNewPlayer);
 			}
 		}
-	}
+	}*/
+    // DarkLunaPhantom end
 
 
 	GC.getGameINLINE().updatePlotGroups();
