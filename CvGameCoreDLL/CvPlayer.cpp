@@ -21996,10 +21996,18 @@ bool CvPlayer::canDoResolution(VoteSourceTypes eVoteSource, const VoteSelectionS
 					return false;
 				}
 
-				if (kOurTeam.getAtWarCount(true) > 0 || GET_TEAM((TeamTypes)iTeam2).getAtWarCount(true) > 0)
+                // DarkLunaPhantom begin - Sometimes defensive pact can be signed while at war.
+				//if (kOurTeam.getAtWarCount(true) > 0 || GET_TEAM((TeamTypes)iTeam2).getAtWarCount(true) > 0)
+                if ((kOurTeam.getAtWarCount(true) > 0 || GET_TEAM((TeamTypes)iTeam2).getAtWarCount(true) > 0) && GC.getBBAI_DEFENSIVE_PACT_BEHAVIOR() == 0)
 				{
 					return false;
 				}
+                
+                if (kOurTeam.isAtWar((TeamTypes)iTeam2))
+				{
+					return false;
+				}
+                // DarkLunaPhantom end
 
 				if (!kOurTeam.canSignDefensivePact((TeamTypes)iTeam2))
 				{
@@ -22091,6 +22099,12 @@ bool CvPlayer::canDefyResolution(VoteSourceTypes eVoteSource, const VoteSelectio
 	{
 		return false;
 	}
+    
+    // DarkLunaPhantom - Vassals can't defy resolutions.
+	if(GET_TEAM(getTeam()).isAVassal())
+	{
+		return false;
+	}
 
 	if (GC.getVoteInfo(kData.eVote).isOpenBorders())
 	{
@@ -22132,7 +22146,8 @@ bool CvPlayer::canDefyResolution(VoteSourceTypes eVoteSource, const VoteSelectio
 	}
 	else if (GC.getVoteInfo(kData.eVote).isForceWar())
 	{
-		if (!::atWar(getTeam(), GET_PLAYER(kData.ePlayer).getTeam()))
+		//if (!::atWar(getTeam(), GET_PLAYER(kData.ePlayer).getTeam()))
+        if (!::atWar(getTeam(), GET_PLAYER(kData.ePlayer).getTeam()) && !(GET_PLAYER(kData.ePlayer).getTeam() == getTeam())) // DarkLunaPhantom - Cannot defy war declaration against itself.
 		{
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      12/31/08                                jdog5000      */
@@ -22140,7 +22155,7 @@ bool CvPlayer::canDefyResolution(VoteSourceTypes eVoteSource, const VoteSelectio
 /*                                                                                              */
 /************************************************************************************************/
 			// Vassals can't defy declarations of war
-			if( !GET_TEAM(getTeam()).isAVassal() )
+			//if( !GET_TEAM(getTeam()).isAVassal() ) // DarkLunaPhantom - Vassals now cannot defy any resolution, so unnecessary.
 			{
 				return true;
 			}
@@ -22163,7 +22178,8 @@ bool CvPlayer::canDefyResolution(VoteSourceTypes eVoteSource, const VoteSelectio
 	}
 	else if (GC.getVoteInfo(kData.eVote).isAssignCity())
 	{
-		if (kData.ePlayer == getID())
+		//if (kData.ePlayer == getID())
+        if (kData.ePlayer == getID() || kData.eOtherPlayer == getID()) // DarkLunaPhantom - You can defy resolution giving you a city.
 		{
 			return true;
 		}
@@ -22179,7 +22195,7 @@ bool CvPlayer::canDefyResolution(VoteSourceTypes eVoteSource, const VoteSelectio
 
 void CvPlayer::setDefiedResolution(VoteSourceTypes eVoteSource, const VoteSelectionSubData& kData)
 {
-	FAssert(canDefyResolution(eVoteSource, kData));
+	FAssert(canDefyResolution(eVoteSource, kData)); // DarkLunaPhantom - This can now fail when a team member defies resolution.
 
 	// cities get unhappiness
 	int iLoop;
@@ -22497,7 +22513,8 @@ int CvPlayer::getReligionPopulation(ReligionTypes eReligion) const
 	{
 		if (pCity->isHasReligion(eReligion))
 		{
-			iPopulation += pCity->getPopulation();
+			//iPopulation += pCity->getPopulation();
+            iPopulation += pCity->getPopulation() / std::max(1, pCity->getReligionCount()); // DarkLunaPhantom - This makes more sense, but it might be worse for gameplay reasons (especially without some kind of Inquisitor unit).
 		}
 	}
 

@@ -1247,13 +1247,20 @@ int CvTeamAI::AI_chooseElection(const VoteSelectionData& kVoteSelectionData) con
 				{
 					if (GET_PLAYER((PlayerTypes)iJ).getTeam() == getID())
 					{
-						PlayerVoteTypes eVote = GET_PLAYER((PlayerTypes)iJ).AI_diploVote(kVoteSelectionData.aVoteOptions[iI], eVoteSource, true);
+                        // DarkLunaPhantom begin - AI can choose to repeal an already passed resolution if all team members agree.
+						//PlayerVoteTypes eVote = GET_PLAYER((PlayerTypes)iJ).AI_diploVote(kVoteSelectionData.aVoteOptions[iI], eVoteSource, true);
+                        PlayerVoteTypes ePlayerVote = GET_PLAYER((PlayerTypes)iJ).AI_diploVote(kVoteSelectionData.aVoteOptions[iI], eVoteSource, true); // DarkLunaPhantom - Same variable name was confusing.
 
-						if (eVote != PLAYER_VOTE_YES || eVote == GC.getGameINLINE().getVoteOutcome((VoteTypes)iI))
-						{
+                        bool bVoteYes = (ePlayerVote == PLAYER_VOTE_YES);
+                        bool bAlreadyPassed = (GC.getGameINLINE().getVoteOutcome(eVote) == PLAYER_VOTE_YES);
+                        
+						//if (eVote != PLAYER_VOTE_YES || eVote == GC.getGameINLINE().getVoteOutcome((VoteTypes)iI)) // DarkLunaPhantom - This was also wrong, eVote should go where (VoteTypes)iI is.
+                        if ((bVoteYes && bAlreadyPassed) || (!bVoteYes && !bAlreadyPassed))
+                        {
 							bValid = false;
 							break;
-						}
+                        }
+                        // DarkLunaPhantom end
 					}
 				}
 			}

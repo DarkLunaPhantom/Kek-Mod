@@ -8589,14 +8589,23 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
 		{
 			if (eSecretaryGeneral != NO_TEAM)
 			{
-				if (eSecretaryGeneral == getTeam())
+                // DarkLunaPhantom - Secretary General can intend to repeal a resolution.
+				/*if (eSecretaryGeneral == getTeam())
 				{
-					return PLAYER_VOTE_YES;
+					return PLAYER_VOTE_YES; 
 				}
-				else
+				else*/
+                if (eSecretaryGeneral != getTeam())
 				{
-					bFriendlyToSecretary = (kOurTeam.AI_getAttitude(eSecretaryGeneral) == ATTITUDE_FRIENDLY);
+                    // DarkLunaPhantom - Attitude only important if the Secretary General plans to vote yes. Incorporating the other case properly would be a lot of additional work...
+					//bFriendlyToSecretary = (kOurTeam.AI_getAttitude(eSecretaryGeneral) == ATTITUDE_FRIENDLY);
+                    bFriendlyToSecretary = (kOurTeam.AI_getAttitude(eSecretaryGeneral) == ATTITUDE_FRIENDLY && GC.getGameINLINE().getVoteOutcome(eVote) != PLAYER_VOTE_YES);
 				}
+                // DarkLunaPhantom - Go with the human player if our team is proposing the resolution.
+                else if (GET_TEAM(getTeam()).isHuman())
+                {
+                    return (GC.getGameINLINE().getVoteOutcome(eVote) != PLAYER_VOTE_YES ? PLAYER_VOTE_YES : PLAYER_VOTE_NO);
+                }
 			}
 		}
 /************************************************************************************************/

@@ -4774,7 +4774,8 @@ bool CvGame::isValidVoteSelection(VoteSourceTypes eVoteSource, const VoteSelecti
 			return false;
 		}
 
-		if (!kPlayer.isFullMember(eVoteSource))
+		//if (!kPlayer.isFullMember(eVoteSource))
+        if (!GET_TEAM(kPlayer.getTeam()).isFullMember(eVoteSource)) // DarkLunaPhantom - These are not necessarily the same.
 		{
 			return false;
 		}
@@ -4804,7 +4805,8 @@ bool CvGame::isValidVoteSelection(VoteSourceTypes eVoteSource, const VoteSelecti
 	{
 		CvPlayer& kPlayer = GET_PLAYER(kData.ePlayer);
 
-		if (kPlayer.isFullMember(eVoteSource))
+		//if (kPlayer.isFullMember(eVoteSource))
+        if (GET_TEAM(kPlayer.getTeam()).isFullMember(eVoteSource)) // DarkLunaPhantom - These are not necessarily the same.
 		{
 			return false;
 		}
@@ -4815,7 +4817,8 @@ bool CvGame::isValidVoteSelection(VoteSourceTypes eVoteSource, const VoteSelecti
 			CvPlayer& kPlayer2 = GET_PLAYER((PlayerTypes)iPlayer2);
 			if (kPlayer2.getTeam() != kPlayer.getTeam())
 			{
-				if (kPlayer2.isFullMember(eVoteSource))
+				//if (kPlayer2.isFullMember(eVoteSource))
+                if (GET_TEAM(kPlayer2.getTeam()).isFullMember(eVoteSource)) // DarkLunaPhantom - These are not necessarily the same.
 				{
 					if (kPlayer2.canStopTradingWithTeam(kPlayer.getTeam()))
 					{
@@ -4841,7 +4844,8 @@ bool CvGame::isValidVoteSelection(VoteSourceTypes eVoteSource, const VoteSelecti
 			return false;
 		}
 
-		if (kPlayer.isFullMember(eVoteSource))
+		//if (kPlayer.isFullMember(eVoteSource))
+        if (GET_TEAM(kPlayer.getTeam()).isFullMember(eVoteSource)) // DarkLunaPhantom - These are not necessarily the same.
 		{
 			return false;
 		}
@@ -4868,8 +4872,9 @@ bool CvGame::isValidVoteSelection(VoteSourceTypes eVoteSource, const VoteSelecti
 			return false;
 		}
 
-		// Can be passed against a non-member only if he is already at war with a member 
-		if (!kPlayer.isVotingMember(eVoteSource))
+		// DarkLunaPhantom - Can be passed against a non-member or a (non-full) voting member only if he is already at war with a full member
+		//if (!kPlayer.isVotingMember(eVoteSource))
+        if (!GET_TEAM(kPlayer.getTeam()).isFullMember(eVoteSource))
 		{
 			bool bValid = false;
 			for (int iTeam2 = 0; iTeam2 < MAX_CIV_TEAMS; ++iTeam2)
@@ -4895,7 +4900,8 @@ bool CvGame::isValidVoteSelection(VoteSourceTypes eVoteSource, const VoteSelecti
 	else if (GC.getVoteInfo(kData.eVote).isAssignCity())
 	{
 		CvPlayer& kPlayer = GET_PLAYER(kData.ePlayer);
-		if (kPlayer.isFullMember(eVoteSource) || !kPlayer.isVotingMember(eVoteSource))
+		//if (kPlayer.isFullMember(eVoteSource) || !kPlayer.isVotingMember(eVoteSource))
+        if (GET_TEAM(kPlayer.getTeam()).isFullMember(eVoteSource) || !GET_TEAM(kPlayer.getTeam()).isVotingMember(eVoteSource)) // DarkLunaPhantom - These are not necessarily the same.
 		{
 			return false;
 		}
@@ -4923,7 +4929,8 @@ bool CvGame::isValidVoteSelection(VoteSourceTypes eVoteSource, const VoteSelecti
 			return false;
 		}
 
-		if (!kOtherPlayer.isFullMember(eVoteSource))
+		//if (!kOtherPlayer.isFullMember(eVoteSource))
+        if (!GET_TEAM(kOtherPlayer.getTeam()).isFullMember(eVoteSource)) // DarkLunaPhantom - These are not necessarily the same.
 		{
 			return false;			
 		}
@@ -8187,6 +8194,44 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 
+            // DarkLunaPhantom begin - Cancel defensive pacts with the attackers first.
+            int iLoop;
+            for (CvDeal* pLoopDeal = GC.getGameINLINE().firstDeal(&iLoop); pLoopDeal != NULL; pLoopDeal = GC.getGameINLINE().nextDeal(&iLoop))
+            {
+                bool bCancelDeal = false;
+
+                if ((GET_PLAYER(pLoopDeal->getFirstPlayer()).getTeam() == kPlayer.getTeam() && GET_TEAM(GET_PLAYER(pLoopDeal->getSecondPlayer()).getTeam()).isVotingMember(kData.eVoteSource)) ||
+                    (GET_PLAYER(pLoopDeal->getSecondPlayer()).getTeam() == kPlayer.getTeam() && GET_TEAM(GET_PLAYER(pLoopDeal->getFirstPlayer()).getTeam()).isVotingMember(kData.eVoteSource)))
+                {
+                    for (CLLNode<TradeData>* pNode = pLoopDeal->headFirstTradesNode(); (pNode != NULL); pNode = pLoopDeal->nextFirstTradesNode(pNode))
+                    {
+                        if (pNode->m_data.m_eItemType == TRADE_DEFENSIVE_PACT)
+                        {
+                            bCancelDeal = true;
+                            break;
+                        }
+                    }
+
+                    if (!bCancelDeal)
+                    {
+                        for (CLLNode<TradeData>* pNode = pLoopDeal->headSecondTradesNode(); (pNode != NULL); pNode = pLoopDeal->nextSecondTradesNode(pNode))
+                        {
+                            if (pNode->m_data.m_eItemType == TRADE_DEFENSIVE_PACT)
+                            {
+                                bCancelDeal = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (bCancelDeal)
+                {
+                    pLoopDeal->kill();
+                }
+            }
+            // DarkLunaPhantom end
+            
 			for (int iPlayer = 0; iPlayer < MAX_CIV_PLAYERS; ++iPlayer)
 			{
 				CvPlayer& kLoopPlayer = GET_PLAYER((PlayerTypes)iPlayer);
@@ -9975,12 +10020,28 @@ void CvGame::doVoteResults()
 				{
 					for (int iJ = 0; iJ < MAX_CIV_PLAYERS; iJ++)
 					{
-						if (getPlayerVote((PlayerTypes)iJ, pVoteTriggered->getID()) == PLAYER_VOTE_NEVER)
+                        // DarkLunaPhantom begin - Give defiance penalty to the whole team.
+						/*if (getPlayerVote((PlayerTypes)iJ, pVoteTriggered->getID()) == PLAYER_VOTE_NEVER)
 						{
 							bPassed = false;
 
 							GET_PLAYER((PlayerTypes)iJ).setDefiedResolution(eVoteSource, pVoteTriggered->kVoteOption);
-						}
+						}*/
+                        for (int iK = 0; iK < MAX_CIV_PLAYERS; ++iK)
+                        {
+                            if (getPlayerVote((PlayerTypes)iK, pVoteTriggered->getID()) == PLAYER_VOTE_NEVER && GET_PLAYER((PlayerTypes)iJ).getTeam() == GET_PLAYER((PlayerTypes)iK).getTeam())
+                            {
+                                bPassed = false;
+                                
+                                if (GET_PLAYER((PlayerTypes)iJ).isVotingMember(eVoteSource))
+                                {
+                                    GET_PLAYER((PlayerTypes)iJ).setDefiedResolution(eVoteSource, pVoteTriggered->kVoteOption);
+                                }
+                                
+                                break;
+                            }
+                        }
+                        // DarkLunaPhantom end
 					}
 				}
 
