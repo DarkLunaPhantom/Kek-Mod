@@ -405,7 +405,7 @@ void CvGame::setInitialItems()
 	PROFILE_FUNC();
 
 	// K-Mod: Adjust the game handicap level to be the average of all the human player's handicap.
-	// (Note: in the original bts rules, it would always set to Nobel if the humans had different handicaps)
+	// (Note: in the original bts rules, it would always set to Noble if the humans had different handicaps)
 	if (isGameMultiPlayer())
 	{
 		int iHumanPlayers = 0;

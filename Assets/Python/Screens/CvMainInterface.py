@@ -3140,7 +3140,7 @@ class CvMainInterface:
 						iEraColor = ClockOpt.getEraColor(gc.getEraInfo(playerEra).getType())
 						if (iEraColor >= 0):
 							szText = localText.changeTextColor(szText, iEraColor)
-					screen.setLabel( "EraText", "Background", szText, CvUtil.FONT_RIGHT_JUSTIFY, 250, 6, -0.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+					screen.setLabel( "EraText", "Background", szText, CvUtil.FONT_RIGHT_JUSTIFY, 250, 20, -0.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 					screen.show( "EraText" )
 # BUG - NJAGC - end
 				
