@@ -3684,7 +3684,7 @@ void CvPlayer::verifyStateReligion()
 {
 	if (!isAnarchy())
 	{
-		if (!canDoReligion(getStateReligion()))
+		if (getStateReligion() != NO_RELIGION && !canDoReligion(getStateReligion()))
 		{
 			setLastStateReligion(NO_RELIGION);
 		}
