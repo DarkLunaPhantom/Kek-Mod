@@ -21185,7 +21185,8 @@ PlayerTypes CvPlayer::getSplitEmpirePlayer(int iAreaId) const
 		}
 	}
 
-	if (eNewPlayer == NO_PLAYER)
+    // DarkLunaPhantom - This is bugged, eg. when this player used to share a team, and also unnecessary as maximum number of players is quite big (and can be easily increased).
+	/*if (eNewPlayer == NO_PLAYER)
 	{
 		// Try to recycle a dead player
 		for (int i = 0; i < MAX_CIV_PLAYERS; ++i)
@@ -21196,7 +21197,7 @@ PlayerTypes CvPlayer::getSplitEmpirePlayer(int iAreaId) const
 				break;
 			}
 		}
-	}
+	}*/
 
 	return eNewPlayer;
 }
@@ -21452,7 +21453,8 @@ bool CvPlayer::splitEmpire(int iAreaId)
 			}
 		}
 
-		for (int iTeam = 0; iTeam < MAX_TEAMS; ++iTeam)
+        // DarkLunaPhantom - This didn't seem fair or necessary.
+		/*for (int iTeam = 0; iTeam < MAX_TEAMS; ++iTeam)
 		{
 			CvTeam& kLoopTeam = GET_TEAM((TeamTypes)iTeam);
 
@@ -21461,7 +21463,7 @@ bool CvPlayer::splitEmpire(int iAreaId)
 				kNewTeam.setEspionagePointsAgainstTeam((TeamTypes)iTeam, GET_TEAM(getTeam()).getEspionagePointsAgainstTeam((TeamTypes)iTeam));
 				kLoopTeam.setEspionagePointsAgainstTeam(GET_PLAYER(eNewPlayer).getTeam(), kLoopTeam.getEspionagePointsAgainstTeam(getTeam()));
 			}
-		}
+		}*/
 		kNewTeam.setEspionagePointsEver(GET_TEAM(getTeam()).getEspionagePointsEver());
 
 		GET_TEAM(getTeam()).assignVassal(GET_PLAYER(eNewPlayer).getTeam(), false);
