@@ -614,11 +614,6 @@ void CvGame::reset(HandicapTypes eHandicap, bool bConstructorCall)
 	m_eGameState = GAMESTATE_ON;
 
 	m_szScriptData = "";
-	
-	// Leoreth: graphics paging
-	m_iLastLookatX = -1;
-	m_iLastLookatY = -1;
-	m_bWasGraphicsPagingEnabled = false;
 
 	for (iI = 0; iI < MAX_PLAYERS; iI++)
 	{
@@ -2301,64 +2296,6 @@ void CvGame::update()
 {
 	startProfilingDLL(false);
 	PROFILE_BEGIN("CvGame::update");
-
-	// Leoreth: graphics paging
-	CvPlot* lookatPlot = gDLL->getInterfaceIFace()->getLookAtPlot();
-	if ( lookatPlot != NULL )
-	{
-		//	Sample the BUG setting in the main thread on entry to game update here (it requires a Python call
-		//	so we don't want it happening in background, or more frequently than once per turn slice)
-		bool bPagingEnabled = getBugOptionBOOL("MainInterface__EnableGraphicalPaging", false);
-		GC.setGraphicalDetailPagingEnabled(bPagingEnabled);
-
-		if ( m_bWasGraphicsPagingEnabled != bPagingEnabled)
-		{
-			for(int iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
-			{
-				CvPlot*	pPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
-				if ( pPlot != NULL )
-				{
-					if ( m_bWasGraphicsPagingEnabled )
-					{
-						pPlot->setShouldHaveFullGraphics(true);
-					}
-					else
-					{
-						pPlot->setShouldHaveFullGraphics(false);
-					}
-				}
-			}
-		}
-
-		m_bWasGraphicsPagingEnabled = bPagingEnabled;
-
-		if ( GC.getGraphicalDetailPagingEnabled() )
-		{
-			if ( (m_iLastLookatX != lookatPlot->getX_INLINE() || m_iLastLookatY != lookatPlot->getY_INLINE()) )
-			{
-				int pageInRange = GC.getGraphicalDetailPageInRange();
-				CvPlot::notePageRenderStart((pageInRange*2+1)*(pageInRange*2+1));
-
-				for(int iX = -pageInRange; iX <= pageInRange; iX++)
-				{
-					for(int iY = -pageInRange; iY <= pageInRange; iY++)
-					{
-						CvPlot* pPlot = plotXY(lookatPlot->getX_INLINE(),lookatPlot->getY_INLINE(),iX,iY);
-
-						if ( pPlot != NULL )
-						{
-							pPlot->setShouldHaveFullGraphics(true);
-						}
-					}
-				}
-
-				m_iLastLookatX = lookatPlot->getX_INLINE();
-				m_iLastLookatY = lookatPlot->getY_INLINE();
-			}
-
-			CvPlot::EvictGraphicsIfNecessary();
-		}
-	}
 
 again:
 	if (!gDLL->GetWorldBuilderMode() || isInAdvancedStart())

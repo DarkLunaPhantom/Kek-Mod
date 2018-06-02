@@ -674,11 +674,6 @@ protected:
 	CvReplayInfo* m_pReplayInfo;
 
 	int m_iNumSessions;
-	
-	// Leoreth: graphics paging
-	int m_iLastLookatX;
-	int m_iLastLookatY;
-	bool m_bWasGraphicsPagingEnabled;
 
 	std::vector<PlotExtraYield> m_aPlotExtraYields;
 	std::vector<PlotExtraCost> m_aPlotExtraCosts;

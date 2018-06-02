@@ -97,5 +97,3 @@ class BugGeneralOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.addCheckbox(screen, panel, "MainInterface__SimpleSelection")
 		# K-Mod Extended
 		self.addCheckbox(screen, panel, "MainInterface__MinimizeAITurnSlices")
-		# Leoreth: graphics paging
-		self.addCheckbox(screen, panel, "MainInterface__EnableGraphicalPaging")
