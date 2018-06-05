@@ -158,7 +158,7 @@
 			<bNoGoodies>0</bNoGoodies>
 			<bNoAnimals>1</bNoAnimals>
 			<bNoBarbUnits>0</bNoBarbUnits>
-			<bNoBarbCities>1</bNoBarbCities>
+			<bNoBarbCities>0</bNoBarbCities>
 			<iAdvancedStartPoints>200</iAdvancedStartPoints>
 			<iStartingUnitMultiplier>1</iStartingUnitMultiplier>
 			<iStartingDefenseUnits>1</iStartingDefenseUnits>
@@ -226,7 +226,7 @@
 			<bNoGoodies>0</bNoGoodies>
 			<bNoAnimals>1</bNoAnimals>
 			<bNoBarbUnits>0</bNoBarbUnits>
-			<bNoBarbCities>1</bNoBarbCities>
+			<bNoBarbCities>0</bNoBarbCities>
 			<iAdvancedStartPoints>400</iAdvancedStartPoints>
 			<iStartingUnitMultiplier>1</iStartingUnitMultiplier>
 			<iStartingDefenseUnits>1</iStartingDefenseUnits>
