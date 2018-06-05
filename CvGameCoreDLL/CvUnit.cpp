@@ -3332,9 +3332,12 @@ bool CvUnit::canGift(bool bTestVisible, bool bTestTransport)
 	// an unbreakable (permanent or temporary) peace treaty.
 	for (int iTeam = 0; iTeam < MAX_CIV_TEAMS; ++iTeam)
 		{
-			if (canCombat() && GET_TEAM(pPlot->getTeam()).isAtWar((TeamTypes)iTeam) && !GET_TEAM(getTeam()).isAtWar((TeamTypes)iTeam) && !GET_TEAM(getTeam()).canDeclareWar((TeamTypes)iTeam))
+			if (GET_TEAM((TeamTypes)iTeam).isAlive() && GET_TEAM(getTeam()).isHasMet((TeamTypes)iTeam))
 			{
-				return false;
+				if (canCombat() && GET_TEAM(pPlot->getTeam()).isAtWar((TeamTypes)iTeam) && !GET_TEAM(getTeam()).isAtWar((TeamTypes)iTeam) && !GET_TEAM(getTeam()).canDeclareWar((TeamTypes)iTeam))
+				{
+					return false;
+				}
 			}
 		}
 
@@ -3452,6 +3455,7 @@ void CvUnit::gift(bool bTestTransport)
 	FAssertMsg(pGiftUnit != NULL, "GiftUnit is not assigned a valid value");
 
 	pGiftUnit->convert(this);
+    pGiftUnit->changeImmobileTimer(GC.getDefineINT("GIFTED_UNIT_IMMOBILE_TURNS")); // DarkLunaPhantom - Gifted units now cannot move for first 2 turns.
 
 	PlayerTypes eOwner = getOwnerINLINE();
 
@@ -7516,7 +7520,7 @@ int CvUnit::upgradePrice(UnitTypes eUnit) const
 
 	iPrice += (std::max(0, (GET_PLAYER(getOwnerINLINE()).getProductionNeeded(eUnit) - GET_PLAYER(getOwnerINLINE()).getProductionNeeded(getUnitType()))) * GC.getDefineINT("UNIT_UPGRADE_COST_PER_PRODUCTION"));
 
-	if (!isHuman() && !isBarbarian())
+	if (!isHuman()/* && !isBarbarian()*/) // DarkLunaPhantom
 	{
 		iPrice *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIUnitUpgradePercent();
 		iPrice /= 100;
@@ -8201,7 +8205,7 @@ int CvUnit::workRate(bool bMax) const
 	iRate *= std::max(0, (GET_PLAYER(getOwnerINLINE()).getWorkerSpeedModifier() + 100));
 	iRate /= 100;
 
-	if (!isHuman() && !isBarbarian())
+	if (!isHuman()/* && !isBarbarian()*/) // DarkLunaPhantom
 	{
 		iRate *= std::max(0, (GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIWorkRateModifier() + 100));
 		iRate /= 100;

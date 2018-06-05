@@ -167,6 +167,137 @@ void CvGame::init(HandicapTypes eHandicap)
 			}
 		}
 	}
+    
+    // DarkLunaPhantom begin - This is a reimplementation of Unrestricted Leaders game option originally located in exe.
+    // There is a bug in exe, that option is hardcoded in the 8th place in list of options. Doing this here preempts the triggering of that bug.
+    // Idea from FfH2 by Kael, but implementation and details different.
+    std::set<CivilizationTypes> unused_civs;
+    std::set<LeaderHeadTypes> unused_leaders;
+    // Find all possible civs and leaders.
+    for (int iCiv = 0; iCiv < GC.getNumCivilizationInfos(); ++iCiv)
+    {
+        if (GC.getCivilizationInfo((CivilizationTypes)iCiv).isPlayable())
+        {
+            unused_civs.insert((CivilizationTypes)iCiv);
+            for (int iLeader = 0; iLeader < GC.getNumLeaderHeadInfos(); ++iLeader)
+            {
+                if (GC.getCivilizationInfo((CivilizationTypes)iCiv).isLeaders(iLeader))
+                {
+                    unused_leaders.insert((LeaderHeadTypes)iLeader);
+                }
+            }
+        }
+    }
+    // Remove used civs and leaders.
+    for (int iPlayer = 0; iPlayer < MAX_CIV_PLAYERS; ++iPlayer)
+    {
+        SlotStatus eSlot = GC.getInitCore().getSlotStatus((PlayerTypes)iPlayer);
+        if (eSlot == SS_TAKEN || eSlot == SS_COMPUTER)
+        {
+            unused_civs.erase(GC.getInitCore().getCiv((PlayerTypes)iPlayer));
+            unused_leaders.erase(GC.getInitCore().getLeader((PlayerTypes)iPlayer));
+        }
+    }
+    
+    for (int iPlayer = 0; iPlayer < MAX_CIV_PLAYERS; ++iPlayer)
+    {
+        SlotStatus eSlot = GC.getInitCore().getSlotStatus((PlayerTypes)iPlayer);
+        if (eSlot == SS_TAKEN || eSlot == SS_COMPUTER)
+        {
+            CivilizationTypes eCiv = GC.getInitCore().getCiv((PlayerTypes)iPlayer);
+            LeaderHeadTypes eLeader = GC.getInitCore().getLeader((PlayerTypes)iPlayer);
+            if (eCiv == NO_CIVILIZATION || eLeader == NO_LEADER)
+            {
+                if (eLeader == NO_LEADER)
+                {
+                    if (eCiv == NO_CIVILIZATION)
+                    {
+                        std::vector<CivilizationTypes> civs;
+                        // Pick all valid unused civs.
+                        for (std::set<CivilizationTypes>::iterator it = unused_civs.begin(); it != unused_civs.end(); ++it)
+                        {
+                            if (eSlot != SS_COMPUTER || GC.getCivilizationInfo(*it).isAIPlayable())
+                            {
+                                civs.push_back(*it);
+                            }
+                        }
+                        // Add all valid civs if necessary.
+                        if (civs.empty())
+                        {
+                            for (int iCiv = 0; iCiv < GC.getNumCivilizationInfos(); ++iCiv)
+                            {
+                                if (GC.getCivilizationInfo((CivilizationTypes)iCiv).isPlayable() && (eSlot != SS_COMPUTER || GC.getCivilizationInfo((CivilizationTypes)iCiv).isAIPlayable()))
+                                {
+                                    civs.push_back((CivilizationTypes)iCiv);
+                                }
+                            }
+                        }
+                        eCiv = civs[GC.getGameINLINE().getSorenRandNum(civs.size(), "Civilization")];
+                        unused_civs.erase(eCiv);
+                    }
+                    
+                    std::vector<LeaderHeadTypes> leaders;
+                    // Pick all valid unused leaders.
+                    for (std::set<LeaderHeadTypes>::iterator it = unused_leaders.begin(); it != unused_leaders.end(); ++it)
+                    {
+                        if (isOption(GAMEOPTION_LEAD_ANY_CIV) || GC.getCivilizationInfo(eCiv).isLeaders((int)(*it)))
+                        {
+                            leaders.push_back(*it);
+                        }
+                    }
+                    // Add all valid leaders if necessary.
+                    if (leaders.empty())
+                    {
+                        for (int iCiv = 0; iCiv < GC.getNumCivilizationInfos(); ++iCiv)
+                        {
+                            if (GC.getCivilizationInfo((CivilizationTypes)iCiv).isPlayable())
+                            {
+                                for (int iLeader = 0; iLeader < GC.getNumLeaderHeadInfos(); ++iLeader)
+                                {
+                                    if (GC.getCivilizationInfo((CivilizationTypes)iCiv).isLeaders(iLeader))
+                                    {
+                                        leaders.push_back((LeaderHeadTypes)iLeader);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    eLeader = leaders[GC.getGameINLINE().getSorenRandNum(leaders.size(), "Leader")];
+                    unused_leaders.erase(eLeader);
+                }
+                
+                else
+                {
+                    std::vector<CivilizationTypes> civs;
+                    // Pick all valid unused civs.
+                    for (std::set<CivilizationTypes>::iterator it = unused_civs.begin(); it != unused_civs.end(); ++it)
+                    {
+                        if ((isOption(GAMEOPTION_LEAD_ANY_CIV) || GC.getCivilizationInfo(*it).isLeaders((int)eLeader)) && (eSlot != SS_COMPUTER || GC.getCivilizationInfo(*it).isAIPlayable()))
+                        {
+                            civs.push_back(*it);
+                        }
+                    }
+                    // Add all valid civs if necessary.
+                    if (civs.empty())
+                    {
+                        for (int iCiv = 0; iCiv < GC.getNumCivilizationInfos(); ++iCiv)
+                        {
+                            if (GC.getCivilizationInfo((CivilizationTypes)iCiv).isPlayable() && (eSlot != SS_COMPUTER || GC.getCivilizationInfo((CivilizationTypes)iCiv).isAIPlayable()))
+                            {
+                                civs.push_back((CivilizationTypes)iCiv);
+                            }
+                        }
+                    }
+                        eCiv = civs[GC.getGameINLINE().getSorenRandNum(civs.size(), "Civilization")];
+                        unused_civs.erase(eCiv);
+                }
+                
+            GC.getInitCore().setCiv((PlayerTypes)iPlayer, eCiv);
+            GC.getInitCore().setLeader((PlayerTypes)iPlayer, eLeader);
+            }
+        }
+    }
+    // DarkLunaPhantom end
 
 	if (isOption(GAMEOPTION_LOCK_MODS))
 	{
@@ -274,7 +405,7 @@ void CvGame::setInitialItems()
 	PROFILE_FUNC();
 
 	// K-Mod: Adjust the game handicap level to be the average of all the human player's handicap.
-	// (Note: in the original bts rules, it would always set to Nobel if the humans had different handicaps)
+	// (Note: in the original bts rules, it would always set to Noble if the humans had different handicaps)
 	if (isGameMultiPlayer())
 	{
 		int iHumanPlayers = 0;
@@ -288,7 +419,8 @@ void CvGame::setInitialItems()
 			}
 		}
 		if (iHumanPlayers > 0)
-			setHandicapType((HandicapTypes)(iTotal/iHumanPlayers));
+			//setHandicapType((HandicapTypes)(iTotal/iHumanPlayers));
+            setHandicapType((HandicapTypes)((int)((iTotal + 0.5) / iHumanPlayers))); // DarkLunaPhantom - Changed from round down to round.
 		else
 			FAssert(false); // all AI game. Not necessary wrong - but unexpected.
 	}
@@ -3490,7 +3622,8 @@ EraTypes CvGame::getCurrentEra() const
 
 	if (iCount > 0)
 	{
-		return ((EraTypes)(iEra / iCount));
+        //return ((EraTypes)(iEra / iCount));
+		return (EraTypes)((int)((iEra + 0.5) / iCount)); // DarkLunaPhantom - Changed to round from round down.
 	}
 
 	return NO_ERA;
@@ -4580,7 +4713,8 @@ bool CvGame::isValidVoteSelection(VoteSourceTypes eVoteSource, const VoteSelecti
 			return false;
 		}
 
-		if (!kPlayer.isFullMember(eVoteSource))
+		//if (!kPlayer.isFullMember(eVoteSource))
+        if (!GET_TEAM(kPlayer.getTeam()).isFullMember(eVoteSource)) // DarkLunaPhantom - These are not necessarily the same.
 		{
 			return false;
 		}
@@ -4610,7 +4744,8 @@ bool CvGame::isValidVoteSelection(VoteSourceTypes eVoteSource, const VoteSelecti
 	{
 		CvPlayer& kPlayer = GET_PLAYER(kData.ePlayer);
 
-		if (kPlayer.isFullMember(eVoteSource))
+		//if (kPlayer.isFullMember(eVoteSource))
+        if (GET_TEAM(kPlayer.getTeam()).isFullMember(eVoteSource)) // DarkLunaPhantom - These are not necessarily the same.
 		{
 			return false;
 		}
@@ -4621,7 +4756,8 @@ bool CvGame::isValidVoteSelection(VoteSourceTypes eVoteSource, const VoteSelecti
 			CvPlayer& kPlayer2 = GET_PLAYER((PlayerTypes)iPlayer2);
 			if (kPlayer2.getTeam() != kPlayer.getTeam())
 			{
-				if (kPlayer2.isFullMember(eVoteSource))
+				//if (kPlayer2.isFullMember(eVoteSource))
+                if (GET_TEAM(kPlayer2.getTeam()).isFullMember(eVoteSource)) // DarkLunaPhantom - These are not necessarily the same.
 				{
 					if (kPlayer2.canStopTradingWithTeam(kPlayer.getTeam()))
 					{
@@ -4647,7 +4783,8 @@ bool CvGame::isValidVoteSelection(VoteSourceTypes eVoteSource, const VoteSelecti
 			return false;
 		}
 
-		if (kPlayer.isFullMember(eVoteSource))
+		//if (kPlayer.isFullMember(eVoteSource))
+        if (GET_TEAM(kPlayer.getTeam()).isFullMember(eVoteSource)) // DarkLunaPhantom - These are not necessarily the same.
 		{
 			return false;
 		}
@@ -4674,8 +4811,9 @@ bool CvGame::isValidVoteSelection(VoteSourceTypes eVoteSource, const VoteSelecti
 			return false;
 		}
 
-		// Can be passed against a non-member only if he is already at war with a member 
-		if (!kPlayer.isVotingMember(eVoteSource))
+		// DarkLunaPhantom - Can be passed against a non-member or a (non-full) voting member only if he is already at war with a full member
+		//if (!kPlayer.isVotingMember(eVoteSource))
+        if (!GET_TEAM(kPlayer.getTeam()).isFullMember(eVoteSource))
 		{
 			bool bValid = false;
 			for (int iTeam2 = 0; iTeam2 < MAX_CIV_TEAMS; ++iTeam2)
@@ -4701,7 +4839,8 @@ bool CvGame::isValidVoteSelection(VoteSourceTypes eVoteSource, const VoteSelecti
 	else if (GC.getVoteInfo(kData.eVote).isAssignCity())
 	{
 		CvPlayer& kPlayer = GET_PLAYER(kData.ePlayer);
-		if (kPlayer.isFullMember(eVoteSource) || !kPlayer.isVotingMember(eVoteSource))
+		//if (kPlayer.isFullMember(eVoteSource) || !kPlayer.isVotingMember(eVoteSource))
+        if (GET_TEAM(kPlayer.getTeam()).isFullMember(eVoteSource) || !GET_TEAM(kPlayer.getTeam()).isVotingMember(eVoteSource)) // DarkLunaPhantom - These are not necessarily the same.
 		{
 			return false;
 		}
@@ -4729,7 +4868,8 @@ bool CvGame::isValidVoteSelection(VoteSourceTypes eVoteSource, const VoteSelecti
 			return false;
 		}
 
-		if (!kOtherPlayer.isFullMember(eVoteSource))
+		//if (!kOtherPlayer.isFullMember(eVoteSource))
+        if (!GET_TEAM(kOtherPlayer.getTeam()).isFullMember(eVoteSource)) // DarkLunaPhantom - These are not necessarily the same.
 		{
 			return false;			
 		}
@@ -5185,10 +5325,19 @@ GameSpeedTypes CvGame::getGameSpeedType() const
 	return GC.getInitCore().getGameSpeed();
 }
 
-
-EraTypes CvGame::getStartEra() const
+// DarkLunaPhantom begin - Adjusted for Advanced Settlers game option.
+//EraTypes CvGame::getStartEra() const
+EraTypes CvGame::getStartEra(PlayerTypes ePlayer) const
 {
-	return GC.getInitCore().getEra();
+    if (ePlayer != NO_PLAYER)
+    {
+        if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_SETTLERS))
+        {
+            return std::min(GET_PLAYER(ePlayer).getCurrentEra(), GC.getGameINLINE().getCurrentEra());
+        }
+    }
+// DarkLunaPhantom end
+    return GC.getInitCore().getEra();
 }
 
 
@@ -6901,10 +7050,23 @@ void CvGame::createBarbarianCities()
 				
 					if (iTargetCitiesMultiplier > 100)
 					{
-						iValue *= pLoopPlot->area()->getNumOwnedTiles();
+                        // DarkLunaPhantom - Bugfix from AdvCiv by f1rpo.
+                        /*  advc300, advc.001:
+                            Also, the first city placed in a previously uninhabited area
+                            is placed randomly b/c each found value gets multiplied
+                            with 0, which is probably a bug. Let's instead use the projected number of
+                            owned tiles after placing the city (by adding 9). */
+						//iValue *= pLoopPlot->area()->getNumOwnedTiles();
+                        iValue *= 9 + pLoopPlot->area()->getNumOwnedTiles();
 					}
 
-					iValue += (100 + getSorenRandNum(50, "Barb City Found"));
+                    // DarkLunaPhantom - Bugfix from AdvCiv by f1rpo.
+                    /*  advc.300, advc.001: Looks like another bug.
+						Good spots have found values in the thousands; adding
+						between 0 and 50 is negligible. The division by 100
+						suggests that times 1 to 1.5 was intended. */
+					//iValue += (100 + getSorenRandNum(50, "Barb City Found"));
+                    iValue *= (100 + getSorenRandNum(50, "Barb City Found"));
 					iValue /= 100;
 
 					if (iValue > iBestValue)
@@ -7035,6 +7197,7 @@ New Code:*/
 				{
 					iNeededBarbs = ((iNeededBarbs / 4) + 1);
 
+					// DarkLunaPhantom - Disabled this change. Seems unnecessary and doesn't count ships in cities.
 					/********************************************************************************/
 					/* 	BETTER_BTS_AI_MOD						9/25/08				jdog5000	*/
 					/* 																			*/
@@ -7042,7 +7205,7 @@ New Code:*/
 					/********************************************************************************/
 					// Limit construction of barb ships based on player navies
 					// Keeps barb ship count in check in early game since generation is greatly increased for BTS 3.17
-					if( pLoopArea->isWater() )
+					/*if( pLoopArea->isWater() )
 					{
 						int iPlayerSeaUnits = 0;
 						for( int iI = 0; iI < MAX_CIV_PLAYERS; iI++ )
@@ -7060,14 +7223,17 @@ New Code:*/
 						{
 							iNeededBarbs = 0;
 						}
-					}
+					}*/
 					/********************************************************************************/
 					/* 	BETTER_BTS_AI_MOD						END								*/
 					/********************************************************************************/
 
 					for (iI = 0; iI < iNeededBarbs; iI++)
 					{
-						pPlot = GC.getMapINLINE().syncRandPlot((RANDPLOT_NOT_VISIBLE_TO_CIV | RANDPLOT_ADJACENT_LAND | RANDPLOT_PASSIBLE), pLoopArea->getID(), GC.getDefineINT("MIN_BARBARIAN_STARTING_DISTANCE"));
+                        // DarkLunaPhantom - Tiles are now weighted by food on adjacent land tiles. This is to stop barbarians from appearing where there's no food and encourage them in richer lands. See CvMap::syncRandPlot.
+                        // Idea from AdvCiv by f1rpo (advc.300), but implementation and details different.
+						//pPlot = GC.getMapINLINE().syncRandPlot((RANDPLOT_NOT_VISIBLE_TO_CIV | RANDPLOT_ADJACENT_LAND | RANDPLOT_PASSIBLE), pLoopArea->getID(), GC.getDefineINT("MIN_BARBARIAN_STARTING_DISTANCE"));
+                        pPlot = GC.getMapINLINE().syncRandPlot((RANDPLOT_NOT_VISIBLE_TO_CIV | RANDPLOT_ADJACENT_LAND_FOOD_WEIGHTED | RANDPLOT_PASSIBLE), pLoopArea->getID(), GC.getDefineINT("MIN_BARBARIAN_STARTING_DISTANCE"));
 
 						// DarkLunaPhantom - Merged ifs to avoid shifting everything to the right.
 						//if (pPlot != NULL)
@@ -8035,6 +8201,44 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 
+            // DarkLunaPhantom begin - Cancel defensive pacts with the attackers first.
+            int iLoop;
+            for (CvDeal* pLoopDeal = GC.getGameINLINE().firstDeal(&iLoop); pLoopDeal != NULL; pLoopDeal = GC.getGameINLINE().nextDeal(&iLoop))
+            {
+                bool bCancelDeal = false;
+
+                if ((GET_PLAYER(pLoopDeal->getFirstPlayer()).getTeam() == kPlayer.getTeam() && GET_TEAM(GET_PLAYER(pLoopDeal->getSecondPlayer()).getTeam()).isVotingMember(kData.eVoteSource)) ||
+                    (GET_PLAYER(pLoopDeal->getSecondPlayer()).getTeam() == kPlayer.getTeam() && GET_TEAM(GET_PLAYER(pLoopDeal->getFirstPlayer()).getTeam()).isVotingMember(kData.eVoteSource)))
+                {
+                    for (CLLNode<TradeData>* pNode = pLoopDeal->headFirstTradesNode(); (pNode != NULL); pNode = pLoopDeal->nextFirstTradesNode(pNode))
+                    {
+                        if (pNode->m_data.m_eItemType == TRADE_DEFENSIVE_PACT)
+                        {
+                            bCancelDeal = true;
+                            break;
+                        }
+                    }
+
+                    if (!bCancelDeal)
+                    {
+                        for (CLLNode<TradeData>* pNode = pLoopDeal->headSecondTradesNode(); (pNode != NULL); pNode = pLoopDeal->nextSecondTradesNode(pNode))
+                        {
+                            if (pNode->m_data.m_eItemType == TRADE_DEFENSIVE_PACT)
+                            {
+                                bCancelDeal = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (bCancelDeal)
+                {
+                    pLoopDeal->kill();
+                }
+            }
+            // DarkLunaPhantom end
+            
 			for (int iPlayer = 0; iPlayer < MAX_CIV_PLAYERS; ++iPlayer)
 			{
 				CvPlayer& kLoopPlayer = GET_PLAYER((PlayerTypes)iPlayer);
@@ -8072,7 +8276,8 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
-					GET_PLAYER(kData.kVoteOption.eOtherPlayer).acquireCity(pCity, false, true, true);
+					//GET_PLAYER(kData.kVoteOption.eOtherPlayer).acquireCity(pCity, false, true, true);
+                    GET_PLAYER(kData.kVoteOption.eOtherPlayer).acquireCity(pCity, false, false, true); // DarkLunaPhantom - As this might be involuntary, it will not be considered as "trade".
 				}
 			}
 
@@ -9822,12 +10027,28 @@ void CvGame::doVoteResults()
 				{
 					for (int iJ = 0; iJ < MAX_CIV_PLAYERS; iJ++)
 					{
-						if (getPlayerVote((PlayerTypes)iJ, pVoteTriggered->getID()) == PLAYER_VOTE_NEVER)
+                        // DarkLunaPhantom begin - Give defiance penalty to the whole team.
+						/*if (getPlayerVote((PlayerTypes)iJ, pVoteTriggered->getID()) == PLAYER_VOTE_NEVER)
 						{
 							bPassed = false;
 
 							GET_PLAYER((PlayerTypes)iJ).setDefiedResolution(eVoteSource, pVoteTriggered->kVoteOption);
-						}
+						}*/
+                        for (int iK = 0; iK < MAX_CIV_PLAYERS; ++iK)
+                        {
+                            if (getPlayerVote((PlayerTypes)iK, pVoteTriggered->getID()) == PLAYER_VOTE_NEVER && GET_PLAYER((PlayerTypes)iJ).getTeam() == GET_PLAYER((PlayerTypes)iK).getTeam())
+                            {
+                                bPassed = false;
+                                
+                                if (GET_PLAYER((PlayerTypes)iJ).isVotingMember(eVoteSource))
+                                {
+                                    GET_PLAYER((PlayerTypes)iJ).setDefiedResolution(eVoteSource, pVoteTriggered->kVoteOption);
+                                }
+                                
+                                break;
+                            }
+                        }
+                        // DarkLunaPhantom end
 					}
 				}
 

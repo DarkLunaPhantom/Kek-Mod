@@ -28,7 +28,7 @@ gc = CyGlobalContext()
 Z_DEPTH = -0.3
 
 # Columns IDs
-NUM_PARTS = 25
+NUM_PARTS = 27
 (
 	ALIVE,
 	WAR,
@@ -54,7 +54,9 @@ NUM_PARTS = 25
 	CITIES,
 	WAITING,
 	NET_STATS,
-	OOS
+	OOS,
+	TEAM, # DarkLunaPhantom
+	TEAM_SCORE #DarkLunaPhantom
 ) = range(NUM_PARTS)
 
 # Types
@@ -90,8 +92,9 @@ def init():
 	global columns
 	
 	# Used keys:
-	# ABCDEFHIKLMNOPQRSTUVWZ*?
-	# GJXY
+	# ABCDEHIJKLMNOPQRSTUVYWZ*!?
+	# Unused keys:
+	# FGX
 	columns.append(Column('', ALIVE))
 	columns.append(Column('S', SCORE, DYNAMIC))
 	columns.append(Column('Z', SCORE_DELTA, DYNAMIC))
@@ -117,6 +120,8 @@ def init():
 	columns.append(Column('*', WAITING, FIXED, smallText("*")))
 	columns.append(Column('L', NET_STATS, DYNAMIC))
 	columns.append(Column('O', OOS, DYNAMIC))
+	columns.append(Column('J', TEAM, DYNAMIC)) # DarkLunaPhantom
+	columns.append(Column('Y', TEAM_SCORE, DYNAMIC)) # DarkLunaPhantom
 	
 	global WAR_ICON, PEACE_ICON
 	WAR_ICON = smallSymbol(FontSymbols.WAR_CHAR)
@@ -290,6 +295,12 @@ class Scoreboard:
 		
 	def setOOS(self, value):
 		self._set(OOS, smallText(value))
+		
+	def setTeam(self, value): #DarkLunaPhantom
+		self._set(TEAM, smallText(value))
+		
+	def setTeamScore(self, value): #DarkLunaPhantom
+		self._set(TEAM_SCORE, smallText(value))
 		
 		
 	def _getContactWidget(self):

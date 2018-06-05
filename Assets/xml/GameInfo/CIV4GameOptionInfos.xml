@@ -14,6 +14,13 @@
 			<bVisible>1</bVisible>
 		</GameOptionInfo>
 		<GameOptionInfo>
+			<Type>GAMEOPTION_ADVANCED_SETTLERS</Type>
+			<Description>TXT_KEY_GAME_OPTION_ADVANCED_SETTLERS</Description>
+			<Help>TXT_KEY_GAME_OPTION_ADVANCED_SETTLERS_HELP</Help>
+			<bDefault>0</bDefault>
+			<bVisible>1</bVisible>
+		</GameOptionInfo>
+		<GameOptionInfo>
 			<Type>GAMEOPTION_NO_CITY_RAZING</Type>
 			<Description>TXT_KEY_GAME_OPTION_NO_CITY_RAZING</Description>
 			<Help>TXT_KEY_GAME_OPTION_NO_CITY_RAZING_HELP</Help>
@@ -47,6 +54,13 @@
 			<Help>TXT_KEY_GAME_OPTION_RAGING_BARBARIANS_HELP</Help>
 			<bDefault>0</bDefault>
 			<bVisible>1</bVisible>
+		</GameOptionInfo>
+		<GameOptionInfo> <!-- DarkLunaPhantom - This should always be on the 8th place. (cf. with CvInitCore::getOption) -->
+			<Type>GAMEOPTION_DUMMY</Type>
+			<Description>TXT_KEY_GAME_OPTION_DUMMY</Description>
+			<Help>TXT_KEY_GAME_OPTION_DUMMY_HELP</Help>
+			<bDefault>1</bDefault>
+			<bVisible>0</bVisible>
 		</GameOptionInfo>
 		<GameOptionInfo>
 			<Type>GAMEOPTION_AGGRESSIVE_AI</Type>
@@ -94,6 +108,13 @@
 			<Type>GAMEOPTION_PERMANENT_ALLIANCES</Type>
 			<Description>TXT_KEY_GAME_OPTION_PERMANENT_ALLIANCES</Description>
 			<Help>TXT_KEY_GAME_OPTION_PERMANENT_ALLIANCES_HELP</Help>
+			<bDefault>0</bDefault>
+			<bVisible>1</bVisible>
+		</GameOptionInfo>
+		<GameOptionInfo>
+			<Type>GAMEOPTION_UNLIMITED_PERMANENT_ALLIANCES</Type>
+			<Description>TXT_KEY_GAME_OPTION_UNLIMITED_PERMANENT_ALLIANCES</Description>
+			<Help>TXT_KEY_GAME_OPTION_UNLIMITED_PERMANENT_ALLIANCES_HELP</Help>
 			<bDefault>0</bDefault>
 			<bVisible>1</bVisible>
 		</GameOptionInfo>

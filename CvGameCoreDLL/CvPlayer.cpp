@@ -279,7 +279,8 @@ void CvPlayer::init(PlayerTypes eID)
 			resetTriggerFired((EventTriggerTypes)iI);
 		}
 
-		for (iI = 0; iI < GC.getNumUnitClassInfos(); ++iI)
+        // DarkLunaPhantom - This is not cached anymore.
+		/*for (iI = 0; iI < GC.getNumUnitClassInfos(); ++iI)
 		{
 			UnitTypes eUnit = ((UnitTypes)(GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(iI)));
 
@@ -290,7 +291,7 @@ void CvPlayer::init(PlayerTypes eID)
 					setUnitExtraCost((UnitClassTypes)iI, getNewCityProductionValue());
 				}
 			}
-		}
+		}*/
 	}
 
 	AI_init();
@@ -518,7 +519,8 @@ void CvPlayer::initInGame(PlayerTypes eID)
 			resetEventOccured((EventTypes)iI, false);
 		}
 
-		for (iI = 0; iI < GC.getNumUnitClassInfos(); ++iI)
+        // DarkLunaPhantom - This is not cached anymore.
+		/*for (iI = 0; iI < GC.getNumUnitClassInfos(); ++iI)
 		{
 			UnitTypes eUnit = ((UnitTypes)(GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(iI)));
 
@@ -529,7 +531,7 @@ void CvPlayer::initInGame(PlayerTypes eID)
 					setUnitExtraCost((UnitClassTypes)iI, getNewCityProductionValue());
 				}
 			}
-		}
+		}*/
 	}
 
 	resetPlotAndCityData();
@@ -1007,7 +1009,7 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		m_aFreeUnitCombatPromotions.clear();
 		m_aFreeUnitClassPromotions.clear();
 		m_aVote.clear();
-		m_aUnitExtraCosts.clear();
+		//m_aUnitExtraCosts.clear(); // DarkLunaPhantom - Not used anymore.
 		m_triggersFired.clear();
 	}
 
@@ -1242,7 +1244,8 @@ void CvPlayer::resetCivTypeEffects( )
 		}
 	}
 
-	for (iI = 0; iI < GC.getNumUnitClassInfos(); ++iI)
+    // DarkLunaPhantom - This is not cached anymore.
+	/*for (iI = 0; iI < GC.getNumUnitClassInfos(); ++iI)
 	{
 		UnitTypes eUnit = ((UnitTypes)(GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(iI)));
 
@@ -1253,7 +1256,7 @@ void CvPlayer::resetCivTypeEffects( )
 				setUnitExtraCost((UnitClassTypes)iI, getNewCityProductionValue());
 			}
 		}
-	}
+	}*/
 }
 /************************************************************************************************/
 /* CHANGE_PLAYER                           END                                                  */
@@ -2302,9 +2305,19 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 
 	bRecapture = ((eHighestCulturePlayer != NO_PLAYER) ? (GET_PLAYER(eHighestCulturePlayer).getTeam() == getTeam()) : false);
 
-	pOldCity->kill(false);
+    // DarkLunaPhantom - Preserve some more old city data for later use.
+    int iCultureLevel = std::max(0, (int)pOldCity->getCultureLevel());
+    bool* pabCityRevealed = new bool[MAX_TEAMS];
+    for (int iI = 0; iI < MAX_TEAMS; ++iI)
+    {
+        pabCityRevealed[iI] = pOldCity->isRevealed((TeamTypes)iI, false);
+    }
+    
+	//pOldCity->kill(false);
+    pOldCity->kill(false, false); // DarkLunaPhantom - In this case, the plot culture of old city shouldn't be removed.
 
-	if (bTrade)
+    // DarkLunaPhantom - Plot culture is dealt with further down.
+	/*if (bTrade)
 	{
 		for (iDX = -1; iDX <= 1; iDX++)
 		{
@@ -2318,7 +2331,7 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 				}
 			}
 		}
-	}
+	}*/
 
 	pNewCity = initCity(pCityPlot->getX_INLINE(), pCityPlot->getY_INLINE(), !bConquest, false);
 
@@ -2338,6 +2351,15 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 		pNewCity->setEverOwned(((PlayerTypes)iI), abEverOwned[iI]);
 		pNewCity->setCultureTimes100(((PlayerTypes)iI), aiCulture[iI], false, false);
 	}
+    
+    // DarkLunaPhantom begin - An attempt to get more consistent and sane plot/city culture effects related to city trades.
+    // Now in case of trade, all old owner's city culture and (most) plot culture is transferred to the new owner.
+    if (bTrade)
+    {
+        pNewCity->setCultureTimes100((PlayerTypes)getID(), pNewCity->getCultureTimes100((PlayerTypes)getID()) + pNewCity->getCultureTimes100(eOldOwner), true, false);
+        pNewCity->setCultureTimes100(eOldOwner, 0, true, false);
+    }
+    // DarkLunaPhantom end
 
 	for (iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 	{
@@ -2350,6 +2372,12 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 			{
 				eBuilding = (BuildingTypes)iI;
 			}
+            // DarkLunaPhantom begin - National wonders should be destroyed when changing hands.
+            else if (::isNationalWonderClass(eBuildingClass) || ::isTeamWonderClass(eBuildingClass))
+            {
+                eBuilding = NO_BUILDING;
+            }
+            // DarkLunaPhantom end
 			else
 			{
 				eBuilding = (BuildingTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuildings(eBuildingClass);
@@ -2464,7 +2492,8 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 		GC.getMapINLINE().verifyUnitValidPlot();
 	}
 
-	pCityPlot->setRevealed(GET_PLAYER(eOldOwner).getTeam(), true, false, NO_TEAM, false);
+    // DarkLunaPhantom - Changed and moved further down.
+    //pCityPlot->setRevealed(GET_PLAYER(eOldOwner).getTeam(), true, false, NO_TEAM, false);
 
 	pNewCity->updateEspionageVisibility(false);
 
@@ -2495,6 +2524,47 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 	SAFE_DELETE_ARRAY(paiNumRealBuilding);
 	SAFE_DELETE_ARRAY(paiBuildingOriginalOwner);
 	SAFE_DELETE_ARRAY(paiBuildingOriginalTime);
+    
+    // DarkLunaPhantom begin - Reveal the city and surrounding plot ownership to those who saw them before.
+    // This is done before the city is maybe razed, so analogous procedure is also performed in CvCity::kill.
+    int iNewCultureLevel = std::max(0, (int)pNewCity->getCultureLevel());
+    
+    for (int iI = 0; iI < MAX_TEAMS; ++iI)
+    {
+        if (pabCityRevealed[iI])
+        {
+            for (iDX = -(iCultureLevel); iDX <= iCultureLevel; iDX++)
+            {
+                for (iDY = -(iCultureLevel); iDY <= iCultureLevel; iDY++)
+                {
+                    if (plotDistance(0, 0, iDX, iDY) <= iCultureLevel)
+                    {
+                        pLoopPlot = plotXY(pCityPlot->getX_INLINE(), pCityPlot->getY_INLINE(), iDX, iDY);
+
+                        if (pLoopPlot != NULL)
+                        {
+                            if (pLoopPlot->getRevealedOwner((TeamTypes)iI, false) == eOldOwner && pLoopPlot->getOwnerINLINE() != eOldOwner)
+                            {
+                                if (pLoopPlot->getOwnerINLINE() == getID() && plotDistance(0, 0, iDX, iDY) <= iNewCultureLevel)
+                                {
+                                    pLoopPlot->setRevealedOwner((TeamTypes)iI, getID());
+                                }
+                                else
+                                {
+                                    pLoopPlot->setRevealedOwner((TeamTypes)iI, NO_PLAYER);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            pNewCity->setRevealed((TeamTypes)iI, true);
+        }
+    }
+    
+    SAFE_DELETE_ARRAY(pabCityRevealed);
+    // DarkLunaPhantom end
 
 	if (bConquest)
 	{
@@ -3489,6 +3559,7 @@ void CvPlayer::doTurn()
 	}
 
 	verifyCivics();
+	verifyStateReligion(); // DarkLunaPhantom
 
 	updateTradeRoutes();
 
@@ -3625,6 +3696,19 @@ void CvPlayer::verifyCivics()
 					}
 				}
 			}
+		}
+	}
+}
+
+
+// DarkLunaPhantom
+void CvPlayer::verifyStateReligion()
+{
+	if (!isAnarchy())
+	{
+		if (getStateReligion() != NO_RELIGION && !canDoReligion(getStateReligion()))
+		{
+			setLastStateReligion(NO_RELIGION);
 		}
 	}
 }
@@ -5109,7 +5193,9 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 				{
 					if (GET_TEAM(getTeam()).isPermanentAllianceTrading() || GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).isPermanentAllianceTrading())
 					{
-						if ((GET_TEAM(getTeam()).getNumMembers() == 1) && (GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).getNumMembers() == 1))
+                        // DarkLunaPhantom - Added Unlimited Permanent Alliances game option which supports more than 2 players in a team.
+						//if ((GET_TEAM(getTeam()).getNumMembers() == 1) && (GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).getNumMembers() == 1))
+                        if (((GET_TEAM(getTeam()).getNumMembers() == 1) && (GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).getNumMembers() == 1)) || GC.getGameINLINE().isOption(GAMEOPTION_UNLIMITED_PERMANENT_ALLIANCES))
 						{
 							return true;
 						}
@@ -6226,7 +6312,7 @@ bool CvPlayer::canFound(int iX, int iY, bool bTestVisible) const
 				{
 					if (pLoopPlot->isCity())
 					{
-						if (pLoopPlot->area() == pPlot->area())
+						//if (pLoopPlot->area() == pPlot->area()) DarkLunaPhantom - Block too close cities on different landmasses, too.
 						{
 							return false;
 						}
@@ -6272,6 +6358,17 @@ void CvPlayer::found(int iX, int iY)
 				initUnit(eDefenderUnit, iX, iY, UNITAI_CITY_DEFENSE);
 			}
 		}
+        
+        // DarkLunaPhantom begin
+        if (GC.getGameINLINE().isOption(GAMEOPTION_RAGING_BARBARIANS))
+        {
+            UnitTypes eWorkerUnit = pCity->AI_bestUnitAI(UNITAI_WORKER);
+            if (eWorkerUnit != NO_UNIT)
+            {
+                initUnit(eWorkerUnit, iX, iY, UNITAI_WORKER);
+            }
+        }
+        // DarkLunaPhantom end
 	}
 
 	for (iI = 0; iI < GC.getNumBuildingClassInfos(); iI++)
@@ -6282,7 +6379,8 @@ void CvPlayer::found(int iX, int iY)
 		{
 			if (GC.getBuildingInfo(eLoopBuilding).getFreeStartEra() != NO_ERA)
 			{
-				if (GC.getGameINLINE().getStartEra() >= GC.getBuildingInfo(eLoopBuilding).getFreeStartEra())
+				//if (GC.getGameINLINE().getStartEra() >= GC.getBuildingInfo(eLoopBuilding).getFreeStartEra())
+                if (GC.getGameINLINE().getStartEra(getID()) >= GC.getBuildingInfo(eLoopBuilding).getFreeStartEra()) // DarkLunaPhantom - Adjusted for Advanced Settlers game option.
 				{
 					if (pCity->canConstruct(eLoopBuilding))
 					{
@@ -6476,6 +6574,45 @@ bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
 	return true;
 }
 
+// K-Mod. Check that we have the required bonuses to train the given unit.
+// This isn't for any particular city. It's just a rough guide for whether or not we could build the unit.
+bool CvPlayer::haveResourcesToTrain(UnitTypes eUnit) const
+{
+	FASSERT_BOUNDS(0, GC.getNumUnitInfos(), eUnit, "CvPlayer::haveResourcesToTrain");
+
+	const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
+	//const CvTeam& kTeam = GET_TEAM(getTeam());
+
+	// "and" bonus
+	BonusTypes ePrereqBonus = (BonusTypes)kUnit.getPrereqAndBonus();
+	if (ePrereqBonus != NO_BONUS)
+	{
+		if (!hasBonus(ePrereqBonus) && countOwnedBonuses(ePrereqBonus) == 0)
+		{
+			return false;
+		}
+	}
+
+	// "or" bonuses
+	bool bMissingBonus = false;
+	for (int i = 0; i < GC.getNUM_UNIT_PREREQ_OR_BONUSES(); ++i)
+	{
+		BonusTypes ePrereqBonus = (BonusTypes)kUnit.getPrereqOrBonuses(i);
+
+		if (ePrereqBonus == NO_BONUS)
+			continue;
+
+		if (hasBonus(ePrereqBonus) || countOwnedBonuses(ePrereqBonus) > 0)
+		{
+			bMissingBonus = false;
+			break;
+		}
+		bMissingBonus = true;
+	}
+
+	return !bMissingBonus;
+}
+// K-Mod end
 
 bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVisible, bool bIgnoreCost, bool bIgnoreTech) const
 {
@@ -6561,6 +6698,18 @@ bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestV
 			return false;
 		}
 	}
+    
+    // DarkLunaPhantom - Blocked moving of capital while spaceship is underway.
+    if (eBuilding == (BuildingTypes)(GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuildings(GC.getDefineINT("CAPITAL_BUILDINGCLASS"))))
+    {
+        for (int iI = 0; iI < GC.getNumVictoryInfos(); ++iI)
+        {
+            if (currentTeam.getVictoryCountdown((VictoryTypes)iI) >= 0 && GC.getGameINLINE().getGameState() == GAMESTATE_ON)
+            {
+                return false;
+            }
+        }
+    }
 
 	if (GC.getBuildingInfo(eBuilding).getMaxStartEra() != NO_ERA)
 	{
@@ -6870,7 +7019,7 @@ int CvPlayer::getProductionNeeded(UnitTypes eUnit) const
 	iProductionNeeded *= GC.getEraInfo(GC.getGameINLINE().getStartEra()).getTrainPercent();
 	iProductionNeeded /= 100;
 
-	if (!isHuman() && !isBarbarian())
+	if (!isHuman()/* && !isBarbarian()*/) // DarkLunaPhantom
 	{
 		if (isWorldUnitClass(eUnitClass))
 		{
@@ -6945,7 +7094,7 @@ int CvPlayer::getProductionNeeded(BuildingTypes eBuilding) const
 	iProductionNeeded *= GC.getEraInfo(GC.getGameINLINE().getStartEra()).getConstructPercent();
 	iProductionNeeded /= 100;
 
-	if (!isHuman() && !isBarbarian())
+	if (!isHuman()/* && !isBarbarian()*/) // DarkLunaPhantom
 	{
 		if (isWorldWonderClass((BuildingClassTypes)(GC.getBuildingInfo(eBuilding).getBuildingClassType())))
 		{
@@ -6981,7 +7130,7 @@ int CvPlayer::getProductionNeeded(ProjectTypes eProject) const
 	iProductionNeeded *= GC.getEraInfo(GC.getGameINLINE().getStartEra()).getCreatePercent();
 	iProductionNeeded /= 100;
 
-	if (!isHuman() && !isBarbarian())
+	if (!isHuman()/* && !isBarbarian()*/) // DarkLunaPhantom
 	{
 		if (isWorldProject(eProject))
 		{
@@ -7510,7 +7659,7 @@ int CvPlayer::getUnitCostMultiplier() const
 	iMultiplier *= GC.getHandicapInfo(getHandicapType()).getUnitCostPercent();
 	iMultiplier /= 100;
 
-	if (!isHuman() && !isBarbarian())
+	if (!isHuman()/* && !isBarbarian()*/) // DarkLunaPhantom
 	{
 		iMultiplier *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIUnitCostPercent();
 		iMultiplier /= 100;
@@ -7627,7 +7776,7 @@ int CvPlayer::calculateUnitSupply(int& iPaidUnits, int& iBaseSupplyCost) const
 
 	iSupply = iBaseSupplyCost;
 
-	if (!isHuman() && !isBarbarian())
+	if (!isHuman()/* && !isBarbarian()*/) // DarkLunaPhantom
 	{
 		iSupply *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIUnitSupplyPercent();
 		iSupply /= 100;
@@ -7706,7 +7855,7 @@ void CvPlayer::updateInflationRate()
 	iInflationPerTurnTimes10000 /= 100;
 
 	int iModifier = m_iInflationModifier;
-	if (!isHuman() && !isBarbarian())
+	if (!isHuman()/* && !isBarbarian()*/) // DarkLunaPhantom
 	{
 		int iAIModifier = GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIInflationPercent();
 		iAIModifier *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * getCurrentEra()) + 100));
@@ -9869,6 +10018,10 @@ int CvPlayer::getTypicalUnitValue(UnitAITypes eUnitAI, DomainTypes eDomain) cons
 
 int CvPlayer::getGoldPerUnit() const																		
 {
+    if (isBarbarian()) // DarkLunaPhantom
+    {
+        return 0;
+    }
 	return m_iGoldPerUnit;
 }
 
@@ -9889,6 +10042,10 @@ void CvPlayer::changeGoldPerUnit(int iChange)
 
 int CvPlayer::getGoldPerMilitaryUnit() const
 {
+    if (isBarbarian()) // DarkLunaPhantom
+    {
+        return 0;
+    }
 	return m_iGoldPerMilitaryUnit;
 }
 
@@ -10385,7 +10542,7 @@ int CvPlayer::getModifiedWarWearinessPercentAnger(int iWarWearinessPercentAnger)
 	iWarWearinessPercentAnger *= std::max(0, (GC.getWorldInfo(GC.getMapINLINE().getWorldSize()).getWarWearinessModifier() + 100));
 	iWarWearinessPercentAnger /= 100;
 
-	if (!isHuman() && !isBarbarian() && !isMinorCiv())
+	if (!isHuman()/* && !isBarbarian() && !isMinorCiv()*/) // DarkLunaPhantom
 	{
 		iWarWearinessPercentAnger *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIWarWearinessPercent();
 		iWarWearinessPercentAnger /= 100;
@@ -11179,6 +11336,20 @@ void CvPlayer::setAlive(bool bNewValue)
 			{
 				gDLL->closeSlot(getID());
 			}
+            
+            // DarkLunaPhantom - Turn all dead civ's culture to barbarian.
+            for (int iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); ++iI)
+            {
+                CvPlot* pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
+                pLoopPlot->changeCulture(BARBARIAN_PLAYER, pLoopPlot->getCulture((PlayerTypes)getID()), true);
+                pLoopPlot->setCulture((PlayerTypes)getID(), 0, false, false);
+                CvCity* pCity = pLoopPlot->getPlotCity();
+                if (pCity != NULL)
+                {
+                    pCity->changeCultureTimes100(BARBARIAN_PLAYER, pCity->getCultureTimes100((PlayerTypes)getID()), false, true);
+                    pCity->setCultureTimes100((PlayerTypes)getID(), 0, false, false);
+                }
+            }
 
 			if (GC.getGameINLINE().getElapsedGameTurns() > 0)
 			{
@@ -11474,7 +11645,7 @@ void CvPlayer::setTurnActive(bool bNewValue, bool bDoTurn)
 			// Previously it showed 3960BC when it was supposed to be 4000BC.
 			else
 			{
-				if (GC.getGameINLINE().getElapsedGameTurns() == 0 && GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_START) && isHuman() && !GC.getGameINLINE().isInAdvancedStart())
+				if (GC.getGameINLINE().getElapsedGameTurns() == 0 && GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_START) && !GC.getGameINLINE().isInAdvancedStart())
 				{
 					int aiShuffle[MAX_PLAYERS];
 
@@ -11486,11 +11657,12 @@ void CvPlayer::setTurnActive(bool bNewValue, bool bDoTurn)
 						PlayerTypes eLoopPlayer = (PlayerTypes)aiShuffle[iI];
 
 						CvPlayer& kLoopPlayer = GET_PLAYER(eLoopPlayer);
-						if (kLoopPlayer.isAlive() && !kLoopPlayer.isHuman())
+						if (kLoopPlayer.isAlive() && kLoopPlayer.getAdvancedStartPoints() >= 0)
 						{
+							// DarkLunaPhantom - Disabled this because it's not necessary and it's complicated to do it right.
 							// K-Mod. call CvTeam::doTurn when the first player from each team is activated.
-							if (active_teams.insert(kLoopPlayer.getTeam()).second && !GET_TEAM(kLoopPlayer.getTeam()).isHuman())
-							GET_TEAM(kLoopPlayer.getTeam()).doTurn();
+							//if (active_teams.insert(kLoopPlayer.getTeam()).second && !GET_TEAM(kLoopPlayer.getTeam()).isHuman())
+							//GET_TEAM(kLoopPlayer.getTeam()).doTurn();
 							// K-Mod end
 							kLoopPlayer.setTurnActive(true);
 						}
@@ -13373,7 +13545,7 @@ int CvPlayer::getSingleCivicUpkeep(CivicTypes eCivic, bool bIgnoreAnarchy) const
 	iUpkeep *= GC.getHandicapInfo(getHandicapType()).getCivicUpkeepPercent();
 	iUpkeep /= 100;
 
-	if (!isHuman() && !isBarbarian())
+	if (!isHuman()/* && !isBarbarian()*/) // DarkLunaPhantom
 	{
 		iUpkeep *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAICivicUpkeepPercent();
 		iUpkeep /= 100;
@@ -13729,7 +13901,7 @@ int CvPlayer::findPathLength(TechTypes eTech, bool bCost) const
 		if (ePreReq != NO_TECH)
 		{
 			//	Recursively find the path length (takes into account all ANDs)
-			iNumSteps = findPathLength(ePreReq, bCost);
+			iNumSteps = findPathLength(ePreReq, bCost); // K-Mod note: This will double-count any shared AND-prepreqs.
 
 			//	If the prereq is a valid tech and its the current shortest, mark it as such
 			if (iNumSteps < iShortestPath)
@@ -15914,7 +16086,7 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 			break;
 		default:
 			// The first action must be to place a city
-			// so players can lose by spending everything
+			// so players can't lose by spending everything
 			return;
 		}
 	}
@@ -16141,7 +16313,8 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 				if (bPopChanged)
 				{
 					pCity->setHighestPopulation(pCity->getPopulation());
-					if (pCity->getPopulation() == 1)
+                    // DarkLunaPhantom - Removed additional food.
+					/*if (pCity->getPopulation() == 1)
 					{
 						pCity->setFood(0);
 						pCity->setFoodKept(0);
@@ -16150,7 +16323,7 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 					{
 						pCity->setFood(pCity->growthThreshold() / 2);
 						pCity->setFoodKept((pCity->getFood() * pCity->getMaxFoodKeptPercent()) / 100);
-					}
+					}*/
 				}
 			}
 		}
@@ -16671,7 +16844,7 @@ int CvPlayer::getAdvancedStartCityCost(bool bAdd, CvPlot* pPlot) const
 			{
 				return -1;
 			}
-			//Only allow founding a city at someone elses start point if 
+			//Only allow founding a city at someone else's start point if 
 			//We have no cities and they have no cities.
 			if ((getID() != eClosestPlayer) && ((getNumCities() > 0) || (GET_PLAYER(eClosestPlayer).getNumCities() > 0)))
 			{
@@ -16694,6 +16867,18 @@ int CvPlayer::getAdvancedStartCityCost(bool bAdd, CvPlot* pPlot) const
 			iCost /= 100;
 		}
 	}
+    
+    // DarkLunaPhantom begin - Apply imperialistic trait settler cost reduction to advanced start cities. This assumes only one found unit exists.
+    for (UnitTypes i = (UnitTypes)0; i < GC.getNumUnitInfos(); i = (UnitTypes)(i+1))
+    {
+        if(GC.getUnitInfo(i).isFound())
+        {
+            iCost *= 100;
+            iCost /= std::max(1, 100 + getProductionModifier(i));
+            break;
+        }
+    }
+    // DarkLunaPhantom end
 	
 	return iCost;
 }
@@ -16725,7 +16910,8 @@ int CvPlayer::getAdvancedStartPopCost(bool bAdd, CvCity* pCity) const
 		{
 			--iPopulation;
 
-			if (iPopulation < GC.getDefineINT("INITIAL_CITY_POPULATION") + GC.getEraInfo(GC.getGameINLINE().getStartEra()).getFreePopulation())
+			//if (iPopulation < GC.getDefineINT("INITIAL_CITY_POPULATION") + GC.getEraInfo(GC.getGameINLINE().getStartEra()).getFreePopulation())
+            if (iPopulation < GC.getDefineINT("INITIAL_CITY_POPULATION") + GC.getEraInfo(GC.getGameINLINE().getStartEra(getID())).getFreePopulation()) // DarkLunaPhantom - Adjusted for Advanced Settlers game option.
 			{
 				return -1;
 			}
@@ -18011,7 +18197,8 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		}
 	}
 
-	{
+    // DarkLunaPhantom - Not used anymore.
+	/*{
 		m_aUnitExtraCosts.clear();
 		uint iSize;
 		pStream->Read(&iSize);
@@ -18023,7 +18210,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			pStream->Read(&iCost);
 			m_aUnitExtraCosts.push_back(std::make_pair(eUnit, iCost));
 		}
-	}
+	}*/
 
 	if (uiFlag > 0)
 	{
@@ -18464,7 +18651,8 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		}
 	}
 
-	{
+    // DarkLunaPhantom - Not used anymore.
+	/*{
 		uint iSize = m_aUnitExtraCosts.size();
 		pStream->Write(iSize);
 		std::vector< std::pair<UnitClassTypes, int> >::iterator it;
@@ -18473,7 +18661,7 @@ void CvPlayer::write(FDataStreamBase* pStream)
 			pStream->Write((*it).first);
 			pStream->Write((*it).second);
 		}
-	}
+	}*/
 
 	{
 		uint iSize = m_triggersFired.size();
@@ -21165,7 +21353,8 @@ PlayerTypes CvPlayer::getSplitEmpirePlayer(int iAreaId) const
 		}
 	}
 
-	if (eNewPlayer == NO_PLAYER)
+    // DarkLunaPhantom - This is bugged, eg. when this player used to share a team, and also unnecessary as maximum number of players is quite big (and can be easily increased).
+	/*if (eNewPlayer == NO_PLAYER)
 	{
 		// Try to recycle a dead player
 		for (int i = 0; i < MAX_CIV_PLAYERS; ++i)
@@ -21176,7 +21365,7 @@ PlayerTypes CvPlayer::getSplitEmpirePlayer(int iAreaId) const
 				break;
 			}
 		}
-	}
+	}*/
 
 	return eNewPlayer;
 }
@@ -21432,7 +21621,8 @@ bool CvPlayer::splitEmpire(int iAreaId)
 			}
 		}
 
-		for (int iTeam = 0; iTeam < MAX_TEAMS; ++iTeam)
+        // DarkLunaPhantom - This didn't seem fair or necessary.
+		/*for (int iTeam = 0; iTeam < MAX_TEAMS; ++iTeam)
 		{
 			CvTeam& kLoopTeam = GET_TEAM((TeamTypes)iTeam);
 
@@ -21441,7 +21631,7 @@ bool CvPlayer::splitEmpire(int iAreaId)
 				kNewTeam.setEspionagePointsAgainstTeam((TeamTypes)iTeam, GET_TEAM(getTeam()).getEspionagePointsAgainstTeam((TeamTypes)iTeam));
 				kLoopTeam.setEspionagePointsAgainstTeam(GET_PLAYER(eNewPlayer).getTeam(), kLoopTeam.getEspionagePointsAgainstTeam(getTeam()));
 			}
-		}
+		}*/
 		kNewTeam.setEspionagePointsEver(GET_TEAM(getTeam()).getEspionagePointsEver());
 
 		GET_TEAM(getTeam()).assignVassal(GET_PLAYER(eNewPlayer).getTeam(), false);
@@ -21449,12 +21639,13 @@ bool CvPlayer::splitEmpire(int iAreaId)
 		AI_updateBonusValue();
 	}
 
-	std::vector< std::pair<int, int> > aCultures;
+    // DarkLunaPhantom - Culture is dealt with in CvCity::acquireCity so those parts are disabled here.
+	//std::vector< std::pair<int, int> > aCultures;
 	for (int iPlot = 0; iPlot < GC.getMapINLINE().numPlotsINLINE(); ++iPlot)
 	{
 		CvPlot* pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iPlot);
 
-		bool bTranferPlot = false;
+		/*bool bTranferPlot = false;
 
 		if (!bTranferPlot && pLoopPlot->area() == pArea)
 		{
@@ -21485,7 +21676,7 @@ bool CvPlayer::splitEmpire(int iAreaId)
 			}
 
 			aCultures.push_back(std::make_pair(iPlot, iCulture));
-		}
+		}*/
 
 		if (pLoopPlot->isRevealed(getTeam(), false))
 		{
@@ -21498,7 +21689,7 @@ bool CvPlayer::splitEmpire(int iAreaId)
 	{
 		if (pLoopCity->area() == pArea)
 		{
-			int iCulture = pLoopCity->getCultureTimes100(getID());
+			//int iCulture = pLoopCity->getCultureTimes100(getID());
 			CvPlot* pPlot = pLoopCity->plot();
 
 			GET_PLAYER(eNewPlayer).acquireCity(pLoopCity, false, true, false);
@@ -21508,18 +21699,19 @@ bool CvPlayer::splitEmpire(int iAreaId)
 				CvCity* pCity = pPlot->getPlotCity();
 				if (NULL != pCity)
 				{
-					pCity->setCultureTimes100(eNewPlayer, iCulture, false, false);
-				}
+					//pCity->setCultureTimes100(eNewPlayer, iCulture, false, false);
+				//}
 
-				for (int i = 0; i < GC.getDefineINT("COLONY_NUM_FREE_DEFENDERS"); ++i)
-				{
-					pCity->initConscriptedUnit();
-				}
+                    for (int i = 0; i < GC.getDefineINT("COLONY_NUM_FREE_DEFENDERS"); ++i) // DarkLunaPhantom - Moved inside if clause.
+                    {
+                        pCity->initConscriptedUnit();
+                    }
+                }
 			}
 		}
 	}
 
-	for (uint i = 0; i < aCultures.size(); ++i)
+	/*for (uint i = 0; i < aCultures.size(); ++i)
 	{
 		CvPlot* pPlot = GC.getMapINLINE().plotByIndexINLINE(aCultures[i].first);
 		pPlot->setCulture(eNewPlayer, aCultures[i].second, true, false);
@@ -21532,7 +21724,8 @@ bool CvPlayer::splitEmpire(int iAreaId)
 				pPlot->setRevealedOwner((TeamTypes)iTeam, eNewPlayer);
 			}
 		}
-	}
+	}*/
+    // DarkLunaPhantom end
 
 
 	GC.getGameINLINE().updatePlotGroups();
@@ -21817,18 +22010,30 @@ void CvPlayer::setVote(int iId, PlayerVoteTypes ePlayerVote)
 
 int CvPlayer::getUnitExtraCost(UnitClassTypes eUnitClass) const
 {
-	for (std::vector< std::pair<UnitClassTypes, int> >::const_iterator it = m_aUnitExtraCosts.begin(); it != m_aUnitExtraCosts.end(); ++it)
+    // DarkLunaPhantom begin - This is now always recalculated instead of being cached.
+	/*for (std::vector< std::pair<UnitClassTypes, int> >::const_iterator it = m_aUnitExtraCosts.begin(); it != m_aUnitExtraCosts.end(); ++it)
 	{
 		if ((*it).first == eUnitClass)
 		{
 			return ((*it).second);
 		}
-	}
+	}*/
+    UnitTypes eUnit = ((UnitTypes)(GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(eUnitClass)));
 
-	return 0;
+	if (NO_UNIT != eUnit)
+	{
+		if (GC.getUnitInfo(eUnit).isFound())
+		{
+			return getNewCityProductionValue();
+		}
+	}
+    // DarkLunaPhantom end
+    
+    return 0;
 }
 
-void CvPlayer::setUnitExtraCost(UnitClassTypes eUnitClass, int iCost)
+// DarkLunaPhantom - This cache is not used anymore.
+/*void CvPlayer::setUnitExtraCost(UnitClassTypes eUnitClass, int iCost)
 {
 	for (std::vector< std::pair<UnitClassTypes, int> >::iterator it = m_aUnitExtraCosts.begin(); it != m_aUnitExtraCosts.end(); ++it)
 	{
@@ -21850,7 +22055,7 @@ void CvPlayer::setUnitExtraCost(UnitClassTypes eUnitClass, int iCost)
 	{
 		m_aUnitExtraCosts.push_back(std::make_pair(eUnitClass, iCost));
 	}
-}
+}*/
 
 // CACHE: cache frequently used values
 ///////////////////////////////////////
@@ -22020,10 +22225,18 @@ bool CvPlayer::canDoResolution(VoteSourceTypes eVoteSource, const VoteSelectionS
 					return false;
 				}
 
-				if (kOurTeam.getAtWarCount(true) > 0 || GET_TEAM((TeamTypes)iTeam2).getAtWarCount(true) > 0)
+                // DarkLunaPhantom begin - Sometimes defensive pact can be signed while at war.
+				//if (kOurTeam.getAtWarCount(true) > 0 || GET_TEAM((TeamTypes)iTeam2).getAtWarCount(true) > 0)
+                if ((kOurTeam.getAtWarCount(true) > 0 || GET_TEAM((TeamTypes)iTeam2).getAtWarCount(true) > 0) && GC.getBBAI_DEFENSIVE_PACT_BEHAVIOR() == 0)
 				{
 					return false;
 				}
+                
+                if (kOurTeam.isAtWar((TeamTypes)iTeam2))
+				{
+					return false;
+				}
+                // DarkLunaPhantom end
 
 				if (!kOurTeam.canSignDefensivePact((TeamTypes)iTeam2))
 				{
@@ -22115,6 +22328,12 @@ bool CvPlayer::canDefyResolution(VoteSourceTypes eVoteSource, const VoteSelectio
 	{
 		return false;
 	}
+    
+    // DarkLunaPhantom - Vassals can't defy resolutions.
+	if(GET_TEAM(getTeam()).isAVassal())
+	{
+		return false;
+	}
 
 	if (GC.getVoteInfo(kData.eVote).isOpenBorders())
 	{
@@ -22156,7 +22375,8 @@ bool CvPlayer::canDefyResolution(VoteSourceTypes eVoteSource, const VoteSelectio
 	}
 	else if (GC.getVoteInfo(kData.eVote).isForceWar())
 	{
-		if (!::atWar(getTeam(), GET_PLAYER(kData.ePlayer).getTeam()))
+		//if (!::atWar(getTeam(), GET_PLAYER(kData.ePlayer).getTeam()))
+        if (!::atWar(getTeam(), GET_PLAYER(kData.ePlayer).getTeam()) && !(GET_PLAYER(kData.ePlayer).getTeam() == getTeam())) // DarkLunaPhantom - Cannot defy war declaration against itself.
 		{
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      12/31/08                                jdog5000      */
@@ -22164,7 +22384,7 @@ bool CvPlayer::canDefyResolution(VoteSourceTypes eVoteSource, const VoteSelectio
 /*                                                                                              */
 /************************************************************************************************/
 			// Vassals can't defy declarations of war
-			if( !GET_TEAM(getTeam()).isAVassal() )
+			//if( !GET_TEAM(getTeam()).isAVassal() ) // DarkLunaPhantom - Vassals now cannot defy any resolution, so unnecessary.
 			{
 				return true;
 			}
@@ -22187,7 +22407,8 @@ bool CvPlayer::canDefyResolution(VoteSourceTypes eVoteSource, const VoteSelectio
 	}
 	else if (GC.getVoteInfo(kData.eVote).isAssignCity())
 	{
-		if (kData.ePlayer == getID())
+		//if (kData.ePlayer == getID())
+        if (kData.ePlayer == getID() || kData.eOtherPlayer == getID()) // DarkLunaPhantom - You can defy resolution giving you a city.
 		{
 			return true;
 		}
@@ -22203,7 +22424,7 @@ bool CvPlayer::canDefyResolution(VoteSourceTypes eVoteSource, const VoteSelectio
 
 void CvPlayer::setDefiedResolution(VoteSourceTypes eVoteSource, const VoteSelectionSubData& kData)
 {
-	FAssert(canDefyResolution(eVoteSource, kData));
+	FAssert(canDefyResolution(eVoteSource, kData)); // DarkLunaPhantom - This can now fail when a team member defies resolution.
 
 	// cities get unhappiness
 	int iLoop;
@@ -22335,7 +22556,7 @@ bool CvPlayer::canForceCivics(PlayerTypes eTarget, CivicTypes eCivic) const
 bool CvPlayer::canForceReligion(PlayerTypes eTarget, ReligionTypes eReligion) const
 {
 	//return (GET_PLAYER(eTarget).canDoReligion(eReligion) && GET_PLAYER(eTarget).getStateReligion() != eReligion && getStateReligion() == eReligion);
-	// K-Mod - You shouldn't be able to force a relgion on an irreligious civ.
+	// K-Mod - You shouldn't be able to force a religion on an irreligious civ.
 	return (GET_PLAYER(eTarget).isStateReligion() && GET_PLAYER(eTarget).canDoReligion(eReligion) && GET_PLAYER(eTarget).getStateReligion() != eReligion && getStateReligion() == eReligion);
 }
 
@@ -22521,7 +22742,8 @@ int CvPlayer::getReligionPopulation(ReligionTypes eReligion) const
 	{
 		if (pCity->isHasReligion(eReligion))
 		{
-			iPopulation += pCity->getPopulation();
+			//iPopulation += pCity->getPopulation();
+            iPopulation += pCity->getPopulation() / std::max(1, pCity->getReligionCount()); // DarkLunaPhantom - This makes more sense, but it might be worse for gameplay reasons (especially without some kind of Inquisitor unit).
 		}
 	}
 
@@ -22539,7 +22761,8 @@ int CvPlayer::getNewCityProductionValue() const
 		{
 			if (GC.getBuildingInfo(eBuilding).getFreeStartEra() != NO_ERA)
 			{
-				if (GC.getGameINLINE().getStartEra() >= GC.getBuildingInfo(eBuilding).getFreeStartEra())
+				//if (GC.getGameINLINE().getStartEra() >= GC.getBuildingInfo(eBuilding).getFreeStartEra())
+                if (GC.getGameINLINE().getStartEra(getID()) >= GC.getBuildingInfo(eBuilding).getFreeStartEra()) // DarkLunaPhantom - Adjusted for Advanced Settlers game option.
 				{
 					iValue += (100 * getProductionNeeded(eBuilding)) / std::max(1, 100 + getProductionModifier(eBuilding));
 				}
@@ -22552,7 +22775,8 @@ int CvPlayer::getNewCityProductionValue() const
 
 	iValue += (GC.getDefineINT("ADVANCED_START_CITY_COST") * GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getGrowthPercent()) / 100;
 
-	int iPopulation = GC.getDefineINT("INITIAL_CITY_POPULATION") + GC.getEraInfo(GC.getGameINLINE().getStartEra()).getFreePopulation();
+	//int iPopulation = GC.getDefineINT("INITIAL_CITY_POPULATION") + GC.getEraInfo(GC.getGameINLINE().getStartEra()).getFreePopulation();
+    int iPopulation = GC.getDefineINT("INITIAL_CITY_POPULATION") + GC.getEraInfo(GC.getGameINLINE().getStartEra(getID())).getFreePopulation(); // DarkLunaPhantom - Adjusted for Advanced Settlers game option.
 	for (int i = 1; i <= iPopulation; ++i)
 	{
 		iValue += (getGrowthThreshold(i) * GC.getDefineINT("ADVANCED_START_POPULATION_COST")) / 100;
@@ -22573,7 +22797,7 @@ int CvPlayer::getGrowthThreshold(int iPopulation) const
 	iThreshold *= GC.getEraInfo(GC.getGameINLINE().getStartEra()).getGrowthPercent();
 	iThreshold /= 100;
 
-	if (!isHuman() && !isBarbarian())
+	if (!isHuman()/* && !isBarbarian()*/) // DarkLunaPhantom
 	{
 		iThreshold *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIGrowthPercent();
 		iThreshold /= 100;
@@ -23583,7 +23807,7 @@ void CvPlayer::getCultureLayerColors(std::vector<NiColorA>& aColors, std::vector
 		if (iTotalCulture == 0)
 			continue;
 		// K-Mod end
-		for (int iPlayer = 0; iPlayer < MAX_CIV_PLAYERS; iPlayer++)
+		for (int iPlayer = 0; iPlayer < MAX_PLAYERS; iPlayer++) // DarkLunaPhantom - Changed MAX_CIV_PLAYERS to MAX_PLAYERS to include barbarians.
 		{
 			if (GET_PLAYER((PlayerTypes)iPlayer).isAlive())
 			{

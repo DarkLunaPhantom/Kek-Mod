@@ -837,7 +837,7 @@ void CvTeam::shareItems(TeamTypes eTeam)
 	}
 }
 
-// K-Mod. I've editted this function quite a lot. (for reasons that have been lost in the sands of time)
+// K-Mod. I've edited this function quite a lot. (for reasons that have been lost in the sands of time)
 void CvTeam::shareCounters(TeamTypes eTeam)
 {
 	CvTeamAI& kShareTeam = GET_TEAM(eTeam); // K-Mod
@@ -1599,7 +1599,7 @@ void CvTeam::declareWar(TeamTypes eTeam, bool bNewDiplo, WarPlanTypes eWarPlan, 
 
 	// DarkLunaPhantom begin - BBAI option 1 didn't work because if clauses for canceling pacts were wrong.
 	// BBAI otpion 2 needs further fixing. When all players have defensive pacts with all other players
-	// and someone declares war the correct behaviour would be to have all attack the inital attacker, but additional wars
+	// and someone declares war the correct behaviour would be to have all attack the initial attacker, but additional wars
 	// are declared due to recursive calls of declareWar in the loop below.
 	if(GC.getBBAI_DEFENSIVE_PACT_BEHAVIOR() == 0 || (GC.getBBAI_DEFENSIVE_PACT_BEHAVIOR() == 1 && bPrimaryDoW))
 	{
@@ -2397,7 +2397,7 @@ bool CvTeam::isAVassal() const
 			{
 				if (isVassal((TeamTypes)iI))
 				{
-					FAssert(iI != getID());
+					//FAssert(iI != getID()); DarkLunaPhantom - This will never ever happen.
 					return true;
 				}
 			}

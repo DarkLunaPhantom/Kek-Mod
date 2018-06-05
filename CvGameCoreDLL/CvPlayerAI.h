@@ -124,16 +124,17 @@ public:
 	//int AI_goldTarget() const;
 	int AI_goldTarget(bool bUpgradeBudgetOnly = false) const; // K-Mod
 
-	TechTypes AI_bestTech(int iMaxPathLength = 1, bool bIgnoreCost = false, bool bAsync = false, TechTypes eIgnoreTech = NO_TECH, AdvisorTypes eIgnoreAdvisor = NO_ADVISOR) const;
+	TechTypes AI_bestTech(int iMaxPathLength = 1, bool bFreeTech = false, bool bAsync = false, TechTypes eIgnoreTech = NO_TECH, AdvisorTypes eIgnoreAdvisor = NO_ADVISOR) const; // K-Mod renamed bIgnoreCost to bFreeTech
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      03/18/10                                jdog5000      */
 /*                                                                                              */
 /* Tech AI                                                                                      */
 /************************************************************************************************/
-	int AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost, bool bAsync, const std::vector<int>& viBonusClassRevealed, const std::vector<int>& viBonusClassUnrevealed, const std::vector<int>& viBonusClassHave) const;
+	int AI_techValue(TechTypes eTech, int iPathLength, bool bFreeTech, bool bAsync, const std::vector<int>& viBonusClassRevealed, const std::vector<int>& viBonusClassUnrevealed, const std::vector<int>& viBonusClassHave) const;
 	int AI_obsoleteBuildingPenalty(TechTypes eTech, bool bConstCache) const; // K-Mod
 	int AI_techBuildingValue(TechTypes eTech, bool bConstCache, bool& bEnablesWonder) const; // Rewritten for K-Mod
 	int AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnablesUnitWonder ) const;
+	int AI_techProjectValue(TechTypes eTech, int iPathLength, bool &bEnablesProjectWonder) const; // K-Mod
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/

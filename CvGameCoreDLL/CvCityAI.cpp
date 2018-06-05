@@ -1954,7 +1954,7 @@ void CvCityAI::AI_chooseProduction()
 				return;
 			}
 
-			// DarkLunaPhantom - Moved this out of assault case to the place further down where where planes for carriers are built.
+			// DarkLunaPhantom - Moved this out of assault only case to the place further down where where planes for carriers are built.
 			/*if (iUnitSpending < (iMaxUnitSpending))
 			{
 				int iMissileCarriers = kPlayer.AI_totalUnitAIs(UNITAI_MISSILE_CARRIER_SEA);
@@ -1971,9 +1971,11 @@ void CvCityAI::AI_chooseProduction()
 							
 							int iMissileCarrierAirNeeded = iMissileCarriers * GC.getUnitInfo(eBestMissileCarrierUnit).getCargoSpace();
 							
+                            // DarkLunaPhantom - That inequality should go the other way around.
 							if ((kPlayer.AI_totalUnitAIs(UNITAI_MISSILE_AIR) < iMissileCarrierAirNeeded) || 
-								(bPrimaryArea && (kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_MISSILE_CARRIER_SEA) * GC.getUnitInfo(eBestMissileCarrierUnit).getCargoSpace() < kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_MISSILE_AIR))))
-							{
+							//	(bPrimaryArea && (kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_MISSILE_CARRIER_SEA) * GC.getUnitInfo(eBestMissileCarrierUnit).getCargoSpace() < kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_MISSILE_AIR))))
+                                (bPrimaryArea && (kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_MISSILE_CARRIER_SEA) * GC.getUnitInfo(eBestMissileCarrierUnit).getCargoSpace() > kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_MISSILE_AIR))))
+                            {
 								// Don't always build missiles, more likely if really low
 								if (AI_chooseUnit(UNITAI_MISSILE_AIR, (kPlayer.AI_totalUnitAIs(UNITAI_MISSILE_AIR) < iMissileCarrierAirNeeded/2) ? 50 : 20))
 								{
@@ -2074,6 +2076,7 @@ void CvCityAI::AI_chooseProduction()
 	}
 
 	// Check for whether to produce planes to fill carriers
+    // DarkLunaPhantom - Or missiles to fill missile carriers.
 	if ( (bLandWar || bAssault) && iUnitSpending < (iMaxUnitSpending))
 	{			
 		if (iCarriers > 0 && !bImportantCity)
@@ -2103,7 +2106,7 @@ void CvCityAI::AI_chooseProduction()
 			}
 		}
 		
-		// DarkLunaPhantom begin - Moved out of assault case above.
+		// DarkLunaPhantom begin - Moved out of assault only case above. (K-Mod made similar change for planes for carriers.)
 		int iMissileCarriers = kPlayer.AI_totalUnitAIs(UNITAI_MISSILE_CARRIER_SEA);
 	
 		if (!bFinancialTrouble && iMissileCarriers > 0 && !bImportantCity)
@@ -2118,8 +2121,10 @@ void CvCityAI::AI_chooseProduction()
 					
 					int iMissileCarrierAirNeeded = iMissileCarriers * GC.getUnitInfo(eBestMissileCarrierUnit).getCargoSpace();
 					
+                    // DarkLunaPhantom - That inequality should go the other way around.
 					if ((kPlayer.AI_totalUnitAIs(UNITAI_MISSILE_AIR) < iMissileCarrierAirNeeded) || 
-						(bPrimaryArea && (kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_MISSILE_CARRIER_SEA) * GC.getUnitInfo(eBestMissileCarrierUnit).getCargoSpace() < kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_MISSILE_AIR))))
+					//	(bPrimaryArea && (kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_MISSILE_CARRIER_SEA) * GC.getUnitInfo(eBestMissileCarrierUnit).getCargoSpace() < kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_MISSILE_AIR))))
+                    (bPrimaryArea && (kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_MISSILE_CARRIER_SEA) * GC.getUnitInfo(eBestMissileCarrierUnit).getCargoSpace() > kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_MISSILE_AIR))))
 					{
 						// Don't always build missiles, more likely if really low
 						if (AI_chooseUnit(UNITAI_MISSILE_AIR, (kPlayer.AI_totalUnitAIs(UNITAI_MISSILE_AIR) < iMissileCarrierAirNeeded/2) ? 50 : 20))
@@ -2158,7 +2163,7 @@ void CvCityAI::AI_chooseProduction()
 			}
 		}
 	} */
-	// K-Mod. Roughly the same conditions for builing a nuke, but with a few adjustments for flavour and strategy
+	// K-Mod. Roughly the same conditions for building a nuke, but with a few adjustments for flavour and strategy
 	if (!bAlwaysPeace && !bLandWar && !bUnitExempt && !bFinancialTrouble)
 	{
 		if ((kPlayer.AI_isDoStrategy(AI_STRATEGY_OWABWNW) || GC.getGame().getSorenRandNum(1200, "AI consider Nuke") < std::min(400, iNukeWeight))
@@ -2235,7 +2240,7 @@ void CvCityAI::AI_chooseProduction()
 				}
 			}
 
-			// K-Mod - get more seige units for crush
+			// K-Mod - get more siege units for crush
 			if (bCrushStrategy && GC.getGameINLINE().getSorenRandNum(100, "City AI extra crush bombard") < iTrainInvaderChance)
 			{
 				UnitTypes eCityAttackUnit = NO_UNIT;
@@ -3106,7 +3111,7 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
 		iValue *= (getProductionExperience(eLoopUnit) + 10);
 		iValue /= 10;
 
-		// Take into account free promotions, and avaiable promotions that suit the AI type.
+		// Take into account free promotions, and available promotions that suit the AI type.
 		// Note: it might be better if this was in AI_unitValue rather than here, but the
 		// advantage of doing it here is that we can check city promotions at the same time.
         int iPromotionValue = 0;
@@ -3568,6 +3573,7 @@ int CvCityAI::AI_buildingValue(BuildingTypes eBuilding, int iFocusFlags, int iTh
 	PROFILE_FUNC();
 
 	CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
+    CvTeamAI& kTeam = GET_TEAM(kOwner.getTeam()); // DarkLunaPhantom
 	CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 	BuildingClassTypes eBuildingClass = (BuildingClassTypes) kBuilding.getBuildingClassType();
 	int iLimitedWonderLimit = limitedWonderClassLimit(eBuildingClass);
@@ -3720,7 +3726,55 @@ int CvCityAI::AI_buildingValue(BuildingTypes eBuilding, int iFocusFlags, int iTh
 				iValue += iTemp;
 			}
 
-			iValue += -kBuilding.getNukeModifier() / (GC.getGameINLINE().isNukesValid() && !GC.getGameINLINE().isNoNukes() ? 4 : 40);
+            // DarkLunaPhantom begin - Bomb Shelters should be of much higher value, I copied and adjusted rough estimates from AI_projectValue().
+            int iNukeDefense = -kBuilding.getNukeModifier();
+            if (iNukeDefense > 0)
+            {
+                bool bForeignNukes = false; // we're going to cheat a little bit, by counting nukes that we probably shouldn't know about.
+                for (PlayerTypes i = (PlayerTypes)0; i < MAX_CIV_PLAYERS; i = (PlayerTypes)(i + 1))
+                {
+                    const CvPlayerAI& kLoopPlayer = GET_PLAYER(i);
+                    if (kLoopPlayer.getTeam() != kOwner.getTeam() && kTeam.isHasMet(kLoopPlayer.getTeam()))
+                    {
+                        if (kLoopPlayer.getNumNukeUnits() > 0)
+                        {
+                            bForeignNukes = true;
+                            break;
+                        }
+                    }
+                }
+                int iNukeEvasionProbability = 0;
+                int iNukeUnitTypes = 0;
+                for (UnitTypes i = (UnitTypes)0; i < GC.getNumUnitInfos(); i = (UnitTypes)(i+1))
+                {
+                    const CvUnitInfo& kLoopUnit = GC.getUnitInfo(i);
+                    if (kLoopUnit.getNukeRange() >= 0)
+                    {
+                        iNukeEvasionProbability += kLoopUnit.getEvasionProbability();
+                        iNukeUnitTypes++;
+                    }
+                }
+                iNukeEvasionProbability /= std::max(1, iNukeUnitTypes);
+                int iTargetValue = 10 + (getYieldRate(YIELD_PRODUCTION) * 5 + getYieldRate(YIELD_COMMERCE) * 3)/2; // DarkLunaPhantom - cf. iTargetValue in the SDI section of AI_projectValue() (K-Mod).
+                int iStackValue = 0; // DarkLunaPhantom - Lazy attempt to estimate the value of the strongest unit stack this shelter might defend.
+                for (PlayerTypes i = (PlayerTypes)0; i < MAX_CIV_PLAYERS; i = (PlayerTypes)(i + 1))
+                {
+                    if (GET_PLAYER(i).getTeam() == kOwner.getTeam())
+                    {
+                        iStackValue += area()->getPower(i);
+                    }
+                }
+                iStackValue *= 7;
+                iStackValue /= 20;
+                int iTempValue = iNukeDefense * (iStackValue + iTargetValue);
+                iTempValue /= 100;
+                iTempValue *= 10000 - kTeam.getNukeInterception()*(100 - iNukeEvasionProbability);
+                iTempValue /= 10000;
+                iTempValue /= (bForeignNukes || !GC.getGameINLINE().isNoNukes() ? 1 : 10);
+                iValue += iTempValue;
+            }
+			//iValue += -kBuilding.getNukeModifier() / (GC.getGameINLINE().isNukesValid() && !GC.getGameINLINE().isNoNukes() ? 4 : 40);
+            // DarkLunaPhantom end
 			// K-Mod end
 		}
 
@@ -4158,7 +4212,7 @@ int CvCityAI::AI_buildingValue(BuildingTypes eBuilding, int iFocusFlags, int iTh
 					{
 						if (!(kOwner.canDoCivics((CivicTypes)iI)))
 						{
-							iValue += (kOwner.AI_civicValue((CivicTypes)iI) / 10);
+							iValue += (kOwner.AI_civicValue((CivicTypes)iI) / 10); // Todo: compare to current civics!
 						}
 					}
 				}
@@ -4342,8 +4396,8 @@ int CvCityAI::AI_buildingValue(BuildingTypes eBuilding, int iFocusFlags, int iTh
 				{
 					int iTechValue =  ((iTotalTechValue / iTechCount) + iMaxTechValue)/2;
 
-					// It's hard to measure an instant boost with units of commerce per turn... So I'm just going to divide it by 10.
-					iValue += iTechValue * 10 / GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getResearchPercent();
+					// It's hard to measure an instant boost with units of commerce per turn... So I'm just going to divide it by ~12.5, scaled by game speed.
+					iValue += iTechValue * 8 / GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getResearchPercent();
 				}
 				// else: If there is nothing to research, a free tech is worthless.
 			}
@@ -4926,9 +4980,11 @@ int CvCityAI::AI_buildingValue(BuildingTypes eBuilding, int iFocusFlags, int iTh
 				// add value for a commerce modifier
 				int iCommerceModifier = kBuilding.getCommerceModifier(iI);
 				int iBaseCommerceRate = getBaseCommerceRate((CommerceTypes) iI);
-				// K-Mod. inflate the base commerce rate, to account for the fact that commerce multipliers give us flexibility.
+				// K-Mod
 				{
-					int x = std::max(5, kOwner.getCommercePercent((CommerceTypes)iI));
+					// inflate the base commerce rate, to account for the fact that commerce multipliers give us flexibility.
+					// But not for espionage. Because... reasons. (Espionage gets a priority bonus later. That's good enough.)
+					int x = std::max(iI == COMMERCE_ESPIONAGE ? 0 : 5, kOwner.getCommercePercent((CommerceTypes)iI));
 					if (iI == COMMERCE_CULTURE)
 					{
 						x += x <= 45 && bCulturalVictory1 ? 10 : 0;
@@ -5516,8 +5572,9 @@ ProjectTypes CvCityAI::AI_bestProject(int* piBestValue)
 		int iTurnsLeft = getProductionTurnsLeft(i, 0);
 		int iRelativeTurns = (100 * iTurnsLeft + 50) / GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getCreatePercent();
 
-		if (iRelativeTurns > 10 && kLoopProject.getMaxTeamInstances() > 0 && GET_TEAM(getTeam()).isHuman())
-			continue; // not fast enough to risk blocking our human allies from building it.
+        // DarkLunaPhantom - Building projects (or wonders or limited units) doesn't block team members from building them anymore so unnecessary.
+		//if (iRelativeTurns > 10 && kLoopProject.getMaxTeamInstances() > 0 && GET_TEAM(getTeam()).isHuman())
+		//	continue; // not fast enough to risk blocking our human allies from building it.
 
 		if (iRelativeTurns > 20 && iProductionRank > std::max(3, GET_PLAYER(getOwnerINLINE()).getNumCities()/2))
 			continue; // not fast enough to risk blocking our more productive cities from building it.
@@ -5629,7 +5686,7 @@ ProjectTypes CvCityAI::AI_bestProject(int* piBestValue)
 	return eBestProject;
 }
 
-// This function has been completely rewriten for K-Mod
+// This function has been completely rewritten for K-Mod
 // The return value is roughly in units of 4 * commerce per turn, to match AI_buildingValue.
 // However, note that most projects don't actually give commerce per turn - so the evaluation is quite rough.
 int CvCityAI::AI_projectValue(ProjectTypes eProject)
@@ -5674,20 +5731,44 @@ int CvCityAI::AI_projectValue(ProjectTypes eProject)
 	{
 		int iForeignNukes = 0; // we're going to cheat a little bit, by counting nukes that we probably shouldn't know about.
 		int iTeamsMet = 0;
-		for (PlayerTypes i = (PlayerTypes)0; i < MAX_CIV_PLAYERS; i = (PlayerTypes)(i + 1))
+        // DarkLunaPhantom begin - iTeamsMet was previously counting players instead of teams, now it counts free teams (as vassal's nukes count for master's team in getNumNukeUnits()).
+		for (TeamTypes i = (TeamTypes)0; i < MAX_CIV_TEAMS; i = (TeamTypes)(i + 1))
 		{
-			const CvPlayerAI& kLoopPlayer = GET_PLAYER(i);
-			if (kLoopPlayer.getTeam() != kOwner.getTeam() && kTeam.isHasMet(kLoopPlayer.getTeam()))
+			const CvTeamAI& kLoopTeam = GET_TEAM(i);
+			if (i != kOwner.getTeam() && kTeam.isHasMet(i) && !kLoopTeam.isAVassal())
 			{
-				iForeignNukes += kLoopPlayer.getNumNukeUnits();
+				iForeignNukes += kLoopTeam.getNumNukeUnits() - (kTeam.isVassal(i) ? kTeam.getNumNukeUnits(): 0); //DarkLunaPhantom - Don't count own nukes as foreign.
+        // DarkLunaPhantom end
 				iTeamsMet++;
 			}
 		}
-		if (!GC.getGameINLINE().isNoNukes() || iForeignNukes > iTeamsMet)
+		//if (!GC.getGameINLINE().isNoNukes() || iForeignNukes > iTeamsMet)
+        if (!GC.getGameINLINE().isNoNukes() || iForeignNukes > 0) // DarkLunaPhantom - Being nuked hurts, so don't take chances.
 		{
+            // DarkLunaPhantom begin - Evasion probability is now used with assumption that all nuke units are roughly equally viable.
+            // Also added estimated unit value.
+            int iNukeEvasionProbability = 0;
+            int iNukeUnitTypes = 0;
+            for (UnitTypes i = (UnitTypes)0; i < GC.getNumUnitInfos(); i = (UnitTypes)(i+1))
+			{
+				const CvUnitInfo& kLoopUnit = GC.getUnitInfo(i);
+                if (kLoopUnit.getNukeRange() >= 0)
+                {
+                    iNukeEvasionProbability += kLoopUnit.getEvasionProbability();
+                    iNukeUnitTypes++;
+                }
+            }
+            iNukeEvasionProbability /= std::max(1, iNukeUnitTypes);
 			int iTargetValue = 10 + (getYieldRate(YIELD_PRODUCTION) * 5 + getYieldRate(YIELD_COMMERCE) * 3)/2; // a very rough estimate of the cost of being nuked
 			int iEstimatedNukeAttacks = iForeignNukes * (2 + iTeamsMet) / (2 + 2*iTeamsMet) + (GC.getGameINLINE().isNoNukes() ? 0 : 2 + GC.getGameINLINE().getNukesExploded() / (2 + iTeamsMet));
-			iValue += kProject.getNukeInterception() * iEstimatedNukeAttacks * iTargetValue / 100;
+            int iStackValue = (((GET_TEAM(getTeam()).getPower(false) * 7) / 20) * std::min(1, iEstimatedNukeAttacks)) / (iEstimatedNukeAttacks > 1 ? 1 : 2); // DarkLunaPhantom - Lazy attempt to estimate unit value.
+			//iValue += kProject.getNukeInterception() * iEstimatedNukeAttacks * iTargetValue / 100;
+            int iTempValue = kProject.getNukeInterception() * (iStackValue + iEstimatedNukeAttacks * iTargetValue);
+            iTempValue /= 100;
+            iTempValue *= 100 - iNukeEvasionProbability;
+            iTempValue /= 100;
+            iValue += iTempValue;
+            // DarkLunaPhantom end
 		}
 		//iValue += (GC.getProjectInfo(eProject).getNukeInterception() / 10);
 	}
@@ -5782,7 +5863,7 @@ int CvCityAI::AI_projectValue(ProjectTypes eProject)
 	// this is going to be very arbitrary...  -- and it will be based on the original BtS code!
 	int iSpaceValue = 0;
 
-	// a project which enables other projects... We're talking about the Apolo Program
+	// a project which enables other projects... We're talking about the Apollo Program
 	for (int iI = 0; iI < GC.getNumProjectInfos(); iI++)
 	{
 		iSpaceValue += (std::max(0, (GC.getProjectInfo((ProjectTypes)iI).getProjectsNeeded(eProject) - GET_TEAM(getTeam()).getProjectCount(eProject))) * 8); // was *10
@@ -9411,6 +9492,8 @@ int CvCityAI::AI_yieldValue(short* piYields, short* piCommerceYields, bool bRemo
 	{
 		if (iGrowthValue < 0)
 			iGrowthValue = AI_growthValuePerFood();
+		if (bEmphasizeFood)
+			iGrowthValue += 8; // in addition to other effects.
 
 		// tiny food factor, to ensure that even when we don't want to grow, 
 		// we still prefer more food if everything else is equal
@@ -9536,18 +9619,20 @@ int CvCityAI::AI_yieldValue(short* piYields, short* piCommerceYields, bool bRemo
 					{
 						//If we are emphasize food, pay less heed to caps.
 						iHealthLevel += 5;
-						iFutureHappy += 2;
+						iFutureHappy += 3;
 					}
 
 					bool bBarFull = iFoodLevel + iAdjustedFoodPerTurn > iFoodToGrow * 80 / 100;
 
 					int iPopToGrow = std::max(0, iHappinessLevel+iFutureHappy);
-					int iGoodTiles = AI_countGoodTiles(iHealthLevel > 0, true, 50, true);
+					int iGoodTiles = AI_countGoodTiles(iHealthLevel > 0, true, 50, true); // Note: 'bWorkerOptimization' is set to true so that we pretend the plots are already improved.
 					iGoodTiles += AI_countGoodSpecialists(iHealthLevel > 0);
 
 					if (!bEmphasizeFood)
 					{
 						iPopToGrow = std::min(iPopToGrow, iGoodTiles + (bWorkerOptimization ? 1 : 0));
+						if (iPopulation < 3 && iHappinessLevel+iFutureHappy > 0)
+							iPopToGrow = std::max(iPopToGrow, 1);
 						if (AI_isEmphasizeYield(YIELD_PRODUCTION) || AI_isEmphasizeGreatPeople())
 							iPopToGrow = std::min(iPopToGrow, 2);
 						else if (AI_isEmphasizeYield(YIELD_COMMERCE))
@@ -9587,7 +9672,7 @@ int CvCityAI::AI_yieldValue(short* piYields, short* piCommerceYields, bool bRemo
 							if (bFillingBar)
 								iDevalueRate = 25 + 15 * (iFoodLevel + iAdjustedFoodPerTurn) / iFoodToGrow;
 							else
-								iDevalueRate = 20 - std::min(5, iPopToGrow)*3;
+								iDevalueRate = 18 - std::min(5, iPopToGrow)*3;
 
 							if (iHealthLevel < 1)
 								iDevalueRate += 5;
@@ -9602,7 +9687,8 @@ int CvCityAI::AI_yieldValue(short* piYields, short* piCommerceYields, bool bRemo
 
 				// Slavery evaluation
 				// K-Mod. Rescaled values and conditions.
-				if (!bWorkerOptimization && isProduction() && kOwner.canPopRush() && getHurryAngerTimer() <= std::min(3,getPopulation()/2)+2*iHappinessLevel) // K-Mod
+				//if (!bWorkerOptimization && isProduction() && kOwner.canPopRush() && (getHurryAngerTimer() <= std::min(3,getPopulation()/2)+2*iHappinessLevel || bEmphasizeFood)) // K-Mod
+				if (!bWorkerOptimization && isProduction() && kOwner.canPopRush() && iHappinessLevel >= 0)
 				{
 					//iSlaveryValue = 30 * 14 * std::max(0, aiYields[YIELD_FOOD] - ((iHealthLevel < 0) ? 1 : 0));
 					int iProductionPerPop = 0;
@@ -9615,17 +9701,41 @@ int CvCityAI::AI_yieldValue(short* piYields, short* piCommerceYields, bool bRemo
 						}
 					}
 					FAssert(iProductionPerPop > 0);
-					// Note: '80' means that we're only counting 90% of the potential production, because slavery require careful micromangement to get 100% of the value.
-					// Ideally, we'd try to take our infrastructure needs into account. (ie. how much do we still need to build.)
+
+					/* old calculation
+					// Note: '80' means that we're only counting 80% of the potential production, because slavery require careful micromangement to get 100% of the value.
 					iSlaveryValue = 80 * iProductionPerPop * iBaseProductionValue * std::max(0, iFoodYield - ((iHealthLevel < 0) ? 1 : 0));
 					iSlaveryValue /= std::max(10*100, (growthThreshold() * (100 - getMaxFoodKeptPercent())));
 
 					iSlaveryValue *= 100;
 					iSlaveryValue /= getHurryCostModifier(true);
-
 					iSlaveryValue *= iConsumtionPerPop * 2;
-					//iSlaveryValue /= iConsumtionPerPop * 2 + std::max(0, iAdjustedFoodDifference);
-					iSlaveryValue /= iConsumtionPerPop * 2 + std::max(0, iAdjustedFoodPerTurn - iConsumtionPerPop * iHappinessLevel);
+					iSlaveryValue /= iConsumtionPerPop * 2 + std::max(0, iAdjustedFoodPerTurn - iConsumtionPerPop * iHappinessLevel);*/
+
+					// We'll use the same 'devalue rate' system as we used for growth value earlier.
+					// Ideally, we'd try to take our infrastructure needs into account. (ie. how much do we still need to build.)
+					int iWhipValue = 100 * iProductionPerPop * iBaseProductionValue; // the factor of 100 is removed at the end.
+
+					int iDevalueRate = 0;
+					if (!bEmphasizeFood && !isNoUnhappiness())
+					{
+						// What we really care about is how many turns it will take to grow the population lost from whipping.
+						// But that calculation isn't easy (given that number of turns will depend on which plots we choose to work - potentially resulting in circular reasoning.)
+						// So we're just going to do some ad hoc calculation instead.
+						iDevalueRate = std::max(0, 10 + getHurryAngerTimer()*(3+iPopulation)/(1+3*iPopulation) - iHappinessLevel*3); // 1*timer for size 1. 1/3 * in limit.
+
+						if (iHealthLevel < 0)
+							iDevalueRate += 5;
+					}
+					int iBestFoodYield = std::max(0, std::min(iFoodYield, 100/std::max(1, iDevalueRate) - iAdjustedFoodPerTurn)); // maximum value for this amount of food.
+					iSlaveryValue = iBestFoodYield * iWhipValue * (100 - iDevalueRate*iAdjustedFoodPerTurn) / 100;
+					iSlaveryValue -= iBestFoodYield * iBestFoodYield * iDevalueRate * iWhipValue / 200;
+
+					iSlaveryValue *= 100;
+					iSlaveryValue /= getHurryCostModifier(true);
+					iSlaveryValue /= std::max(10*100, (growthThreshold() * (100 - getMaxFoodKeptPercent())));
+
+					FAssert(iSlaveryValue >= 0);
 				}
 			}
 		}
@@ -9912,7 +10022,7 @@ int CvCityAI::AI_jobChangeValue(std::pair<bool, int> new_job, std::pair<bool, in
 			}
 
 			// Scale based on how often this city will actually get a great person.
-			if (!AI_isEmphasizeGreatPeople())
+			if (iGPPValue != 0 && !AI_isEmphasizeGreatPeople())
 			{
 				int iCityRate = getGreatPeopleRate() + iGPPGained - iGPPLost;
 				int iHighestRate = 0;
@@ -10115,48 +10225,91 @@ int CvCityAI::AI_growthValuePerFood() const
 	int iFoodMultiplier = getBaseYieldRateModifier(YIELD_FOOD);
 	int iConsumtionPerPop = std::max(1, GC.getFOOD_CONSUMPTION_PER_POPULATION());
 
-	std::vector<int> jobs;
+	// Note, although we are trying to evaluate growth value, we still need to take into account jobs
+	// we are already working, because some of our food goes into supporting those jobs; and if they
+	// are significantly more valuable than the unworked jobs, then our cities just won't want to grow.
+	// (This function is probably a good place to calculate the 'devalue rate' used in food evaluation. But we aren't doing that right now.)
+	std::vector<int> unworked_jobs;
+	std::vector<int> worked_jobs;
 	for (int i = 1; i < NUM_CITY_PLOTS; i++)
 	{
-		if (isWorkingPlot(i))
-			continue;
-
 		CvPlot* pLoopPlot = getCityIndexPlot(i);
 		if (pLoopPlot == 0)
 			continue;
 
-		int iValue = AI_plotValue(pLoopPlot, false, true, true, -1);
+		if (pLoopPlot->getWorkingCity() != this)
+			continue;
 
+		if (isWorkingPlot(i) && pLoopPlot->getYield(YIELD_FOOD) >= iConsumtionPerPop)
+			continue; // we don't need to evaluate self-sufficient plots already being worked.
+
+		int iValue = AI_plotValue(pLoopPlot, isWorkingPlot(i), true, true, -1);
 		iValue *= 100 * iConsumtionPerPop + iFoodMultiplier * pLoopPlot->getYield(YIELD_FOOD);
 		iValue /= 100 * iConsumtionPerPop;
 
-		jobs.push_back(iValue);
+		if (isWorkingPlot(i))
+		{
+			/*iValue *= 100 * iConsumtionPerPop;
+			iValue /= 100 * iConsumtionPerPop + iFoodMultiplier * pLoopPlot->getYield(YIELD_FOOD);*/
+			worked_jobs.push_back(iValue);
+		}
+		else
+		{
+			unworked_jobs.push_back(iValue);
+		}
 	}
 
 	const CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
 
 	for (SpecialistTypes i = (SpecialistTypes)0; i < GC.getNumSpecialistInfos(); i = (SpecialistTypes)(i+1))
 	{
-		int iAvailable = kOwner.isSpecialistValid(i) ? 3 : std::min(3, getMaxSpecialistCount(i) - getSpecialistCount(i));
+		// cf. CvCity::isSpecialistValid
+		int iAvailable = (kOwner.isSpecialistValid(i) || i == GC.getDefineINT("DEFAULT_SPECIALIST"))
+			? 3
+			: std::min(3, getMaxSpecialistCount(i) - getSpecialistCount(i));
 
-		if (iAvailable > 0)
+		int iCurrent = getSpecialistCount(i); // this could get messed up by free specialists. I'm not sure if that's a problem.
+		// consider using totalFreeSpecialists() or something to get if we are actually feeding these specialists.
+
+		if (iAvailable > 0 || (iCurrent > 0 && kOwner.specialistYield(i, YIELD_FOOD) < iConsumtionPerPop))
 		{
-			FAssert(isSpecialistValid(i, iAvailable));
-			int iValue = AI_specialistValue(i, false, true, -1);
+			FAssert(iAvailable == 0 || isSpecialistValid(i, iAvailable));
+			int iValue = AI_specialistValue(i, false, true, -1); // note. I'm just sticking with `bRemove == false` so that we don't have to evaluate twice.
 			iValue *= 100 * iConsumtionPerPop + iFoodMultiplier * kOwner.specialistYield(i, YIELD_FOOD);
 			iValue /= 100 * iConsumtionPerPop;
 
-			while (--iAvailable >= 0)
-				jobs.push_back(iValue);
+			if (iCurrent > 0)
+			{
+				/* int iValue = iBaseValue;
+				iValue *= 100 * iConsumtionPerPop;
+				iValue /= 100 * iConsumtionPerPop + iFoodMultiplier * kOwner.specialistYield(i, YIELD_FOOD); */
+
+				while (--iCurrent >= 0)
+					worked_jobs.push_back(iValue);
+			}
+			if (iAvailable > 0)
+			{
+				while (--iAvailable >= 0)
+					unworked_jobs.push_back(iValue);
+			}
 		}
 	}
 
-	// ok. we've surveyed the available jobs. Now, the growth value..
-	while (jobs.size() < 3)
-		jobs.push_back(0);
-	std::partial_sort(jobs.begin(), jobs.begin() + 3, jobs.end(), std::greater<int>());
+	// ok. we've surveyed the available jobs.
+	// To calculate the food value, we'll use the values of the best 3 unworked jobs; but we'll also consider the worst of the worked jobs.
+	// (To be honest, I'm really not sure what is the best way to handle the worked jobs. The current system can cause flip-flopping, due to food value decreasing when food is being worked.)
+	// Note: from here on, "unworked_jobs" isn't only for unworked jobs.
 
-	return (jobs[0]*4 + jobs[1]*2 + jobs[2]*1) / (700 * iConsumtionPerPop);
+	while (worked_jobs.size() < 3)
+		worked_jobs.push_back(0);
+	std::partial_sort(worked_jobs.begin(), worked_jobs.begin() + 3, worked_jobs.end(), std::less_equal<int>()); // worst 3 worked jobs.
+
+	for (int i = 0; i < 3; ++i)
+		unworked_jobs.push_back(worked_jobs[i]);
+
+	std::partial_sort(unworked_jobs.begin(), unworked_jobs.begin() + 3, unworked_jobs.end(), std::greater<int>()); // best 3 unworked (or best of the worsed worked)
+
+	return (unworked_jobs[0]*4 + unworked_jobs[1]*2 + unworked_jobs[2]*1) / (700 * iConsumtionPerPop);
 }
 // K-Mod end
 
@@ -11262,16 +11415,14 @@ int CvCityAI::AI_getYieldMagicValue(const int* piYieldsTimes100, bool bHealthy) 
 int CvCityAI::AI_getPlotMagicValue(CvPlot* pPlot, bool bHealthy, bool bWorkerOptimization) const
 {
 	int aiYields[NUM_YIELD_TYPES];
-	ImprovementTypes eCurrentImprovement;
-	ImprovementTypes eFinalImprovement;
-	int iI;
-	int iYieldDiff;
+
+	bool bFinalBuildAssumed = bWorkerOptimization && pPlot->getWorkingCity() == this && AI_getBestBuild(getCityPlotIndex(pPlot)) != NO_BUILD;
 
 	FAssert(pPlot != NULL);
 
-	for (iI = 0; iI < NUM_YIELD_TYPES; iI++)
+	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{
-		if ((bWorkerOptimization) && (pPlot->getWorkingCity() == this) && (AI_getBestBuild(getCityPlotIndex(pPlot)) != NO_BUILD))
+		if (bFinalBuildAssumed)
 		{
 			aiYields[iI] = pPlot->getYieldWithBuild(AI_getBestBuild(getCityPlotIndex(pPlot)), (YieldTypes)iI, true);
 		}
@@ -11281,20 +11432,29 @@ int CvCityAI::AI_getPlotMagicValue(CvPlot* pPlot, bool bHealthy, bool bWorkerOpt
 		}
 	}
 
-	eCurrentImprovement = pPlot->getImprovementType();
+	ImprovementTypes eCurrentImprovement = pPlot->getImprovementType();
 
-	if (eCurrentImprovement != NO_IMPROVEMENT)
+	if (eCurrentImprovement != NO_IMPROVEMENT && !bFinalBuildAssumed)
 	{
-		eFinalImprovement = finalImprovementUpgrade(eCurrentImprovement);
+		/* ImprovementTypes eFinalImprovement = finalImprovementUpgrade(eCurrentImprovement);
 
 		if ((eFinalImprovement != NO_IMPROVEMENT) && (eFinalImprovement != eCurrentImprovement))
 		{
-			for (iI = 0; iI < NUM_YIELD_TYPES; iI++)
+			for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
 			{
 				iYieldDiff = 100 * pPlot->calculateImprovementYieldChange(eFinalImprovement, ((YieldTypes)iI), getOwnerINLINE());
 				iYieldDiff -= 100 * pPlot->calculateImprovementYieldChange(eCurrentImprovement, ((YieldTypes)iI), getOwnerINLINE());
 				aiYields[iI] += iYieldDiff / 2;
 			}
+		} */
+		// K-Mod.
+		short aiYieldDiffs[NUM_YIELD_TYPES] = {};
+		AI_finalImprovementYieldDifference(pPlot, aiYieldDiffs);
+		// Remember, aiYields has values *100.
+		for (int iI = 0; iI < NUM_YIELD_TYPES; ++iI)
+		{
+			//aiYields[iI] += bWorkerOptimization ? aiYieldDiffs[iI]*100 : aiYieldDiffs[iI]*50;
+			aiYields[iI] += aiYieldDiffs[iI]*100; //  Just use the final values.
 		}
 	}
 
@@ -11320,7 +11480,7 @@ int CvCityAI::AI_countGoodTiles(bool bHealthy, bool bUnworkedOnly, int iThreshol
 			{
 				if (!bUnworkedOnly || !(pLoopPlot->isBeingWorked()))
 				{
-					if (AI_getPlotMagicValue(pLoopPlot, bHealthy) > iThreshold)
+					if (AI_getPlotMagicValue(pLoopPlot, bHealthy, bWorkerOptimization) > iThreshold)
 					{
 						iCount++;
 					}

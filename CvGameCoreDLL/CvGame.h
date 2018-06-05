@@ -326,7 +326,8 @@ public:
 	DllExport GameStateTypes getGameState() const;																		// Exposed to Python
 	DllExport void setGameState(GameStateTypes eNewValue);
 
-	DllExport EraTypes getStartEra() const;																			// Exposed to Python
+	//DllExport EraTypes getStartEra() const;																			// Exposed to Python
+    DllExport EraTypes getStartEra(PlayerTypes ePlayer = NO_PLAYER) const;	// DarkLunaphantom - Adjusted for Advanced Settlers game option.		// Exposed to Python
 
 	DllExport CalendarTypes getCalendar() const;																// Exposed to Python
 

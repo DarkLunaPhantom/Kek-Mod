@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by lcollins (Firaxis Games) -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_GAME_OPTION_ADVANCED_SETTLERS</Tag>
+		<English>Advanced Settlers</English>
+		<French>Colons avanc&#233;s</French>
+		<German>Fortgeschrittene Siedler</German>
+		<Italian>Coloni avanzati</Italian>
+		<Spanish>Colonos avanzados</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GAME_OPTION_ADVANCED_SETTLERS_HELP</Tag>
+		<English>New cities start with more population and buildings as the game progresses through eras.</English>
+		<French>Les nouvelles villes commencent avec plus de population et de b&#226;timents que le jeu progresse &#224; travers les &#233;poques.</French>
+		<German>Neue St&#228;dte beginnen mit mehr Bev&#246;lkerung und Gebäuden, w&#228;hrend das Spiel in Epochen voranschreitet.</German>
+		<Italian>Le nuove citt&#224; iniziano con pi&#249; popolazione ed edifici man mano che il gioco progredisce attraverso le epoche.</Italian>
+		<Spanish>Las nuevas ciudades comienzan con m&#225;s poblaci&#243;n y edificios a medida que el juego avanza por &#233;pocas.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GAME_OPTION_DUMMY</Tag>
+		<English></English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GAME_OPTION_DUMMY_HELP</Tag>
+		<English></English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GAME_OPTION_UNLIMITED_PERMANENT_ALLIANCES</Tag>
+		<English>Unlimited Permanent Alliances</English>
+		<French>Alliances permanentes illimit&#233;es</French>
+		<German>Unbegrenzte Allianzen</German>
+		<Italian>Alleanze permanenti illimitate</Italian>
+		<Spanish>Alianzas permanentes ilimitadas</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GAME_OPTION_UNLIMITED_PERMANENT_ALLIANCES_HELP</Tag>
+		<English>More than two civilizations can form a Permanent Alliance which lasts the rest of the game.</English>
+		<French>Plus de deux civilisations peuvent former une alliance permanente qui dure le reste de la partie.</French>
+		<German>Mehr als zwei Zivilisationen k&#246;nnen eine Allianz bilden, die den Rest des Spiels dauert.</German>
+		<Italian>Pi&#249; di due civilt&#224; possono formare un'alleanza permanente che dura per il resto del partito.</Italian>
+		<Spanish>M&#225;s de dos civilizaciones pueden formar una alianza permanente que dura para el resto de la fiesta.</Spanish>
+	</TEXT>
+</Civ4GameText>

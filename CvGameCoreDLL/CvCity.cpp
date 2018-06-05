@@ -271,7 +271,8 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 	setGameTurnFounded(GC.getGameINLINE().getGameTurn());
 	setGameTurnAcquired(GC.getGameINLINE().getGameTurn());
 
-	changePopulation(GC.getDefineINT("INITIAL_CITY_POPULATION") + GC.getEraInfo(GC.getGameINLINE().getStartEra()).getFreePopulation());
+	//changePopulation(GC.getDefineINT("INITIAL_CITY_POPULATION") + GC.getEraInfo(GC.getGameINLINE().getStartEra()).getFreePopulation());
+    changePopulation(GC.getDefineINT("INITIAL_CITY_POPULATION") + GC.getEraInfo(GC.getGameINLINE().getStartEra(getOwnerINLINE())).getFreePopulation()); // DarkLunaPhantom - Adjusted for Advanced Settlers game option.
 
 //Added in Final Frontier: TC01
 	for (int iTrait = 0; iTrait < GC.getNumTraitInfos(); iTrait++)
@@ -711,7 +712,7 @@ void CvCity::setupGraphical()
 	setLayoutDirty(true);
 }
 
-void CvCity::kill(bool bUpdatePlotGroups)
+void CvCity::kill(bool bUpdatePlotGroups, bool bRemoveCulture) // DarkLunaPhantom - Added bRemoveCulture to erase (most) plot culture of destroyed cities.
 {
 	CvPlot* pPlot;
 	CvPlot* pAdjacentPlot;
@@ -740,7 +741,20 @@ void CvCity::kill(bool bUpdatePlotGroups)
 		}
 	}
 
-	setCultureLevel(NO_CULTURELEVEL, false);
+    // DarkLunaPhantom - Erase (most) plot culture of destroyed cities.
+    //setCultureLevel(NO_CULTURELEVEL, false);
+    int iCultureLevel = std::max(0, (int)getCultureLevel());
+    if (bRemoveCulture)
+    {
+        for (int iI; iI < MAX_PLAYERS; ++iI)
+        {
+            setCultureTimes100((PlayerTypes)iI, 0, true, false);
+        }
+    }
+    else
+    {
+        setCultureLevel(NO_CULTURELEVEL, false);
+    }
 
 	for (iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 	{
@@ -787,9 +801,11 @@ void CvCity::kill(bool bUpdatePlotGroups)
 
 	// remember the visibility before we take away the city from the plot below
 	std::vector<bool> abEspionageVisibility;
+    bool* pabCityRevealed = new bool[MAX_TEAMS]; // DarkLunaPhantom
 	for (iI = 0; iI < MAX_TEAMS; iI++)
 	{
 		abEspionageVisibility.push_back(getEspionageVisibility((TeamTypes)iI));
+        pabCityRevealed[iI] = isRevealed((TeamTypes)iI, false); // DarkLunaPhantom
 	}
 
 /************************************************************************************************/
@@ -810,8 +826,9 @@ void CvCity::kill(bool bUpdatePlotGroups)
 /*                                                                                              */
 /* Bugfix                                                                                       */
 /************************************************************************************************/
+    // DarkLunaPhantom - No.
 	// Replace floodplains after city is removed
-	if (pPlot->getBonusType() == NO_BONUS)
+	/*if (pPlot->getBonusType() == NO_BONUS)
 	{
 		for (int iJ = 0; iJ < GC.getNumFeatureInfos(); iJ++)
 		{
@@ -827,7 +844,7 @@ void CvCity::kill(bool bUpdatePlotGroups)
 				}
 			}
 		}
-	}
+	}*/
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
@@ -884,6 +901,40 @@ void CvCity::kill(bool bUpdatePlotGroups)
 			pPlot->changeAdjacentSight((TeamTypes)iI, GC.getDefineINT("PLOT_VISIBILITY_RANGE"), false, NULL, false);
 		}
 	}
+    
+    // DarkLunaPhantom begin - "Reveal" lack of plot culture after the city is removed. (cf. CvCity::acquireCity).
+    if (bRemoveCulture)
+    {
+        for (int iI = 0; iI < MAX_TEAMS; ++iI)
+        {
+            if (pabCityRevealed[iI])
+            {
+                for (int iDX = -(iCultureLevel); iDX <= iCultureLevel; iDX++)
+                {
+                    for (int iDY = -(iCultureLevel); iDY <= iCultureLevel; iDY++)
+                    {
+                        if (plotDistance(0, 0, iDX, iDY) <= iCultureLevel)
+                        {
+                            pLoopPlot = plotXY(pPlot->getX_INLINE(), pPlot->getY_INLINE(), iDX, iDY);
+
+                            if (pLoopPlot != NULL)
+                            {
+                                if (pLoopPlot->getRevealedOwner((TeamTypes)iI, false) == eOwner && pLoopPlot->getOwnerINLINE() != eOwner)
+                                {
+                                    pLoopPlot->setRevealedOwner((TeamTypes)iI, NO_PLAYER);
+                                }
+                            }
+                        }
+                    }
+                }
+            
+                pPlot->setRevealedImprovementType((TeamTypes)iI, pPlot->getImprovementType());
+            }
+        }
+    }
+    
+    SAFE_DELETE_ARRAY(pabCityRevealed);
+    // DarkLunaPhantom end
 
 	GET_PLAYER(eOwner).updateMaintenance();
 
@@ -6129,7 +6180,7 @@ int CvCity::calculateNumCitiesMaintenanceTimes100() const
 	iNumVassalCities /= std::max(1, GET_TEAM(getTeam()).getNumMembers());
 /*
 ** K-Mod, 04/sep/10, karadoc
-** Reduced vassal maintenace and removed maintenace cap
+** Reduced vassal maintenance and removed maintenance cap
 */
 	/* original BTS code
 	int iNumCitiesMaintenance = (GET_PLAYER(getOwnerINLINE()).getNumCities() + iNumVassalCities) * iNumCitiesPercent;
@@ -7771,13 +7822,17 @@ void CvCity::changeForeignTradeRouteModifier(int iChange)
 **/
 int CvCity::getTradeCultureRateTimes100(int iLevel) const
 {
-	// int iPercent = std::min((int)getCultureLevel(), iLevel) - 1;
-	// I've disabled the cap since trade culture isn't added to city culture now, 11/dec/10
-	int iPercent = (int)getCultureLevel();
+	// Note: iLevel currently isn't used.
+
+	//int iPercent = (int)getCultureLevel();
+
+	// Note: GC.getNumCultureLevelInfos() is 7 with the standard xml, which means legendary culture is level 6.
+	// So we have 3, 4, 4, 5, 5, 6, 6
+	int iPercent = (GC.getNumCultureLevelInfos()+(int)getCultureLevel())/2;
 
 	if (iPercent > 0)
 	{
-		// 1% of culture rate for each culture level.
+		// (originally this was 1% of culture rate for each culture level.)
 		return (m_aiCommerceRate[COMMERCE_CULTURE] * iPercent)/100;
 	}
 	return 0;
@@ -9368,7 +9423,7 @@ int CvCity::getBuildingCommerceByBuilding(CommerceTypes eIndex, BuildingTypes eB
 			GC.getGameINLINE().getGameTurnYear() - getBuildingOriginalTime(eBuilding) >= kBuilding.getCommerceChangeDoubleTime(eIndex)
 			? 2 : 1;
 		// there are just two components which get multiplied by the time factor: the standard commerce, and the "safe" commerce.
-		// the rest of the compontents are bonuses which should not be doubled.
+		// the rest of the components are bonuses which should not be doubled.
 
 		if (!kBuilding.isCommerceChangeOriginalOwner(eIndex) || getBuildingOriginalOwner(eBuilding) == getOwnerINLINE())
 		{
@@ -10141,7 +10196,7 @@ bool CvCity::canCultureFlip(PlayerTypes eToPlayer) const
 
 	return !GC.getGameINLINE().isOption(GAMEOPTION_NO_CITY_FLIPPING) &&
 		(GC.getGameINLINE().isOption(GAMEOPTION_FLIPPING_AFTER_CONQUEST) || getPreviousOwner() == NO_PLAYER || GET_PLAYER(getPreviousOwner()).getTeam() != GET_PLAYER(eToPlayer).getTeam()) &&
-		getNumRevolts(eToPlayer) >= GC.getDefineINT("NUM_WARNING_REVOLTS");
+		getNumRevolts(eToPlayer) >= GC.getDefineINT("NUM_WARNING_REVOLTS") && !GET_TEAM(GET_PLAYER(eToPlayer).getTeam()).isVassal(getTeam()); // DarkLunaPhantom - Blocked flips from master to vassal.
 }
 // K-Mod end
 
@@ -10445,7 +10500,7 @@ void CvCity::setName(const wchar* szNewValue, bool bFound)
 {
 	CvWString szName(szNewValue);
 	gDLL->stripSpecialCharacters(szName);
-	// K-Mod. stripSpecialCharacters apparently doesn't count '%' as a special characater
+	// K-Mod. stripSpecialCharacters apparently doesn't count '%' as a special character
 	// however, strings with '%' in them will cause the game to crash. So I'm going to strip them out.
 	for (CvWString::iterator it = szName.begin(); it != szName.end(); )
 	{
@@ -13048,7 +13103,7 @@ void CvCity::doCulture()
 }
 
 
-// This function has essentially been rewriten for K-Mod. (and it use to not be 'times 100')
+// This function has essentially been rewritten for K-Mod. (and it use to not be 'times 100')
 // A note about scale: the city plot itself gets roughly 10x culture. The outer edges of the cultural influence get 1x culture (ie. the influence that extends beyond the borders).
 void CvCity::doPlotCultureTimes100(bool bUpdate, PlayerTypes ePlayer, int iCultureRateTimes100, bool bCityCulture)
 {
@@ -13097,12 +13152,14 @@ void CvCity::doPlotCultureTimes100(bool bUpdate, PlayerTypes ePlayer, int iCultu
 	// (original bts code deleted)
 
 	// Experimental culture profile...
-	// Ae^(-bx). A = 10 (no effect), b = log(full_range_ratio)/range
+	// Ae^(-bx). A = 10 (no effect), b = log(full_range_ratio)/range, x = distance from centre
+	//
 	// (iScale-1)(iDistance - iRange)^2/(iRange^2) + 1   // This approximates the exponential pretty well
+	// In our case, 10^(-x/R), where x is distance, and R is max range. So it's 10 times culture at the centre compared to the edge.
 	const int iScale = 10;
 	const int iCultureRange = eCultureLevel + 3;
 
-	//const int iOuterRatio = 10;
+	//const int iOuterRatio = 10; // Ratio of culture added at centre vs culture added at max range.
 	//const double iB = log((double)iOuterRatio)/iCultureRange;
 
 	// free culture bonus for cities
@@ -13125,12 +13182,12 @@ void CvCity::doPlotCultureTimes100(bool bUpdate, PlayerTypes ePlayer, int iCultu
 					{
 						if (pLoopPlot->isPotentialCityWorkForArea(area()))
 						{
-							/* int iCultureToAdd =
-								(iInnerFactor * iCultureRange - iDistance * (iInnerFactor - iOuterFactor))
-								* iCultureRateTimes100 / (iCultureRange * 100); */
 							//int iCultureToAdd = (int)(iScale*iCultureRateTimes100*exp(-iB*iDistance)/100);
-							int iCultureToAdd =
-								iCultureRateTimes100*((iScale-1)*(iDistance-iCultureRange)*(iDistance-iCultureRange) + iCultureRange*iCultureRange)/(100*iCultureRange*iCultureRange);
+							// approxately = culture * ( (iScale-1)(iDistance - iRange)^2/(iRange^2) + 1 )
+
+							// Cast to double to avoid overflow. (The world-builder can add a lot of culture in one hit.)
+                            int delta = iDistance-iCultureRange;
+							int iCultureToAdd = static_cast<int>(iCultureRateTimes100 * static_cast<double>((iScale-1)*delta*delta + iCultureRange*iCultureRange) / (100.0*iCultureRange*iCultureRange));
 
 							pLoopPlot->changeCulture(ePlayer, iCultureToAdd, (bUpdate || !(pLoopPlot->isOwned())));
 						}
@@ -15560,22 +15617,24 @@ void CvCity::liberate(bool bConquest)
 			GET_TEAM(GET_PLAYER(ePlayer).getTeam()).setVassalPower(GET_TEAM(GET_PLAYER(ePlayer).getTeam()).getVassalPower() + iNewVassalLand - iOldVassalLand);
 		}
 
-		if (NULL != pPlot)
+        // DarkLunaPhantom begin - Liberation will now give all previous owner's culture to the new one, but it will be handled elsewhere. (cf. CvCity::acquireCity)
+        // Also, I don't see the need for free units in case of a vassal new owner.
+		/*if (NULL != pPlot)
 		{
 			CvCity* pCity = pPlot->getPlotCity();
 			if (NULL != pCity)
-			{
+			{*/
 /*
 ** K-Mod, 7/jan/11, karadoc
 ** This mechanic was exploitable. Players could increase their culture indefinitely in a single turn by gifting cities backwards and forwards.
 ** I've attempted to close the exploit.
 */
-				if (!bPreviouslyOwned) // K-Mod
-					pCity->setCultureTimes100(ePlayer, pCity->getCultureTimes100(ePlayer) + iOldOwnerCulture / 2, true, true);
+				//if (!bPreviouslyOwned) // K-Mod
+				//	pCity->setCultureTimes100(ePlayer, pCity->getCultureTimes100(ePlayer) + iOldOwnerCulture / 2, true, true);
 /*
 ** K-Mod end
 */
-			}
+			/*}
 
 			if (GET_TEAM(GET_PLAYER(ePlayer).getTeam()).isAVassal())
 			{
@@ -15584,7 +15643,8 @@ void CvCity::liberate(bool bConquest)
 					pCity->initConscriptedUnit();
 				}
 			}
-		}
+		}*/
+        // DarkLunaPhantom end
 	}
 }
 

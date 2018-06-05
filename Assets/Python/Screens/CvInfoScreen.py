@@ -2455,7 +2455,8 @@ class CvInfoScreen:
 								if (iTeamLoop == self.iActiveTeam or self.pActiveTeam.isHasMet(iTeamLoop)):
 									self.aaWondersBuilt_BUG.append([-9999,iProjectLoop,True,gc.getPlayer(iPlayerLoop).getCivilizationShortDescription(0),None, iPlayerLoop])
 								else:
-									self.aaWondersBuilt_BUG.append([-9999,iProjectLoop,False,localText.getText("TXT_KEY_UNKNOWN", ()),None, 9999])
+									#self.aaWondersBuilt_BUG.append([-9999,iProjectLoop,False,localText.getText("TXT_KEY_UNKNOWN", ()),None, 9999])
+									self.aaWondersBuilt_BUG.append([-9999,iProjectLoop,False,localText.getText("TXT_KEY_UNKNOWN", ()),None, gc.getBARBARIAN_PLAYER()]) # DarkLunaPhantom
 								self.iNumWonders += 1
 
 		# Sort wonders in order of date built

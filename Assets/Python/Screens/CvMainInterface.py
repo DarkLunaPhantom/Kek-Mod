@@ -3508,12 +3508,18 @@ class CvMainInterface:
 # BUG - NJAGC - start
 				if (ClockOpt.isEnabled()
 				and ClockOpt.isShowEra()):
-					szText = localText.getText("TXT_KEY_BUG_ERA", (gc.getEraInfo(gc.getPlayer(ePlayer).getCurrentEra()).getDescription(), ))
+					# DarkLunaPhantom - Added game era.
+					playerEra = gc.getPlayer(ePlayer).getCurrentEra()
+					gameEra = gc.getGame().getCurrentEra()
+					if (playerEra == gameEra):
+						szText = localText.getText("TXT_KEY_BUG_ERA", (gc.getEraInfo(playerEra).getDescription(), ))
+					else:
+						szText = localText.getText("TXT_KEY_BUG_ERAS", (gc.getEraInfo(playerEra).getDescription(), gc.getEraInfo(gameEra).getDescription()))
 					if(ClockOpt.isUseEraColor()):
-						iEraColor = ClockOpt.getEraColor(gc.getEraInfo(gc.getPlayer(ePlayer).getCurrentEra()).getType())
+						iEraColor = ClockOpt.getEraColor(gc.getEraInfo(playerEra).getType())
 						if (iEraColor >= 0):
 							szText = localText.changeTextColor(szText, iEraColor)
-					screen.setLabel( "EraText", "Background", szText, CvUtil.FONT_RIGHT_JUSTIFY, 250, 6, -0.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+					screen.setLabel( "EraText", "Background", szText, CvUtil.FONT_RIGHT_JUSTIFY, 250, 20, -0.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 					screen.show( "EraText" )
 # BUG - NJAGC - end
 				
@@ -5427,6 +5433,10 @@ class CvMainInterface:
 												szPlayerScore = u"%d" % iScore
 												if (bAlignIcons):
 													scores.setScore(szPlayerScore)
+													if (gc.getTeam(gc.getPlayer(ePlayer).getTeam()).getNumMembers() > 1): #DarkLunaPhantom
+														scores.setTeamScore(u"(%d)" % gc.getGame().getTeamScore(gc.getPlayer(ePlayer).getTeam()))
+													else:
+														scores.setTeamScore("")
 # BUG - Score Delta - start
 												if (ScoreOpt.isShowScoreDelta()):
 													iGameTurn = gc.getGame().getGameTurn()
@@ -5467,6 +5477,10 @@ class CvMainInterface:
 											if (bAlignIcons):
 												scores.setName(szPlayerName)
 												scores.setID(u"<color=%d,%d,%d,%d>%d</color>" %(gc.getPlayer(ePlayer).getPlayerTextColorR(), gc.getPlayer(ePlayer).getPlayerTextColorG(), gc.getPlayer(ePlayer).getPlayerTextColorB(), gc.getPlayer(ePlayer).getPlayerTextColorA(), ePlayer))
+												if (gc.getTeam(gc.getPlayer(ePlayer).getTeam()).getNumMembers() > 1): #DarkLunaPhantom
+													scores.setTeam(u"<color=%d,%d,%d,%d>(%d)</color>" %(gc.getPlayer(ePlayer).getPlayerTextColorR(), gc.getPlayer(ePlayer).getPlayerTextColorG(), gc.getPlayer(ePlayer).getPlayerTextColorB(), gc.getPlayer(ePlayer).getPlayerTextColorA(), gc.getPlayer(ePlayer).getTeam() + 1))
+												else:
+													scores.setTeam("")
 											
 											if (gc.getPlayer(ePlayer).isAlive()):
 												if (bAlignIcons):
@@ -5587,7 +5601,7 @@ class CvMainInterface:
 															scores.setWorstEnemy()
 # BUG - Worst Enemy - end
 # BUG - WHEOOH - start
-												if (ScoreOpt.isShowWHEOOH() and False): # disabled by K-Mod
+												if (ScoreOpt.isShowWHEOOH()):
 													if (PlayerUtil.isWHEOOH(ePlayer, PlayerUtil.getActivePlayerID())):
 														szTempBuffer = u"%c" %(CyGame().getSymbolID(FontSymbols.OCCUPATION_CHAR))
 														szBuffer = szBuffer + szTempBuffer

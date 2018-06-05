@@ -138,6 +138,7 @@ public:
 	void doTurnUnits();
 
 	void verifyCivics();
+	void verifyStateReligion(); // DarkLunaPhantom
 
 	void updatePlotGroups();
 
@@ -231,6 +232,7 @@ public:
 	void found(int iX, int iY);																																			// Exposed to Python			
 
 	DllExport bool canTrain(UnitTypes eUnit, bool bContinue = false, bool bTestVisible = false, bool bIgnoreCost = false) const;										// Exposed to Python
+	bool haveResourcesToTrain(UnitTypes eUnit) const; // K-Mod. (used in conjuction with canTrain, for AI related decisions.)
 	bool canConstruct(BuildingTypes eBuilding, bool bContinue = false, bool bTestVisible = false, bool bIgnoreCost = false, bool bIgnoreTech = false) const; // Exposed to Python, K-Mod added bIgnoreTech
 	bool canCreate(ProjectTypes eProject, bool bContinue = false, bool bTestVisible = false) const;							// Exposed to Python
 	bool canMaintain(ProcessTypes eProcess, bool bContinue = false) const;																			// Exposed to Python
@@ -1023,7 +1025,7 @@ public:
 	void setVote(int iId, PlayerVoteTypes ePlayerVote);
 
 	int getUnitExtraCost(UnitClassTypes eUnitClass) const;
-	void setUnitExtraCost(UnitClassTypes eUnitClass, int iCost);
+	//void setUnitExtraCost(UnitClassTypes eUnitClass, int iCost); // DarkLunaPhantom - This is not used anymore.
 
 	DllExport bool splitEmpire(int iAreaId);
 	bool canSplitEmpire() const;
@@ -1354,7 +1356,7 @@ protected:
 	UnitClassPromotionArray m_aFreeUnitClassPromotions;
 
 	std::vector< std::pair<int, PlayerVoteTypes> > m_aVote;
-	std::vector< std::pair<UnitClassTypes, int> > m_aUnitExtraCosts;
+	//std::vector< std::pair<UnitClassTypes, int> > m_aUnitExtraCosts; // DarkLunaPhantom - Not used anymore.
 
 	CvMessageQueue m_listGameMessages; 
 	CvPopupQueue m_listPopups;

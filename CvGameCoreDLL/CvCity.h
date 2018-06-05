@@ -38,7 +38,7 @@ public:
 	void reset(int iID = 0, PlayerTypes eOwner = NO_PLAYER, int iX = 0, int iY = 0, bool bConstructorCall = false);
 	void setupGraphical();
 
-	void kill(bool bUpdatePlotGroups);																								// Exposed to Python
+	void kill(bool bUpdatePlotGroups, bool bRemoveCulture = true);	// DarkLunaPhantom - Added bRemoveCulture to erase (most) plot culture of destroyed cities.				// Exposed to Python
 
 	void doTurn();
 
@@ -636,7 +636,7 @@ public:
 	bool isProductionAutomated() const;											// Exposed to Python
 	void setProductionAutomated(bool bNewValue, bool bClear);					// Exposed to Python 
 
-	/* allows you to programatically specify a cities walls rather than having them be generated automagically */
+	/* allows you to programmatically specify a cities walls rather than having them be generated automagically */
 	DllExport bool isWallOverride() const; 
 	void setWallOverride(bool bOverride);
 

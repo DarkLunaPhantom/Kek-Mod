@@ -1040,10 +1040,16 @@ void CvPlot::nukeExplosion(int iRange, CvUnit* pNukeUnit, bool bBomb)
 					{
 						pLoopUnit->changeDamage(iNukeDamage, ((pNukeUnit != NULL) ? pNukeUnit->getOwnerINLINE() : NO_PLAYER));
 					}
-					else if (iNukeDamage >= GC.getDefineINT("NUKE_NON_COMBAT_DEATH_THRESHOLD"))
+                    // DarkLunaPhantom begin - This was definitely an oversight. Bomb Shelter used to reduce the probability of nuke destroying a non-combat unit from around 80% to around 2-3%
+                    // (these probabilities are not immediately obvious and have to be calculated; exercise is left for the reader) because someone was not careful with probabilities.
+                    // NUKE_NON_COMBAT_DEATH_THRESHOLD was probably picked so that the probability is close to average nuke damage to combat units (which is 79%). I changed the chance to destroy
+                    // a non-combat unit to exactly 79%, and Bomb Shelter halves that so those are now exactly the same as average damage to combat units. NUKE_NON_COMBAT_DEATH_THRESHOLD is now unused.
+                    //else if (iNukeDamage >= GC.getDefineINT("NUKE_NON_COMBAT_DEATH_THRESHOLD"))
+					else if (GC.getGameINLINE().getSorenRandNum(100, "Non-Combat Nuke Rand") * 100 < std::max(0, (pLoopCity->getNukeModifier() + 100)) * (GC.getDefineINT("NUKE_UNIT_DAMAGE_BASE") -1 + (GC.getDefineINT("NUKE_UNIT_DAMAGE_RAND_1") + GC.getDefineINT("NUKE_UNIT_DAMAGE_RAND_2") - 1) / 2))
 					{
 						pLoopUnit->kill(false, ((pNukeUnit != NULL) ? pNukeUnit->getOwnerINLINE() : NO_PLAYER));
 					}
+                    // DarkLunaPhantom end
 				}
 			}
 
@@ -9062,7 +9068,7 @@ ColorTypes CvPlot::plotMinimapColor()
 			}
 		}
 
-		if ((getRevealedOwner(GC.getGameINLINE().getActiveTeam(), true) != NO_PLAYER) && !isRevealedBarbarian())
+		if ((getRevealedOwner(GC.getGameINLINE().getActiveTeam(), true) != NO_PLAYER)/* && !isRevealedBarbarian()*/) // DarkLunaPhantom - Show barbarian territory.
 		{
 			return ((ColorTypes)(GC.getPlayerColorInfo(GET_PLAYER(getRevealedOwner(GC.getGameINLINE().getActiveTeam(), true)).getPlayerColor()).getColorTypePrimary()));
 		}
@@ -9787,11 +9793,10 @@ int CvPlot::getYieldWithBuild(BuildTypes eBuild, YieldTypes eYield, bool bWithUp
 		{
 			//in the case that improvements upgrade, use 2 upgrade levels higher for the
 			//yield calculations.
-			ImprovementTypes eUpgradeImprovement = (ImprovementTypes)GC.getImprovementInfo(eImprovement).getImprovementUpgrade();
+			/* ImprovementTypes eUpgradeImprovement = (ImprovementTypes)GC.getImprovementInfo(eImprovement).getImprovementUpgrade();
 			if (eUpgradeImprovement != NO_IMPROVEMENT)
 			{
 				//unless it's commerce on a low food tile, in which case only use 1 level higher
-				// K-Mod, stuff that. Just use 2 levels.
 				//if ((eYield != YIELD_COMMERCE) || (getYield(YIELD_FOOD) >= GC.getFOOD_CONSUMPTION_PER_POPULATION()))
 				{
 					ImprovementTypes eUpgradeImprovement2 = (ImprovementTypes)GC.getImprovementInfo(eUpgradeImprovement).getImprovementUpgrade();
@@ -9805,7 +9810,12 @@ int CvPlot::getYieldWithBuild(BuildTypes eBuild, YieldTypes eYield, bool bWithUp
 			if ((eUpgradeImprovement != NO_IMPROVEMENT) && (eUpgradeImprovement != eImprovement))
 			{
 				eImprovement = eUpgradeImprovement;
-			}
+			} */ // original code
+
+			// K-Mod. Stuff that. Just use the final improvement.
+			ImprovementTypes eFinalImprovement = finalImprovementUpgrade(eImprovement);
+			if (eFinalImprovement != NO_IMPROVEMENT)
+				eImprovement = eFinalImprovement;
 		}
 		
 		iYield += calculateImprovementYieldChange(eImprovement, eYield, getOwnerINLINE(), false);
