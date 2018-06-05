@@ -18,7 +18,7 @@
 			<Description>TXT_KEY_GAME_OPTION_ADVANCED_SETTLERS</Description>
 			<Help>TXT_KEY_GAME_OPTION_ADVANCED_SETTLERS_HELP</Help>
 			<bDefault>0</bDefault>
-			<bVisible>1</bVisible>
+			<bVisible>0</bVisible>
 		</GameOptionInfo>
 		<GameOptionInfo>
 			<Type>GAMEOPTION_NO_CITY_RAZING</Type>

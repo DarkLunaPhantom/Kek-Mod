@@ -6346,7 +6346,9 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bFreeTech, b
 				iValue += 4 * std::min(iCityCount, iCityTarget); // just a little something extra for the early game... to indicate that we may have undervalued the civic's long term appeal.
 			}
 
-			if (eCivic == GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic())
+			// < Multiple Favorite Civics Start >
+			if (GC.getLeaderHeadInfo(getPersonalityType()).hasFavoriteCivic(eCivic))
+			// < Multiple Favorite Civics End   >
 				iValue += 6*iCityCount; // Note: favourite civic is already taken into account in the civic evaluation above.
 			else
 				iValue += 4*iCityCount;
