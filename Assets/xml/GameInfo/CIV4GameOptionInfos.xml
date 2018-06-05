@@ -59,7 +59,7 @@
 			<Type>GAMEOPTION_DUMMY</Type>
 			<Description>TXT_KEY_GAME_OPTION_DUMMY</Description>
 			<Help>TXT_KEY_GAME_OPTION_DUMMY_HELP</Help>
-			<bDefault>1</bDefault>
+			<bDefault>0</bDefault>
 			<bVisible>0</bVisible>
 		</GameOptionInfo>
 		<GameOptionInfo>
