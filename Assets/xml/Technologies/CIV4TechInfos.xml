@@ -17,7 +17,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>75</iCost>
-			<iAdvancedStartCost>70</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_ISOLATION</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -76,7 +76,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>130</iCost>
-			<iAdvancedStartCost>120</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_ISOLATION</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -137,7 +137,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>225</iCost>
-			<iAdvancedStartCost>200</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_ISOLATION</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -206,7 +206,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>360</iCost>
-			<iAdvancedStartCost>300</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_ISOLATION</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -271,7 +271,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>630</iCost>
-			<iAdvancedStartCost>500</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_EXPANSION</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -332,7 +332,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>1000</iCost>
-			<iAdvancedStartCost>800</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_EXPANSION</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -393,7 +393,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>1000</iCost>
-			<iAdvancedStartCost>750</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_EXPANSION</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -454,7 +454,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>1610</iCost>
-			<iAdvancedStartCost>1200</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_EXPANSION</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -518,7 +518,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>2310</iCost>
-			<iAdvancedStartCost>1700</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_EXPANSION</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -579,7 +579,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>3025</iCost>
-			<iAdvancedStartCost>2000</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_GALACTIC</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -651,7 +651,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>3580</iCost>
-			<iAdvancedStartCost>2300</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_GALACTIC</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -712,7 +712,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>4680</iCost>
-			<iAdvancedStartCost>2900</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_GALACTIC</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -775,7 +775,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>5850</iCost>
-			<iAdvancedStartCost>3700</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_GALACTIC</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -839,7 +839,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>7320</iCost>
-			<iAdvancedStartCost>4300</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_FAR_FUTURE</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -902,7 +902,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>75</iCost>
-			<iAdvancedStartCost>70</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_ISOLATION</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -969,7 +969,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>130</iCost>
-			<iAdvancedStartCost>120</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_ISOLATION</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -1038,7 +1038,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>225</iCost>
-			<iAdvancedStartCost>200</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_ISOLATION</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -1103,7 +1103,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>360</iCost>
-			<iAdvancedStartCost>300</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_ISOLATION</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -1177,7 +1177,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>630</iCost>
-			<iAdvancedStartCost>500</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_ISOLATION</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -1243,7 +1243,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>1000</iCost>
-			<iAdvancedStartCost>800</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_EXPANSION</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -1317,7 +1317,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>1610</iCost>
-			<iAdvancedStartCost>1200</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_EXPANSION</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -1384,7 +1384,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>2310</iCost>
-			<iAdvancedStartCost>1700</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_EXPANSION</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -1451,7 +1451,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>2860</iCost>
-			<iAdvancedStartCost>2000</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_GALACTIC</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -1516,7 +1516,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>3580</iCost>
-			<iAdvancedStartCost>2300</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_GALACTIC</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -1584,7 +1584,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>4680</iCost>
-			<iAdvancedStartCost>2900</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_GALACTIC</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -1655,7 +1655,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>5850</iCost>
-			<iAdvancedStartCost>3700</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_GALACTIC</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -1718,7 +1718,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>8780</iCost>
-			<iAdvancedStartCost>7200</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_FAR_FUTURE</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -1790,7 +1790,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>75</iCost>
-			<iAdvancedStartCost>70</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_ISOLATION</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -1853,7 +1853,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>130</iCost>
-			<iAdvancedStartCost>120</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_ISOLATION</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -1926,7 +1926,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>225</iCost>
-			<iAdvancedStartCost>200</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_ISOLATION</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -1991,7 +1991,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>360</iCost>
-			<iAdvancedStartCost>300</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_ISOLATION</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -2067,7 +2067,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>630</iCost>
-			<iAdvancedStartCost>500</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_ISOLATION</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -2136,7 +2136,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>1000</iCost>
-			<iAdvancedStartCost>800</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_EXPANSION</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -2211,7 +2211,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>1610</iCost>
-			<iAdvancedStartCost>1200</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_EXPANSION</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -2282,7 +2282,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>2310</iCost>
-			<iAdvancedStartCost>1700</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_EXPANSION</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -2348,7 +2348,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>2860</iCost>
-			<iAdvancedStartCost>2000</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_GALACTIC</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -2413,7 +2413,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>3300</iCost>
-			<iAdvancedStartCost>2300</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_GALACTIC</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -2482,7 +2482,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>4680</iCost>
-			<iAdvancedStartCost>2900</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_GALACTIC</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -2553,7 +2553,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>5850</iCost>
-			<iAdvancedStartCost>3700</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_GALACTIC</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -2614,7 +2614,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>7320</iCost>
-			<iAdvancedStartCost>4300</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_FAR_FUTURE</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -2683,7 +2683,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>8540</iCost>
-			<iAdvancedStartCost>4800</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_FAR_FUTURE</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -2755,7 +2755,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>10200</iCost>
-			<iAdvancedStartCost>5500</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_FAR_FUTURE</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -2822,7 +2822,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>630</iCost>
-			<iAdvancedStartCost>600</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_ISOLATION</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>
@@ -2897,7 +2897,7 @@
 			<iAIWeight>0</iAIWeight>
 			<iAITradeModifier>0</iAITradeModifier>
 			<iCost>4500</iCost>
-			<iAdvancedStartCost>2900</iAdvancedStartCost>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<Era>ERA_GALACTIC</Era>
 			<FirstFreeUnitClass>NONE</FirstFreeUnitClass>

@@ -23,7 +23,7 @@
 			<bNoAnimals>1</bNoAnimals>
 			<bNoBarbUnits>0</bNoBarbUnits>
 			<bNoBarbCities>0</bNoBarbCities>
-			<iAdvancedStartPoints>50</iAdvancedStartPoints>
+			<iAdvancedStartPoints>400</iAdvancedStartPoints>
 			<iStartingUnitMultiplier>1</iStartingUnitMultiplier>
 			<iStartingDefenseUnits>1</iStartingDefenseUnits>
 			<iStartingWorkerUnits>0</iStartingWorkerUnits>
@@ -91,14 +91,14 @@
 			<bNoAnimals>1</bNoAnimals>
 			<bNoBarbUnits>0</bNoBarbUnits>
 			<bNoBarbCities>0</bNoBarbCities>
-			<iAdvancedStartPoints>100</iAdvancedStartPoints>
+			<iAdvancedStartPoints>800</iAdvancedStartPoints>
 			<iStartingUnitMultiplier>1</iStartingUnitMultiplier>
 			<iStartingDefenseUnits>1</iStartingDefenseUnits>
 			<iStartingWorkerUnits>0</iStartingWorkerUnits>
 			<iStartingExploreUnits>0</iStartingExploreUnits>
 			<iStartingGold>10</iStartingGold>
 			<iFreePopulation>0</iFreePopulation>
-			<iStartPercent>0</iStartPercent>
+			<iStartPercent>25</iStartPercent>
 			<iGrowthPercent>100</iGrowthPercent>
 			<iTrainPercent>100</iTrainPercent>
 			<iConstructPercent>100</iConstructPercent>
@@ -159,14 +159,14 @@
 			<bNoAnimals>1</bNoAnimals>
 			<bNoBarbUnits>0</bNoBarbUnits>
 			<bNoBarbCities>0</bNoBarbCities>
-			<iAdvancedStartPoints>200</iAdvancedStartPoints>
+			<iAdvancedStartPoints>1200</iAdvancedStartPoints>
 			<iStartingUnitMultiplier>1</iStartingUnitMultiplier>
 			<iStartingDefenseUnits>1</iStartingDefenseUnits>
 			<iStartingWorkerUnits>0</iStartingWorkerUnits>
 			<iStartingExploreUnits>0</iStartingExploreUnits>
 			<iStartingGold>10</iStartingGold>
 			<iFreePopulation>0</iFreePopulation>
-			<iStartPercent>0</iStartPercent>
+			<iStartPercent>50</iStartPercent>
 			<iGrowthPercent>100</iGrowthPercent>
 			<iTrainPercent>100</iTrainPercent>
 			<iConstructPercent>100</iConstructPercent>
@@ -227,14 +227,14 @@
 			<bNoAnimals>1</bNoAnimals>
 			<bNoBarbUnits>0</bNoBarbUnits>
 			<bNoBarbCities>0</bNoBarbCities>
-			<iAdvancedStartPoints>400</iAdvancedStartPoints>
+			<iAdvancedStartPoints>2400</iAdvancedStartPoints>
 			<iStartingUnitMultiplier>1</iStartingUnitMultiplier>
 			<iStartingDefenseUnits>1</iStartingDefenseUnits>
 			<iStartingWorkerUnits>0</iStartingWorkerUnits>
 			<iStartingExploreUnits>0</iStartingExploreUnits>
 			<iStartingGold>10</iStartingGold>
 			<iFreePopulation>0</iFreePopulation>
-			<iStartPercent>0</iStartPercent>
+			<iStartPercent>75</iStartPercent>
 			<iGrowthPercent>100</iGrowthPercent>
 			<iTrainPercent>100</iTrainPercent>
 			<iConstructPercent>100</iConstructPercent>
