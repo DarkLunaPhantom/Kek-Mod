@@ -737,3 +737,7 @@ class CvGameUtils:
 		if 0 != iModifier:
 			iExperienceNeeded += (iExperienceNeeded * iModifier + 99) / 100   # ROUND UP
 		return iExperienceNeeded
+
+	# DarkLunaPhantom
+	def getSystemPopulationLimit(self, argsList):
+		return -1

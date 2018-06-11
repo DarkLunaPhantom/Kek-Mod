@@ -1152,3 +1152,8 @@ class FFGameUtils:
 		if 0 != iModifier:
 			iExperienceNeeded += (iExperienceNeeded * iModifier + 99) / 100   # ROUND UP
 		return iExperienceNeeded
+
+	# DarkLunaPhantom
+	def getSystemPopulationLimit(self, argsList):
+		pPlot = argsList[0]
+		return CvSolarSystem.getSystemAt(pPlot.getX(), pPlot.getY()).getPopulationLimit()

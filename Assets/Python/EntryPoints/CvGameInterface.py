@@ -299,3 +299,7 @@ def getUpgradePriceOverride(argsList):
 
 def getExperienceNeeded(argsList):
 	return gameUtils().getExperienceNeeded(argsList)
+
+# DarkLunaPhantom
+def getSystemPopulationLimit(argsList):
+	return gameUtils().getSystemPopulationLimit(argsList)

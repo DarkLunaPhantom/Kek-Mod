@@ -24,6 +24,7 @@
 #include "CvDLLFAStarIFaceBase.h"
 #include "FAStarNode.h"
 #include "CvEventReporter.h"
+#include "CyPlot.h"
 
 #include "BetterBTSAI.h"
 
@@ -22899,7 +22900,9 @@ bool CvPlayerAI::AI_advancedStartPlaceCity(CvPlot* pPlot)
 	pCity->AI_updateBestBuild();
 	
 	int iPlotsImproved = 0;
-	for (int iI = 0; iI < NUM_CITY_PLOTS; iI++)
+    // DarkLunaPhantom begin - Changed how number of "improved plots", i.e. how much population should be added to the city, is calculated.
+    // It is set to the system population limit (taking happiness into account).
+	/*for (int iI = 0; iI < NUM_CITY_PLOTS; iI++)
 	{
 		if (iI != CITY_HOME_PLOT)
 		{
@@ -22912,9 +22915,17 @@ bool CvPlayerAI::AI_advancedStartPlaceCity(CvPlot* pPlot)
 				}
 			}
 		}
-	}
+	}*/
+    long lSystemPopulationLimit;
+    CyPlot* pyPlot = new CyPlot(pPlot);
+    CyArgsList argsList;
+    argsList.add(gDLL->getPythonIFace()->makePythonObject(pyPlot));
+    gDLL->getPythonIFace()->callFunction(PYGameModule, "getSystemPopulationLimit", argsList.makeFunctionArgs(), &lSystemPopulationLimit);
+    delete pyPlot;
+    FAssert(lSystemPopulationLimit >= 0);
+    iPlotsImproved = (int)lSystemPopulationLimit;
 
-	int iTargetPopulation = pCity->happyLevel() + (getCurrentEra() / 2);
+	/*int iTargetPopulation = pCity->happyLevel() + (getCurrentEra() / 2);
 	
 	while (iPlotsImproved < iTargetPopulation)
 	{
@@ -22959,7 +22970,8 @@ bool CvPlayerAI::AI_advancedStartPlaceCity(CvPlot* pPlot)
 		{
 			break;
 		}
-	}
+	}*/
+	// DarkLunaPhantom end
 		
 
 	while (iPlotsImproved > pCity->getPopulation())
