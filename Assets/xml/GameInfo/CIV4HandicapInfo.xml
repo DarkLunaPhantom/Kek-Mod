@@ -742,7 +742,7 @@
 					<bFreeTech>1</bFreeTech>
 				</FreeTech>
 				<FreeTech>
-					<TechType>TECH_TECH_INDUSTRY_0</TechType>
+					<TechType>TECH_INDUSTRY_0</TechType>
 					<bFreeTech>1</bFreeTech>
 				</FreeTech>
 			</AIFreeTechs>
@@ -849,15 +849,15 @@
 			<FreeTechs/>
 			<AIFreeTechs>
 				<FreeTech>
-					<TechType>TECH_TECH_HAPPY_0</TechType>
+					<TechType>TECH_HAPPY_0</TechType>
 					<bFreeTech>1</bFreeTech>
 				</FreeTech>
 				<FreeTech>
-					<TechType>TECH_TECH_INDUSTRY_0</TechType>
+					<TechType>TECH_INDUSTRY_0</TechType>
 					<bFreeTech>1</bFreeTech>
 				</FreeTech>
 				<FreeTech>
-					<TechType>TECH_TECH_MILITARY_0</TechType>
+					<TechType>TECH_MILITARY_0</TechType>
 					<bFreeTech>1</bFreeTech>
 				</FreeTech>
 			</AIFreeTechs>
@@ -964,15 +964,15 @@
 			<FreeTechs/>
 			<AIFreeTechs>
 				<FreeTech>
-					<TechType>TECH_TECH_HAPPY_0</TechType>
+					<TechType>TECH_HAPPY_0</TechType>
 					<bFreeTech>1</bFreeTech>
 				</FreeTech>
 				<FreeTech>
-					<TechType>TECH_TECH_INDUSTRY_0</TechType>
+					<TechType>TECH_INDUSTRY_0</TechType>
 					<bFreeTech>1</bFreeTech>
 				</FreeTech>
 				<FreeTech>
-					<TechType>TECH_TECH_MILITARY_0</TechType>
+					<TechType>TECH_MILITARY_0</TechType>
 					<bFreeTech>1</bFreeTech>
 				</FreeTech>
 				<FreeTech>
