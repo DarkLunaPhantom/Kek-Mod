@@ -17,7 +17,6 @@ import ScreenInput
 import SevoScreenEnums
 
 import BugCore
-FFPopt = BugCore.game.FinalFrontierPlus
 
 gc = CyGlobalContext()
 ArtFileMgr = CyArtFileMgr()

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!--
+	Final Frontier Plus
+-->
+<mod id="FinalFrontierPlus" 
+	 version="1.84">
+	 
+	<events module="FinalFrontierEvents" class="FinalFrontierEvents"/>
+	<gameutils module="FinalFrontierGameUtils" class="FFGameUtils" override="True"/>
+	 
+</mod>
