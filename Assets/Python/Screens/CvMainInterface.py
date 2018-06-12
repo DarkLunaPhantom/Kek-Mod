@@ -988,10 +988,11 @@ class CvMainInterface:
 		iBtnX = 27
 		iBtnX = 10
 
-#		sBUGOptionsScreenButton = ArtFileMgr.getInterfaceArtInfo("BUG_OPTIONS_SCREEN_BUTTON").getPath()
-#		screen.setImageButton("BUGOptionsScreenWidget", sBUGOptionsScreenButton,  iBtnX + 30, iBtnY - 2, iBtnWidth, iBtnWidth, WidgetTypes.WIDGET_BUG_OPTION_SCREEN, -1, -1)
-		screen.setImageButton("BUGOptionsScreenWidget", "", iBtnX + 30, iBtnY - 2, iBtnWidth, iBtnWidth, WidgetTypes.WIDGET_BUG_OPTION_SCREEN, -1, -1 )
-		screen.setStyle("BUGOptionsScreenWidget", "Button_HUDAdvisorCorporation_Style" )
+		# DarkLunaPhantom - Restored old BUG button.
+		sBUGOptionsScreenButton = ArtFileMgr.getInterfaceArtInfo("BUG_OPTIONS_SCREEN_BUTTON").getPath()
+		screen.setImageButton("BUGOptionsScreenWidget", sBUGOptionsScreenButton,  iBtnX + 30, iBtnY - 2, iBtnWidth, iBtnWidth, WidgetTypes.WIDGET_BUG_OPTION_SCREEN, -1, -1)
+		#screen.setImageButton("BUGOptionsScreenWidget", "", iBtnX + 30, iBtnY - 2, iBtnWidth, iBtnWidth, WidgetTypes.WIDGET_BUG_OPTION_SCREEN, -1, -1 )
+		#screen.setStyle("BUGOptionsScreenWidget", "Button_HUDAdvisorCorporation_Style" )
 		screen.hide("BUGOptionsScreenWidget")
 # BUG - BUG Option Button - End
 
