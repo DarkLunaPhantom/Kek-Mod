@@ -224,19 +224,8 @@ class SevoPediaTech(CvPediaScreen.CvPediaScreen):
 		panelName = self.top.getNextWidgetName()
 		screen.addPanel(panelName, "", "", True, True,
 			self.X_QUOTE_PANE, self.Y_QUOTE_PANE, self.W_QUOTE_PANE, self.H_QUOTE_PANE, PanelStyles.PANEL_STYLE_BLUE50)
-		
-		doQuote = True # FFP: Hide Tech Text BUG option changes start here
-		if (self.top.iActivePlayer == -1):
-			doQuote = not FFPopt.isHideTechText() # sadly, this will always be True since the BUG options are not laoded at this point and if an option doesn't exist (yet) this returns False
-		elif FFPopt.isHideTechText() and not (gc.getTeam(CyGame().getActiveTeam()).isHasTech(self.iTech)):
-			doQuote = False
-		
-		if doQuote:
-			szQuote = gc.getTechInfo(self.iTech).getQuote()
-			szQuote += u"\n\n" + gc.getTechInfo(self.iTech).getCivilopedia()
-		else:
-			szQuote = localText.getText("TXT_KEY_TECH_NOT_RESEARCHED_YET", ())# FFP: Hide Tech Text BUG option changes end here
-		
+		szQuote = gc.getTechInfo(self.iTech).getQuote()
+		szQuote += u"\n\n" + gc.getTechInfo(self.iTech).getCivilopedia()
 		szQuoteTextWidget = self.top.getNextWidgetName()
 		screen.addMultilineText(szQuoteTextWidget, szQuote, self.X_QUOTE_PANE + 15, self.Y_QUOTE_PANE + 15,
 		    self.W_QUOTE_PANE - (15 * 2), self.H_QUOTE_PANE - (15 * 2), WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
