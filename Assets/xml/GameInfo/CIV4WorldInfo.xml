@@ -107,7 +107,7 @@
 			<Type>WORLDSIZE_LARGE</Type>
 			<Description>TXT_KEY_WORLD_LARGE</Description>
 			<Help>TXT_KEY_WORLD_LARGE_HELP</Help>
-			<iDefaultPlayers>7</iDefaultPlayers>
+			<iDefaultPlayers>8</iDefaultPlayers>
 			<iUnitNameModifier>10</iUnitNameModifier>
 			<iTargetNumCities>6</iTargetNumCities>
 			<iNumFreeBuildingBonuses>6</iNumFreeBuildingBonuses>
@@ -131,7 +131,7 @@
 			<Type>WORLDSIZE_HUGE</Type>
 			<Description>TXT_KEY_WORLD_HUGE</Description>
 			<Help>TXT_KEY_WORLD_HUGE_HELP</Help>
-			<iDefaultPlayers>8</iDefaultPlayers>
+			<iDefaultPlayers>9</iDefaultPlayers>
 			<iUnitNameModifier>0</iUnitNameModifier>
 			<iTargetNumCities>6</iTargetNumCities>
 			<iNumFreeBuildingBonuses>7</iNumFreeBuildingBonuses>
