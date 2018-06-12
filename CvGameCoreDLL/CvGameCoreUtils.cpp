@@ -1760,7 +1760,7 @@ int pathCost(FAStarNode* parent, FAStarNode* node, int data, const void* pointer
 		}
 
 		// Damage caused by features (for mods)
-		if (0 != GC.getPATH_DAMAGE_WEIGHT())
+		//if (0 != GC.getPATH_DAMAGE_WEIGHT()) // DarkLunaPhantom - Enabled use of ExtraMovePathCost even if there is no terrain damage.
 		{
 			// DarkLunaPhantom - This code won't work because it is out of the unit loop. I've adjusted the code to new function structure further down.
 			/*if (pToPlot->getFeatureType() != NO_FEATURE)
@@ -1838,9 +1838,9 @@ int pathCost(FAStarNode* parent, FAStarNode* node, int data, const void* pointer
 				}
 				
 				// DarkLunaPhantom begin - New feature damage modifier calculation, part 1.
-				if (eFeature != NO_FEATURE)
+				if (eFeature != NO_FEATURE && iFeatureDamage > 0)
 				{
-					iFeatureCost += std::max(0, iFeatureDamage + pLoopUnit->featureDamageModifier(eFeature));
+					iFeatureCost += std::max(0, iFeatureDamage + pLoopUnit->featureDamageModifier(eFeature)) * 10 / std::max(1, std::min(pLoopUnit->healRate(pFromPlot), pLoopUnit->healRate(pToPlot)));
 				}
 				// DarkLunaPhantom end
 			}
@@ -1859,7 +1859,7 @@ int pathCost(FAStarNode* parent, FAStarNode* node, int data, const void* pointer
 		iWorstCost += PATH_DEFENSE_WEIGHT * std::max(0, (iDefenceCount*200 - iDefenceMod) / std::max(1, iDefenceCount));
 		iWorstCost += PATH_DEFENSE_WEIGHT * std::max(0, (iAttackCount*200 - iFromDefenceMod) / std::max(1, iAttackCount));
 		iWorstCost += std::max(0, iAttackWeight) / std::max(1, iAttackCount);
-		iWorstCost += GC.getPATH_DAMAGE_WEIGHT() * std::max(0, iFeatureCost / (GC.getMAX_HIT_POINTS() * std::max(1, iDefenceCount))); // DarkLunaPhantom - New feature damage modifier calculation, part 2.
+		iWorstCost += GC.getPATH_DAMAGE_WEIGHT() * std::max(0, iFeatureCost / std::max(1, iDefenceCount)); // DarkLunaPhantom - New feature damage modifier calculation, part 2.
 		// if we're in enemy territory, consider the sum of our defensive bonuses as well as the average
 		if (pToPlot->isOwned() && atWar(pToPlot->getTeam(), eTeam))
 		{

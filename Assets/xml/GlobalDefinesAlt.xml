@@ -380,7 +380,7 @@
 	</Define>
 	<Define>
 		<DefineName>PATH_DAMAGE_WEIGHT</DefineName>
-		<iDefineIntVal>500000</iDefineIntVal>
+		<iDefineIntVal>7000</iDefineIntVal>
 	</Define>
 	<Define>
 		<DefineName>VICTORY_SOUNDTRACK_AVAILABLE</DefineName>

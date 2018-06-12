@@ -345,7 +345,6 @@
 			<iEffectProbability>0</iEffectProbability>
 			<iAdvancedStartRemoveCost>0</iAdvancedStartRemoveCost>
 			<bNoBarbarianSpawn>1</bNoBarbarianSpawn>
-			<iMovePathExtraCost>60000</iMovePathExtraCost>
 		</FeatureInfo>
 		<FeatureInfo>
 			<Type>FEATURE_OASIS</Type>
@@ -457,7 +456,6 @@
 			<iEffectProbability>0</iEffectProbability>
 			<iAdvancedStartRemoveCost>0</iAdvancedStartRemoveCost>
 			<bNoBarbarianSpawn>1</bNoBarbarianSpawn>
-			<iMovePathExtraCost>10000</iMovePathExtraCost>
 		</FeatureInfo>
 		<FeatureInfo>
 			<Type>FEATURE_FLOOD_PLAINS</Type>
@@ -674,7 +672,7 @@
 			<iEffectProbability>0</iEffectProbability>
 			<iAdvancedStartRemoveCost>0</iAdvancedStartRemoveCost>
 			<bNoBarbarianSpawn>1</bNoBarbarianSpawn>
-			<iMovePathExtraCost>10000</iMovePathExtraCost>
+            <iMovePathExtraCost>50000</iMovePathExtraCost>
 			<iGravityFieldForce>1</iGravityFieldForce>
 			<iBlackHoleInArea>2</iBlackHoleInArea>
 			<BlackHoleFeatureType>FEATURE_OASIS</BlackHoleFeatureType>
@@ -784,7 +782,6 @@
 			<iEffectProbability>0</iEffectProbability>
 			<iAdvancedStartRemoveCost>0</iAdvancedStartRemoveCost>
 			<bNoBarbarianSpawn>1</bNoBarbarianSpawn>
-			<iMovePathExtraCost>60000</iMovePathExtraCost>
 		</FeatureInfo>
 		<FeatureInfo>
 			<Type>FEATURE_FOREST</Type>
@@ -1009,7 +1006,6 @@
 			<iEffectProbability>0</iEffectProbability>
 			<iAdvancedStartRemoveCost>0</iAdvancedStartRemoveCost>
 			<bNoBarbarianSpawn>1</bNoBarbarianSpawn>
-			<iMovePathExtraCost>2000</iMovePathExtraCost>
 		</FeatureInfo>
 		<FeatureInfo>
 			<Type>FEATURE_WORMHOLE</Type>
@@ -1120,6 +1116,7 @@
 			<EffectType>NONE</EffectType>
 			<iEffectProbability>0</iEffectProbability>
 			<iAdvancedStartRemoveCost>0</iAdvancedStartRemoveCost>
+            <iMovePathExtraCost>50000</iMovePathExtraCost>
 			<TargetWormholeType>FEATURE_WORMHOLE</TargetWormholeType>
 		</FeatureInfo>
 		<FeatureInfo>
@@ -1231,6 +1228,7 @@
 			<EffectType>NONE</EffectType>
 			<iEffectProbability>0</iEffectProbability>
 			<iAdvancedStartRemoveCost>0</iAdvancedStartRemoveCost>
+            <iMovePathExtraCost>50000</iMovePathExtraCost>
 			<TargetWormholeType>FEATURE_RED_WORMHOLE</TargetWormholeType>
 		</FeatureInfo>
 		<FeatureInfo>
@@ -1342,6 +1340,7 @@
 			<EffectType>NONE</EffectType>
 			<iEffectProbability>0</iEffectProbability>
 			<iAdvancedStartRemoveCost>0</iAdvancedStartRemoveCost>
+            <iMovePathExtraCost>50000</iMovePathExtraCost>
 			<TargetWormholeType>FEATURE_PURPLE_WORMHOLE</TargetWormholeType>
 		</FeatureInfo>
 	</FeatureInfos>
