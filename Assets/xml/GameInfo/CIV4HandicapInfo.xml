@@ -9,39 +9,259 @@
 		<HandicapInfo>
 			<Type>HANDICAP_SETTLER</Type>
 			<Description>TXT_KEY_HANDICAP_SETTLER</Description>
-			<Help>TXT_KEY_HANDICAP_SETTLER_HELP</Help>
+			<Help>TXT_KEY_HANDICAP_SETTLER_HELP</Help> <!-- DarkLunaPhantom - Comments contain ratios with those value in BTS (Kek-Mod). -->
+			<iFreeWinsVsBarbs>5</iFreeWinsVsBarbs> <!-- x1 -->
+			<iAnimalAttackProb>25</iAnimalAttackProb> <!-- x1 -->
+			<iStartingLocPercent>10</iStartingLocPercent>  <!-- x1 -->
+			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>  <!-- x1 -->
+			<iGold>0</iGold> <!-- x1 -->
+			<iFreeUnits>12</iFreeUnits> <!-- x1/2 -->
+			<iUnitCostPercent>30</iUnitCostPercent> <!-- x3/2 -->
+			<iResearchPercent>60</iResearchPercent>  <!-- x1 -->
+			<iDistanceMaintenancePercent>30</iDistanceMaintenancePercent>  <!-- x2/3 -->
+			<iNumCitiesMaintenancePercent>60</iNumCitiesMaintenancePercent> <!-- x3/2 -->
+			<iMaxNumCitiesMaintenance>4</iMaxNumCitiesMaintenance> <!-- x1 -->
+			<iColonyMaintenancePercent>90</iColonyMaintenancePercent> <!-- x3/2 -->
+			<iMaxColonyMaintenance>300</iMaxColonyMaintenance> <!-- x3/2 -->
+			<iCorporationMaintenancePercent>90</iCorporationMaintenancePercent> <!-- x3/2 -->
+			<iCivicUpkeepPercent>75</iCivicUpkeepPercent> <!-- x3/2 -->
+			<iInflationPercent>90</iInflationPercent> <!-- x3/2 -->
+			<iHealthBonus>6</iHealthBonus> <!-- +2 -->
+			<iHappyBonus>6</iHappyBonus> <!-- +0 -->
+			<iAttitudeChange>2</iAttitudeChange> <!-- x1 -->
+			<iNoTechTradeModifier>100</iNoTechTradeModifier> <!-- x1 -->
+			<iTechTradeKnownModifier>-100</iTechTradeKnownModifier> <!-- x1 -->
+			<iUnownedTilesPerGameAnimal>300</iUnownedTilesPerGameAnimal> <!-- x3 -->
+			<iUnownedTilesPerBarbarianUnit>450</iUnownedTilesPerBarbarianUnit> <!-- x3 -->
+			<iUnownedWaterTilesPerBarbarianUnit>2250</iUnownedWaterTilesPerBarbarianUnit> <!-- x3 -->
+			<iUnownedTilesPerBarbarianCity>480</iUnownedTilesPerBarbarianCity> <!-- x3 -->
+			<iBarbarianCreationTurnsElapsed>55</iBarbarianCreationTurnsElapsed> <!-- x1.1 -->
+			<iBarbarianCityCreationTurnsElapsed>550</iBarbarianCityCreationTurnsElapsed> <!-- max turns -->
+			<iBarbarianCityCreationProb>4</iBarbarianCityCreationProb> <!-- x1 -->
+			<iAnimalBonus>-70</iAnimalBonus> <!-- x1 -->
+			<iBarbarianBonus>-40</iBarbarianBonus> <!-- x1 -->
+			<iAIAnimalBonus>-40</iAIAnimalBonus> <!-- x1 -->
+			<iAIBarbarianBonus>-25</iAIBarbarianBonus> <!-- x1 -->
+			<iStartingDefenseUnits>0</iStartingDefenseUnits> <!-- x1 -->
+			<iStartingWorkerUnits>0</iStartingWorkerUnits> <!-- x1 -->
+			<iStartingExploreUnits>0</iStartingExploreUnits> <!-- x1 -->
+			<iAIStartingUnitMultiplier>0</iAIStartingUnitMultiplier> <!-- x1 -->
+			<iAIStartingDefenseUnits>0</iAIStartingDefenseUnits> <!-- x1 -->
+			<iAIStartingWorkerUnits>0</iAIStartingWorkerUnits> <!-- x1 -->
+			<iAIStartingExploreUnits>0</iAIStartingExploreUnits> <!-- x1 -->
+			<iBarbarianDefenders>1</iBarbarianDefenders> <!-- x1 -->
+			<iAIDeclareWarProb>25</iAIDeclareWarProb> <!-- x1 -->
+			<iAIWorkRateModifier>0</iAIWorkRateModifier> <!-- x1 -->
+			<iAIGrowthPercent>160</iAIGrowthPercent> <!-- x1 -->
+			<iAITrainPercent>160</iAITrainPercent> <!-- x1 -->
+			<iAIWorldTrainPercent>160</iAIWorldTrainPercent> <!-- x1 -->
+			<iAIConstructPercent>160</iAIConstructPercent> <!-- x1 -->
+			<iAIWorldConstructPercent>160</iAIWorldConstructPercent> <!-- x1 -->
+			<iAICreatePercent>160</iAICreatePercent> <!-- x1 -->
+			<iAIWorldCreatePercent>160</iAIWorldCreatePercent> <!-- x1 -->
+			<iAICivicUpkeepPercent>100</iAICivicUpkeepPercent> <!-- x1 -->
+			<iAIUnitCostPercent>100</iAIUnitCostPercent> <!-- x1 -->
+			<iAIUnitSupplyPercent>50</iAIUnitSupplyPercent> <!-- x1 -->
+			<iAIUnitUpgradePercent>50</iAIUnitUpgradePercent> <!-- x1 -->
+			<iAIInflationPercent>100</iAIInflationPercent> <!-- x1 -->
+			<iAIWarWearinessPercent>100</iAIWarWearinessPercent> <!-- x1 -->
+			<iAIPerEraModifier>0</iAIPerEraModifier> <!-- x1 -->
+			<iAIAdvancedStartPercent>67</iAIAdvancedStartPercent> <!-- x1 -->
+			<Goodies>
+				<GoodyType>GOODY_HIGH_GOLD</GoodyType>
+				<GoodyType>GOODY_HIGH_GOLD</GoodyType>
+				<GoodyType>GOODY_HIGH_GOLD</GoodyType>
+				<GoodyType>GOODY_HIGH_GOLD</GoodyType>
+				<GoodyType>GOODY_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_MAP</GoodyType>
+				<GoodyType>GOODY_SETTLER</GoodyType>
+				<GoodyType>GOODY_SETTLER</GoodyType>
+				<GoodyType>GOODY_WARRIOR</GoodyType>
+				<GoodyType>GOODY_WARRIOR</GoodyType>
+				<GoodyType>GOODY_SCOUT</GoodyType>
+				<GoodyType>GOODY_WORKER</GoodyType>
+				<GoodyType>GOODY_WORKER</GoodyType>
+				<GoodyType>GOODY_EXPERIENCE</GoodyType>
+				<GoodyType>GOODY_HEALING</GoodyType>
+				<GoodyType>GOODY_TECH</GoodyType>
+				<GoodyType>GOODY_TECH</GoodyType>
+				<GoodyType>GOODY_TECH</GoodyType>
+				<GoodyType>GOODY_TECH</GoodyType>
+				<GoodyType>GOODY_ALIEN_HIGH_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_HIGH_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_HIGH_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_HIGH_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_MAP</GoodyType>
+				<GoodyType>GOODY_ALIEN_GIFT_CITY</GoodyType>
+				<GoodyType>GOODY_ALIEN_GIFT_CITY</GoodyType>
+				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
+				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
+				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
+				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
+			</Goodies>
+            <FreeTechs>
+				<FreeTech>
+					<TechType>TECH_HAPPY_0</TechType>
+					<bFreeTech>1</bFreeTech>
+				</FreeTech>
+				<FreeTech>
+					<TechType>TECH_INDUSTRY_0</TechType>
+					<bFreeTech>1</bFreeTech>
+				</FreeTech>
+				<FreeTech>
+					<TechType>TECH_MILITARY_0</TechType>
+					<bFreeTech>1</bFreeTech>
+				</FreeTech>
+			</FreeTechs>
+			<AIFreeTechs/>
+		</HandicapInfo>
+		<HandicapInfo>
+			<Type>HANDICAP_CHIEFTAIN</Type>
+			<Description>TXT_KEY_HANDICAP_CHIEFTAIN</Description>
+			<Help>TXT_KEY_HANDICAP_CHIEFTAIN_HELP</Help>
+			<iFreeWinsVsBarbs>4</iFreeWinsVsBarbs>
+			<iAnimalAttackProb>50</iAnimalAttackProb>
+			<iStartingLocPercent>20</iStartingLocPercent>
+			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>
+			<iGold>0</iGold>
+			<iFreeUnits>9</iFreeUnits>
+			<iUnitCostPercent>45</iUnitCostPercent>
+			<iResearchPercent>75</iResearchPercent>
+			<iDistanceMaintenancePercent>37</iDistanceMaintenancePercent>
+			<iNumCitiesMaintenancePercent>75</iNumCitiesMaintenancePercent>
+			<iMaxNumCitiesMaintenance>4</iMaxNumCitiesMaintenance>
+			<iColonyMaintenancePercent>120</iColonyMaintenancePercent>
+			<iMaxColonyMaintenance>300</iMaxColonyMaintenance>
+			<iCorporationMaintenancePercent>120</iCorporationMaintenancePercent>
+			<iCivicUpkeepPercent>90</iCivicUpkeepPercent>
+			<iInflationPercent>105</iInflationPercent>
+			<iHealthBonus>5</iHealthBonus>
+			<iHappyBonus>5</iHappyBonus>
+			<iAttitudeChange>1</iAttitudeChange>
+			<iNoTechTradeModifier>90</iNoTechTradeModifier>
+			<iTechTradeKnownModifier>-50</iTechTradeKnownModifier>
+			<iUnownedTilesPerGameAnimal>240</iUnownedTilesPerGameAnimal>
+			<iUnownedTilesPerBarbarianUnit>300</iUnownedTilesPerBarbarianUnit>
+			<iUnownedWaterTilesPerBarbarianUnit>1800</iUnownedWaterTilesPerBarbarianUnit>
+			<iUnownedTilesPerBarbarianCity>450</iUnownedTilesPerBarbarianCity>
+			<iBarbarianCreationTurnsElapsed>50</iBarbarianCreationTurnsElapsed>
+			<iBarbarianCityCreationTurnsElapsed>550</iBarbarianCityCreationTurnsElapsed>
+			<iBarbarianCityCreationProb>5</iBarbarianCityCreationProb>
+			<iAnimalBonus>-60</iAnimalBonus>
+			<iBarbarianBonus>-30</iBarbarianBonus>
+			<iAIAnimalBonus>-40</iAIAnimalBonus>
+			<iAIBarbarianBonus>-25</iAIBarbarianBonus>
+			<iStartingDefenseUnits>0</iStartingDefenseUnits>
+			<iStartingWorkerUnits>0</iStartingWorkerUnits>
+			<iStartingExploreUnits>0</iStartingExploreUnits>
+			<iAIStartingUnitMultiplier>0</iAIStartingUnitMultiplier>
+			<iAIStartingDefenseUnits>0</iAIStartingDefenseUnits>
+			<iAIStartingWorkerUnits>0</iAIStartingWorkerUnits>
+			<iAIStartingExploreUnits>0</iAIStartingExploreUnits>
+			<iBarbarianDefenders>1</iBarbarianDefenders>
+			<iAIDeclareWarProb>50</iAIDeclareWarProb>
+			<iAIWorkRateModifier>0</iAIWorkRateModifier>
+			<iAIGrowthPercent>130</iAIGrowthPercent>
+			<iAITrainPercent>130</iAITrainPercent>
+			<iAIWorldTrainPercent>130</iAIWorldTrainPercent>
+			<iAIConstructPercent>130</iAIConstructPercent>
+			<iAIWorldConstructPercent>130</iAIWorldConstructPercent>
+			<iAICreatePercent>130</iAICreatePercent>
+			<iAIWorldCreatePercent>130</iAIWorldCreatePercent>
+			<iAICivicUpkeepPercent>100</iAICivicUpkeepPercent>
+			<iAIUnitCostPercent>100</iAIUnitCostPercent>
+			<iAIUnitSupplyPercent>50</iAIUnitSupplyPercent>
+			<iAIUnitUpgradePercent>50</iAIUnitUpgradePercent>
+			<iAIInflationPercent>90</iAIInflationPercent>
+			<iAIWarWearinessPercent>90</iAIWarWearinessPercent>
+			<iAIPerEraModifier>0</iAIPerEraModifier>
+			<iAIAdvancedStartPercent>77</iAIAdvancedStartPercent>
+			<Goodies>
+				<GoodyType>GOODY_HIGH_GOLD</GoodyType>
+				<GoodyType>GOODY_HIGH_GOLD</GoodyType>
+				<GoodyType>GOODY_HIGH_GOLD</GoodyType>
+				<GoodyType>GOODY_HIGH_GOLD</GoodyType>
+				<GoodyType>GOODY_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_MAP</GoodyType>
+				<GoodyType>GOODY_SETTLER</GoodyType>
+				<GoodyType>GOODY_SETTLER</GoodyType>
+				<GoodyType>GOODY_WARRIOR</GoodyType>
+				<GoodyType>GOODY_WARRIOR</GoodyType>
+				<GoodyType>GOODY_SCOUT</GoodyType>
+				<GoodyType>GOODY_WORKER</GoodyType>
+				<GoodyType>GOODY_WORKER</GoodyType>
+				<GoodyType>GOODY_EXPERIENCE</GoodyType>
+				<GoodyType>GOODY_HEALING</GoodyType>
+				<GoodyType>GOODY_TECH</GoodyType>
+				<GoodyType>GOODY_TECH</GoodyType>
+				<GoodyType>GOODY_TECH</GoodyType>
+				<GoodyType>GOODY_BARBARIANS_WEAK</GoodyType>
+				<GoodyType>GOODY_ALIEN_HIGH_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_HIGH_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_HIGH_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_HIGH_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_MAP</GoodyType>
+				<GoodyType>GOODY_ALIEN_GIFT_CITY</GoodyType>
+				<GoodyType>GOODY_ALIEN_GIFT_CITY</GoodyType>
+				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
+				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
+				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
+				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
+			</Goodies>
+            <FreeTechs>
+				<FreeTech>
+					<TechType>TECH_HAPPY_0</TechType>
+					<bFreeTech>1</bFreeTech>
+				</FreeTech>
+				<FreeTech>
+					<TechType>TECH_INDUSTRY_0</TechType>
+					<bFreeTech>1</bFreeTech>
+				</FreeTech>
+			</FreeTechs>
+			<AIFreeTechs/>
+		</HandicapInfo>
+		<HandicapInfo>
+			<Type>HANDICAP_WARLORD</Type>
+			<Description>TXT_KEY_HANDICAP_WARLORD</Description>
+			<Help>TXT_KEY_HANDICAP_WARLORD_HELP</Help>
 			<iFreeWinsVsBarbs>3</iFreeWinsVsBarbs>
 			<iAnimalAttackProb>75</iAnimalAttackProb>
 			<iStartingLocPercent>30</iStartingLocPercent>
 			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>
 			<iGold>0</iGold>
-			<iFreeUnits>12</iFreeUnits>
-			<iUnitCostPercent>40</iUnitCostPercent>
+			<iFreeUnits>6</iFreeUnits>
+			<iUnitCostPercent>60</iUnitCostPercent>
 			<iResearchPercent>90</iResearchPercent>
-			<iDistanceMaintenancePercent>33</iDistanceMaintenancePercent>
-			<iNumCitiesMaintenancePercent>60</iNumCitiesMaintenancePercent>
+			<iDistanceMaintenancePercent>43</iDistanceMaintenancePercent>
+			<iNumCitiesMaintenancePercent>90</iNumCitiesMaintenancePercent>
 			<iMaxNumCitiesMaintenance>5</iMaxNumCitiesMaintenance>
-			<iColonyMaintenancePercent>90</iColonyMaintenancePercent>
-			<iMaxColonyMaintenance>100</iMaxColonyMaintenance>
-			<iCorporationMaintenancePercent>90</iCorporationMaintenancePercent>
-			<iCivicUpkeepPercent>70</iCivicUpkeepPercent>
-			<iInflationPercent>80</iInflationPercent>
-			<iHealthBonus>5</iHealthBonus>
-			<iHappyBonus>5</iHappyBonus>
+			<iColonyMaintenancePercent>135</iColonyMaintenancePercent>
+			<iMaxColonyMaintenance>300</iMaxColonyMaintenance>
+			<iCorporationMaintenancePercent>135</iCorporationMaintenancePercent>
+			<iCivicUpkeepPercent>105</iCivicUpkeepPercent>
+			<iInflationPercent>120</iInflationPercent>
+			<iHealthBonus>4</iHealthBonus>
+			<iHappyBonus>4</iHappyBonus>
 			<iAttitudeChange>0</iAttitudeChange>
 			<iNoTechTradeModifier>80</iNoTechTradeModifier>
 			<iTechTradeKnownModifier>-25</iTechTradeKnownModifier>
-			<iUnownedTilesPerGameAnimal>60</iUnownedTilesPerGameAnimal>
-			<iUnownedTilesPerBarbarianUnit>420</iUnownedTilesPerBarbarianUnit>
-			<iUnownedWaterTilesPerBarbarianUnit>2200</iUnownedWaterTilesPerBarbarianUnit>
-			<iUnownedTilesPerBarbarianCity>140</iUnownedTilesPerBarbarianCity>
-			<iBarbarianCreationTurnsElapsed>40</iBarbarianCreationTurnsElapsed>
-			<iBarbarianCityCreationTurnsElapsed>500</iBarbarianCityCreationTurnsElapsed>
+			<iUnownedTilesPerGameAnimal>180</iUnownedTilesPerGameAnimal>
+			<iUnownedTilesPerBarbarianUnit>240</iUnownedTilesPerBarbarianUnit>
+			<iUnownedWaterTilesPerBarbarianUnit>1650</iUnownedWaterTilesPerBarbarianUnit>
+			<iUnownedTilesPerBarbarianCity>420</iUnownedTilesPerBarbarianCity>
+			<iBarbarianCreationTurnsElapsed>44</iBarbarianCreationTurnsElapsed>
+			<iBarbarianCityCreationTurnsElapsed>550</iBarbarianCityCreationTurnsElapsed>
 			<iBarbarianCityCreationProb>5</iBarbarianCityCreationProb>
 			<iAnimalBonus>-50</iAnimalBonus>
 			<iBarbarianBonus>-20</iBarbarianBonus>
-			<iAIAnimalBonus>-70</iAIAnimalBonus>
-			<iAIBarbarianBonus>-40</iAIBarbarianBonus>
+			<iAIAnimalBonus>-40</iAIAnimalBonus>
+			<iAIBarbarianBonus>-25</iAIBarbarianBonus>
 			<iStartingDefenseUnits>0</iStartingDefenseUnits>
 			<iStartingWorkerUnits>0</iStartingWorkerUnits>
 			<iStartingExploreUnits>0</iStartingExploreUnits>
@@ -61,12 +281,12 @@
 			<iAIWorldCreatePercent>110</iAIWorldCreatePercent>
 			<iAICivicUpkeepPercent>100</iAICivicUpkeepPercent>
 			<iAIUnitCostPercent>100</iAIUnitCostPercent>
-			<iAIUnitSupplyPercent>40</iAIUnitSupplyPercent>
+			<iAIUnitSupplyPercent>50</iAIUnitSupplyPercent>
 			<iAIUnitUpgradePercent>50</iAIUnitUpgradePercent>
 			<iAIInflationPercent>80</iAIInflationPercent>
 			<iAIWarWearinessPercent>80</iAIWarWearinessPercent>
 			<iAIPerEraModifier>0</iAIPerEraModifier>
-			<iAIAdvancedStartPercent>100</iAIAdvancedStartPercent>
+			<iAIAdvancedStartPercent>91</iAIAdvancedStartPercent>
 			<Goodies>
 				<GoodyType>GOODY_HIGH_GOLD</GoodyType>
 				<GoodyType>GOODY_HIGH_GOLD</GoodyType>
@@ -88,57 +308,65 @@
 				<GoodyType>GOODY_TECH</GoodyType>
 				<GoodyType>GOODY_BARBARIANS_WEAK</GoodyType>
 				<GoodyType>GOODY_BARBARIANS_STRONG</GoodyType>
-				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
-				<GoodyType>GOODY_ALIEN_MAP</GoodyType>
-				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
 				<GoodyType>GOODY_ALIEN_HIGH_GOLD</GoodyType>
-				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
-				<GoodyType>GOODY_ALIEN_MAP</GoodyType>
-				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
 				<GoodyType>GOODY_ALIEN_HIGH_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_HIGH_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_MAP</GoodyType>
+				<GoodyType>GOODY_ALIEN_MAP</GoodyType>
 				<GoodyType>GOODY_ALIEN_GIFT_CITY</GoodyType>
+				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
+				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
+				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
 				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
 				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
 			</Goodies>
-			<FreeTechs/>
+            <FreeTechs>
+				<FreeTech>
+					<TechType>TECH_HAPPY_0</TechType>
+					<bFreeTech>1</bFreeTech>
+				</FreeTech>
+			</FreeTechs>
 			<AIFreeTechs/>
 		</HandicapInfo>
 		<HandicapInfo>
-			<Type>HANDICAP_CHIEFTAIN</Type>
-			<Description>TXT_KEY_HANDICAP_CHIEFTAIN</Description>
-			<Help>TXT_KEY_HANDICAP_CHIEFTAIN_HELP</Help>
+			<Type>HANDICAP_NOBLE</Type>
+			<Description>TXT_KEY_HANDICAP_NOBLE</Description>
+			<Help>TXT_KEY_HANDICAP_NOBLE_HELP</Help>
 			<iFreeWinsVsBarbs>2</iFreeWinsVsBarbs>
 			<iAnimalAttackProb>85</iAnimalAttackProb>
 			<iStartingLocPercent>40</iStartingLocPercent>
 			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>
 			<iGold>0</iGold>
-			<iFreeUnits>8</iFreeUnits>
-			<iUnitCostPercent>50</iUnitCostPercent>
+			<iFreeUnits>4</iFreeUnits>
+			<iUnitCostPercent>75</iUnitCostPercent>
 			<iResearchPercent>100</iResearchPercent>
-			<iDistanceMaintenancePercent>38</iDistanceMaintenancePercent>
-			<iNumCitiesMaintenancePercent>70</iNumCitiesMaintenancePercent>
+			<iDistanceMaintenancePercent>50</iDistanceMaintenancePercent>
+			<iNumCitiesMaintenancePercent>105</iNumCitiesMaintenancePercent>
 			<iMaxNumCitiesMaintenance>5</iMaxNumCitiesMaintenance>
-			<iColonyMaintenancePercent>100</iColonyMaintenancePercent>
-			<iMaxColonyMaintenance>100</iMaxColonyMaintenance>
-			<iCorporationMaintenancePercent>100</iCorporationMaintenancePercent>
-			<iCivicUpkeepPercent>80</iCivicUpkeepPercent>
-			<iInflationPercent>90</iInflationPercent>
+			<iColonyMaintenancePercent>150</iColonyMaintenancePercent>
+			<iMaxColonyMaintenance>300</iMaxColonyMaintenance>
+			<iCorporationMaintenancePercent>150</iCorporationMaintenancePercent>
+			<iCivicUpkeepPercent>120</iCivicUpkeepPercent>
+			<iInflationPercent>135</iInflationPercent>
 			<iHealthBonus>4</iHealthBonus>
 			<iHappyBonus>4</iHappyBonus>
 			<iAttitudeChange>-1</iAttitudeChange>
 			<iNoTechTradeModifier>70</iNoTechTradeModifier>
 			<iTechTradeKnownModifier>0</iTechTradeKnownModifier>
-			<iUnownedTilesPerGameAnimal>50</iUnownedTilesPerGameAnimal>
-			<iUnownedTilesPerBarbarianUnit>400</iUnownedTilesPerBarbarianUnit>
-			<iUnownedWaterTilesPerBarbarianUnit>2000</iUnownedWaterTilesPerBarbarianUnit>
-			<iUnownedTilesPerBarbarianCity>130</iUnownedTilesPerBarbarianCity>
-			<iBarbarianCreationTurnsElapsed>35</iBarbarianCreationTurnsElapsed>
-			<iBarbarianCityCreationTurnsElapsed>500</iBarbarianCityCreationTurnsElapsed>
+			<iUnownedTilesPerGameAnimal>150</iUnownedTilesPerGameAnimal>
+			<iUnownedTilesPerBarbarianUnit>180</iUnownedTilesPerBarbarianUnit>
+			<iUnownedWaterTilesPerBarbarianUnit>1500</iUnownedWaterTilesPerBarbarianUnit>
+			<iUnownedTilesPerBarbarianCity>390</iUnownedTilesPerBarbarianCity>
+			<iBarbarianCreationTurnsElapsed>39</iBarbarianCreationTurnsElapsed>
+			<iBarbarianCityCreationTurnsElapsed>550</iBarbarianCityCreationTurnsElapsed>
 			<iBarbarianCityCreationProb>6</iBarbarianCityCreationProb>
 			<iAnimalBonus>-40</iAnimalBonus>
 			<iBarbarianBonus>-10</iBarbarianBonus>
-			<iAIAnimalBonus>-70</iAIAnimalBonus>
-			<iAIBarbarianBonus>-40</iAIBarbarianBonus>
+			<iAIAnimalBonus>-40</iAIAnimalBonus>
+			<iAIBarbarianBonus>-25</iAIBarbarianBonus>
 			<iStartingDefenseUnits>0</iStartingDefenseUnits>
 			<iStartingWorkerUnits>0</iStartingWorkerUnits>
 			<iStartingExploreUnits>0</iStartingExploreUnits>
@@ -158,10 +386,10 @@
 			<iAIWorldCreatePercent>100</iAIWorldCreatePercent>
 			<iAICivicUpkeepPercent>100</iAICivicUpkeepPercent>
 			<iAIUnitCostPercent>100</iAIUnitCostPercent>
-			<iAIUnitSupplyPercent>35</iAIUnitSupplyPercent>
-			<iAIUnitUpgradePercent>45</iAIUnitUpgradePercent>
-			<iAIInflationPercent>70</iAIInflationPercent>
-			<iAIWarWearinessPercent>70</iAIWarWearinessPercent>
+			<iAIUnitSupplyPercent>50</iAIUnitSupplyPercent>
+			<iAIUnitUpgradePercent>50</iAIUnitUpgradePercent>
+			<iAIInflationPercent>80</iAIInflationPercent>
+			<iAIWarWearinessPercent>80</iAIWarWearinessPercent>
 			<iAIPerEraModifier>0</iAIPerEraModifier>
 			<iAIAdvancedStartPercent>100</iAIAdvancedStartPercent>
 			<Goodies>
@@ -185,209 +413,18 @@
 				<GoodyType>GOODY_BARBARIANS_WEAK</GoodyType>
 				<GoodyType>GOODY_BARBARIANS_WEAK</GoodyType>
 				<GoodyType>GOODY_BARBARIANS_STRONG</GoodyType>
-				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
-				<GoodyType>GOODY_ALIEN_MAP</GoodyType>
-				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
 				<GoodyType>GOODY_ALIEN_HIGH_GOLD</GoodyType>
-				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
-				<GoodyType>GOODY_ALIEN_MAP</GoodyType>
-				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
 				<GoodyType>GOODY_ALIEN_HIGH_GOLD</GoodyType>
-				<GoodyType>GOODY_ALIEN_GIFT_CITY</GoodyType>
+				<GoodyType>GOODY_ALIEN_HIGH_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_MAP</GoodyType>
+				<GoodyType>GOODY_ALIEN_MAP</GoodyType>
+				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
+				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
 				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
-				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
-			</Goodies>
-			<FreeTechs/>
-			<AIFreeTechs/>
-		</HandicapInfo>
-		<HandicapInfo>
-			<Type>HANDICAP_WARLORD</Type>
-			<Description>TXT_KEY_HANDICAP_WARLORD</Description>
-			<Help>TXT_KEY_HANDICAP_WARLORD_HELP</Help>
-			<iFreeWinsVsBarbs>1</iFreeWinsVsBarbs>
-			<iAnimalAttackProb>90</iAnimalAttackProb>
-			<iStartingLocPercent>50</iStartingLocPercent>
-			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>
-			<iGold>0</iGold>
-			<iFreeUnits>6</iFreeUnits>
-			<iUnitCostPercent>60</iUnitCostPercent>
-			<iResearchPercent>110</iResearchPercent>
-			<iDistanceMaintenancePercent>42</iDistanceMaintenancePercent>
-			<iNumCitiesMaintenancePercent>80</iNumCitiesMaintenancePercent>
-			<iMaxNumCitiesMaintenance>6</iMaxNumCitiesMaintenance>
-			<iColonyMaintenancePercent>110</iColonyMaintenancePercent>
-			<iMaxColonyMaintenance>100</iMaxColonyMaintenance>
-			<iCorporationMaintenancePercent>110</iCorporationMaintenancePercent>
-			<iCivicUpkeepPercent>90</iCivicUpkeepPercent>
-			<iInflationPercent>95</iInflationPercent>
-			<iHealthBonus>4</iHealthBonus>
-			<iHappyBonus>4</iHappyBonus>
-			<iAttitudeChange>-1</iAttitudeChange>
-			<iNoTechTradeModifier>60</iNoTechTradeModifier>
-			<iTechTradeKnownModifier>0</iTechTradeKnownModifier>
-			<iUnownedTilesPerGameAnimal>40</iUnownedTilesPerGameAnimal>
-			<iUnownedTilesPerBarbarianUnit>330</iUnownedTilesPerBarbarianUnit>
-			<iUnownedWaterTilesPerBarbarianUnit>1800</iUnownedWaterTilesPerBarbarianUnit>
-			<iUnownedTilesPerBarbarianCity>120</iUnownedTilesPerBarbarianCity>
-			<iBarbarianCreationTurnsElapsed>35</iBarbarianCreationTurnsElapsed>
-			<iBarbarianCityCreationTurnsElapsed>500</iBarbarianCityCreationTurnsElapsed>
-			<iBarbarianCityCreationProb>6</iBarbarianCityCreationProb>
-			<iAnimalBonus>-30</iAnimalBonus>
-			<iBarbarianBonus>-5</iBarbarianBonus>
-			<iAIAnimalBonus>-70</iAIAnimalBonus>
-			<iAIBarbarianBonus>-40</iAIBarbarianBonus>
-			<iStartingDefenseUnits>0</iStartingDefenseUnits>
-			<iStartingWorkerUnits>0</iStartingWorkerUnits>
-			<iStartingExploreUnits>0</iStartingExploreUnits>
-			<iAIStartingUnitMultiplier>0</iAIStartingUnitMultiplier>
-			<iAIStartingDefenseUnits>0</iAIStartingDefenseUnits>
-			<iAIStartingWorkerUnits>0</iAIStartingWorkerUnits>
-			<iAIStartingExploreUnits>1</iAIStartingExploreUnits>
-			<iBarbarianDefenders>2</iBarbarianDefenders>
-			<iAIDeclareWarProb>100</iAIDeclareWarProb>
-			<iAIWorkRateModifier>10</iAIWorkRateModifier>
-			<iAIGrowthPercent>95</iAIGrowthPercent>
-			<iAITrainPercent>95</iAITrainPercent>
-			<iAIWorldTrainPercent>100</iAIWorldTrainPercent>
-			<iAIConstructPercent>95</iAIConstructPercent>
-			<iAIWorldConstructPercent>100</iAIWorldConstructPercent>
-			<iAICreatePercent>95</iAICreatePercent>
-			<iAIWorldCreatePercent>100</iAIWorldCreatePercent>
-			<iAICivicUpkeepPercent>95</iAICivicUpkeepPercent>
-			<iAIUnitCostPercent>95</iAIUnitCostPercent>
-			<iAIUnitSupplyPercent>30</iAIUnitSupplyPercent>
-			<iAIUnitUpgradePercent>45</iAIUnitUpgradePercent>
-			<iAIInflationPercent>60</iAIInflationPercent>
-			<iAIWarWearinessPercent>60</iAIWarWearinessPercent>
-			<iAIPerEraModifier>-1</iAIPerEraModifier>
-			<iAIAdvancedStartPercent>100</iAIAdvancedStartPercent>
-			<Goodies>
-				<GoodyType>GOODY_HIGH_GOLD</GoodyType>
-				<GoodyType>GOODY_HIGH_GOLD</GoodyType>
-				<GoodyType>GOODY_LOW_GOLD</GoodyType>
-				<GoodyType>GOODY_LOW_GOLD</GoodyType>
-				<GoodyType>GOODY_LOW_GOLD</GoodyType>
-				<GoodyType>GOODY_LOW_GOLD</GoodyType>
-				<GoodyType>GOODY_MAP</GoodyType>
-				<GoodyType>GOODY_MAP</GoodyType>
-				<GoodyType>GOODY_WARRIOR</GoodyType>
-				<GoodyType>GOODY_WARRIOR</GoodyType>
-				<GoodyType>GOODY_SCOUT</GoodyType>
-				<GoodyType>GOODY_EXPERIENCE</GoodyType>
-				<GoodyType>GOODY_EXPERIENCE</GoodyType>
-				<GoodyType>GOODY_HEALING</GoodyType>
-				<GoodyType>GOODY_TECH</GoodyType>
-				<GoodyType>GOODY_TECH</GoodyType>
-				<GoodyType>GOODY_BARBARIANS_WEAK</GoodyType>
-				<GoodyType>GOODY_BARBARIANS_WEAK</GoodyType>
-				<GoodyType>GOODY_BARBARIANS_WEAK</GoodyType>
-				<GoodyType>GOODY_BARBARIANS_STRONG</GoodyType>
-				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
-				<GoodyType>GOODY_ALIEN_MAP</GoodyType>
-				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
-				<GoodyType>GOODY_ALIEN_HIGH_GOLD</GoodyType>
-				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
-				<GoodyType>GOODY_ALIEN_MAP</GoodyType>
-				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
-				<GoodyType>GOODY_ALIEN_HIGH_GOLD</GoodyType>
-				<GoodyType>GOODY_ALIEN_GIFT_CITY</GoodyType>
-				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
-				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
-			</Goodies>
-			<FreeTechs/>
-			<AIFreeTechs/>
-		</HandicapInfo>
-		<HandicapInfo>
-			<Type>HANDICAP_NOBLE</Type>
-			<Description>TXT_KEY_HANDICAP_NOBLE</Description>
-			<Help>TXT_KEY_HANDICAP_NOBLE_HELP</Help>
-			<iFreeWinsVsBarbs>0</iFreeWinsVsBarbs>
-			<iAnimalAttackProb>90</iAnimalAttackProb>
-			<iStartingLocPercent>60</iStartingLocPercent>
-			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>
-			<iGold>0</iGold>
-			<iFreeUnits>4</iFreeUnits>
-			<iUnitCostPercent>70</iUnitCostPercent>
-			<iResearchPercent>115</iResearchPercent>
-			<iDistanceMaintenancePercent>45</iDistanceMaintenancePercent>
-			<iNumCitiesMaintenancePercent>85</iNumCitiesMaintenancePercent>
-			<iMaxNumCitiesMaintenance>6</iMaxNumCitiesMaintenance>
-			<iColonyMaintenancePercent>120</iColonyMaintenancePercent>
-			<iMaxColonyMaintenance>100</iMaxColonyMaintenance>
-			<iCorporationMaintenancePercent>120</iCorporationMaintenancePercent>
-			<iCivicUpkeepPercent>95</iCivicUpkeepPercent>
-			<iInflationPercent>100</iInflationPercent>
-			<iHealthBonus>4</iHealthBonus>
-			<iHappyBonus>4</iHappyBonus>
-			<iAttitudeChange>-1</iAttitudeChange>
-			<iNoTechTradeModifier>50</iNoTechTradeModifier>
-			<iTechTradeKnownModifier>0</iTechTradeKnownModifier>
-			<iUnownedTilesPerGameAnimal>35</iUnownedTilesPerGameAnimal>
-			<iUnownedTilesPerBarbarianUnit>280</iUnownedTilesPerBarbarianUnit>
-			<iUnownedWaterTilesPerBarbarianUnit>1600</iUnownedWaterTilesPerBarbarianUnit>
-			<iUnownedTilesPerBarbarianCity>110</iUnownedTilesPerBarbarianCity>
-			<iBarbarianCreationTurnsElapsed>30</iBarbarianCreationTurnsElapsed>
-			<iBarbarianCityCreationTurnsElapsed>500</iBarbarianCityCreationTurnsElapsed>
-			<iBarbarianCityCreationProb>7</iBarbarianCityCreationProb>
-			<iAnimalBonus>-20</iAnimalBonus>
-			<iBarbarianBonus>0</iBarbarianBonus>
-			<iAIAnimalBonus>-70</iAIAnimalBonus>
-			<iAIBarbarianBonus>-40</iAIBarbarianBonus>
-			<iStartingDefenseUnits>0</iStartingDefenseUnits>
-			<iStartingWorkerUnits>0</iStartingWorkerUnits>
-			<iStartingExploreUnits>0</iStartingExploreUnits>
-			<iAIStartingUnitMultiplier>0</iAIStartingUnitMultiplier>
-			<iAIStartingDefenseUnits>1</iAIStartingDefenseUnits>
-			<iAIStartingWorkerUnits>1</iAIStartingWorkerUnits>
-			<iAIStartingExploreUnits>0</iAIStartingExploreUnits>
-			<iBarbarianDefenders>3</iBarbarianDefenders>
-			<iAIDeclareWarProb>100</iAIDeclareWarProb>
-			<iAIWorkRateModifier>20</iAIWorkRateModifier>
-			<iAIGrowthPercent>90</iAIGrowthPercent>
-			<iAITrainPercent>90</iAITrainPercent>
-			<iAIWorldTrainPercent>100</iAIWorldTrainPercent>
-			<iAIConstructPercent>90</iAIConstructPercent>
-			<iAIWorldConstructPercent>100</iAIWorldConstructPercent>
-			<iAICreatePercent>90</iAICreatePercent>
-			<iAIWorldCreatePercent>100</iAIWorldCreatePercent>
-			<iAICivicUpkeepPercent>90</iAICivicUpkeepPercent>
-			<iAIUnitCostPercent>90</iAIUnitCostPercent>
-			<iAIUnitSupplyPercent>25</iAIUnitSupplyPercent>
-			<iAIUnitUpgradePercent>40</iAIUnitUpgradePercent>
-			<iAIInflationPercent>50</iAIInflationPercent>
-			<iAIWarWearinessPercent>50</iAIWarWearinessPercent>
-			<iAIPerEraModifier>-2</iAIPerEraModifier>
-			<iAIAdvancedStartPercent>100</iAIAdvancedStartPercent>
-			<Goodies>
-				<GoodyType>GOODY_HIGH_GOLD</GoodyType>
-				<GoodyType>GOODY_LOW_GOLD</GoodyType>
-				<GoodyType>GOODY_LOW_GOLD</GoodyType>
-				<GoodyType>GOODY_LOW_GOLD</GoodyType>
-				<GoodyType>GOODY_LOW_GOLD</GoodyType>
-				<GoodyType>GOODY_MAP</GoodyType>
-				<GoodyType>GOODY_MAP</GoodyType>
-				<GoodyType>GOODY_WARRIOR</GoodyType>
-				<GoodyType>GOODY_WARRIOR</GoodyType>
-				<GoodyType>GOODY_SCOUT</GoodyType>
-				<GoodyType>GOODY_EXPERIENCE</GoodyType>
-				<GoodyType>GOODY_EXPERIENCE</GoodyType>
-				<GoodyType>GOODY_HEALING</GoodyType>
-				<GoodyType>GOODY_TECH</GoodyType>
-				<GoodyType>GOODY_TECH</GoodyType>
-				<GoodyType>GOODY_BARBARIANS_WEAK</GoodyType>
-				<GoodyType>GOODY_BARBARIANS_WEAK</GoodyType>
-				<GoodyType>GOODY_BARBARIANS_WEAK</GoodyType>
-				<GoodyType>GOODY_BARBARIANS_STRONG</GoodyType>
-				<GoodyType>GOODY_BARBARIANS_STRONG</GoodyType>
-				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
-				<GoodyType>GOODY_ALIEN_MAP</GoodyType>
-				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
-				<GoodyType>GOODY_ALIEN_HIGH_GOLD</GoodyType>
-				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
-				<GoodyType>GOODY_ALIEN_MAP</GoodyType>
-				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
-				<GoodyType>GOODY_ALIEN_HIGH_GOLD</GoodyType>
-				<GoodyType>GOODY_ALIEN_GIFT_CITY</GoodyType>
 				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
 				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
 			</Goodies>
@@ -398,66 +435,66 @@
 			<Type>HANDICAP_PRINCE</Type>
 			<Description>TXT_KEY_HANDICAP_PRINCE</Description>
 			<Help>TXT_KEY_HANDICAP_PRINCE_HELP</Help>
-			<iFreeWinsVsBarbs>0</iFreeWinsVsBarbs>
+			<iFreeWinsVsBarbs>1</iFreeWinsVsBarbs>
 			<iAnimalAttackProb>90</iAnimalAttackProb>
-			<iStartingLocPercent>70</iStartingLocPercent>
+			<iStartingLocPercent>50</iStartingLocPercent>
 			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>
 			<iGold>0</iGold>
 			<iFreeUnits>3</iFreeUnits>
-			<iUnitCostPercent>80</iUnitCostPercent>
-			<iResearchPercent>120</iResearchPercent>
-			<iDistanceMaintenancePercent>48</iDistanceMaintenancePercent>
-			<iNumCitiesMaintenancePercent>90</iNumCitiesMaintenancePercent>
-			<iMaxNumCitiesMaintenance>7</iMaxNumCitiesMaintenance>
-			<iColonyMaintenancePercent>130</iColonyMaintenancePercent>
-			<iMaxColonyMaintenance>100</iMaxColonyMaintenance>
-			<iCorporationMaintenancePercent>130</iCorporationMaintenancePercent>
-			<iCivicUpkeepPercent>100</iCivicUpkeepPercent>
-			<iInflationPercent>100</iInflationPercent>
+			<iUnitCostPercent>90</iUnitCostPercent>
+			<iResearchPercent>110</iResearchPercent>
+			<iDistanceMaintenancePercent>57</iDistanceMaintenancePercent>
+			<iNumCitiesMaintenancePercent>120</iNumCitiesMaintenancePercent>
+			<iMaxNumCitiesMaintenance>6</iMaxNumCitiesMaintenance>
+			<iColonyMaintenancePercent>165</iColonyMaintenancePercent>
+			<iMaxColonyMaintenance>300</iMaxColonyMaintenance>
+			<iCorporationMaintenancePercent>165</iCorporationMaintenancePercent>
+			<iCivicUpkeepPercent>135</iCivicUpkeepPercent>
+			<iInflationPercent>143</iInflationPercent>
 			<iHealthBonus>4</iHealthBonus>
 			<iHappyBonus>4</iHappyBonus>
 			<iAttitudeChange>-1</iAttitudeChange>
-			<iNoTechTradeModifier>40</iNoTechTradeModifier>
+			<iNoTechTradeModifier>60</iNoTechTradeModifier>
 			<iTechTradeKnownModifier>0</iTechTradeKnownModifier>
-			<iUnownedTilesPerGameAnimal>30</iUnownedTilesPerGameAnimal>
-			<iUnownedTilesPerBarbarianUnit>240</iUnownedTilesPerBarbarianUnit>
-			<iUnownedWaterTilesPerBarbarianUnit>1400</iUnownedWaterTilesPerBarbarianUnit>
-			<iUnownedTilesPerBarbarianCity>100</iUnownedTilesPerBarbarianCity>
-			<iBarbarianCreationTurnsElapsed>25</iBarbarianCreationTurnsElapsed>
-			<iBarbarianCityCreationTurnsElapsed>500</iBarbarianCityCreationTurnsElapsed>
-			<iBarbarianCityCreationProb>7</iBarbarianCityCreationProb>
-			<iAnimalBonus>-10</iAnimalBonus>
-			<iBarbarianBonus>0</iBarbarianBonus>
-			<iAIAnimalBonus>-70</iAIAnimalBonus>
-			<iAIBarbarianBonus>-40</iAIBarbarianBonus>
+			<iUnownedTilesPerGameAnimal>120</iUnownedTilesPerGameAnimal>
+			<iUnownedTilesPerBarbarianUnit>150</iUnownedTilesPerBarbarianUnit>
+			<iUnownedWaterTilesPerBarbarianUnit>1350</iUnownedWaterTilesPerBarbarianUnit>
+			<iUnownedTilesPerBarbarianCity>360</iUnownedTilesPerBarbarianCity>
+			<iBarbarianCreationTurnsElapsed>33</iBarbarianCreationTurnsElapsed>
+			<iBarbarianCityCreationTurnsElapsed>550</iBarbarianCityCreationTurnsElapsed>
+			<iBarbarianCityCreationProb>6</iBarbarianCityCreationProb>
+			<iAnimalBonus>-30</iAnimalBonus>
+			<iBarbarianBonus>-5</iBarbarianBonus>
+			<iAIAnimalBonus>-40</iAIAnimalBonus>
+			<iAIBarbarianBonus>-25</iAIBarbarianBonus>
 			<iStartingDefenseUnits>0</iStartingDefenseUnits>
 			<iStartingWorkerUnits>0</iStartingWorkerUnits>
 			<iStartingExploreUnits>0</iStartingExploreUnits>
 			<iAIStartingUnitMultiplier>0</iAIStartingUnitMultiplier>
-			<iAIStartingDefenseUnits>2</iAIStartingDefenseUnits>
-			<iAIStartingWorkerUnits>1</iAIStartingWorkerUnits>
-			<iAIStartingExploreUnits>1</iAIStartingExploreUnits>
-			<iBarbarianDefenders>3</iBarbarianDefenders>
+			<iAIStartingDefenseUnits>0</iAIStartingDefenseUnits>
+			<iAIStartingWorkerUnits>0</iAIStartingWorkerUnits>
+			<iAIStartingExploreUnits>0</iAIStartingExploreUnits>
+			<iBarbarianDefenders>2</iBarbarianDefenders>
 			<iAIDeclareWarProb>100</iAIDeclareWarProb>
-			<iAIWorkRateModifier>50</iAIWorkRateModifier>
-			<iAIGrowthPercent>85</iAIGrowthPercent>
-			<iAITrainPercent>85</iAITrainPercent>
+			<iAIWorkRateModifier>10</iAIWorkRateModifier>
+			<iAIGrowthPercent>100</iAIGrowthPercent>
+			<iAITrainPercent>95</iAITrainPercent>
 			<iAIWorldTrainPercent>100</iAIWorldTrainPercent>
-			<iAIConstructPercent>85</iAIConstructPercent>
+			<iAIConstructPercent>95</iAIConstructPercent>
 			<iAIWorldConstructPercent>100</iAIWorldConstructPercent>
-			<iAICreatePercent>85</iAICreatePercent>
+			<iAICreatePercent>95</iAICreatePercent>
 			<iAIWorldCreatePercent>100</iAIWorldCreatePercent>
-			<iAICivicUpkeepPercent>85</iAICivicUpkeepPercent>
-			<iAIUnitCostPercent>85</iAIUnitCostPercent>
-			<iAIUnitSupplyPercent>20</iAIUnitSupplyPercent>
-			<iAIUnitUpgradePercent>40</iAIUnitUpgradePercent>
-			<iAIInflationPercent>40</iAIInflationPercent>
-			<iAIWarWearinessPercent>40</iAIWarWearinessPercent>
-			<iAIPerEraModifier>-3</iAIPerEraModifier>
-			<iAIAdvancedStartPercent>100</iAIAdvancedStartPercent>
+			<iAICivicUpkeepPercent>95</iAICivicUpkeepPercent>
+			<iAIUnitCostPercent>95</iAIUnitCostPercent>
+			<iAIUnitSupplyPercent>50</iAIUnitSupplyPercent>
+			<iAIUnitUpgradePercent>50</iAIUnitUpgradePercent>
+			<iAIInflationPercent>80</iAIInflationPercent>
+			<iAIWarWearinessPercent>80</iAIWarWearinessPercent>
+			<iAIPerEraModifier>-1</iAIPerEraModifier>
+			<iAIAdvancedStartPercent>116</iAIAdvancedStartPercent>
 			<Goodies>
 				<GoodyType>GOODY_HIGH_GOLD</GoodyType>
-				<GoodyType>GOODY_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_HIGH_GOLD</GoodyType>
 				<GoodyType>GOODY_LOW_GOLD</GoodyType>
 				<GoodyType>GOODY_LOW_GOLD</GoodyType>
 				<GoodyType>GOODY_LOW_GOLD</GoodyType>
@@ -465,7 +502,9 @@
 				<GoodyType>GOODY_MAP</GoodyType>
 				<GoodyType>GOODY_MAP</GoodyType>
 				<GoodyType>GOODY_WARRIOR</GoodyType>
+				<GoodyType>GOODY_WARRIOR</GoodyType>
 				<GoodyType>GOODY_SCOUT</GoodyType>
+				<GoodyType>GOODY_EXPERIENCE</GoodyType>
 				<GoodyType>GOODY_EXPERIENCE</GoodyType>
 				<GoodyType>GOODY_HEALING</GoodyType>
 				<GoodyType>GOODY_TECH</GoodyType>
@@ -474,17 +513,18 @@
 				<GoodyType>GOODY_BARBARIANS_WEAK</GoodyType>
 				<GoodyType>GOODY_BARBARIANS_WEAK</GoodyType>
 				<GoodyType>GOODY_BARBARIANS_STRONG</GoodyType>
-				<GoodyType>GOODY_BARBARIANS_STRONG</GoodyType>
-				<GoodyType>GOODY_BARBARIANS_STRONG</GoodyType>
-				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
-				<GoodyType>GOODY_ALIEN_MAP</GoodyType>
-				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
 				<GoodyType>GOODY_ALIEN_HIGH_GOLD</GoodyType>
-				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
-				<GoodyType>GOODY_ALIEN_MAP</GoodyType>
-				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
 				<GoodyType>GOODY_ALIEN_HIGH_GOLD</GoodyType>
-				<GoodyType>GOODY_ALIEN_GIFT_CITY</GoodyType>
+				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_MAP</GoodyType>
+				<GoodyType>GOODY_ALIEN_MAP</GoodyType>
+				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
+				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
+				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
+				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
 				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
 				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
 			</Goodies>
@@ -497,47 +537,263 @@
 			<Help>TXT_KEY_HANDICAP_MONARCH_HELP</Help>
 			<iFreeWinsVsBarbs>0</iFreeWinsVsBarbs>
 			<iAnimalAttackProb>90</iAnimalAttackProb>
-			<iStartingLocPercent>80</iStartingLocPercent>
+			<iStartingLocPercent>60</iStartingLocPercent>
 			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>
 			<iGold>0</iGold>
 			<iFreeUnits>2</iFreeUnits>
-			<iUnitCostPercent>90</iUnitCostPercent>
-			<iResearchPercent>125</iResearchPercent>
-			<iDistanceMaintenancePercent>50</iDistanceMaintenancePercent>
-			<iNumCitiesMaintenancePercent>95</iNumCitiesMaintenancePercent>
+			<iUnitCostPercent>105</iUnitCostPercent>
+			<iResearchPercent>115</iResearchPercent>
+			<iDistanceMaintenancePercent>60</iDistanceMaintenancePercent>
+			<iNumCitiesMaintenancePercent>128</iNumCitiesMaintenancePercent>
+			<iMaxNumCitiesMaintenance>6</iMaxNumCitiesMaintenance>
+			<iColonyMaintenancePercent>180</iColonyMaintenancePercent>
+			<iMaxColonyMaintenance>300</iMaxColonyMaintenance>
+			<iCorporationMaintenancePercent>180</iCorporationMaintenancePercent>
+			<iCivicUpkeepPercent>143</iCivicUpkeepPercent>
+			<iInflationPercent>150</iInflationPercent>
+			<iHealthBonus>4</iHealthBonus>
+			<iHappyBonus>4</iHappyBonus>
+			<iAttitudeChange>-1</iAttitudeChange>
+			<iNoTechTradeModifier>50</iNoTechTradeModifier>
+			<iTechTradeKnownModifier>0</iTechTradeKnownModifier>
+			<iUnownedTilesPerGameAnimal>105</iUnownedTilesPerGameAnimal>
+			<iUnownedTilesPerBarbarianUnit>120</iUnownedTilesPerBarbarianUnit>
+			<iUnownedWaterTilesPerBarbarianUnit>1200</iUnownedWaterTilesPerBarbarianUnit>
+			<iUnownedTilesPerBarbarianCity>330</iUnownedTilesPerBarbarianCity>
+			<iBarbarianCreationTurnsElapsed>28</iBarbarianCreationTurnsElapsed>
+			<iBarbarianCityCreationTurnsElapsed>550</iBarbarianCityCreationTurnsElapsed>
+			<iBarbarianCityCreationProb>7</iBarbarianCityCreationProb>
+			<iAnimalBonus>-20</iAnimalBonus>
+			<iBarbarianBonus>0</iBarbarianBonus>
+			<iAIAnimalBonus>-40</iAIAnimalBonus>
+			<iAIBarbarianBonus>-25</iAIBarbarianBonus>
+			<iStartingDefenseUnits>0</iStartingDefenseUnits>
+			<iStartingWorkerUnits>0</iStartingWorkerUnits>
+			<iStartingExploreUnits>0</iStartingExploreUnits>
+			<iAIStartingUnitMultiplier>0</iAIStartingUnitMultiplier>
+			<iAIStartingDefenseUnits>1</iAIStartingDefenseUnits>
+			<iAIStartingWorkerUnits>0</iAIStartingWorkerUnits>
+			<iAIStartingExploreUnits>0</iAIStartingExploreUnits>
+			<iBarbarianDefenders>3</iBarbarianDefenders>
+			<iAIDeclareWarProb>100</iAIDeclareWarProb>
+			<iAIWorkRateModifier>20</iAIWorkRateModifier>
+			<iAIGrowthPercent>95</iAIGrowthPercent>
+			<iAITrainPercent>90</iAITrainPercent>
+			<iAIWorldTrainPercent>100</iAIWorldTrainPercent>
+			<iAIConstructPercent>90</iAIConstructPercent>
+			<iAIWorldConstructPercent>100</iAIWorldConstructPercent>
+			<iAICreatePercent>90</iAICreatePercent>
+			<iAIWorldCreatePercent>100</iAIWorldCreatePercent>
+			<iAICivicUpkeepPercent>90</iAICivicUpkeepPercent>
+			<iAIUnitCostPercent>90</iAIUnitCostPercent>
+			<iAIUnitSupplyPercent>50</iAIUnitSupplyPercent>
+			<iAIUnitUpgradePercent>50</iAIUnitUpgradePercent>
+			<iAIInflationPercent>80</iAIInflationPercent>
+			<iAIWarWearinessPercent>75</iAIWarWearinessPercent>
+			<iAIPerEraModifier>-2</iAIPerEraModifier>
+			<iAIAdvancedStartPercent>133</iAIAdvancedStartPercent>
+			<Goodies>
+				<GoodyType>GOODY_HIGH_GOLD</GoodyType>
+				<GoodyType>GOODY_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_MAP</GoodyType>
+				<GoodyType>GOODY_MAP</GoodyType>
+				<GoodyType>GOODY_WARRIOR</GoodyType>
+				<GoodyType>GOODY_WARRIOR</GoodyType>
+				<GoodyType>GOODY_SCOUT</GoodyType>
+				<GoodyType>GOODY_EXPERIENCE</GoodyType>
+				<GoodyType>GOODY_EXPERIENCE</GoodyType>
+				<GoodyType>GOODY_HEALING</GoodyType>
+				<GoodyType>GOODY_TECH</GoodyType>
+				<GoodyType>GOODY_TECH</GoodyType>
+				<GoodyType>GOODY_BARBARIANS_WEAK</GoodyType>
+				<GoodyType>GOODY_BARBARIANS_WEAK</GoodyType>
+				<GoodyType>GOODY_BARBARIANS_WEAK</GoodyType>
+				<GoodyType>GOODY_BARBARIANS_STRONG</GoodyType>
+				<GoodyType>GOODY_BARBARIANS_STRONG</GoodyType>
+				<GoodyType>GOODY_ALIEN_HIGH_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
+                <GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_MAP</GoodyType>
+				<GoodyType>GOODY_ALIEN_MAP</GoodyType>
+				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
+				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
+				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
+				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
+				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
+				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
+				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
+			</Goodies>
+			<FreeTechs/>
+			<AIFreeTechs>
+				<FreeTech>
+					<TechType>TECH_HAPPY_0</TechType>
+					<bFreeTech>1</bFreeTech>
+				</FreeTech>
+			</AIFreeTechs>
+		</HandicapInfo>
+		<HandicapInfo>
+			<Type>HANDICAP_EMPEROR</Type>
+			<Description>TXT_KEY_HANDICAP_EMPEROR</Description>
+			<Help>TXT_KEY_HANDICAP_EMPEROR_HELP</Help>
+			<iFreeWinsVsBarbs>0</iFreeWinsVsBarbs>
+			<iAnimalAttackProb>90</iAnimalAttackProb>
+			<iStartingLocPercent>70</iStartingLocPercent>
+			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>
+			<iGold>0</iGold>
+			<iFreeUnits>2</iFreeUnits>
+			<iUnitCostPercent>120</iUnitCostPercent>
+			<iResearchPercent>120</iResearchPercent>
+			<iDistanceMaintenancePercent>63</iDistanceMaintenancePercent>
+			<iNumCitiesMaintenancePercent>135</iNumCitiesMaintenancePercent>
 			<iMaxNumCitiesMaintenance>7</iMaxNumCitiesMaintenance>
-			<iColonyMaintenancePercent>140</iColonyMaintenancePercent>
-			<iMaxColonyMaintenance>100</iMaxColonyMaintenance>
-			<iCorporationMaintenancePercent>140</iCorporationMaintenancePercent>
-			<iCivicUpkeepPercent>100</iCivicUpkeepPercent>
-			<iInflationPercent>100</iInflationPercent>
+			<iColonyMaintenancePercent>195</iColonyMaintenancePercent>
+			<iMaxColonyMaintenance>300</iMaxColonyMaintenance>
+			<iCorporationMaintenancePercent>195</iCorporationMaintenancePercent>
+			<iCivicUpkeepPercent>150</iCivicUpkeepPercent>
+			<iInflationPercent>150</iInflationPercent>
+			<iHealthBonus>4</iHealthBonus>
+			<iHappyBonus>4</iHappyBonus>
+			<iAttitudeChange>-1</iAttitudeChange>
+			<iNoTechTradeModifier>40</iNoTechTradeModifier>
+			<iTechTradeKnownModifier>0</iTechTradeKnownModifier>
+			<iUnownedTilesPerGameAnimal>90</iUnownedTilesPerGameAnimal>
+			<iUnownedTilesPerBarbarianUnit>105</iUnownedTilesPerBarbarianUnit>
+			<iUnownedWaterTilesPerBarbarianUnit>1050</iUnownedWaterTilesPerBarbarianUnit>
+			<iUnownedTilesPerBarbarianCity>300</iUnownedTilesPerBarbarianCity>
+			<iBarbarianCreationTurnsElapsed>22</iBarbarianCreationTurnsElapsed>
+			<iBarbarianCityCreationTurnsElapsed>550</iBarbarianCityCreationTurnsElapsed>
+			<iBarbarianCityCreationProb>7</iBarbarianCityCreationProb>
+			<iAnimalBonus>-10</iAnimalBonus>
+			<iBarbarianBonus>0</iBarbarianBonus>
+			<iAIAnimalBonus>-40</iAIAnimalBonus>
+			<iAIBarbarianBonus>-25</iAIBarbarianBonus>
+			<iStartingDefenseUnits>0</iStartingDefenseUnits>
+			<iStartingWorkerUnits>0</iStartingWorkerUnits>
+			<iStartingExploreUnits>0</iStartingExploreUnits>
+			<iAIStartingUnitMultiplier>0</iAIStartingUnitMultiplier>
+			<iAIStartingDefenseUnits>2</iAIStartingDefenseUnits>
+			<iAIStartingWorkerUnits>0</iAIStartingWorkerUnits>
+			<iAIStartingExploreUnits>1</iAIStartingExploreUnits>
+			<iBarbarianDefenders>3</iBarbarianDefenders>
+			<iAIDeclareWarProb>100</iAIDeclareWarProb>
+			<iAIWorkRateModifier>50</iAIWorkRateModifier>
+			<iAIGrowthPercent>90</iAIGrowthPercent>
+			<iAITrainPercent>85</iAITrainPercent>
+			<iAIWorldTrainPercent>100</iAIWorldTrainPercent>
+			<iAIConstructPercent>85</iAIConstructPercent>
+			<iAIWorldConstructPercent>100</iAIWorldConstructPercent>
+			<iAICreatePercent>85</iAICreatePercent>
+			<iAIWorldCreatePercent>100</iAIWorldCreatePercent>
+			<iAICivicUpkeepPercent>85</iAICivicUpkeepPercent>
+			<iAIUnitCostPercent>85</iAIUnitCostPercent>
+			<iAIUnitSupplyPercent>50</iAIUnitSupplyPercent>
+			<iAIUnitUpgradePercent>50</iAIUnitUpgradePercent>
+			<iAIInflationPercent>80</iAIInflationPercent>
+			<iAIWarWearinessPercent>70</iAIWarWearinessPercent>
+			<iAIPerEraModifier>-3</iAIPerEraModifier>
+			<iAIAdvancedStartPercent>159</iAIAdvancedStartPercent>
+			<Goodies>
+				<GoodyType>GOODY_HIGH_GOLD</GoodyType>
+				<GoodyType>GOODY_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_MAP</GoodyType>
+				<GoodyType>GOODY_MAP</GoodyType>
+				<GoodyType>GOODY_WARRIOR</GoodyType>
+				<GoodyType>GOODY_SCOUT</GoodyType>
+				<GoodyType>GOODY_EXPERIENCE</GoodyType>
+				<GoodyType>GOODY_HEALING</GoodyType>
+				<GoodyType>GOODY_TECH</GoodyType>
+				<GoodyType>GOODY_TECH</GoodyType>
+				<GoodyType>GOODY_BARBARIANS_WEAK</GoodyType>
+				<GoodyType>GOODY_BARBARIANS_WEAK</GoodyType>
+				<GoodyType>GOODY_BARBARIANS_WEAK</GoodyType>
+				<GoodyType>GOODY_BARBARIANS_STRONG</GoodyType>
+				<GoodyType>GOODY_BARBARIANS_STRONG</GoodyType>
+				<GoodyType>GOODY_BARBARIANS_STRONG</GoodyType>
+				<GoodyType>GOODY_ALIEN_HIGH_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
+                <GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
+                <GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_MAP</GoodyType>
+				<GoodyType>GOODY_ALIEN_MAP</GoodyType>
+				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
+				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
+				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
+				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
+				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
+				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
+				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
+				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
+			</Goodies>
+			<FreeTechs/>
+			<AIFreeTechs>
+				<FreeTech>
+					<TechType>TECH_HAPPY_0</TechType>
+					<bFreeTech>1</bFreeTech>
+				</FreeTech>
+				<FreeTech>
+					<TechType>TECH_TECH_INDUSTRY_0</TechType>
+					<bFreeTech>1</bFreeTech>
+				</FreeTech>
+			</AIFreeTechs>
+		</HandicapInfo>
+		<HandicapInfo>
+			<Type>HANDICAP_IMMORTAL</Type>
+			<Description>TXT_KEY_HANDICAP_IMMORTAL</Description>
+			<Help>TXT_KEY_HANDICAP_IMMORTAL_HELP</Help>
+			<iFreeWinsVsBarbs>0</iFreeWinsVsBarbs>
+			<iAnimalAttackProb>90</iAnimalAttackProb>
+			<iStartingLocPercent>80</iStartingLocPercent>
+			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>
+			<iGold>0</iGold>
+			<iFreeUnits>1</iFreeUnits>
+			<iUnitCostPercent>135</iUnitCostPercent>
+			<iResearchPercent>125</iResearchPercent>
+			<iDistanceMaintenancePercent>67</iDistanceMaintenancePercent>
+			<iNumCitiesMaintenancePercent>143</iNumCitiesMaintenancePercent>
+			<iMaxNumCitiesMaintenance>7</iMaxNumCitiesMaintenance>
+			<iColonyMaintenancePercent>210</iColonyMaintenancePercent>
+			<iMaxColonyMaintenance>300</iMaxColonyMaintenance>
+			<iCorporationMaintenancePercent>210</iCorporationMaintenancePercent>
+			<iCivicUpkeepPercent>150</iCivicUpkeepPercent>
+			<iInflationPercent>150</iInflationPercent>
 			<iHealthBonus>4</iHealthBonus>
 			<iHappyBonus>4</iHappyBonus>
 			<iAttitudeChange>-1</iAttitudeChange>
 			<iNoTechTradeModifier>30</iNoTechTradeModifier>
 			<iTechTradeKnownModifier>0</iTechTradeKnownModifier>
-			<iUnownedTilesPerGameAnimal>25</iUnownedTilesPerGameAnimal>
-			<iUnownedTilesPerBarbarianUnit>200</iUnownedTilesPerBarbarianUnit>
-			<iUnownedWaterTilesPerBarbarianUnit>1200</iUnownedWaterTilesPerBarbarianUnit>
-			<iUnownedTilesPerBarbarianCity>90</iUnownedTilesPerBarbarianCity>
-			<iBarbarianCreationTurnsElapsed>20</iBarbarianCreationTurnsElapsed>
-			<iBarbarianCityCreationTurnsElapsed>500</iBarbarianCityCreationTurnsElapsed>
+			<iUnownedTilesPerGameAnimal>75</iUnownedTilesPerGameAnimal>
+			<iUnownedTilesPerBarbarianUnit>90</iUnownedTilesPerBarbarianUnit>
+			<iUnownedWaterTilesPerBarbarianUnit>900</iUnownedWaterTilesPerBarbarianUnit>
+			<iUnownedTilesPerBarbarianCity>270</iUnownedTilesPerBarbarianCity>
+			<iBarbarianCreationTurnsElapsed>17</iBarbarianCreationTurnsElapsed>
+			<iBarbarianCityCreationTurnsElapsed>550</iBarbarianCityCreationTurnsElapsed>
 			<iBarbarianCityCreationProb>8</iBarbarianCityCreationProb>
 			<iAnimalBonus>-5</iAnimalBonus>
 			<iBarbarianBonus>0</iBarbarianBonus>
-			<iAIAnimalBonus>-70</iAIAnimalBonus>
-			<iAIBarbarianBonus>-40</iAIBarbarianBonus>
+			<iAIAnimalBonus>-40</iAIAnimalBonus>
+			<iAIBarbarianBonus>-25</iAIBarbarianBonus>
 			<iStartingDefenseUnits>0</iStartingDefenseUnits>
 			<iStartingWorkerUnits>0</iStartingWorkerUnits>
 			<iStartingExploreUnits>0</iStartingExploreUnits>
 			<iAIStartingUnitMultiplier>0</iAIStartingUnitMultiplier>
 			<iAIStartingDefenseUnits>3</iAIStartingDefenseUnits>
-			<iAIStartingWorkerUnits>2</iAIStartingWorkerUnits>
+			<iAIStartingWorkerUnits>1</iAIStartingWorkerUnits>
 			<iAIStartingExploreUnits>1</iAIStartingExploreUnits>
 			<iBarbarianDefenders>4</iBarbarianDefenders>
 			<iAIDeclareWarProb>100</iAIDeclareWarProb>
 			<iAIWorkRateModifier>75</iAIWorkRateModifier>
-			<iAIGrowthPercent>80</iAIGrowthPercent>
+			<iAIGrowthPercent>85</iAIGrowthPercent>
 			<iAITrainPercent>80</iAITrainPercent>
 			<iAIWorldTrainPercent>100</iAIWorldTrainPercent>
 			<iAIConstructPercent>80</iAIConstructPercent>
@@ -546,12 +802,12 @@
 			<iAIWorldCreatePercent>100</iAIWorldCreatePercent>
 			<iAICivicUpkeepPercent>80</iAICivicUpkeepPercent>
 			<iAIUnitCostPercent>80</iAIUnitCostPercent>
-			<iAIUnitSupplyPercent>15</iAIUnitSupplyPercent>
-			<iAIUnitUpgradePercent>35</iAIUnitUpgradePercent>
-			<iAIInflationPercent>30</iAIInflationPercent>
-			<iAIWarWearinessPercent>30</iAIWarWearinessPercent>
+			<iAIUnitSupplyPercent>50</iAIUnitSupplyPercent>
+			<iAIUnitUpgradePercent>50</iAIUnitUpgradePercent>
+			<iAIInflationPercent>80</iAIInflationPercent>
+			<iAIWarWearinessPercent>60</iAIWarWearinessPercent>
 			<iAIPerEraModifier>-4</iAIPerEraModifier>
-			<iAIAdvancedStartPercent>100</iAIAdvancedStartPercent>
+			<iAIAdvancedStartPercent>188</iAIAdvancedStartPercent>
 			<Goodies>
 				<GoodyType>GOODY_LOW_GOLD</GoodyType>
 				<GoodyType>GOODY_LOW_GOLD</GoodyType>
@@ -573,214 +829,38 @@
 				<GoodyType>GOODY_BARBARIANS_STRONG</GoodyType>
 				<GoodyType>GOODY_BARBARIANS_STRONG</GoodyType>
 				<GoodyType>GOODY_BARBARIANS_STRONG</GoodyType>
-				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
-				<GoodyType>GOODY_ALIEN_MAP</GoodyType>
 				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
-				<GoodyType>GOODY_ALIEN_HIGH_GOLD</GoodyType>
-				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
-				<GoodyType>GOODY_ALIEN_MAP</GoodyType>
 				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
-				<GoodyType>GOODY_ALIEN_HIGH_GOLD</GoodyType>
-				<GoodyType>GOODY_ALIEN_GIFT_CITY</GoodyType>
+                <GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
+				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
+                <GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
+                <GoodyType>GOODY_ALIEN_MAP</GoodyType>
+                <GoodyType>GOODY_ALIEN_MAP</GoodyType>
+                <GoodyType>GOODY_ALIEN_TECH</GoodyType>
+                <GoodyType>GOODY_ALIEN_TECH</GoodyType>
+                <GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
 				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
+                <GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
 				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
+                <GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
+				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
+                <GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
 			</Goodies>
 			<FreeTechs/>
-			<AIFreeTechs/>
-		</HandicapInfo>
-		<HandicapInfo>
-			<Type>HANDICAP_EMPEROR</Type>
-			<Description>TXT_KEY_HANDICAP_EMPEROR</Description>
-			<Help>TXT_KEY_HANDICAP_EMPEROR_HELP</Help>
-			<iFreeWinsVsBarbs>0</iFreeWinsVsBarbs>
-			<iAnimalAttackProb>90</iAnimalAttackProb>
-			<iStartingLocPercent>90</iStartingLocPercent>
-			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>
-			<iGold>0</iGold>
-			<iFreeUnits>1</iFreeUnits>
-			<iUnitCostPercent>100</iUnitCostPercent>
-			<iResearchPercent>130</iResearchPercent>
-			<iDistanceMaintenancePercent>50</iDistanceMaintenancePercent>
-			<iNumCitiesMaintenancePercent>100</iNumCitiesMaintenancePercent>
-			<iMaxNumCitiesMaintenance>8</iMaxNumCitiesMaintenance>
-			<iColonyMaintenancePercent>150</iColonyMaintenancePercent>
-			<iMaxColonyMaintenance>100</iMaxColonyMaintenance>
-			<iCorporationMaintenancePercent>150</iCorporationMaintenancePercent>
-			<iCivicUpkeepPercent>100</iCivicUpkeepPercent>
-			<iInflationPercent>100</iInflationPercent>
-			<iHealthBonus>4</iHealthBonus>
-			<iHappyBonus>4</iHappyBonus>
-			<iAttitudeChange>-1</iAttitudeChange>
-			<iNoTechTradeModifier>20</iNoTechTradeModifier>
-			<iTechTradeKnownModifier>0</iTechTradeKnownModifier>
-			<iUnownedTilesPerGameAnimal>20</iUnownedTilesPerGameAnimal>
-			<iUnownedTilesPerBarbarianUnit>160</iUnownedTilesPerBarbarianUnit>
-			<iUnownedWaterTilesPerBarbarianUnit>1000</iUnownedWaterTilesPerBarbarianUnit>
-			<iUnownedTilesPerBarbarianCity>80</iUnownedTilesPerBarbarianCity>
-			<iBarbarianCreationTurnsElapsed>20</iBarbarianCreationTurnsElapsed>
-			<iBarbarianCityCreationTurnsElapsed>500</iBarbarianCityCreationTurnsElapsed>
-			<iBarbarianCityCreationProb>8</iBarbarianCityCreationProb>
-			<iAnimalBonus>0</iAnimalBonus>
-			<iBarbarianBonus>0</iBarbarianBonus>
-			<iAIAnimalBonus>-70</iAIAnimalBonus>
-			<iAIBarbarianBonus>-40</iAIBarbarianBonus>
-			<iStartingDefenseUnits>0</iStartingDefenseUnits>
-			<iStartingWorkerUnits>0</iStartingWorkerUnits>
-			<iStartingExploreUnits>0</iStartingExploreUnits>
-			<iAIStartingUnitMultiplier>0</iAIStartingUnitMultiplier>
-			<iAIStartingDefenseUnits>4</iAIStartingDefenseUnits>
-			<iAIStartingWorkerUnits>2</iAIStartingWorkerUnits>
-			<iAIStartingExploreUnits>1</iAIStartingExploreUnits>
-			<iBarbarianDefenders>4</iBarbarianDefenders>
-			<iAIDeclareWarProb>100</iAIDeclareWarProb>
-			<iAIWorkRateModifier>100</iAIWorkRateModifier>
-			<iAIGrowthPercent>60</iAIGrowthPercent>
-			<iAITrainPercent>60</iAITrainPercent>
-			<iAIWorldTrainPercent>100</iAIWorldTrainPercent>
-			<iAIConstructPercent>60</iAIConstructPercent>
-			<iAIWorldConstructPercent>100</iAIWorldConstructPercent>
-			<iAICreatePercent>60</iAICreatePercent>
-			<iAIWorldCreatePercent>100</iAIWorldCreatePercent>
-			<iAICivicUpkeepPercent>60</iAICivicUpkeepPercent>
-			<iAIUnitCostPercent>60</iAIUnitCostPercent>
-			<iAIUnitSupplyPercent>10</iAIUnitSupplyPercent>
-			<iAIUnitUpgradePercent>30</iAIUnitUpgradePercent>
-			<iAIInflationPercent>20</iAIInflationPercent>
-			<iAIWarWearinessPercent>20</iAIWarWearinessPercent>
-			<iAIPerEraModifier>-5</iAIPerEraModifier>
-			<iAIAdvancedStartPercent>100</iAIAdvancedStartPercent>
-			<Goodies>
-				<GoodyType>GOODY_LOW_GOLD</GoodyType>
-				<GoodyType>GOODY_LOW_GOLD</GoodyType>
-				<GoodyType>GOODY_LOW_GOLD</GoodyType>
-				<GoodyType>GOODY_LOW_GOLD</GoodyType>
-				<GoodyType>GOODY_LOW_GOLD</GoodyType>
-				<GoodyType>GOODY_MAP</GoodyType>
-				<GoodyType>GOODY_WARRIOR</GoodyType>
-				<GoodyType>GOODY_SCOUT</GoodyType>
-				<GoodyType>GOODY_EXPERIENCE</GoodyType>
-				<GoodyType>GOODY_HEALING</GoodyType>
-				<GoodyType>GOODY_TECH</GoodyType>
-				<GoodyType>GOODY_TECH</GoodyType>
-				<GoodyType>GOODY_BARBARIANS_WEAK</GoodyType>
-				<GoodyType>GOODY_BARBARIANS_WEAK</GoodyType>
-				<GoodyType>GOODY_BARBARIANS_STRONG</GoodyType>
-				<GoodyType>GOODY_BARBARIANS_STRONG</GoodyType>
-				<GoodyType>GOODY_BARBARIANS_STRONG</GoodyType>
-				<GoodyType>GOODY_BARBARIANS_STRONG</GoodyType>
-				<GoodyType>GOODY_BARBARIANS_STRONG</GoodyType>
-				<GoodyType>GOODY_BARBARIANS_STRONG</GoodyType>
-				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
-				<GoodyType>GOODY_ALIEN_MAP</GoodyType>
-				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
-				<GoodyType>GOODY_ALIEN_HIGH_GOLD</GoodyType>
-				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
-				<GoodyType>GOODY_ALIEN_MAP</GoodyType>
-				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
-				<GoodyType>GOODY_ALIEN_HIGH_GOLD</GoodyType>
-				<GoodyType>GOODY_ALIEN_GIFT_CITY</GoodyType>
-				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
-				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
-			</Goodies>
-			<FreeTechs/>
-			<AIFreeTechs/>
-		</HandicapInfo>
-		<HandicapInfo>
-			<Type>HANDICAP_IMMORTAL</Type>
-			<Description>TXT_KEY_HANDICAP_IMMORTAL</Description>
-			<Help>TXT_KEY_HANDICAP_IMMORTAL_HELP</Help>
-			<iFreeWinsVsBarbs>0</iFreeWinsVsBarbs>
-			<iAnimalAttackProb>90</iAnimalAttackProb>
-			<iStartingLocPercent>90</iStartingLocPercent>
-			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>
-			<iGold>0</iGold>
-			<iFreeUnits>1</iFreeUnits>
-			<iUnitCostPercent>110</iUnitCostPercent>
-			<iResearchPercent>140</iResearchPercent>
-			<iDistanceMaintenancePercent>50</iDistanceMaintenancePercent>
-			<iNumCitiesMaintenancePercent>100</iNumCitiesMaintenancePercent>
-			<iMaxNumCitiesMaintenance>8</iMaxNumCitiesMaintenance>
-			<iColonyMaintenancePercent>160</iColonyMaintenancePercent>
-			<iMaxColonyMaintenance>100</iMaxColonyMaintenance>
-			<iCorporationMaintenancePercent>160</iCorporationMaintenancePercent>
-			<iCivicUpkeepPercent>100</iCivicUpkeepPercent>
-			<iInflationPercent>100</iInflationPercent>
-			<iHealthBonus>4</iHealthBonus>
-			<iHappyBonus>4</iHappyBonus>
-			<iAttitudeChange>-1</iAttitudeChange>
-			<iNoTechTradeModifier>15</iNoTechTradeModifier>
-			<iTechTradeKnownModifier>0</iTechTradeKnownModifier>
-			<iUnownedTilesPerGameAnimal>15</iUnownedTilesPerGameAnimal>
-			<iUnownedTilesPerBarbarianUnit>145</iUnownedTilesPerBarbarianUnit>
-			<iUnownedWaterTilesPerBarbarianUnit>900</iUnownedWaterTilesPerBarbarianUnit>
-			<iUnownedTilesPerBarbarianCity>75</iUnownedTilesPerBarbarianCity>
-			<iBarbarianCreationTurnsElapsed>20</iBarbarianCreationTurnsElapsed>
-			<iBarbarianCityCreationTurnsElapsed>500</iBarbarianCityCreationTurnsElapsed>
-			<iBarbarianCityCreationProb>8</iBarbarianCityCreationProb>
-			<iAnimalBonus>0</iAnimalBonus>
-			<iBarbarianBonus>0</iBarbarianBonus>
-			<iAIAnimalBonus>-70</iAIAnimalBonus>
-			<iAIBarbarianBonus>-40</iAIBarbarianBonus>
-			<iStartingDefenseUnits>0</iStartingDefenseUnits>
-			<iStartingWorkerUnits>0</iStartingWorkerUnits>
-			<iStartingExploreUnits>0</iStartingExploreUnits>
-			<iAIStartingUnitMultiplier>1</iAIStartingUnitMultiplier>
-			<iAIStartingDefenseUnits>4</iAIStartingDefenseUnits>
-			<iAIStartingWorkerUnits>2</iAIStartingWorkerUnits>
-			<iAIStartingExploreUnits>1</iAIStartingExploreUnits>
-			<iBarbarianDefenders>4</iBarbarianDefenders>
-			<iAIDeclareWarProb>100</iAIDeclareWarProb>
-			<iAIWorkRateModifier>110</iAIWorkRateModifier>
-			<iAIGrowthPercent>55</iAIGrowthPercent>
-			<iAITrainPercent>55</iAITrainPercent>
-			<iAIWorldTrainPercent>100</iAIWorldTrainPercent>
-			<iAIConstructPercent>55</iAIConstructPercent>
-			<iAIWorldConstructPercent>100</iAIWorldConstructPercent>
-			<iAICreatePercent>55</iAICreatePercent>
-			<iAIWorldCreatePercent>100</iAIWorldCreatePercent>
-			<iAICivicUpkeepPercent>55</iAICivicUpkeepPercent>
-			<iAIUnitCostPercent>55</iAIUnitCostPercent>
-			<iAIUnitSupplyPercent>10</iAIUnitSupplyPercent>
-			<iAIUnitUpgradePercent>25</iAIUnitUpgradePercent>
-			<iAIInflationPercent>15</iAIInflationPercent>
-			<iAIWarWearinessPercent>15</iAIWarWearinessPercent>
-			<iAIPerEraModifier>-6</iAIPerEraModifier>
-			<iAIAdvancedStartPercent>100</iAIAdvancedStartPercent>
-			<Goodies>
-				<GoodyType>GOODY_LOW_GOLD</GoodyType>
-				<GoodyType>GOODY_LOW_GOLD</GoodyType>
-				<GoodyType>GOODY_LOW_GOLD</GoodyType>
-				<GoodyType>GOODY_LOW_GOLD</GoodyType>
-				<GoodyType>GOODY_LOW_GOLD</GoodyType>
-				<GoodyType>GOODY_MAP</GoodyType>
-				<GoodyType>GOODY_MAP</GoodyType>
-				<GoodyType>GOODY_WARRIOR</GoodyType>
-				<GoodyType>GOODY_SCOUT</GoodyType>
-				<GoodyType>GOODY_EXPERIENCE</GoodyType>
-				<GoodyType>GOODY_HEALING</GoodyType>
-				<GoodyType>GOODY_TECH</GoodyType>
-				<GoodyType>GOODY_TECH</GoodyType>
-				<GoodyType>GOODY_BARBARIANS_WEAK</GoodyType>
-				<GoodyType>GOODY_BARBARIANS_WEAK</GoodyType>
-				<GoodyType>GOODY_BARBARIANS_WEAK</GoodyType>
-				<GoodyType>GOODY_BARBARIANS_STRONG</GoodyType>
-				<GoodyType>GOODY_BARBARIANS_STRONG</GoodyType>
-				<GoodyType>GOODY_BARBARIANS_STRONG</GoodyType>
-				<GoodyType>GOODY_BARBARIANS_STRONG</GoodyType>
-				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
-				<GoodyType>GOODY_ALIEN_MAP</GoodyType>
-				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
-				<GoodyType>GOODY_ALIEN_HIGH_GOLD</GoodyType>
-				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
-				<GoodyType>GOODY_ALIEN_MAP</GoodyType>
-				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
-				<GoodyType>GOODY_ALIEN_HIGH_GOLD</GoodyType>
-				<GoodyType>GOODY_ALIEN_GIFT_CITY</GoodyType>
-				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
-				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
-			</Goodies>
-			<FreeTechs/>
-			<AIFreeTechs/>
+			<AIFreeTechs>
+				<FreeTech>
+					<TechType>TECH_TECH_HAPPY_0</TechType>
+					<bFreeTech>1</bFreeTech>
+				</FreeTech>
+				<FreeTech>
+					<TechType>TECH_TECH_INDUSTRY_0</TechType>
+					<bFreeTech>1</bFreeTech>
+				</FreeTech>
+				<FreeTech>
+					<TechType>TECH_TECH_MILITARY_0</TechType>
+					<bFreeTech>1</bFreeTech>
+				</FreeTech>
+			</AIFreeTechs>
 		</HandicapInfo>
 		<HandicapInfo>
 			<Type>HANDICAP_DEITY</Type>
@@ -792,57 +872,57 @@
 			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>
 			<iGold>0</iGold>
 			<iFreeUnits>1</iFreeUnits>
-			<iUnitCostPercent>120</iUnitCostPercent>
-			<iResearchPercent>150</iResearchPercent>
-			<iDistanceMaintenancePercent>50</iDistanceMaintenancePercent>
-			<iNumCitiesMaintenancePercent>100</iNumCitiesMaintenancePercent>
+			<iUnitCostPercent>150</iUnitCostPercent>
+			<iResearchPercent>130</iResearchPercent>
+			<iDistanceMaintenancePercent>67</iDistanceMaintenancePercent>
+			<iNumCitiesMaintenancePercent>150</iNumCitiesMaintenancePercent>
 			<iMaxNumCitiesMaintenance>8</iMaxNumCitiesMaintenance>
-			<iColonyMaintenancePercent>170</iColonyMaintenancePercent>
-			<iMaxColonyMaintenance>100</iMaxColonyMaintenance>
-			<iCorporationMaintenancePercent>170</iCorporationMaintenancePercent>
-			<iCivicUpkeepPercent>100</iCivicUpkeepPercent>
-			<iInflationPercent>100</iInflationPercent>
+			<iColonyMaintenancePercent>225</iColonyMaintenancePercent>
+			<iMaxColonyMaintenance>300</iMaxColonyMaintenance>
+			<iCorporationMaintenancePercent>225</iCorporationMaintenancePercent>
+			<iCivicUpkeepPercent>150</iCivicUpkeepPercent>
+			<iInflationPercent>150</iInflationPercent>
 			<iHealthBonus>4</iHealthBonus>
 			<iHappyBonus>4</iHappyBonus>
 			<iAttitudeChange>-1</iAttitudeChange>
-			<iNoTechTradeModifier>10</iNoTechTradeModifier>
+			<iNoTechTradeModifier>20</iNoTechTradeModifier>
 			<iTechTradeKnownModifier>0</iTechTradeKnownModifier>
-			<iUnownedTilesPerGameAnimal>10</iUnownedTilesPerGameAnimal>
-			<iUnownedTilesPerBarbarianUnit>130</iUnownedTilesPerBarbarianUnit>
-			<iUnownedWaterTilesPerBarbarianUnit>800</iUnownedWaterTilesPerBarbarianUnit>
-			<iUnownedTilesPerBarbarianCity>70</iUnownedTilesPerBarbarianCity>
-			<iBarbarianCreationTurnsElapsed>20</iBarbarianCreationTurnsElapsed>
-			<iBarbarianCityCreationTurnsElapsed>500</iBarbarianCityCreationTurnsElapsed>
+			<iUnownedTilesPerGameAnimal>60</iUnownedTilesPerGameAnimal>
+			<iUnownedTilesPerBarbarianUnit>75</iUnownedTilesPerBarbarianUnit>
+			<iUnownedWaterTilesPerBarbarianUnit>750</iUnownedWaterTilesPerBarbarianUnit>
+			<iUnownedTilesPerBarbarianCity>240</iUnownedTilesPerBarbarianCity>
+			<iBarbarianCreationTurnsElapsed>11</iBarbarianCreationTurnsElapsed>
+			<iBarbarianCityCreationTurnsElapsed>550</iBarbarianCityCreationTurnsElapsed>
 			<iBarbarianCityCreationProb>8</iBarbarianCityCreationProb>
 			<iAnimalBonus>0</iAnimalBonus>
 			<iBarbarianBonus>0</iBarbarianBonus>
-			<iAIAnimalBonus>-70</iAIAnimalBonus>
-			<iAIBarbarianBonus>-40</iAIBarbarianBonus>
+			<iAIAnimalBonus>-40</iAIAnimalBonus>
+			<iAIBarbarianBonus>-25</iAIBarbarianBonus>
 			<iStartingDefenseUnits>0</iStartingDefenseUnits>
 			<iStartingWorkerUnits>0</iStartingWorkerUnits>
 			<iStartingExploreUnits>0</iStartingExploreUnits>
 			<iAIStartingUnitMultiplier>1</iAIStartingUnitMultiplier>
-			<iAIStartingDefenseUnits>5</iAIStartingDefenseUnits>
-			<iAIStartingWorkerUnits>2</iAIStartingWorkerUnits>
+			<iAIStartingDefenseUnits>4</iAIStartingDefenseUnits>
+			<iAIStartingWorkerUnits>1</iAIStartingWorkerUnits>
 			<iAIStartingExploreUnits>1</iAIStartingExploreUnits>
 			<iBarbarianDefenders>4</iBarbarianDefenders>
 			<iAIDeclareWarProb>100</iAIDeclareWarProb>
-			<iAIWorkRateModifier>120</iAIWorkRateModifier>
-			<iAIGrowthPercent>50</iAIGrowthPercent>
-			<iAITrainPercent>50</iAITrainPercent>
+			<iAIWorkRateModifier>100</iAIWorkRateModifier>
+			<iAIGrowthPercent>80</iAIGrowthPercent>
+			<iAITrainPercent>60</iAITrainPercent>
 			<iAIWorldTrainPercent>100</iAIWorldTrainPercent>
-			<iAIConstructPercent>50</iAIConstructPercent>
+			<iAIConstructPercent>60</iAIConstructPercent>
 			<iAIWorldConstructPercent>100</iAIWorldConstructPercent>
-			<iAICreatePercent>50</iAICreatePercent>
+			<iAICreatePercent>60</iAICreatePercent>
 			<iAIWorldCreatePercent>100</iAIWorldCreatePercent>
-			<iAICivicUpkeepPercent>50</iAICivicUpkeepPercent>
-			<iAIUnitCostPercent>50</iAIUnitCostPercent>
-			<iAIUnitSupplyPercent>5</iAIUnitSupplyPercent>
-			<iAIUnitUpgradePercent>20</iAIUnitUpgradePercent>
-			<iAIInflationPercent>10</iAIInflationPercent>
-			<iAIWarWearinessPercent>10</iAIWarWearinessPercent>
-			<iAIPerEraModifier>-7</iAIPerEraModifier>
-			<iAIAdvancedStartPercent>100</iAIAdvancedStartPercent>
+			<iAICivicUpkeepPercent>60</iAICivicUpkeepPercent>
+			<iAIUnitCostPercent>60</iAIUnitCostPercent>
+			<iAIUnitSupplyPercent>50</iAIUnitSupplyPercent>
+			<iAIUnitUpgradePercent>50</iAIUnitUpgradePercent>
+			<iAIInflationPercent>80</iAIInflationPercent>
+			<iAIWarWearinessPercent>50</iAIWarWearinessPercent>
+			<iAIPerEraModifier>-5</iAIPerEraModifier>
+			<iAIAdvancedStartPercent>227</iAIAdvancedStartPercent>
 			<Goodies>
 				<GoodyType>GOODY_LOW_GOLD</GoodyType>
 				<GoodyType>GOODY_LOW_GOLD</GoodyType>
@@ -864,20 +944,42 @@
 				<GoodyType>GOODY_BARBARIANS_STRONG</GoodyType>
 				<GoodyType>GOODY_BARBARIANS_STRONG</GoodyType>
 				<GoodyType>GOODY_BARBARIANS_STRONG</GoodyType>
-				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
-				<GoodyType>GOODY_ALIEN_MAP</GoodyType>
+                <GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
 				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
-				<GoodyType>GOODY_ALIEN_HIGH_GOLD</GoodyType>
-				<GoodyType>GOODY_ALIEN_TECH</GoodyType>
-				<GoodyType>GOODY_ALIEN_MAP</GoodyType>
+                <GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
 				<GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
-				<GoodyType>GOODY_ALIEN_HIGH_GOLD</GoodyType>
-				<GoodyType>GOODY_ALIEN_GIFT_CITY</GoodyType>
+                <GoodyType>GOODY_ALIEN_LOW_GOLD</GoodyType>
+                <GoodyType>GOODY_ALIEN_MAP</GoodyType>
+                <GoodyType>GOODY_ALIEN_TECH</GoodyType>
+                <GoodyType>GOODY_ALIEN_TECH</GoodyType>
+                <GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
 				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
+                <GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
+				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
+                <GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
+				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
+                <GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
 				<GoodyType>GOODY_ALIEN_SHOT_DOWN</GoodyType>
 			</Goodies>
 			<FreeTechs/>
-			<AIFreeTechs/>
+			<AIFreeTechs>
+				<FreeTech>
+					<TechType>TECH_TECH_HAPPY_0</TechType>
+					<bFreeTech>1</bFreeTech>
+				</FreeTech>
+				<FreeTech>
+					<TechType>TECH_TECH_INDUSTRY_0</TechType>
+					<bFreeTech>1</bFreeTech>
+				</FreeTech>
+				<FreeTech>
+					<TechType>TECH_TECH_MILITARY_0</TechType>
+					<bFreeTech>1</bFreeTech>
+				</FreeTech>
+				<FreeTech>
+					<TechType>TECH_HAPPY_2</TechType>
+					<bFreeTech>1</bFreeTech>
+				</FreeTech>
+			</AIFreeTechs>
 		</HandicapInfo>
 	</HandicapInfos>
 </Civ4HandicapInfo>
