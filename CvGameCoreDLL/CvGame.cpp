@@ -7369,7 +7369,8 @@ New Code:*/
 								CvUnit* pNewUnit = GET_PLAYER(BARBARIAN_PLAYER).initUnit(eBestUnit, pPlot->getX_INLINE(), pPlot->getY_INLINE(), eBarbUnitAI);
 								// K-Mod. Give a combat penalty to barbarian boats.
 								//if (pNewUnit && pPlot->isWater())
-								if (pNewUnit && pPlot->isWater() && !pNewUnit->getUnitInfo().isHiddenNationality()) // DarkLunaPhantom - Hidden nationality boats shouldn't be too obviously (non-)barbarian.
+								//if (pNewUnit && pPlot->isWater() && !pNewUnit->getUnitInfo().isHiddenNationality()) // DarkLunaPhantom - Hidden nationality boats shouldn't be too obviously (non-)barbarian.
+                                if (pNewUnit && !pNewUnit->getUnitInfo().isHiddenNationality()) // DarkLunaPhantom - Combat penalty for all pirates.
 								{
 									// find the "disorganized" promotion. (is there a better way to do this?)
 									PromotionTypes eDisorganized = (PromotionTypes)GC.getInfoTypeForString("PROMOTION_DISORGANIZED", true);
