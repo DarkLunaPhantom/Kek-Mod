@@ -1,0 +1,6 @@
+Version=11
+BeginGame
+	Description=TXT_KEY_FINAL_FRONTIER_WB_DESC
+	ModPath=Mods\Final Frontier\
+	Random=1
+EndGame
