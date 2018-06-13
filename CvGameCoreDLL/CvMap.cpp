@@ -1051,9 +1051,20 @@ float CvMap::getHeightCoords()
 	return (GC.getPLOT_SIZE() * ((float)getGridHeightINLINE()));
 }
 
-
-int CvMap::maxPlotDistance()
+/* DarkLunaPhantom begin - Idea from Tides of War by SevenSpirits. Explanation by SevenSpirits:
+"Distance maintenance is inversely proportional to the longest distance possible on the map, with distance defined as max(xdistance, ydistance) + 1/2 * min(xdistance, ydistance). When a map wraps in a dimension,
+the longest possible distance in that dimension is N / 2; if it doesn't wrap, the longest possible distance is N - 1. Therefore, more wrapping => shorter longest distance => higher distance maintenance. And therefore,
+toroidal maps have high maintenance, flat maps have low maintenance, and cylindrical maps have medium maintenance."
+SevenSpirits changed the calculation so that it always assumes that there is x wrap and no y wrap. I changed it so that it assumes that there is a wrap along the longer side, and no wrap along the shorter side.
+*/
+//int CvMap::maxPlotDistance()
+int CvMap::maxPlotDistance(bool bDefaultWrap)
 {
+    if (bDefaultWrap)
+    {
+        return std::min(std::max(1, plotDistance(0, 0, getGridWidthINLINE() / 2, getGridHeightINLINE() - 1)), std::max(1, plotDistance(0, 0, getGridWidthINLINE() - 1, getGridHeightINLINE() / 2)));
+    }
+// DarkLunaPhantom end
 	return std::max(1, plotDistance(0, 0, ((isWrapXINLINE()) ? (getGridWidthINLINE() / 2) : (getGridWidthINLINE() - 1)), ((isWrapYINLINE()) ? (getGridHeightINLINE() / 2) : (getGridHeightINLINE() - 1))));
 }
 
