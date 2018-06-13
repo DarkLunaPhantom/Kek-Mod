@@ -16,30 +16,30 @@
 		<section id="Scoreboard">
 			<!-- Dead Civ Scoreboard -->
 			<option id="ShowDead" key="Show Dead Civilizations" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isShowDeadCivs" set="setShowDeadCivs" dirtyBit="Score"/>
 			<option id="TagDead" key="Show Dead Tag" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isShowDeadTag" set="setShowDeadTag" dirtyBit="Score"/>
 			<option id="GreyDead" key="Grey Out Dead Civilizations" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isGreyOutDeadCivs" set="setGreyOutDeadCivs" dirtyBit="Score"/>
 			
 			<!-- Minor Civs -->
 			<option id="ShowMinor" key="Show Minor Civilizations" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isShowMinorCivs" set="setShowMinorCivs" dirtyBit="Score"/>
 			
 			<!-- New Columns -->
 			<option id="Delta" key="Delta" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isShowScoreDelta" set="setShowScoreDelta" dirtyBit="Score"/>
 			<option id="DeltaIncludeCurrent" key="Delta Includes Current Turn" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isScoreDeltaIncludeCurrentTurn" set="setScoreDeltaIncludeCurrentTurn" dirtyBit="Score"/>
 			
 			<list   id="DisplayName" key="Display Name" 
-					type="int" default="2" listType="string" 
+					type="int" default="0" listType="string" 
 					get="getDisplayName" set="setDisplayName" dirtyBit="Score">
 				<choice id="Leader" get="isShowLeaderName" set="setShowLeaderName"/>
 				<choice id="Civilization" get="isShowCivName" set="setShowCivName"/>
@@ -52,16 +52,16 @@
 					get="isUsePlayerName" set="setUsePlayerName" dirtyBit="Score"/>
 			
 			<option id="Attitude" key="Attitude Icons" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isShowAttitude" set="setShowAttitude" dirtyBit="Score"/>
 			<option id="WorstEnemy" key="Worst Enemy Icons" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isShowWorstEnemy" set="setShowWorstEnemy" dirtyBit="Score"/>
 			<option id="WHEOOH" key="WHEOOH" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isShowWHEOOH" set="setShowWHEOOH" dirtyBit="Score"/>
 			<option id="Cities" key="Number of Cities" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isShowCountCities" set="setShowCountCities" dirtyBit="Score"/>
 			
 			<!-- Advanced Layout -->
@@ -98,7 +98,7 @@
 			
 			<!-- Power Ratio -->
 			<option id="Power" key="Power" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isShowPower" set="setShowPower" dirtyBit="Score"/>
 			<list   id="PowerFormula" key="Power Formula" 
 					type="int" default="0" listType="string" 

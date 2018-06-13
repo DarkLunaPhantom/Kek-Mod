@@ -191,6 +191,6 @@
 		<tab module="BugAutologOptionsTab"/>
 		
 		<tab module="BugSystemOptionsTab"/>
-		<tab module="BugCreditsOptionsTab"/>
+		<!--tab module="BugCreditsOptionsTab"/-->
 	</screen>
 </bug>

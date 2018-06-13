@@ -15,12 +15,12 @@
 	<options id="NJAGC" file="Not Just Another Game Clock Mod Config.ini">
 		<section id="Not Just Another Game Clock Mod">
 			<option id="Enabled" key="Enabled" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isEnabled" set="setEnabled" dirtyBit="GameData" 
 					label="Enable NJAGC" 
 					help="When checked, the game clock is displayed using TheLopez's NJAGC mod."/>
 			<option id="ShowEra" key="Show Era" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isShowEra" set="setShowEra" dirtyBit="GameData" 
 					label="Display Era" 
 					help="When checked, the current era is displayed to the left of the research bar."/>
@@ -80,7 +80,7 @@
 					label="Completed Turns" 
 					help="When checked, the number of turns completed is displayed."/>
 			<option id="ShowTotalTurns" key="Show Game Total Turns" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isShowTotalTurns" set="setShowTotalTurns" dirtyBit="GameData" 
 					label="Total Turns" 
 					help="When checked, the total turns in the game is displayed if Time Victory is enabled."/>

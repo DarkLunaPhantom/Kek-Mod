@@ -15,7 +15,7 @@
 	<options id="PLE" file="Plot List Enhancements.ini">
 		<section id="PlotList">
 			<option id="Enabled" key="Enabled" 
-					type="boolean" default="True"/>
+					type="boolean" default="False"/>
 			
 			<list   id="Draw_Method" key="Draw Method" 
 					type="int" default="1" listType="string" 
@@ -23,12 +23,12 @@
 					get="getDrawMethod" dirtyBit="PlotListButtons"/>
 
 			<option id="PLE_Style" key="PLE Style" 
-					type="boolean" default="True"
+					type="boolean" default="False"
 					get="isPLE_Style" dirtyBit="PlotListButtons"/>
 			
 			<!-- Modes and Filters -->
 			<option id="Show_Buttons" key="Show Buttons" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isShowButtons" dirtyBit="PlotListButtons"/>
 			<list   id="Default_View_Mode" key="Default View Mode" 
 					type="int" default="1" listType="string" 
@@ -48,10 +48,10 @@
 			
 			<!-- Health Bar -->
 			<option id="Health_Bar" key="Health Bar" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isShowHealthBar" dirtyBit="PlotListButtons"/>
 			<option id="Hide_Health_Fighting" key="Hide Health Bar While Fighting" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isHideHealthFighting"/>
 			<option id="Healthy_Color" key="Healthy Color" 
 					type="color" default="COLOR_GREEN" 
@@ -66,7 +66,7 @@
 			
 			<!-- Move Bar -->
 			<option id="Move_Bar" key="Move Bar" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isShowMoveBar" dirtyBit="PlotListButtons"/>
 			<option id="Full_Movement_Color" key="Full Movement Color" 
 					type="color" default="COLOR_BLUE" 
@@ -86,7 +86,7 @@
 			
 			<!-- Indicators -->
 			<option id="Wounded_Indicator" key="Wounded Indicator" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isShowWoundedIndicator" dirtyBit="PlotListButtons"/>
 			<option id="Lead_By_GG_Indicator" key="Great General Indicator" 
 					type="boolean" default="True" 
@@ -95,10 +95,10 @@
 					type="boolean" default="True" 
 					get="isShowPromotionIndicator" dirtyBit="PlotListButtons"/>
 			<option id="Upgrade_Indicator" key="Upgrade Indicator" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isShowUpgradeIndicator" dirtyBit="PlotListButtons"/>
 			<option id="Mission_Info" key="Mission Info" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isShowMissionInfo" dirtyBit="PlotListButtons"/>
 			
 			<!-- Button Spacing -->
@@ -151,7 +151,7 @@
 			
 			<!-- Move Highlighter -->
 			<option id="Move_Highlighter" key="Move Highlighter" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isShowMoveHighlighter"/>
 			
 			<option id="MH_Color_Impassable_Terrain" key="Color Impassable Terrain" 

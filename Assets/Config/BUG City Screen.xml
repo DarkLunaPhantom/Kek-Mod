@@ -18,7 +18,7 @@
 		<section id="City Screen">
 			<!-- Raw Yields by EmperorFool (inspired by Raw Commerce by Sevo) -->
 			<option id="RawYields" key="Raw Yields" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isShowRawYields" dirtyBit="CityScreen"/>
 			<list   id="RawYieldsView" key="Raw Yields View" 
 					type="int" default="0" listType="string" 
@@ -41,15 +41,15 @@
 			
 			<!-- FoodAssist by EmperorFool -->
 			<option id="FoodAssist" key="FoodAssist" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isShowFoodAssist" dirtyBit="CityScreen"/>
 			
 			<!-- WhipAssist by EmperorFool, Dresden -->
 			<option id="WhipAssist" key="WhipAssist" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isShowWhipAssist" dirtyBit="CityScreen"/>
 			<option id="WhipAssistOverflowCountCurrentProduction" key="WhipAssist Overflow Count Current Production" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isWhipAssistOverflowCountCurrentProduction" dirtyBit="CityScreen"/>
 			
 			<!-- Culture Turns by Chinese American -->
@@ -91,7 +91,7 @@
 			
 			<!-- Production Started by EmperorFool -->
 			<option id="ProductionStarted" key="Production Started" 
-					type="boolean" default="True" dirtyBit="InfoPane" get="isShowProductionStarted"/>
+					type="boolean" default="False" dirtyBit="InfoPane" get="isShowProductionStarted"/>
 			
 			<!-- Production Decay by EmperorFool [BULL] -->
 			<!-- Queue -->

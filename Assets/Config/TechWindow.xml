@@ -15,7 +15,7 @@
 	<options id="TechWindow" file="TechWindow.ini">
 		<section id="TechWindow">
 			<list   id="ViewType" key="View" 
-					type="int" default="1" listType="string" 
+					type="int" default="0" listType="string" 
 					values="Original|Detailed|Wide" 
 					get="getViewType">
 				<choice id="Original" get="isOriginalView"/>

@@ -16,11 +16,6 @@
 	 
 	<options id="Advisors" file="BUG Advisors.ini">
 		<section id="Advisors">
-			<!-- Finance Advisor by EmperorFool -->
-			<option id="BugFinanceAdvisor" key="BUG Finance Advisor" 
-					type="boolean" default="True" 
-					get="isBugFinanceAdvisor"/>
-
 			<!-- Exotic Foreign Advisor (F4) by Requies, Dresden, EmperorFool -->
 			<option id="EFAGlanceTab" key="EFA Glance" 
 					type="boolean" default="True" 
@@ -40,7 +35,7 @@
 	
 			<!-- BUG Military Advisor (F5) by Ruff_Hi, EmperorFool, Karadoc -->
 			<option id="BugMA" key="BugMilitaryAdvisor"
-					type="boolean" default="True" 
+					type="boolean" default="False"
 					get="isBUG_MA"/>
 	
 			<!-- Technology Advisor (F6) by EmperorFool, Ruff_Hi -->
@@ -48,7 +43,7 @@
 					type="boolean" default="True" 
 					get="isShowGPTechPrefs"/>
 			<option id="WideTechScreen" key="Wide Tech Screen" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isWideTechScreen"/>
 			<option id="ShowTechEra" key="Show Tech Era" 
 					type="boolean" default="False"
@@ -56,7 +51,7 @@
 	
 			<!-- BUG Religion Advisor (F7) by Ruff_Hi -->
 			<option id="BugReligiousTab" key="Religious" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isReligious"/>
 			<list   id="ShowReligions" key="Show Religions" 
 					type="int" default="0" listType="string" 
@@ -68,15 +63,15 @@
 
 			<!-- BUG Victory Advisor (F8) by Ruff_Hi -->
 			<option id="BugVictoriesTab" key="Victories" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isVictories"/>
 			<option id="BugMembersTab" key="Members" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isMembers"/>
 	
 			<!-- BUG Info Screen (F9) by Ruff_Hi -->
 			<option id="BugGraphsTab" key="Graphs" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isGraphs"/>
 			<option id="BugGraphsLogScale" key="Log Scale" 
 					type="boolean" default="False" 
@@ -91,15 +86,15 @@
 					type="boolean" default="False" 
 					get="isShowInfoWonders"/>
 			<option id="BugInfoWondersPlayerColor" key="Wonders Player Color" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isWonderListUsePlayerColor"/>
 
 			<!-- Sevopedia (F12) by Sevo -->
 			<option id="Sevopedia" key="Sevopedia" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isSevopedia"/>
 			<option id="SevopediaSortItemList" key="Sevopedia Sort" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isSortSevopedia"/>
 		</section>
 	</options>

@@ -16,7 +16,7 @@
 	<options id="BetterEspionage" file="Better Espionage.ini">
 		<section id="Better Espionage">
 			<option id="Enabled" key="Enabled" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					dirtyBit="Espionage_Advisor" 
 					label="Better Espionage Screen" 
 					help="When checked, uses Almightix's Better Espionage Screen."/>

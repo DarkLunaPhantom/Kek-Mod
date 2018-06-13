@@ -18,22 +18,22 @@
 		<section id="Main">
 			<!-- Options Screen Shortcut Reminder -->
 			<option id="OptionsKey" key="Options Shortcut Reminder" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isShowOptionsKeyReminder" set="setShowOptionsKeyReminder" dirtyBit="GameData"/>
 			
 			<!-- Options Screen Button -->
 			<option id="OptionsButton" key="Options Button" 
-					type="boolean" default="True" 
+					type="boolean" default="False"
 					get="isShowOptionsButton" set="setShowOptionsButton" dirtyBit="GameData"/>
 
 			<!-- Gold Rate Warning -->
 			<option id="GoldRateWarning" key="Gold Rate Warning" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isGoldRateWarning" dirtyBit="GameData"/>
 			
 			<!-- Great Person Progress Bar by Impaler[WrG], EmperorFool -->
 			<option id="GPBar" key="GP Progress Bar" 
-					type="boolean" default="True" 
+					type="boolean" default="True"
 					get="isShowGPProgressBar" dirtyBit="GameData"/>
 			<list   id="GPBar_Types" key="GP Progress Bar Types" 
 					type="int" default="2" listType="string" 
@@ -46,12 +46,12 @@
 			
 			<!-- Great General Progress Bar by NeverMind -->
 			<option id="Combat_Counter" key="Combat Counter" 
-					type="boolean" default="True" 
+					type="boolean" default="True"
 					get="isShowGGProgressBar" dirtyBit="GameData"/>
 			
 			<!-- Min/Max Commerce Buttons by codewarrior -->
 			<option id="MinMax_Commerce" key="MinMax Commerce" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isShowMinMaxCommerceButtons" dirtyBit="PercentButtons, GameData">
 				<change module="CvCustomizableDomesticAdvisor" function="forcePositionCalc"/>
 			</option>
@@ -68,13 +68,13 @@
 
 			<!-- Field of View -->
 			<option id="FieldOfView" key="Field of View" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isShowFieldOfView" dirtyBit="MiscButtons"/>
 			<option id="FieldOfView_Remember" key="Remember Field of View" 
 					type="boolean" default="True"
 					get="isRememberFieldOfView"/>
 			<option id="FieldOfView_Value" key="Field of View Value"
-					type="string" default="42" 
+					type="string" default="-1"
 					get="getFieldOfView" set="setFieldOfView"/> 
 
 			<!-- Movement Points -->
@@ -82,7 +82,7 @@
 					type="boolean" default="True" 
 					get="isShowUnitMovementPointsFraction" dirtyBit="InfoPane"/>
 			<option id="StackMovementPoints" key="Stack Movement Points" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isShowStackMovementPoints" dirtyBit="InfoPane"/>
 
 			<!-- Stack Promotions -->

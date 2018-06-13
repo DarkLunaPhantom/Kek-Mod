@@ -19,7 +19,7 @@
 			<option id="LoggingOn" type="boolean" default="False"/>
 			
 			<option id="Enabled" key="Enabled" 
-					type="boolean" default="True" 
+					type="boolean" default="False" 
 					get="isEnabled" set="setEnabled" 
 					label="Enable Logging" 
 					help="When checked, various game events are logged to a text file using eotinb's AutoLog mod."/>

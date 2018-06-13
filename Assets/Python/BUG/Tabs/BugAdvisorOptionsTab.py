@@ -25,10 +25,10 @@ class BugAdvisorOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.addTextDropdown(screen, leftL, leftR, "CustDomAdv__SpaceTop", True)
 		self.addTextDropdown(screen, leftL, leftR, "CustDomAdv__SpaceSides", True)
 		self.addTextDropdown(screen, leftL, leftR, "CustDomAdv__ProductionGrouping", True)
-		self.addCheckbox(screen, left, "MiscHover__CDAZoomCityDetails")
+		#self.addCheckbox(screen, left, "MiscHover__CDAZoomCityDetails")
 
-		self.addLabel(screen, left, "Finance_Advisor", "Finance [F2]:")
-		self.addCheckbox(screen, left, "Advisors__BugFinanceAdvisor")
+		#self.addLabel(screen, left, "Finance_Advisor", "Finance [F2]:")
+		#self.addCheckbox(screen, left, "Advisors__BugFinanceAdvisor")
 
 		self.addLabel(screen, left, "Foreign_Advisor", "Foreign [F4]:")
 		comboBox = "Advisors_ComboBoxEFA"
@@ -37,8 +37,8 @@ class BugAdvisorOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.addTextDropdown(screen, None, comboBox, "Advisors__EFAGlanceAttitudes")
 		self.addCheckbox(screen, left, "Advisors__EFAImprovedInfo")
 		self.addCheckbox(screen, left, "Advisors__EFADealTurnsLeft")
-		self.addCheckbox(screen, left, "MiscHover__TechTradeDenial")
-		self.addCheckbox(screen, left, "MiscHover__BonusTradeDenial")
+		#self.addCheckbox(screen, left, "MiscHover__TechTradeDenial")
+		#self.addCheckbox(screen, left, "MiscHover__BonusTradeDenial")
 
 		self.addLabel(screen, left, "Military_Advisor", "Military [F5]:")
 		self.addCheckbox(screen, left, "Advisors__BugMA")
@@ -46,7 +46,7 @@ class BugAdvisorOptionsTab(BugOptionsTab.BugOptionsTab):
 
 		self.addLabel(screen, center, "Technology_Advisor", "Technology [F6]:")
 		self.addCheckbox(screen, center, "Advisors__GPTechPrefs")
-		self.addCheckbox(screen, center, "MiscHover__SpedUpTechs")
+		#self.addCheckbox(screen, center, "MiscHover__SpedUpTechs")
 		self.addCheckbox(screen, center, "Advisors__WideTechScreen")
 		self.addCheckbox(screen, center, "Advisors__ShowTechEra")
 
@@ -54,9 +54,9 @@ class BugAdvisorOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.addCheckbox(screen, center, "Advisors__BugReligiousTab")
 		self.addTextDropdown(screen, center, center, "Advisors__ShowReligions", True)
 
-		self.addLabel(screen, center, "Victory_Conditions", "Victory [F8]:")
-		self.addCheckbox(screen, center, "Advisors__BugVictoriesTab")
-		self.addCheckbox(screen, center, "Advisors__BugMembersTab")
+		#self.addLabel(screen, center, "Victory_Conditions", "Victory [F8]:")
+		#self.addCheckbox(screen, center, "Advisors__BugVictoriesTab")
+		#self.addCheckbox(screen, center, "Advisors__BugMembersTab")
 
 		# K-Mod, info stuff moved from center panel to right
 		self.addLabel(screen, right, "Info_Screens", "Info [F9]:")
@@ -72,22 +72,22 @@ class BugAdvisorOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.addCheckbox(screen, right, "Advisors__Sevopedia")
 		self.addCheckbox(screen, right, "Advisors__SevopediaSortItemList")
 
-		self.addLabel(screen, right, "Espionage_Screen", "Espionage [CTRL + E]:")
-		self.addCheckbox(screen, right, "BetterEspionage__Enabled")
-		self.addCheckbox(screen, right, "BetterEspionage__ShowCalculatedInformation")
+		#self.addLabel(screen, right, "Espionage_Screen", "Espionage [CTRL + E]:")
+		#self.addCheckbox(screen, right, "BetterEspionage__Enabled")
+		#self.addCheckbox(screen, right, "BetterEspionage__ShowCalculatedInformation")
 
-		self.addLabel(screen, right, "Espionage_Ratio", "Ratio:")
-		rightL, rightR = self.addTwoColumnLayout(screen, right, "Espionage_Screen_Column")
-		self.addColorDropdown(screen, rightL, rightR, "BetterEspionage__DefaultRatioColor", True)
-		self.addFloatDropdown(screen, rightL, rightR, "BetterEspionage__GoodRatioCutoff", True, "LAYOUT_LEFT")
-		self.addColorDropdown(screen, rightL, rightR, "BetterEspionage__GoodRatioColor", True)
-		self.addFloatDropdown(screen, rightL, rightR, "BetterEspionage__BadRatioCutoff", True, "LAYOUT_LEFT")
-		self.addColorDropdown(screen, rightL, rightR, "BetterEspionage__BadRatioColor", True)
+		#self.addLabel(screen, right, "Espionage_Ratio", "Ratio:")
+		#rightL, rightR = self.addTwoColumnLayout(screen, right, "Espionage_Screen_Column")
+		#self.addColorDropdown(screen, rightL, rightR, "BetterEspionage__DefaultRatioColor", True)
+		#self.addFloatDropdown(screen, rightL, rightR, "BetterEspionage__GoodRatioCutoff", True, "LAYOUT_LEFT")
+		#self.addColorDropdown(screen, rightL, rightR, "BetterEspionage__GoodRatioColor", True)
+		#self.addFloatDropdown(screen, rightL, rightR, "BetterEspionage__BadRatioCutoff", True, "LAYOUT_LEFT")
+		#self.addColorDropdown(screen, rightL, rightR, "BetterEspionage__BadRatioColor", True)
 
-		self.addLabel(screen, rightL, "Espionage_Missions", "Missions:")
-		self.addSpacer(screen, rightR, "Espionage_Missions")
-		self.addColorDropdown(screen, rightL, rightR, "BetterEspionage__PossibleMissionColor", True)
-		self.addFloatDropdown(screen, rightL, rightR, "BetterEspionage__CloseMissionPercent", True, "LAYOUT_LEFT")
-		self.addColorDropdown(screen, rightL, rightR, "BetterEspionage__CloseMissionColor", True)
+		#self.addLabel(screen, rightL, "Espionage_Missions", "Missions:")
+		#self.addSpacer(screen, rightR, "Espionage_Missions")
+		#self.addColorDropdown(screen, rightL, rightR, "BetterEspionage__PossibleMissionColor", True)
+		#self.addFloatDropdown(screen, rightL, rightR, "BetterEspionage__CloseMissionPercent", True, "LAYOUT_LEFT")
+		#self.addColorDropdown(screen, rightL, rightR, "BetterEspionage__CloseMissionColor", True)
 
 		self.addSpacer(screen, right, "Advisors_Tab")

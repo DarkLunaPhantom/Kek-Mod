@@ -22,7 +22,7 @@ class BugUnitNameOptionsTab(BugOptionsTab.BugOptionsTab):
 		left, center, right = self.addThreeColumnLayout(screen, column, "Options")
 		
 		self.addCheckbox(screen, left, "UnitNaming__Enabled")
-		self.addCheckbox(screen, center, "MiscHover__UpdateUnitNameOnUpgrade")
+		#self.addCheckbox(screen, center, "MiscHover__UpdateUnitNameOnUpgrade")
 		self.addCheckbox(screen, right, "UnitNaming__UseAdvanced")
 
 		columnL, columnR = self.addTwoColumnLayout(screen, column, "UnitNaming")
