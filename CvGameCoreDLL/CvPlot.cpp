@@ -10275,7 +10275,8 @@ bool CvPlot::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible) const
 			}
 		}
 
-		if (GC.getUnitInfo(eUnit).getPrereqBuilding() != NO_BUILDING)
+		//if (GC.getUnitInfo(eUnit).getPrereqBuilding() != NO_BUILDING)
+        if (GC.getUnitInfo(eUnit).getPrereqBuilding() != NO_BUILDING && !isBarbarian()) // DarkLunaPhantom - Barbarians don't have building requirements.
 		{
 			if (NULL == pCity)
 			{

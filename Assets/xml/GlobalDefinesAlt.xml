@@ -419,10 +419,6 @@
 		<iDefineIntVal>100</iDefineIntVal>
 	</Define>
 	<Define>
-		<DefineName>TURN_BARBARIANS_APPEAR</DefineName>
-		<iDefineIntVal>30</iDefineIntVal>
-	</Define>
-	<Define>
 		<DefineName>CONSTRUCT_SHIP</DefineName>
 		<DefineTextVal>UNITCLASS_CONSTRUCT_SHIP</DefineTextVal>
 	</Define>

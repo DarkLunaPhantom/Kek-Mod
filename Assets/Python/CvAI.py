@@ -207,6 +207,10 @@ class CvAI:
 			#if (pCity.AI_avoidGrowth() and iSurplusFood >= 0): # DarkLunaPhantom - AI_avoidGrowth() is unused in K-Mod. This is obviously not a very good replacement.
 			if (pCity.angryPopulation(1) > pCity.getPopulation()  and iSurplusFood >= 0):
 				iYieldNeededMost = gc.getGame().getSorenRandNum(2, "AI Population Assignment Logic") + 1
+			
+			# DarkLunaPhantom - Pirates don't need commerce.
+			if (iOwner == gc.getBARBARIAN_PLAYER() and iYieldNeededMost == 2):
+				iYieldNeededMost = 1
 				
 #			printd("   iYieldNeededMost")
 #			printd(iYieldNeededMost)
@@ -732,6 +736,10 @@ class CvAI:
 					iCount += 1
 					
 		if iCount == 0: # can't build any more, currently
+			aiWeights[iCommerceWeightType] = 0
+		
+		# DarkLunaPhantom - Pirates don't need commerce.
+		if iPlayer == gc.getBARBARIAN_PLAYER():
 			aiWeights[iCommerceWeightType] = 0
 
 		#######################################################################

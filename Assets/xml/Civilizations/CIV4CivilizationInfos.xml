@@ -944,6 +944,54 @@
 					<BuildingType>NONE</BuildingType>
 				</Building>
 				<Building>
+					<BuildingClassType>BUILDINGCLASS_BANKING_SYSTEM</BuildingClassType>
+					<BuildingType>NONE</BuildingType>
+				</Building>
+                <Building>
+					<BuildingClassType>BUILDINGCLASS_CAPITAL_SHIPYARD</BuildingClassType>
+					<BuildingType>NONE</BuildingType>
+				</Building>
+                <Building>
+					<BuildingClassType>BUILDINGCLASS_COMMERCIAL_SATELLITES</BuildingClassType>
+					<BuildingType>NONE</BuildingType>
+				</Building>
+                <Building>
+					<BuildingClassType>BUILDINGCLASS_INTELLIGENCE_CENTER</BuildingClassType>
+					<BuildingType>NONE</BuildingType>
+				</Building>
+                <Building>
+					<BuildingClassType>BUILDINGCLASS_MAG_LEV_NETWORK</BuildingClassType>
+					<BuildingType>NONE</BuildingType>
+				</Building>
+                <Building>
+					<BuildingClassType>BUILDINGCLASS_MILITARY_ACADEMY</BuildingClassType>
+					<BuildingType>NONE</BuildingType>
+				</Building>
+                <Building>
+					<BuildingClassType>BUILDINGCLASS_POLICE_AGENCY</BuildingClassType>
+					<BuildingType>NONE</BuildingType>
+				</Building>
+                <Building>
+					<BuildingClassType>BUILDINGCLASS_RESEARCH_LAB</BuildingClassType>
+					<BuildingType>NONE</BuildingType>
+				</Building>
+                <Building>
+					<BuildingClassType>BUILDINGCLASS_SPACEPORT</BuildingClassType>
+					<BuildingType>NONE</BuildingType>
+				</Building>
+                <Building>
+					<BuildingClassType>BUILDINGCLASS_SQUADRON_FACTORY</BuildingClassType>
+					<BuildingType>NONE</BuildingType>
+				</Building>
+                <Building>
+					<BuildingClassType>BUILDINGCLASS_STARDOCK</BuildingClassType>
+					<BuildingType>NONE</BuildingType>
+				</Building>
+                <Building>
+					<BuildingClassType>BUILDINGCLASS_UNIVERSITY</BuildingClassType>
+					<BuildingType>NONE</BuildingType>
+				</Building>
+				<Building>
 					<BuildingClassType>BUILDINGCLASS_UNITED_NATIONS</BuildingClassType>
 					<BuildingType>NONE</BuildingType>
 				</Building>
