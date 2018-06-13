@@ -111,9 +111,9 @@ def isSeaLevelMap():
 	return 0
 
 def getWrapX():
-	return True
+	return False
 def getWrapY():
-	return True
+	return False
 
 def getGridSize(argsList):
 	# Jon: the grid blocks are 4x4 plots each.
