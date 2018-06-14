@@ -15,10 +15,10 @@
 			<BonusClassType>BONUSCLASS_GENERAL</BonusClassType>
 			<ArtDefineTag>ART_DEF_BONUS_WATER</ArtDefineTag>
 			<TechReveal>NONE</TechReveal>
-			<TechCityTrade>NONE</TechCityTrade>
+			<TechCityTrade>TECH_INDUSTRY_2</TechCityTrade>
 			<TechObsolete>NONE</TechObsolete>
 			<YieldChanges/>
-			<iAITradeModifier>10</iAITradeModifier>
+			<iAITradeModifier>0</iAITradeModifier>
 			<iAIObjective>0</iAIObjective>
 			<iHealth>2</iHealth>
 			<iHappiness>0</iHappiness>
@@ -66,10 +66,10 @@
 			<BonusClassType>BONUSCLASS_MODERN</BonusClassType>
 			<ArtDefineTag>ART_DEF_BONUS_OIL</ArtDefineTag>
 			<TechReveal>NONE</TechReveal>
-			<TechCityTrade>NONE</TechCityTrade>
+			<TechCityTrade>TECH_INDUSTRY_2</TechCityTrade>
 			<TechObsolete>NONE</TechObsolete>
 			<YieldChanges/>
-			<iAITradeModifier>20</iAITradeModifier>
+			<iAITradeModifier>10</iAITradeModifier>
 			<iAIObjective>0</iAIObjective>
 			<iHealth>0</iHealth>
 			<iHappiness>0</iHappiness>
@@ -117,10 +117,10 @@
 			<BonusClassType>BONUSCLASS_GENERAL</BonusClassType>
 			<ArtDefineTag>ART_DEF_BONUS_COPPER</ArtDefineTag>
 			<TechReveal>NONE</TechReveal>
-			<TechCityTrade>NONE</TechCityTrade>
+			<TechCityTrade>TECH_INDUSTRY_2</TechCityTrade>
 			<TechObsolete>NONE</TechObsolete>
 			<YieldChanges/>
-			<iAITradeModifier>0</iAITradeModifier>
+			<iAITradeModifier>10</iAITradeModifier>
 			<iAIObjective>0</iAIObjective>
 			<iHealth>0</iHealth>
 			<iHappiness>0</iHappiness>
@@ -168,7 +168,7 @@
 			<BonusClassType>BONUSCLASS_RUSH</BonusClassType>
 			<ArtDefineTag>ART_DEF_BONUS_IRON</ArtDefineTag>
 			<TechReveal>NONE</TechReveal>
-			<TechCityTrade>NONE</TechCityTrade>
+			<TechCityTrade>TECH_INDUSTRY_2</TechCityTrade>
 			<TechObsolete>NONE</TechObsolete>
 			<YieldChanges/>
 			<iAITradeModifier>10</iAITradeModifier>
@@ -219,10 +219,10 @@
 			<BonusClassType>BONUSCLASS_GENERAL</BonusClassType>
 			<ArtDefineTag>ART_DEF_BONUS_MARBLE</ArtDefineTag>
 			<TechReveal>NONE</TechReveal>
-			<TechCityTrade>NONE</TechCityTrade>
+			<TechCityTrade>TECH_INDUSTRY_2</TechCityTrade>
 			<TechObsolete>NONE</TechObsolete>
 			<YieldChanges/>
-			<iAITradeModifier>0</iAITradeModifier>
+			<iAITradeModifier>10</iAITradeModifier>
 			<iAIObjective>0</iAIObjective>
 			<iHealth>0</iHealth>
 			<iHappiness>0</iHappiness>
@@ -269,8 +269,8 @@
 			<Help>TXT_KEY_BONUS_URANIUM_HELP</Help>
 			<BonusClassType>BONUSCLASS_MODERN</BonusClassType>
 			<ArtDefineTag>ART_DEF_BONUS_URANIUM</ArtDefineTag>
-			<TechReveal>NONE</TechReveal>
-			<TechCityTrade>NONE</TechCityTrade>
+			<TechReveal>TECH_HAPPY_0</TechReveal>
+			<TechCityTrade>TECH_INDUSTRY_2</TechCityTrade>
 			<TechObsolete>NONE</TechObsolete>
 			<YieldChanges/>
 			<iAITradeModifier>30</iAITradeModifier>
@@ -320,10 +320,10 @@
 			<BonusClassType>BONUSCLASS_GENERAL</BonusClassType>
 			<ArtDefineTag>ART_DEF_BONUS_GEMS</ArtDefineTag>
 			<TechReveal>NONE</TechReveal>
-			<TechCityTrade>NONE</TechCityTrade>
+			<TechCityTrade>TECH_INDUSTRY_2</TechCityTrade>
 			<TechObsolete>NONE</TechObsolete>
 			<YieldChanges/>
-			<iAITradeModifier>10</iAITradeModifier>
+			<iAITradeModifier>0</iAITradeModifier>
 			<iAIObjective>0</iAIObjective>
 			<iHealth>0</iHealth>
 			<iHappiness>2</iHappiness>
@@ -370,7 +370,7 @@
 			<BonusClassType>BONUSCLASS_GENERAL</BonusClassType>
 			<ArtDefineTag>ART_DEF_BONUS_GOLD</ArtDefineTag>
 			<TechReveal>NONE</TechReveal>
-			<TechCityTrade>NONE</TechCityTrade>
+			<TechCityTrade>TECH_INDUSTRY_2</TechCityTrade>
 			<TechObsolete>NONE</TechObsolete>
 			<YieldChanges/>
 			<iAITradeModifier>0</iAITradeModifier>
@@ -420,10 +420,10 @@
 			<BonusClassType>BONUSCLASS_GENERAL</BonusClassType>
 			<ArtDefineTag>ART_DEF_BONUS_SILVER</ArtDefineTag>
 			<TechReveal>NONE</TechReveal>
-			<TechCityTrade>NONE</TechCityTrade>
+			<TechCityTrade>TECH_INDUSTRY_2</TechCityTrade>
 			<TechObsolete>NONE</TechObsolete>
 			<YieldChanges/>
-			<iAITradeModifier>10</iAITradeModifier>
+			<iAITradeModifier>0</iAITradeModifier>
 			<iAIObjective>0</iAIObjective>
 			<iHealth>2</iHealth>
 			<iHappiness>0</iHappiness>
