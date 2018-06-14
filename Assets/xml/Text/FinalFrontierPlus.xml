@@ -325,11 +325,11 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_GAME_OPTION_PIRATE_HORDES</Tag>
-		<English>Challenge - Pirate Hordes</English>
-		<French>Challenge - Pirate Hordes</French>
-		<German>Challenge - Pirate Hordes</German>
-		<Italian>Challenge - Pirate Hordes</Italian>
-		<Spanish>Challenge - Pirate Hordes</Spanish>
+		<English>Pirate Hordes</English>
+		<French>Hordes de pirates</French>
+		<German>Piratenhorden</German>
+		<Italian>Orde di pirati</Italian>
+		<Spanish>Hordas de piratas</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_GAME_OPTION_PIRATE_HORDES_HELP</Tag>

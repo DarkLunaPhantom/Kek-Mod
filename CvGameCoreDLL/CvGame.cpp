@@ -7156,6 +7156,18 @@ void CvGame::createBarbarianUnits()
 				iDivisor = std::max(1, (iDivisor / 2));
 			}
 
+			// FFP : GAMEOPTION_REDUCED_PIRATES added for v1.8
+			if (GC.getGame().isOption(GAMEOPTION_REDUCED_PIRATES))
+			{
+				iDivisor *= 2; // Divide by twice the value to get half as many
+			}
+			
+			// DarkLunaPhantom - Reimplemented Pirate Hordes game option.
+			if (GC.getGame().isOption(GAMEOPTION_PIRATE_HORDES))
+			{
+				iDivisor = 1;
+			}
+			
 			if (iDivisor > 0)
 			{
 				iNeededBarbs = ((pLoopArea->getNumUnownedTiles() / iDivisor) - pLoopArea->getUnitsPerPlayer(BARBARIAN_PLAYER)); // XXX eventually need to measure how many barbs of eBarbUnitAI we have in this area...
