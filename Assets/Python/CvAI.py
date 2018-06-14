@@ -511,13 +511,13 @@ class CvAI:
 		printd("   Doing Military Weight")
 		
 		# AI should really want to build Capital Shipyard if it doesn't already have one :)
-		if (pPlayer.canConstruct(iCapitalShipyard, true, false, false)):	# Not actually sure what the middle 2 arguments do here
+		if (iCapitalShipyard != -1 and pPlayer.canConstruct(iCapitalShipyard, true, false, false)):	# Not actually sure what the middle 2 arguments do here
 			if (pCity.getNumBuilding(iCapitalShipyard) == 0): # CP - this seems to have been left out, oops
 				aiWeights[iMilitaryWeightType] += 80 #CP - bumped up from 60 to 80
 		
 		# CP - AI should want to build Squadron Factory if it doesn't already have one
 		iSquadronFactory = pCivilization.getCivilizationBuildings(gc.getInfoTypeForString('BUILDINGCLASS_SQUADRON_FACTORY')) # this civ's SQUADRON_FACTORY
-		if (pPlayer.canConstruct(iSquadronFactory, true, false, false)):	# Not actually sure what the middle 2 arguments do here
+		if (iSquadronFactory != -1 and pPlayer.canConstruct(iSquadronFactory, true, false, false)):	# Not actually sure what the middle 2 arguments do here
 			if (pCity.getNumBuilding(iSquadronFactory) == 0): 
 				aiWeights[iMilitaryWeightType] += 40
 				
@@ -594,7 +594,7 @@ class CvAI:
 		# Adjusted for post 1.72: if we can't actually build any (every planet in cultueral range has one)
 		# drop this weight to 0 unless we can build the extended habitaiton system, in which case
 		# count the number of them that would could build too and then check to see if there is anything we can build.
-		if (pPlayer.canConstruct(iExtHabitationSystem, true, false, false)):
+		if (iExtHabitationSystem != -1 and pPlayer.canConstruct(iExtHabitationSystem, true, false, false)):
 			for iPlanetLoop in range(pSystem.getNumPlanets()):
 				pPlanet = pSystem.getPlanetByIndex(iPlanetLoop)
 				if (pPlanet.isPlanetWithinCulturalRange()) and pPlanet.isHasBuilding(iExtHabitationSystem) :
@@ -687,7 +687,7 @@ class CvAI:
 			elif pPlanet.isPlanetWithinCulturalRange() :
 				iCount += 1
 		# if we can build our nanoextraction upgrade class building	thencount them too
-		if (pPlayer.canConstruct(iNanoExtraction, true, false, false)):
+		if (iNanoExtraction != -1 and pPlayer.canConstruct(iNanoExtraction, true, false, false)):
 			for iPlanetLoop in range(pSystem.getNumPlanets()):
 				pPlanet = pSystem.getPlanetByIndex(iPlanetLoop)
 				if pPlanet.isPlanetWithinCulturalRange() and pPlanet.isHasBuilding(iNanoExtraction) :
@@ -727,7 +727,7 @@ class CvAI:
 			elif pPlanet.isPlanetWithinCulturalRange() :
 				iCount += 1
 		# if we can build out commercial satellite class building, count it too
-		if (pPlayer.canConstruct(iCommercialSatellites, true, false, false)):
+		if (iCommercialSatellites != -1 and pPlayer.canConstruct(iCommercialSatellites, true, false, false)):
 			for iPlanetLoop in range(pSystem.getNumPlanets()):
 				pPlanet = pSystem.getPlanetByIndex(iPlanetLoop)
 				if pPlanet.isPlanetWithinCulturalRange() and pPlanet.isHasBuilding(iCommercialSatellites) :
@@ -834,7 +834,7 @@ class CvAI:
 					if (pPlanet.isPlanetWithinCulturalRange()):
 						
 						# If we have a good enough food planet without a Habitation System (and can build one), then have the place construct one
-						if (pPlayer.canConstruct(iSportsArena, true, false, false)):
+						if (iSportsArena != -1 and pPlayer.canConstruct(iSportsArena, true, false, false)):
 							
 							if (not pPlanet.isHasBuilding(iSportsArena)):
 								
@@ -860,7 +860,7 @@ class CvAI:
 					if (pPlanet.isPlanetWithinCulturalRange()):
 						
 						# If we have a good enough food planet without a Habitation System (and can build one), then have the place construct one
-						if (pPlayer.canConstruct(iRecyclingCenter, true, false, false)):
+						if (iRecyclingCenter != -1 and pPlayer.canConstruct(iRecyclingCenter, true, false, false)):
 							
 							if (not pPlanet.isHasBuilding(iRecyclingCenter)):
 								
@@ -877,7 +877,7 @@ class CvAI:
 			
 			if (iBestWeightType == iMilitaryWeightType):
 				
-				if (pPlayer.canConstruct(iCapitalShipyard, true, false, false)):
+				if (iCapitalShipyard != -1 and pPlayer.canConstruct(iCapitalShipyard, true, false, false)):
 					
 					# No Capital Shipyard yet? BUILD IT!
 					if (pCity.getNumBuilding(iCapitalShipyard) == 0):
@@ -936,7 +936,7 @@ class CvAI:
 					# will also only try to force a carrier, fighter, or bomber if there is already a
 					# a capital shipyard and a squadron factory.
 					iNumCarriers = 0
-					if (pPlayer.canConstruct( iSquadronFactory, true, false, false)):
+					if (iSquadronFactory != -1 and pPlayer.canConstruct( iSquadronFactory, true, false, false)):
 						if (pCity.getNumBuilding(iSquadronFactory) == 0):
 							
 							iRand = CyGame().getSorenRandNum(100, "Finaler Frontier: Random roll to see if City AI will override for Squadron Factory")
@@ -964,7 +964,7 @@ class CvAI:
 														
 							iCarrierIUnit = pCivilization.getCivilizationUnits( iCarrierI ) # get this civilization's unit for this unitclass
 							
-							if ( pPlayer.canTrain( iCarrierIUnit, true, false) ) :
+							if (iCarrierIUnit != -1 and pPlayer.canTrain( iCarrierIUnit, true, false) ) :
 								# It is important to note that we can only get here if the city already has
 								# a Capital Shipyard (otherwise we'd have to check for one)
 															
@@ -1005,9 +1005,9 @@ class CvAI:
 							
 									# Build the most advanced one we can build, of course
 									iBuildUnit = iCarrierIUnit
-									if ( pPlayer.canTrain( iCarrierIIUnit, true, false) ) :
+									if (iCarrierIIUnit != -1 and  pPlayer.canTrain( iCarrierIIUnit, true, false) ) :
 										iBuildUnit = iCarrierIIUnit
-									if ( pPlayer.canTrain( iCarrierIIIUnit, true, false) ) :
+									if (iCarrierIIIUnit != -1 and  pPlayer.canTrain( iCarrierIIIUnit, true, false) ) :
 										iBuildUnit = iCarrierIIIUnit
 							
 									printd("      Telling System to build a Carrier")
@@ -1059,11 +1059,11 @@ class CvAI:
 							
 										# Build the most advanced one we can build, of course
 										iBuildUnit = iSpaceFighterIUnit
-										if ( pPlayer.canTrain( iSpaceFighterIIUnit, true, false) ) :
+										if (iSpaceFighterIIUnit != -1 and  pPlayer.canTrain( iSpaceFighterIIUnit, true, false) ) :
 											iBuildUnit = iSpaceFighterIIUnit
-										if ( pPlayer.canTrain( iSpaceFighterIIIUnit, true, false) ) :
+										if (iSpaceFighterIIIUnit != -1 and  pPlayer.canTrain( iSpaceFighterIIIUnit, true, false) ) :
 											iBuildUnit = iSpaceFighterIIIUnit
-										if ( pPlayer.canTrain( iSquadronQUnit, true, false) ) :
+										if (iSquadronQUnit != -1 and  pPlayer.canTrain( iSquadronQUnit, true, false) ) :
 											iBuildUnit = iSquadronQUnit
 							
 										printd("      Telling System to build a fighter")
@@ -1112,11 +1112,11 @@ class CvAI:
 							
 										# Build the most advanced one we can build, of course
 										iBuildUnit = iSpaceBomberIUnit
-										if ( pPlayer.canTrain( iSpaceBomberIIUnit, true, false) ) :
+										if (iSpaceBomberIIUnit != -1 and  pPlayer.canTrain( iSpaceBomberIIUnit, true, false) ) :
 											iBuildUnit = iSpaceBomberIIUnit
-										if ( pPlayer.canTrain( iSpaceBomberIIIUnit, true, false) ) :
+										if (iSpaceBomberIIIUnit != -1 and  pPlayer.canTrain( iSpaceBomberIIIUnit, true, false) ) :
 											iBuildUnit = iSpaceBomberIIIUnit
-										if ( pPlayer.canTrain( iSquadronQUnit, true, false) ) :
+										if (iSquadronQUnit != -1 and  pPlayer.canTrain( iSquadronQUnit, true, false) ) :
 											iBuildUnit = iSquadronQUnit
 							
 										printd("      Telling System to build a bomber")
@@ -1146,7 +1146,7 @@ class CvAI:
 					if (pPlanet.isPlanetWithinCulturalRange()):
 						
 						# First try for an extended habitation system
-						if (pPlayer.canConstruct(iExtHabitationSystem, true, false, false)):
+						if (iExtHabitationSystem != -1 and pPlayer.canConstruct(iExtHabitationSystem, true, false, false)):
 							
 							# Doesn't already have building
 							if ((not pPlanet.isHasBuilding(iExtHabitationSystem)) and pPlanet.isHasBuilding(iHabitationSystem) and (iPass < pCity.getPopulation())):
@@ -1159,11 +1159,11 @@ class CvAI:
 								break
 								
 							# Increment if player CANNOT build a Habitation System (this is not actually possible given the existing tech tree)
-							elif (not pPlayer.canConstruct(iHabitationSystem, true, false, false)):
+							elif (iHabitationSystem == -1 or not pPlayer.canConstruct(iHabitationSystem, true, false, false)):
 								iPass += 1
 								
 						# If we have a good enough food planet without a Habitation System (and can build one), then have the place construct one
-						if (pPlayer.canConstruct(iHabitationSystem, true, false, false)):
+						if (iHabitationSystem != -1 and pPlayer.canConstruct(iHabitationSystem, true, false, false)):
 							
 							# Good food on this planet, good for future growth
 # CP - the following line makes no sense, so comment it out...
@@ -1204,7 +1204,7 @@ class CvAI:
 					# Can only use planets in our radius
 					if (pPlanet.isPlanetWithinCulturalRange()):
 						
-						if (pPlayer.canConstruct(iNutritionFacility, true, false, false)):
+						if (iNutritionFacility != -1 and pPlayer.canConstruct(iNutritionFacility, true, false, false)):
 							
 							# Doesn't already have building
 							if (not pPlanet.isHasBuilding(iNutritionFacility) and iPass < pCity.getPopulation()):
@@ -1242,7 +1242,7 @@ class CvAI:
 					if (pPlanet.isPlanetWithinCulturalRange()):
 						
 						# First try for a nanoextraction upgrade system
-						if (pPlayer.canConstruct(iNanoExtraction, true, false, false)):
+						if (iNanoExtraction != -1 and pPlayer.canConstruct(iNanoExtraction, true, false, false)):
 							
 							# Doesn't already have building
 							if ((not pPlanet.isHasBuilding(iNanoExtraction)) and pPlanet.isHasBuilding(iMiningFacility) and (iPass < pCity.getPopulation())):
@@ -1255,10 +1255,10 @@ class CvAI:
 								break
 								
 							# Increment if player CANNOT build a Mining Facility (this is not actually possible given the existing tech tree)
-							elif (not pPlayer.canConstruct(iMiningFacility, true, false, false)):
+							elif (iMiningFacility == -1 or not pPlayer.canConstruct(iMiningFacility, true, false, false)):
 								iPass += 1
 
-						if (pPlayer.canConstruct(iMiningFacility, true, false, false)):
+						if (iMiningFacility != -1 and pPlayer.canConstruct(iMiningFacility, true, false, false)):
 							
 							# Doesn't already have building
 							if (not pPlanet.isHasBuilding(iMiningFacility) and iPass < pCity.getPopulation()):
@@ -1296,7 +1296,7 @@ class CvAI:
 					if (pPlanet.isPlanetWithinCulturalRange()):
 						
 						# Commercial Satellites
-						if (pPlayer.canConstruct(iCommercialSatellites, true, false, false)):
+						if (iCommercialSatellites != -1 and pPlayer.canConstruct(iCommercialSatellites, true, false, false)):
 							
 							# Doesn't already have building
 							if ((not pPlanet.isHasBuilding(iCommercialSatellites)) and pPlanet.isHasBuilding(iMagLevNetwork) and (iPass < pCity.getPopulation())): # CP - bug fix: check for mag-lev before trying to construct com. sat.
@@ -1309,11 +1309,11 @@ class CvAI:
 								break
 								
 							# Increment if player CANNOT build a MagLev
-							elif (not pPlayer.canConstruct(iMagLevNetwork, true, false, false)):
+							elif (iMagLevNetwork == -1 or not pPlayer.canConstruct(iMagLevNetwork, true, false, false)):
 								iPass += 1
 								
 						# Can't build Commercial Satellites, go for MagLev instead
-						if (pPlayer.canConstruct(iMagLevNetwork, true, false, false)):
+						if (iMagLevNetwork != -1 and pPlayer.canConstruct(iMagLevNetwork, true, false, false)):
 							
 							# Doesn't already have building
 							if (not pPlanet.isHasBuilding(iMagLevNetwork) and iPass < pCity.getPopulation()):
