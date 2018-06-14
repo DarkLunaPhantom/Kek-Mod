@@ -42,7 +42,7 @@
 			<iTradeModifier>0</iTradeModifier>
 			<iGoldenAgeYield>1</iGoldenAgeYield>
 			<iGoldenAgeYieldThreshold>1</iGoldenAgeYieldThreshold>
-			<iAIWeightPercent>110</iAIWeightPercent>
+			<iAIWeightPercent>100</iAIWeightPercent>
 			<ColorType>COLOR_YIELD_PRODUCTION</ColorType>
 			<SymbolPaths>
 				<SymbolPath>Art/Interface/Symbols/Production/Production01.nif</SymbolPath>
@@ -65,7 +65,7 @@
 			<iTradeModifier>100</iTradeModifier>
 			<iGoldenAgeYield>1</iGoldenAgeYield>
 			<iGoldenAgeYieldThreshold>1</iGoldenAgeYieldThreshold>
-			<iAIWeightPercent>80</iAIWeightPercent>
+			<iAIWeightPercent>100</iAIWeightPercent>
 			<ColorType>COLOR_YIELD_COMMERCE</ColorType>
 			<SymbolPaths>
 				<SymbolPath>Art/Interface/Symbols/Commerce/Commerce01.nif</SymbolPath>
