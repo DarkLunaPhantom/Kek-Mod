@@ -303,3 +303,7 @@ def getExperienceNeeded(argsList):
 # DarkLunaPhantom
 def getSystemPopulationLimit(argsList):
 	return gameUtils().getSystemPopulationLimit(argsList)
+
+# DarkLunaPhantom
+def verifyUnassignedPopulation(argsList):
+	return gameUtils().verifyUnassignedPopulation(argsList)

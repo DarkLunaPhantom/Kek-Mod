@@ -377,7 +377,9 @@ class FFGameUtils:
 		
 	# DarkLunaPhantom begin
 	def AI_assignWorkingPlots(self, argsList):
-		CvAI.CvAI().doCityAIUpdate(argsList[0])
+		pCity = argsList[0]
+		CvEventInterface.getEventManager().FinalFrontier.doCityHappinessPopLimit(pCity)
+		CvEventInterface.getEventManager().FinalFrontier.updateHumanCityTurn(pCity)
 		return False
 	# DarkLunaPhantom end
 
@@ -1157,3 +1159,20 @@ class FFGameUtils:
 	def getSystemPopulationLimit(self, argsList):
 		pPlot = argsList[0]
 		return CvSolarSystem.getSystemAt(pPlot.getX(), pPlot.getY()).getPopulationLimit()
+
+	# DarkLunaPhantom
+	def verifyUnassignedPopulation(self, argsList):
+		pCity = argsList[0]
+		pSystem = CvSolarSystem.getSystemAt(pCity.getX(), pCity.getY())
+		if pSystem is None:
+			return False
+		
+		iMax = pSystem.getPopulationLimit(True)
+		iUnassigned = iMax
+		for iPlanetLoop in range(pSystem.getNumPlanets()):
+			iUnassigned -= pSystem.getPlanetByIndex(iPlanetLoop).getPopulation()
+		
+		if iUnassigned < 0:
+			CvEventInterface.getEventManager().FinalFrontier.doCityHappinessPopLimit(pCity)
+			CvEventInterface.getEventManager().FinalFrontier.updateHumanCityTurn(pCity)
+			

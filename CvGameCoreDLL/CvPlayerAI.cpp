@@ -22989,16 +22989,6 @@ bool CvPlayerAI::AI_advancedStartPlaceCity(CvPlot* pPlot)
 		}
 		doAdvancedStartAction(ADVANCEDSTARTACTION_POP, pPlot->getX_INLINE(), pPlot->getY_INLINE(), -1, true);
 	}
-	
-	pCity->AI_updateAssignWork();
-    
-	// DarkLunaPhantom begin - FFP version of "AI_assignWorkingPlots".
-	CyCity* pyCity = new CyCity(pCity);
-	CyArgsList argsList2;
-	argsList2.add(gDLL->getPythonIFace()->makePythonObject(pyCity));
-	gDLL->getPythonIFace()->callFunction(PYGameModule, "AI_assignWorkingPlots", argsList2.makeFunctionArgs());
-	delete pyCity;
-	// DarkLunaPhantom end
 
 	return true;
 }

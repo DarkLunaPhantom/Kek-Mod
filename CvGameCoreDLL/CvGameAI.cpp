@@ -64,7 +64,8 @@ void CvGameAI::AI_updateAssignWork()
 	for (iI = 0; iI < MAX_PLAYERS; iI++)
 	{
 		CvPlayer& kLoopPlayer = GET_PLAYER((PlayerTypes)iI);
-		if (GET_TEAM(kLoopPlayer.getTeam()).isHuman() && kLoopPlayer.isAlive())
+		//if (GET_TEAM(kLoopPlayer.getTeam()).isHuman() && kLoopPlayer.isAlive())
+		if (kLoopPlayer.isAlive()) // DarkLunaPhantom
 		{
 			kLoopPlayer.AI_updateAssignWork();
 		}

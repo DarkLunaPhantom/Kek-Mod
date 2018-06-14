@@ -745,9 +745,14 @@ class FinalFrontierEvents(CvEventManager.CvEventManager):
 					
 				pPlanet.changePopulation(1)
 			
-	def doCityHappinessPopLimit(self, pCity, pSystem):
+	def doCityHappinessPopLimit(self, pCity):
 		
 		printd("Updating happiness for city %s" %(pCity.getName()))
+		
+		pSystem = getSystemAt(pCity.getX(), pCity.getY())
+		
+		if pSystem is None:
+			return
 		
 		iMaxPop = pSystem.getPopulationLimit(true)
 		iUsedPop = 0
@@ -770,8 +775,9 @@ class FinalFrontierEvents(CvEventManager.CvEventManager):
 			for iPopLoop in range(iPopOver):
 				
 				iWorstPlanetWithPop = self.getSystemWorstPlanetRingWithPopulation(pCity.getOwner(), pSystem)
-				pPlanet = pSystem.getPlanet(iWorstPlanetWithPop)
-				pPlanet.changePopulation(-1)
+				if iWorstPlanetWithPop != -1: # DarkLunaPhantom
+					pPlanet = pSystem.getPlanet(iWorstPlanetWithPop)
+					pPlanet.changePopulation(-1)
 		
 	def getSystemWorstPlanetRingWithPopulation(self, iOwner, pSystem, iActivePlanetOrbitRing = -1):
 		
@@ -1009,10 +1015,10 @@ class FinalFrontierEvents(CvEventManager.CvEventManager):
 			
 			pCity = pyCity.GetCy()
 			printd("in doBeginTurnAI, get system for pCity at x=%d, y=%d" % (pCity.getX(), pCity.getY()))
-			pSystem = getSystemAt(pCity.getX(), pCity.getY()) #FFPBUG
+			#pSystem = getSystemAt(pCity.getX(), pCity.getY()) #FFPBUG
 			
 			# Update Population distribution, removing some if player has more assigned than he can support (happiness)
-			self.doCityHappinessPopLimit(pCity, pSystem)
+			self.doCityHappinessPopLimit(pCity)
 			self.updateHumanCityTurn(pCity)					#Final Frontier AI, thanks to God-Emperor		-- TC01
 		
 		# UNIT AI (Starbases)
@@ -1370,6 +1376,10 @@ class FinalFrontierEvents(CvEventManager.CvEventManager):
 	#	if (not pCity.AI_avoidGrowth()):		Final Frontier AI: TC01, thanks to God-Emperor
 			
 		pSystem = getSystemAt(pCity.getX(), pCity.getY()) #FFPBUG
+		
+		# DarkLunaPhantom
+		if pSystem is None:
+			return
 		
 		printd("\n\n\nWheeeee: Checking City System at %d, %d" %(pCity.getX(), pCity.getY()))
 			

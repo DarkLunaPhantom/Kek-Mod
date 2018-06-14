@@ -376,6 +376,14 @@ void CvCityAI::AI_assignWorkingPlots()
 	{
 		gDLL->getInterfaceIFace()->setDirty(CitizenButtons_DIRTY_BIT, true);
 	}
+	
+	// DarkLunaPhantom begin - FFP version of "AI_assignWorkingPlots".
+	CyCity* pyCity = new CyCity(this);
+	CyArgsList argsList;
+	argsList.add(gDLL->getPythonIFace()->makePythonObject(pyCity));
+	gDLL->getPythonIFace()->callFunction(PYGameModule, "AI_assignWorkingPlots", argsList.makeFunctionArgs());
+	delete pyCity;
+	// DarkLunaPhantom end
 }
 
 
@@ -384,7 +392,16 @@ void CvCityAI::AI_updateAssignWork()
 	if (AI_isAssignWorkDirty())
 	{
 		AI_assignWorkingPlots();
+		return; // DarkLunaPhantom
 	}
+	
+	// DarkLunaPhantom begin - Check for negative values of unassigned population and fix if necessary.
+	CyCity* pyCity = new CyCity(this);
+	CyArgsList argsList;
+	argsList.add(gDLL->getPythonIFace()->makePythonObject(pyCity));
+	gDLL->getPythonIFace()->callFunction(PYGameModule, "verifyUnassignedPopulation", argsList.makeFunctionArgs());
+	delete pyCity;
+
 }
 
 bool CvCityAI::AI_ignoreGrowth()

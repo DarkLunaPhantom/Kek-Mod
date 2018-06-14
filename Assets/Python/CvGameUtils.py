@@ -741,3 +741,7 @@ class CvGameUtils:
 	# DarkLunaPhantom
 	def getSystemPopulationLimit(self, argsList):
 		return -1
+		
+	# DarkLunaPhantom
+	def verifyUnassignedPopulation(self, argsList):
+		return False

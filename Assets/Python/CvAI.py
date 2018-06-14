@@ -123,6 +123,10 @@ class CvAI:
 		
 		pSystem = getSystemAt(pCity.getX(), pCity.getY()) #FFPBUG
 		
+		# DarkLunaPhantom
+		if pSystem is None:
+			return
+		
 		iOwner = pCity.getOwner()
 		
 		iMaxSupportablePop = pSystem.getPopulationLimit(true)

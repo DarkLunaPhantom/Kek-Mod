@@ -5675,17 +5675,6 @@ void CvCity::setPopulation(int iNewValue)
 		}
 
 		//updateGenericBuildings();
-		
-		if (iOldPopulation > iNewValue)
-		{
-			// DarkLunaPhantom begin - FFP version of "AI_assignWorkingPlots".
-			CyCity* pyCity = new CyCity(this);
-			CyArgsList argsList;
-			argsList.add(gDLL->getPythonIFace()->makePythonObject(pyCity));
-			gDLL->getPythonIFace()->callFunction(PYGameModule, "AI_assignWorkingPlots", argsList.makeFunctionArgs());
-			delete pyCity;
-			// DarkLunaPhantom end
-		}
 	}
 }
 
@@ -8366,14 +8355,6 @@ void CvCity::setCitizensAutomated(bool bNewValue)
 		if (isCitizensAutomated())
 		{
 			AI_assignWorkingPlots();
-			
-			// DarkLunaPhantom begin - FFP version of "AI_assignWorkingPlots".
-			CyCity* pyCity = new CyCity(this);
-			CyArgsList argsList;
-			argsList.add(gDLL->getPythonIFace()->makePythonObject(pyCity));
-			gDLL->getPythonIFace()->callFunction(PYGameModule, "AI_assignWorkingPlots", argsList.makeFunctionArgs());
-			delete pyCity;
-			// DarkLunaPhantom end
 		}
 		else
 		{
