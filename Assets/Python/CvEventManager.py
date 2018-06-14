@@ -341,7 +341,8 @@ class CvEventManager:
 
 	def onGameStart(self, argsList):
 		'Called at the start of the game'
-		if (gc.getGame().getGameTurnYear() == gc.getDefineINT("START_YEAR") and not gc.getGame().isOption(GameOptionTypes.GAMEOPTION_ADVANCED_START)):
+		#if (gc.getGame().getGameTurnYear() == gc.getDefineINT("START_YEAR") and not gc.getGame().isOption(GameOptionTypes.GAMEOPTION_ADVANCED_START)):
+		if (gc.getGame().getGameTurnYear() == CyGame().getStartTurn()): # DarkLunaPhantom - Always show Dawn of Man, idea from History Rewritten by Xyth.
 			for iPlayer in range(gc.getMAX_PLAYERS()):
 				player = gc.getPlayer(iPlayer)
 				if (player.isAlive() and player.isHuman()):
