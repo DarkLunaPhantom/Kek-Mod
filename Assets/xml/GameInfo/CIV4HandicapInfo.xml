@@ -16,9 +16,9 @@
 			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>  <!-- x1 -->
 			<iGold>0</iGold> <!-- x1 -->
 			<iFreeUnits>12</iFreeUnits> <!-- x1/2 -->
-			<iUnitCostPercent>30</iUnitCostPercent> <!-- x3/2 -->
+			<iUnitCostPercent>20</iUnitCostPercent> <!-- x1 -->
 			<iResearchPercent>60</iResearchPercent>  <!-- x1 -->
-			<iDistanceMaintenancePercent>30</iDistanceMaintenancePercent>  <!-- x2/3 -->
+			<iDistanceMaintenancePercent>23</iDistanceMaintenancePercent>  <!-- x1/2 -->
 			<iNumCitiesMaintenancePercent>40</iNumCitiesMaintenancePercent> <!-- x1 -->
 			<iMaxNumCitiesMaintenance>4</iMaxNumCitiesMaintenance> <!-- x1 -->
 			<iColonyMaintenancePercent>60</iColonyMaintenancePercent> <!-- x1 -->
@@ -128,9 +128,9 @@
 			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>
 			<iGold>0</iGold>
 			<iFreeUnits>9</iFreeUnits>
-			<iUnitCostPercent>45</iUnitCostPercent>
+			<iUnitCostPercent>30</iUnitCostPercent>
 			<iResearchPercent>75</iResearchPercent>
-			<iDistanceMaintenancePercent>37</iDistanceMaintenancePercent>
+			<iDistanceMaintenancePercent>28</iDistanceMaintenancePercent>
 			<iNumCitiesMaintenancePercent>50</iNumCitiesMaintenancePercent>
 			<iMaxNumCitiesMaintenance>4</iMaxNumCitiesMaintenance>
 			<iColonyMaintenancePercent>80</iColonyMaintenancePercent>
@@ -236,9 +236,9 @@
 			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>
 			<iGold>0</iGold>
 			<iFreeUnits>6</iFreeUnits>
-			<iUnitCostPercent>60</iUnitCostPercent>
+			<iUnitCostPercent>40</iUnitCostPercent>
 			<iResearchPercent>90</iResearchPercent>
-			<iDistanceMaintenancePercent>43</iDistanceMaintenancePercent>
+			<iDistanceMaintenancePercent>33</iDistanceMaintenancePercent>
 			<iNumCitiesMaintenancePercent>60</iNumCitiesMaintenancePercent>
 			<iMaxNumCitiesMaintenance>5</iMaxNumCitiesMaintenance>
 			<iColonyMaintenancePercent>90</iColonyMaintenancePercent>
@@ -341,9 +341,9 @@
 			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>
 			<iGold>0</iGold>
 			<iFreeUnits>4</iFreeUnits>
-			<iUnitCostPercent>75</iUnitCostPercent>
+			<iUnitCostPercent>50</iUnitCostPercent>
 			<iResearchPercent>100</iResearchPercent>
-			<iDistanceMaintenancePercent>50</iDistanceMaintenancePercent>
+			<iDistanceMaintenancePercent>38</iDistanceMaintenancePercent>
 			<iNumCitiesMaintenancePercent>70</iNumCitiesMaintenancePercent>
 			<iMaxNumCitiesMaintenance>5</iMaxNumCitiesMaintenance>
 			<iColonyMaintenancePercent>100</iColonyMaintenancePercent>
@@ -441,9 +441,9 @@
 			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>
 			<iGold>0</iGold>
 			<iFreeUnits>3</iFreeUnits>
-			<iUnitCostPercent>90</iUnitCostPercent>
+			<iUnitCostPercent>60</iUnitCostPercent>
 			<iResearchPercent>110</iResearchPercent>
-			<iDistanceMaintenancePercent>57</iDistanceMaintenancePercent>
+			<iDistanceMaintenancePercent>43</iDistanceMaintenancePercent>
 			<iNumCitiesMaintenancePercent>80</iNumCitiesMaintenancePercent>
 			<iMaxNumCitiesMaintenance>6</iMaxNumCitiesMaintenance>
 			<iColonyMaintenancePercent>110</iColonyMaintenancePercent>
@@ -541,9 +541,9 @@
 			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>
 			<iGold>0</iGold>
 			<iFreeUnits>2</iFreeUnits>
-			<iUnitCostPercent>105</iUnitCostPercent>
+			<iUnitCostPercent>75</iUnitCostPercent>
 			<iResearchPercent>115</iResearchPercent>
-			<iDistanceMaintenancePercent>60</iDistanceMaintenancePercent>
+			<iDistanceMaintenancePercent>45</iDistanceMaintenancePercent>
 			<iNumCitiesMaintenancePercent>85</iNumCitiesMaintenancePercent>
 			<iMaxNumCitiesMaintenance>6</iMaxNumCitiesMaintenance>
 			<iColonyMaintenancePercent>120</iColonyMaintenancePercent>
@@ -646,9 +646,9 @@
 			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>
 			<iGold>0</iGold>
 			<iFreeUnits>2</iFreeUnits>
-			<iUnitCostPercent>120</iUnitCostPercent>
+			<iUnitCostPercent>80</iUnitCostPercent>
 			<iResearchPercent>120</iResearchPercent>
-			<iDistanceMaintenancePercent>63</iDistanceMaintenancePercent>
+			<iDistanceMaintenancePercent>48</iDistanceMaintenancePercent>
 			<iNumCitiesMaintenancePercent>90</iNumCitiesMaintenancePercent>
 			<iMaxNumCitiesMaintenance>7</iMaxNumCitiesMaintenance>
 			<iColonyMaintenancePercent>130</iColonyMaintenancePercent>
@@ -757,9 +757,9 @@
 			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>
 			<iGold>0</iGold>
 			<iFreeUnits>1</iFreeUnits>
-			<iUnitCostPercent>135</iUnitCostPercent>
+			<iUnitCostPercent>90</iUnitCostPercent>
 			<iResearchPercent>125</iResearchPercent>
-			<iDistanceMaintenancePercent>67</iDistanceMaintenancePercent>
+			<iDistanceMaintenancePercent>50</iDistanceMaintenancePercent>
 			<iNumCitiesMaintenancePercent>95</iNumCitiesMaintenancePercent>
 			<iMaxNumCitiesMaintenance>7</iMaxNumCitiesMaintenance>
 			<iColonyMaintenancePercent>140</iColonyMaintenancePercent>
@@ -872,9 +872,9 @@
 			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>
 			<iGold>0</iGold>
 			<iFreeUnits>1</iFreeUnits>
-			<iUnitCostPercent>150</iUnitCostPercent>
+			<iUnitCostPercent>100</iUnitCostPercent>
 			<iResearchPercent>130</iResearchPercent>
-			<iDistanceMaintenancePercent>67</iDistanceMaintenancePercent>
+			<iDistanceMaintenancePercent>50</iDistanceMaintenancePercent>
 			<iNumCitiesMaintenancePercent>100</iNumCitiesMaintenancePercent>
 			<iMaxNumCitiesMaintenance>8</iMaxNumCitiesMaintenance>
 			<iColonyMaintenancePercent>150</iColonyMaintenancePercent>
