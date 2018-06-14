@@ -973,6 +973,7 @@ void CvPlot::forceBumpUnits()
 // (I've also tided up the code a little bit)
 void CvPlot::nukeExplosion(int iRange, CvUnit* pNukeUnit, bool bBomb)
 {
+	TeamTypes eAttacker =  GET_PLAYER(pNukeUnit->getOwnerINLINE()).getTeam(); // DarkLunaPhantom
 	for (int iDX = -(iRange); iDX <= iRange; iDX++)
 	{
 		for (int iDY = -(iRange); iDY <= iRange; iDY++)
@@ -995,7 +996,31 @@ void CvPlot::nukeExplosion(int iRange, CvUnit* pNukeUnit, bool bBomb)
 						if (GC.getGameINLINE().getSorenRandNum(100, "Nuke Fallout") < GC.getDefineINT("NUKE_FALLOUT_PROB"))
 						{
 							pLoopPlot->setImprovementType(NO_IMPROVEMENT);
-							pLoopPlot->setFeatureType((FeatureTypes)(GC.getDefineINT("NUKE_FEATURE")));
+							// DarkLunaPhantom begin - This feature could damage third party units, so don't place it in that case.
+							//pLoopPlot->setFeatureType((FeatureTypes)(GC.getDefineINT("NUKE_FEATURE")));
+							FeatureTypes eNukeFeature = (FeatureTypes)GC.getDefineINT("NUKE_FEATURE");
+							bool bFallout = true;
+							
+							if (GC.getFeatureInfo(eNukeFeature).getTurnDamage() > 0)
+							{
+								for (CLLNode<IDInfo>* pUnitNode = pLoopPlot->headUnitNode(); pUnitNode != NULL; pUnitNode = pLoopPlot->nextUnitNode(pUnitNode))
+								{
+									CvUnit* pLoopUnit = ::getUnit(pUnitNode->m_data);
+									TeamTypes eTarget =  GET_PLAYER(pLoopUnit->getOwnerINLINE()).getTeam();
+
+									if (eAttacker != eTarget && !pLoopUnit->isEnemy(eAttacker))
+									{
+										bFallout = false;
+										break;
+									}
+								}
+							}
+
+							if (bFallout)
+							{
+								pLoopPlot->setFeatureType(eNukeFeature);
+							}
+							// DarkLunaPhantom end
 						}
 					}
 				}

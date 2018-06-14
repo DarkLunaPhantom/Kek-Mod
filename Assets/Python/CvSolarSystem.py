@@ -972,7 +972,7 @@ def getBestPlanetInSystem(pSystem):
 	iOwner = pCity.getOwner()
 	
 	# Loop through all planets to find the best one (we'll call it our homeworld)
-	iBestPlanetValue = -1
+	iBestPlanetValue = -2 # DarkLunaPhantom - It was -1.
 	iBestPlanetIndex = -1
 	for iPlanetLoop in range(pSystem.getNumPlanets()):
 		pPlanet = pSystem.getPlanetByIndex(iPlanetLoop)
@@ -985,6 +985,10 @@ def getBestPlanetInSystem(pSystem):
 		# Planet is unusable, and therefore pretty much worthless to us
 		if (pPlanet.getPopulationLimit(iOwner) == 0):
 			iValue = 0
+		
+		# DarkLunaPhantom
+		if pPlanet.isDisabled():
+			iValue = -1
 		
 		if (iValue > iBestPlanetValue):
 			iBestPlanetValue = iValue

@@ -880,6 +880,17 @@ class FinalFrontierEvents(CvEventManager.CvEventManager):
 		'Nuke Explosion'
 		pPlot, pNukeUnit = argsList
 		
+		# DarkLunaPhantom - Now it destroys planets even if the nuke is not centered on the star.
+		iPlotX, iPlotY = pPlot.getX(), pPlot.getY()
+		iRange = pNukeUnit.nukeRange()
+		for iX in range(iPlotX - iRange, iPlotX + iRange + 1):
+			for iY in range(iPlotY - iRange, iPlotY + iRange + 1):
+				pLoopPlot = plotXY(0, 0, iX, iY)
+				if pLoopPlot is not None:
+					if pLoopPlot.isCity():
+						pPlot = pLoopPlot
+						break
+		
 		if (pPlot.isCity()):
 
 			pCity = pPlot.getPlotCity()
