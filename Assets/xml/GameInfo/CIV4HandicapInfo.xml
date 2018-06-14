@@ -31,10 +31,10 @@
 			<iAttitudeChange>2</iAttitudeChange> <!-- x1 -->
 			<iNoTechTradeModifier>100</iNoTechTradeModifier> <!-- x1 -->
 			<iTechTradeKnownModifier>-100</iTechTradeKnownModifier> <!-- x1 -->
-			<iUnownedTilesPerGameAnimal>300</iUnownedTilesPerGameAnimal> <!-- x3 -->
-			<iUnownedTilesPerBarbarianUnit>450</iUnownedTilesPerBarbarianUnit> <!-- x3 -->
-			<iUnownedWaterTilesPerBarbarianUnit>2250</iUnownedWaterTilesPerBarbarianUnit> <!-- x3 -->
-			<iUnownedTilesPerBarbarianCity>480</iUnownedTilesPerBarbarianCity> <!-- x3 -->
+			<iUnownedTilesPerGameAnimal>500</iUnownedTilesPerGameAnimal> <!-- x5 -->
+			<iUnownedTilesPerBarbarianUnit>750</iUnownedTilesPerBarbarianUnit> <!-- x5 -->
+			<iUnownedWaterTilesPerBarbarianUnit>3750</iUnownedWaterTilesPerBarbarianUnit> <!-- x5 -->
+			<iUnownedTilesPerBarbarianCity>800</iUnownedTilesPerBarbarianCity> <!-- x5 -->
 			<iBarbarianCreationTurnsElapsed>55</iBarbarianCreationTurnsElapsed> <!-- x1.1 -->
 			<iBarbarianCityCreationTurnsElapsed>61</iBarbarianCityCreationTurnsElapsed> <!-- x1.1 -->
 			<iBarbarianCityCreationProb>4</iBarbarianCityCreationProb> <!-- x1 -->
@@ -143,10 +143,10 @@
 			<iAttitudeChange>1</iAttitudeChange>
 			<iNoTechTradeModifier>90</iNoTechTradeModifier>
 			<iTechTradeKnownModifier>-50</iTechTradeKnownModifier>
-			<iUnownedTilesPerGameAnimal>240</iUnownedTilesPerGameAnimal>
-			<iUnownedTilesPerBarbarianUnit>300</iUnownedTilesPerBarbarianUnit>
-			<iUnownedWaterTilesPerBarbarianUnit>1800</iUnownedWaterTilesPerBarbarianUnit>
-			<iUnownedTilesPerBarbarianCity>450</iUnownedTilesPerBarbarianCity>
+			<iUnownedTilesPerGameAnimal>400</iUnownedTilesPerGameAnimal>
+			<iUnownedTilesPerBarbarianUnit>500</iUnownedTilesPerBarbarianUnit>
+			<iUnownedWaterTilesPerBarbarianUnit>3000</iUnownedWaterTilesPerBarbarianUnit>
+			<iUnownedTilesPerBarbarianCity>750</iUnownedTilesPerBarbarianCity>
 			<iBarbarianCreationTurnsElapsed>50</iBarbarianCreationTurnsElapsed>
 			<iBarbarianCityCreationTurnsElapsed>55</iBarbarianCityCreationTurnsElapsed>
 			<iBarbarianCityCreationProb>5</iBarbarianCityCreationProb>
@@ -251,10 +251,10 @@
 			<iAttitudeChange>0</iAttitudeChange>
 			<iNoTechTradeModifier>80</iNoTechTradeModifier>
 			<iTechTradeKnownModifier>-25</iTechTradeKnownModifier>
-			<iUnownedTilesPerGameAnimal>180</iUnownedTilesPerGameAnimal>
-			<iUnownedTilesPerBarbarianUnit>240</iUnownedTilesPerBarbarianUnit>
-			<iUnownedWaterTilesPerBarbarianUnit>1650</iUnownedWaterTilesPerBarbarianUnit>
-			<iUnownedTilesPerBarbarianCity>420</iUnownedTilesPerBarbarianCity>
+			<iUnownedTilesPerGameAnimal>300</iUnownedTilesPerGameAnimal>
+			<iUnownedTilesPerBarbarianUnit>400</iUnownedTilesPerBarbarianUnit>
+			<iUnownedWaterTilesPerBarbarianUnit>2750</iUnownedWaterTilesPerBarbarianUnit>
+			<iUnownedTilesPerBarbarianCity>700</iUnownedTilesPerBarbarianCity>
 			<iBarbarianCreationTurnsElapsed>44</iBarbarianCreationTurnsElapsed>
 			<iBarbarianCityCreationTurnsElapsed>50</iBarbarianCityCreationTurnsElapsed>
 			<iBarbarianCityCreationProb>5</iBarbarianCityCreationProb>
@@ -356,10 +356,10 @@
 			<iAttitudeChange>-1</iAttitudeChange>
 			<iNoTechTradeModifier>70</iNoTechTradeModifier>
 			<iTechTradeKnownModifier>0</iTechTradeKnownModifier>
-			<iUnownedTilesPerGameAnimal>150</iUnownedTilesPerGameAnimal>
-			<iUnownedTilesPerBarbarianUnit>180</iUnownedTilesPerBarbarianUnit>
-			<iUnownedWaterTilesPerBarbarianUnit>1500</iUnownedWaterTilesPerBarbarianUnit>
-			<iUnownedTilesPerBarbarianCity>390</iUnownedTilesPerBarbarianCity>
+			<iUnownedTilesPerGameAnimal>250</iUnownedTilesPerGameAnimal>
+			<iUnownedTilesPerBarbarianUnit>300</iUnownedTilesPerBarbarianUnit>
+			<iUnownedWaterTilesPerBarbarianUnit>2500</iUnownedWaterTilesPerBarbarianUnit>
+			<iUnownedTilesPerBarbarianCity>650</iUnownedTilesPerBarbarianCity>
 			<iBarbarianCreationTurnsElapsed>39</iBarbarianCreationTurnsElapsed>
 			<iBarbarianCityCreationTurnsElapsed>44</iBarbarianCityCreationTurnsElapsed>
 			<iBarbarianCityCreationProb>6</iBarbarianCityCreationProb>
@@ -456,10 +456,10 @@
 			<iAttitudeChange>-1</iAttitudeChange>
 			<iNoTechTradeModifier>60</iNoTechTradeModifier>
 			<iTechTradeKnownModifier>0</iTechTradeKnownModifier>
-			<iUnownedTilesPerGameAnimal>120</iUnownedTilesPerGameAnimal>
-			<iUnownedTilesPerBarbarianUnit>150</iUnownedTilesPerBarbarianUnit>
-			<iUnownedWaterTilesPerBarbarianUnit>1350</iUnownedWaterTilesPerBarbarianUnit>
-			<iUnownedTilesPerBarbarianCity>360</iUnownedTilesPerBarbarianCity>
+			<iUnownedTilesPerGameAnimal>200</iUnownedTilesPerGameAnimal>
+			<iUnownedTilesPerBarbarianUnit>250</iUnownedTilesPerBarbarianUnit>
+			<iUnownedWaterTilesPerBarbarianUnit>2250</iUnownedWaterTilesPerBarbarianUnit>
+			<iUnownedTilesPerBarbarianCity>600</iUnownedTilesPerBarbarianCity>
 			<iBarbarianCreationTurnsElapsed>33</iBarbarianCreationTurnsElapsed>
 			<iBarbarianCityCreationTurnsElapsed>39</iBarbarianCityCreationTurnsElapsed>
 			<iBarbarianCityCreationProb>6</iBarbarianCityCreationProb>
@@ -556,10 +556,10 @@
 			<iAttitudeChange>-1</iAttitudeChange>
 			<iNoTechTradeModifier>50</iNoTechTradeModifier>
 			<iTechTradeKnownModifier>0</iTechTradeKnownModifier>
-			<iUnownedTilesPerGameAnimal>105</iUnownedTilesPerGameAnimal>
-			<iUnownedTilesPerBarbarianUnit>120</iUnownedTilesPerBarbarianUnit>
-			<iUnownedWaterTilesPerBarbarianUnit>1200</iUnownedWaterTilesPerBarbarianUnit>
-			<iUnownedTilesPerBarbarianCity>330</iUnownedTilesPerBarbarianCity>
+			<iUnownedTilesPerGameAnimal>175</iUnownedTilesPerGameAnimal>
+			<iUnownedTilesPerBarbarianUnit>200</iUnownedTilesPerBarbarianUnit>
+			<iUnownedWaterTilesPerBarbarianUnit>2000</iUnownedWaterTilesPerBarbarianUnit>
+			<iUnownedTilesPerBarbarianCity>550</iUnownedTilesPerBarbarianCity>
 			<iBarbarianCreationTurnsElapsed>28</iBarbarianCreationTurnsElapsed>
 			<iBarbarianCityCreationTurnsElapsed>33</iBarbarianCityCreationTurnsElapsed>
 			<iBarbarianCityCreationProb>7</iBarbarianCityCreationProb>
@@ -661,10 +661,10 @@
 			<iAttitudeChange>-1</iAttitudeChange>
 			<iNoTechTradeModifier>40</iNoTechTradeModifier>
 			<iTechTradeKnownModifier>0</iTechTradeKnownModifier>
-			<iUnownedTilesPerGameAnimal>90</iUnownedTilesPerGameAnimal>
-			<iUnownedTilesPerBarbarianUnit>105</iUnownedTilesPerBarbarianUnit>
-			<iUnownedWaterTilesPerBarbarianUnit>1050</iUnownedWaterTilesPerBarbarianUnit>
-			<iUnownedTilesPerBarbarianCity>300</iUnownedTilesPerBarbarianCity>
+			<iUnownedTilesPerGameAnimal>150</iUnownedTilesPerGameAnimal>
+			<iUnownedTilesPerBarbarianUnit>175</iUnownedTilesPerBarbarianUnit>
+			<iUnownedWaterTilesPerBarbarianUnit>1750</iUnownedWaterTilesPerBarbarianUnit>
+			<iUnownedTilesPerBarbarianCity>500</iUnownedTilesPerBarbarianCity>
 			<iBarbarianCreationTurnsElapsed>22</iBarbarianCreationTurnsElapsed>
 			<iBarbarianCityCreationTurnsElapsed>28</iBarbarianCityCreationTurnsElapsed>
 			<iBarbarianCityCreationProb>7</iBarbarianCityCreationProb>
@@ -772,10 +772,10 @@
 			<iAttitudeChange>-1</iAttitudeChange>
 			<iNoTechTradeModifier>30</iNoTechTradeModifier>
 			<iTechTradeKnownModifier>0</iTechTradeKnownModifier>
-			<iUnownedTilesPerGameAnimal>75</iUnownedTilesPerGameAnimal>
-			<iUnownedTilesPerBarbarianUnit>90</iUnownedTilesPerBarbarianUnit>
-			<iUnownedWaterTilesPerBarbarianUnit>900</iUnownedWaterTilesPerBarbarianUnit>
-			<iUnownedTilesPerBarbarianCity>270</iUnownedTilesPerBarbarianCity>
+			<iUnownedTilesPerGameAnimal>125</iUnownedTilesPerGameAnimal>
+			<iUnownedTilesPerBarbarianUnit>150</iUnownedTilesPerBarbarianUnit>
+			<iUnownedWaterTilesPerBarbarianUnit>1500</iUnownedWaterTilesPerBarbarianUnit>
+			<iUnownedTilesPerBarbarianCity>450</iUnownedTilesPerBarbarianCity>
 			<iBarbarianCreationTurnsElapsed>17</iBarbarianCreationTurnsElapsed>
 			<iBarbarianCityCreationTurnsElapsed>22</iBarbarianCityCreationTurnsElapsed>
 			<iBarbarianCityCreationProb>8</iBarbarianCityCreationProb>
@@ -887,10 +887,10 @@
 			<iAttitudeChange>-1</iAttitudeChange>
 			<iNoTechTradeModifier>20</iNoTechTradeModifier>
 			<iTechTradeKnownModifier>0</iTechTradeKnownModifier>
-			<iUnownedTilesPerGameAnimal>60</iUnownedTilesPerGameAnimal>
-			<iUnownedTilesPerBarbarianUnit>75</iUnownedTilesPerBarbarianUnit>
-			<iUnownedWaterTilesPerBarbarianUnit>750</iUnownedWaterTilesPerBarbarianUnit>
-			<iUnownedTilesPerBarbarianCity>240</iUnownedTilesPerBarbarianCity>
+			<iUnownedTilesPerGameAnimal>100</iUnownedTilesPerGameAnimal>
+			<iUnownedTilesPerBarbarianUnit>125</iUnownedTilesPerBarbarianUnit>
+			<iUnownedWaterTilesPerBarbarianUnit>1250</iUnownedWaterTilesPerBarbarianUnit>
+			<iUnownedTilesPerBarbarianCity>400</iUnownedTilesPerBarbarianCity>
 			<iBarbarianCreationTurnsElapsed>11</iBarbarianCreationTurnsElapsed>
 			<iBarbarianCityCreationTurnsElapsed>17</iBarbarianCityCreationTurnsElapsed>
 			<iBarbarianCityCreationProb>8</iBarbarianCityCreationProb>
