@@ -88,7 +88,7 @@
 			<Description>TXT_KEY_BUILD_SENSOR</Description>
 			<Help>TXT_KEY_BUILD_STARBASE_HELP</Help>
 			<PrereqTech>TECH_INDUSTRY_1</PrereqTech>
-					<iTime>300</iTime>
+			<iTime>300</iTime>
 			<iCost>75</iCost>
 			<bKill>1</bKill>
 			<ImprovementType>IMPROVEMENT_SENSOR</ImprovementType>

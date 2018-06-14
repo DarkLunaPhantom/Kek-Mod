@@ -203,7 +203,7 @@
 			<bWater>0</bWater>
 			<bGoody>0</bGoody>
 			<bPermanent>0</bPermanent>
-			<iAdvancedStartCost>40</iAdvancedStartCost>
+			<iAdvancedStartCost>24</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<iTilesPerGoody>0</iTilesPerGoody>
 			<iGoodyRange>0</iGoodyRange>

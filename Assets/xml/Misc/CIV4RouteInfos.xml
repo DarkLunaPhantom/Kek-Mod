@@ -10,7 +10,7 @@
 			<Type>ROUTE_ROAD</Type>
 			<Description>TXT_KEY_ROUTE_WARP_LANE</Description>
 			<iValue>1</iValue>
-			<iAdvancedStartCost>10</iAdvancedStartCost>
+			<iAdvancedStartCost>9</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<iMovement>30</iMovement>
 			<iFlatMovement>30</iFlatMovement>
@@ -24,7 +24,7 @@
 			<Type>ROUTE_RAILROAD</Type>
 			<Description>TXT_KEY_ROUTE_JUMP_LANE</Description>
 			<iValue>2</iValue>
-			<iAdvancedStartCost>20</iAdvancedStartCost>
+			<iAdvancedStartCost>12</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<iMovement>20</iMovement>
 			<iFlatMovement>8</iFlatMovement>
