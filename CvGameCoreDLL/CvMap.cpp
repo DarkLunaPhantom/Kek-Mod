@@ -708,7 +708,8 @@ CvPlot* CvMap::syncRandPlot(int iFlags, int iArea, int iMinUnitDistance, int iTi
 
 			if (bValid)
 			{
-				if (iFlags & RANDPLOT_ADJACENT_LAND)
+				//if (iFlags & RANDPLOT_ADJACENT_LAND)
+				if ((iFlags & RANDPLOT_ADJACENT_LAND) || (iFlags & RANDPLOT_ADJACENT_LAND_FOOD_WEIGHTED)) // DarkLunaPhantom
 				{
 					if (!(pTestPlot->isAdjacentToLand()))
 					{

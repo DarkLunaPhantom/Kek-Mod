@@ -53,7 +53,7 @@
 #define RANDPLOT_PASSIBLE											(0x00000010)
 #define RANDPLOT_NOT_VISIBLE_TO_CIV						(0x00000020)
 #define RANDPLOT_NOT_CITY											(0x00000040)
-#define RANDPLOT_ADJACENT_LAND_FOOD_WEIGHTED                (0x00000088) // DarkLunaPhantom
+#define RANDPLOT_ADJACENT_LAND_FOOD_WEIGHTED                (0x00000080) // DarkLunaPhantom
 
 #ifdef _USRDLL
 #define MAX_CIV_PLAYERS												(48) // note: default is 18, some people like 48. They are not compatible // DarkLunaPhantom - Changed to 48.
