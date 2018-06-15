@@ -6152,8 +6152,9 @@ void CvPlayer::doGoody(CvPlot* pPlot, CvUnit* pUnit)
 
 				if (canReceiveGoody(pPlot, eGoody, pUnit))
 				{
-					pPlot->removeGoody();		//Added in Final Frontier SDK: TC01
+					//pPlot->removeGoody();		//Added in Final Frontier SDK: TC01 // DarkLunaPhantom - Moved this a bit down to pass improvement type check in receiveGoody.
 					receiveGoody(pPlot, eGoody, pUnit);
+					pPlot->removeGoody(); // DarkLunaPhantom
 
 					// Python Event
 					CvEventReporter::getInstance().goodyReceived(getID(), pPlot, pUnit, eGoody);
