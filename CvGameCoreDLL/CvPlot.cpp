@@ -1070,7 +1070,7 @@ void CvPlot::nukeExplosion(int iRange, CvUnit* pNukeUnit, bool bBomb)
                     // NUKE_NON_COMBAT_DEATH_THRESHOLD was probably picked so that the probability is close to average nuke damage to combat units (which is 79%). I changed the chance to destroy
                     // a non-combat unit to exactly 79%, and Bomb Shelter halves that so those are now exactly the same as average damage to combat units. NUKE_NON_COMBAT_DEATH_THRESHOLD is now unused.
                     //else if (iNukeDamage >= GC.getDefineINT("NUKE_NON_COMBAT_DEATH_THRESHOLD"))
-					else if (GC.getGameINLINE().getSorenRandNum(100, "Non-Combat Nuke Rand") * 100 < std::max(0, (pLoopCity->getNukeModifier() + 100)) * (GC.getDefineINT("NUKE_UNIT_DAMAGE_BASE") -1 + (GC.getDefineINT("NUKE_UNIT_DAMAGE_RAND_1") + GC.getDefineINT("NUKE_UNIT_DAMAGE_RAND_2") - 1) / 2))
+					else if (GC.getGameINLINE().getSorenRandNum(100, "Non-Combat Nuke Rand") * 100 < std::max(0, ((pLoopCity != NULL ? pLoopCity->getNukeModifier() : 0) + 100)) * (GC.getDefineINT("NUKE_UNIT_DAMAGE_BASE") -1 + (GC.getDefineINT("NUKE_UNIT_DAMAGE_RAND_1") + GC.getDefineINT("NUKE_UNIT_DAMAGE_RAND_2") - 1) / 2))
 					{
 						pLoopUnit->kill(false, ((pNukeUnit != NULL) ? pNukeUnit->getOwnerINLINE() : NO_PLAYER));
 					}
