@@ -2297,7 +2297,6 @@ void CvGame::update()
 	startProfilingDLL(false);
 	PROFILE_BEGIN("CvGame::update");
 
-again:
 	if (!gDLL->GetWorldBuilderMode() || isInAdvancedStart())
 	{
 		sendPlayerOptions();
@@ -2350,17 +2349,6 @@ again:
 			gDLL->getInterfaceIFace()->setWorldBuilder(true);
 		}
 	}
-
-	// DarkLunaPhantom begin - Fixed bug in K-Mod Extended C2C minimize AI turn time option, multiplayer
-	// needs to be checked first because later checks crash pitboss as it is not a valid active player.
-	// K-Mod Extended
-	CvPlayerAI& kActivePlayer = GET_PLAYER(getActivePlayer());
-	if (!isNetworkMultiPlayer() && (!kActivePlayer.isTurnActive() || kActivePlayer.isAutoMoves()) && !kActivePlayer.hasBusyUnit() && getBugOptionBOOL("MainInterface__MinimizeAITurnSlices", false))
-		{
-			updateTimers();
-			goto again;
-		}
-	// DarkLunaPhantom end
 
 	PROFILE_END();
 	stopProfilingDLL(false);

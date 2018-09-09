@@ -95,5 +95,3 @@ class BugGeneralOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.addCheckbox(screen, panel, "MainInterface__CityArrows")
 		self.addCheckbox(screen, panel, "MainInterface__RapidUnitCycling")
 		self.addCheckbox(screen, panel, "MainInterface__SimpleSelection")
-		# K-Mod Extended
-		self.addCheckbox(screen, panel, "MainInterface__MinimizeAITurnSlices")
