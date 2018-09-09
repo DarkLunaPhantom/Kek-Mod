@@ -730,7 +730,7 @@ void CvCity::kill(bool bUpdatePlotGroups, bool bRemoveCulture) // DarkLunaPhanto
     int iCultureLevel = std::max(0, (int)getCultureLevel());
     if (bRemoveCulture)
     {
-        for (int iI; iI < MAX_PLAYERS; ++iI)
+        for (int iI = 0; iI < MAX_PLAYERS; ++iI)
         {
             setCultureTimes100((PlayerTypes)iI, 0, true, false);
         }
