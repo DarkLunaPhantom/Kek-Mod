@@ -133,6 +133,12 @@ bool CvUnitAI::AI_update()
 	{
 		return false;
 	}
+	
+	// DarkLunaPhantom - Not only ignore, but remove automation from AI units.
+	if (getGroup()->isAutomated() && !isHuman())
+	{
+		getGroup()->setAutomateType(NO_AUTOMATE);
+	}
 
 	if (getGroup()->isAutomated() && isHuman()) // When the AI fills in for a human player, they should ignore automation
 	{
