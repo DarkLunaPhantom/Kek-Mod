@@ -1061,12 +1061,20 @@ SevenSpirits changed the calculation so that it always assumes that there is x w
 //int CvMap::maxPlotDistance()
 int CvMap::maxPlotDistance(bool bDefaultWrap)
 {
+	int iMaxDistance;
     if (bDefaultWrap)
     {
-        return std::min(std::max(1, plotDistance(0, 0, getGridWidthINLINE() / 2, getGridHeightINLINE() - 1)), std::max(1, plotDistance(0, 0, getGridWidthINLINE() - 1, getGridHeightINLINE() / 2)));
+		iMaxDistance = std::min(std::max(getGridWidthINLINE() / 2, getGridHeightINLINE() - 1) + std::min(getGridWidthINLINE() / 2, getGridHeightINLINE() - 1) / 2,
+								std::max(getGridWidthINLINE() - 1, getGridHeightINLINE() / 2) + std::min(getGridWidthINLINE() - 1, getGridHeightINLINE() / 2) / 2);
     }
+	//return std::max(1, plotDistance(0, 0, ((isWrapXINLINE()) ? (getGridWidthINLINE() / 2) : (getGridWidthINLINE() - 1)), ((isWrapYINLINE()) ? (getGridHeightINLINE() / 2) : (getGridHeightINLINE() - 1))));
+	else
+	{
+		iMaxDistance = plotDistance(0, 0, ((isWrapXINLINE()) ? (getGridWidthINLINE() / 2) : (getGridWidthINLINE() - 1)), ((isWrapYINLINE()) ? (getGridHeightINLINE() / 2) : (getGridHeightINLINE() - 1)));
+	}
+	
+	return std::max(1, iMaxDistance);
 // DarkLunaPhantom end
-	return std::max(1, plotDistance(0, 0, ((isWrapXINLINE()) ? (getGridWidthINLINE() / 2) : (getGridWidthINLINE() - 1)), ((isWrapYINLINE()) ? (getGridHeightINLINE() / 2) : (getGridHeightINLINE() - 1))));
 }
 
 
