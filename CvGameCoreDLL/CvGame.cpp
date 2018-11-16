@@ -8164,10 +8164,13 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
 				{
 					if (GET_TEAM(kLoopPlayer.getTeam()).canChangeWarPeace(kPlayer.getTeam()))
 					{
-						GET_TEAM(kLoopPlayer.getTeam()).declareWar(kPlayer.getTeam(), false, WARPLAN_DOGPILE);
+						//GET_TEAM(kLoopPlayer.getTeam()).declareWar(kPlayer.getTeam(), false, WARPLAN_DOGPILE);
+						CvTeam::queueWar(kLoopPlayer.getTeam(), kPlayer.getTeam(), false, WARPLAN_DOGPILE); // DarkLunaPhantom
 					}
 				}
 			}
+			
+			CvTeam::triggerWars(); // DarkLunaPhantom
 
 			setVoteOutcome(kData, NO_PLAYER_VOTE);
 		}
