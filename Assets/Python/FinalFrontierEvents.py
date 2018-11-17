@@ -1042,9 +1042,8 @@ class FinalFrontierEvents(CvEventManager.CvEventManager):
 				AI.doStarbaseAI(pyUnit)
 		
 		# War Stuff
-        # DarkLunaPhantom - DLL can handle this?
-		#if (not pPlayer.isHuman()):
-		#	self.doAIWarChance(iPlayer)
+		if (not pPlayer.isHuman()):
+			self.doAIWarChance(iPlayer)
 		
 	def doAIWarChance(self, iPlayer):
 		
