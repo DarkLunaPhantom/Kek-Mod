@@ -394,7 +394,7 @@ class CvSystem:
 						iPlayer = pCity.getOwner()
 						iTeam = gc.getPlayer(iPlayer).getTeam()
 						iProjectAstralGate = gc.getInfoTypeForString('PROJECT_ASTRAL_GATE')
-						iNumGatePieces = gc.getTeam(iTeam).getProjectCount(iProjectAstralGate)
+						iNumGatePieces = int(gc.getTeam(iTeam).getProjectCount(iProjectAstralGate) / (1 + 0.5 * (gc.getTeam(iTeam).getNumMembers() - 1)))
 						if (iNumGatePieces > 0):
 							szBuilding = aszAstralGateLevels[iNumGatePieces-1]
 							szBuildingString = "FEATURE_DUMMY_TAG_BUILDING_9"
