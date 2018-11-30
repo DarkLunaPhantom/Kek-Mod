@@ -2073,7 +2073,7 @@ class CvInfoScreen:
 					szStatsText += szProjectType.upper() + "\n"
 
 				if (isTeamProject(self.iWonderID)):
-					iMaxInstances = gc.getProjectInfo(self.iWonderID).getMaxTeamInstances()
+					iMaxInstances = gc.getProjectInfo(self.iWonderID).getMaxTeamInstances(gc.getPlayer(CyGame().getActivePlayer()).getTeam())
 					szProjectType = localText.getText("TXT_KEY_PEDIA_TEAM_PROJECT", ())
 					if (iMaxInstances > 1):
 						szProjectType += " " + localText.getText("TXT_KEY_PEDIA_WONDER_INSTANCES", (iMaxInstances,))

@@ -1124,7 +1124,7 @@ class CvVictoryScreen:
 						and self.isApolloBuiltbyTeam(gc.getTeam(iLoopTeam))):
 							teamProject = 0
 							for i in range(gc.getNumProjectInfos()):
-								if (gc.getProjectInfo(i).getVictoryThreshold(iLoopVC) > 0):
+								if (gc.getProjectInfo(i).getVictoryThreshold(iLoopVC, -1) > 0):
 									teamProject += gc.getTeam(iLoopTeam).getProjectCount(i)
 							if (teamProject > bestProject):
 								bestProject = teamProject
@@ -1134,7 +1134,7 @@ class CvVictoryScreen:
 				if AdvisorOpt.isVictories():
 					bApolloShown = False
 					for i in range(gc.getNumProjectInfos()):
-						if (gc.getProjectInfo(i).getVictoryThreshold(iLoopVC) > 0):
+						if (gc.getProjectInfo(i).getVictoryThreshold(iLoopVC, -1) > 0):
 							if not self.isApolloBuilt():
 								iRow = screen.appendTableRow(szTable)
 								screen.setTableText(szTable, 0, iRow, localText.getText("TXT_KEY_PROJECT_ASTRAL_GATE_DESIGN", ()), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY) # FFP - Astral Gate Design, not Apollo Program
@@ -1160,10 +1160,10 @@ class CvVictoryScreen:
 								iRow = screen.appendTableRow(szTable)
 								iReqTech = gc.getProjectInfo(i).getTechPrereq()
 
-								if (gc.getProjectInfo(i).getVictoryMinThreshold(iLoopVC) == gc.getProjectInfo(i).getVictoryThreshold(iLoopVC)):
-									szNumber = unicode(gc.getProjectInfo(i).getVictoryThreshold(iLoopVC))
+								if (gc.getProjectInfo(i).getVictoryMinThreshold(iLoopVC, iActiveTeam) == gc.getProjectInfo(i).getVictoryThreshold(iLoopVC, iActiveTeam)):
+									szNumber = unicode(gc.getProjectInfo(i).getVictoryThreshold(iLoopVC, iActiveTeam))
 								else:
-									szNumber = unicode(gc.getProjectInfo(i).getVictoryMinThreshold(iLoopVC)) + u"-" + unicode(gc.getProjectInfo(i).getVictoryThreshold(iLoopVC))
+									szNumber = unicode(gc.getProjectInfo(i).getVictoryMinThreshold(iLoopVC, iActiveTeam)) + u"-" + unicode(gc.getProjectInfo(i).getVictoryThreshold(iLoopVC, iActiveTeam))
 
 								sSSPart = localText.getText("TXT_KEY_VICTORY_SCREEN_BUILDING", (szNumber, gc.getProjectInfo(i).getTextKey()))
 								screen.setTableText(szTable, 0, iRow, sSSPart, "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
@@ -1176,10 +1176,10 @@ class CvVictoryScreen:
 
 									iHasTechColor = -1
 									iSSColor = 0
-									if activePlayer.getTeam().getProjectCount(i) == gc.getProjectInfo(i).getVictoryThreshold(iLoopVC):
+									if activePlayer.getTeam().getProjectCount(i) == gc.getProjectInfo(i).getVictoryThreshold(iLoopVC, iActiveTeam):
 										sSSCount = "%i" % (activePlayer.getTeam().getProjectCount(i))
 										iSSColor = ColorUtil.keyToType("COLOR_GREEN")
-									elif activePlayer.getTeam().getProjectCount(i) >= gc.getProjectInfo(i).getVictoryMinThreshold(iLoopVC):
+									elif activePlayer.getTeam().getProjectCount(i) >= gc.getProjectInfo(i).getVictoryMinThreshold(iLoopVC, iActiveTeam):
 										iSSColor = ColorUtil.keyToType("COLOR_YELLOW")
 
 									if iSSColor > 0:
@@ -1205,9 +1205,9 @@ class CvVictoryScreen:
 
 									iHasTechColor = -1
 									iSSColor = 0
-									if pTeam.getProjectCount(i) == gc.getProjectInfo(i).getVictoryThreshold(iLoopVC):
+									if pTeam.getProjectCount(i) == gc.getProjectInfo(i).getVictoryThreshold(iLoopVC, iBestProjectTeam):
 										iSSColor = ColorUtil.keyToType("COLOR_GREEN")
-									elif pTeam.getProjectCount(i) >= gc.getProjectInfo(i).getVictoryMinThreshold(iLoopVC):
+									elif pTeam.getProjectCount(i) >= gc.getProjectInfo(i).getVictoryMinThreshold(iLoopVC, iBestProjectTeam):
 										iSSColor = ColorUtil.keyToType("COLOR_YELLOW")
 									elif bHasTech:
 										iSSColor = ColorUtil.keyToType("COLOR_PLAYER_ORANGE")
@@ -1223,12 +1223,12 @@ class CvVictoryScreen:
 
 				else: # vanilla BtS SShip display
 					for i in range(gc.getNumProjectInfos()):
-						if (gc.getProjectInfo(i).getVictoryThreshold(iLoopVC) > 0):
+						if (gc.getProjectInfo(i).getVictoryThreshold(iLoopVC, -1) > 0):
 							iRow = screen.appendTableRow(szTable)
-							if (gc.getProjectInfo(i).getVictoryMinThreshold(iLoopVC) == gc.getProjectInfo(i).getVictoryThreshold(iLoopVC)):
-								szNumber = unicode(gc.getProjectInfo(i).getVictoryThreshold(iLoopVC))
+							if (gc.getProjectInfo(i).getVictoryMinThreshold(iLoopVC, iActiveTeam) == gc.getProjectInfo(i).getVictoryThreshold(iLoopVC, iActiveTeam)):
+								szNumber = unicode(gc.getProjectInfo(i).getVictoryThreshold(iLoopVC, iActiveTeam))
 							else:
-								szNumber = unicode(gc.getProjectInfo(i).getVictoryMinThreshold(iLoopVC)) + u"-" + unicode(gc.getProjectInfo(i).getVictoryThreshold(iLoopVC))
+								szNumber = unicode(gc.getProjectInfo(i).getVictoryMinThreshold(iLoopVC, iActiveTeam)) + u"-" + unicode(gc.getProjectInfo(i).getVictoryThreshold(iLoopVC, iActiveTeam))
 							screen.setTableText(szTable, 0, iRow, localText.getText("TXT_KEY_VICTORY_SCREEN_BUILDING", (szNumber, gc.getProjectInfo(i).getTextKey())), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 							screen.setTableText(szTable, 2, iRow, activePlayer.getTeam().getName() + ":", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 							screen.setTableText(szTable, 3, iRow, str(activePlayer.getTeam().getProjectCount(i)), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
@@ -1272,7 +1272,7 @@ class CvVictoryScreen:
 							screen.setTableText(szTable, 2, iRow, localText.getText("TXT_KEY_VICTORY_SCREEN_NOT_BUILT", ()), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 						bEntriesFound = True
 					
-				if (victory.getCityCulture() != CultureLevelTypes.NO_CULTURELEVEL and victory.getNumCultureCities() > 0):
+				if (victory.getCityCulture() != CultureLevelTypes.NO_CULTURELEVEL and victory.getNumCultureCities(-1) > 0):
 					ourBestCities = self.getListCultureCities(iActiveTeam, victory)
 					
 					# K-Mod - changed to loop through teams rather than players, to match actual victory conditions.
@@ -1303,9 +1303,9 @@ class CvVictoryScreen:
 						theirBestCities = []
 						
 					iRow = screen.appendTableRow(szTable)
-					screen.setTableText(szTable, 0, iRow, localText.getText("TXT_KEY_VICTORY_SCREEN_CITY_CULTURE", (victory.getNumCultureCities(), gc.getCultureLevelInfo(victory.getCityCulture()).getTextKey())), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+					screen.setTableText(szTable, 0, iRow, localText.getText("TXT_KEY_VICTORY_SCREEN_CITY_CULTURE", (victory.getNumCultureCities(iActiveTeam), gc.getCultureLevelInfo(victory.getCityCulture()).getTextKey())), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 
-					for i in range(victory.getNumCultureCities()):
+					for i in range(max(victory.getNumCultureCities(iActiveTeam), victory.getNumCultureCities(iBestCultureTeam))):
 						if (len(ourBestCities) > i):
 							screen.setTableText(szTable, 2, iRow, ourBestCities[i][1].getName() + ":", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 # BUG Additions Start
@@ -1343,7 +1343,7 @@ class CvVictoryScreen:
 							screen.setTableText(szTable, 5, iRow, sString, "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 # BUG Additions End
 
-						if (i < victory.getNumCultureCities()-1):
+						if (i < max(victory.getNumCultureCities(iActiveTeam), victory.getNumCultureCities(iBestCultureTeam)) - 1):
 							iRow = screen.appendTableRow(szTable)
 					bEntriesFound = True
 					
@@ -1352,8 +1352,8 @@ class CvVictoryScreen:
 					screen.appendTableRow(szTable)
 
 		# Remove the two final empty rows (K-Mod)
-		if screen.getTableNumRows(szTable) > 2:
-			screen.setTableNumRows(szTable, screen.getTableNumRows(szTable)-2)
+		if screen.getTableNumRows(szTable) > 1:
+			screen.setTableNumRows(szTable, screen.getTableNumRows(szTable)-1)
 		#
 
 		# civ picker dropdown
@@ -1397,7 +1397,7 @@ class CvVictoryScreen:
 
 		cultureCityList.sort()
 		cultureCityList.reverse()
-		return cultureCityList[0:victory.getNumCultureCities()]
+		return cultureCityList[0:victory.getNumCultureCities(iTeam)]
 # K-Mod end
 
 # BUG Additions Start

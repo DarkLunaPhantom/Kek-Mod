@@ -2382,7 +2382,8 @@ public:
 	int getMinLandPercent() const;				// Exposed to Python
 	int getReligionPercent() const;				// Exposed to Python
 	int getCityCulture() const;				// Exposed to Python
-	int getNumCultureCities() const;				// Exposed to Python
+	//int getNumCultureCities() const;				// Exposed to Python
+	int getNumCultureCities(int i = -1) const;				// Exposed to Python	// DarkLunaPhantom
 	int getTotalCultureRatio() const;				// Exposed to Python
 	int getVictoryDelayTurns() const;				// Exposed to Python
 
@@ -4133,7 +4134,8 @@ public:
 	int getAnyoneProjectPrereq() const;						// Exposed to Python
 	void setAnyoneProjectPrereq(int i);
 	int getMaxGlobalInstances() const;						// Exposed to Python
-	int getMaxTeamInstances() const;							// Exposed to Python
+	//int getMaxTeamInstances() const;							// Exposed to Python
+	int getMaxTeamInstances(int i = -1) const;							// Exposed to Python	// DarkLunaPhantom
 	int getProductionCost() const;								// Exposed to Python
 	int getNukeInterception() const;							// Exposed to Python
 	int getTechShare() const;											// Exposed to Python
@@ -4152,8 +4154,10 @@ public:
 	// Arrays
 
 	int getBonusProductionModifier(int i) const;	// Exposed to Python
-	int getVictoryThreshold(int i) const;					// Exposed to Python
-	int getVictoryMinThreshold(int i) const;					// Exposed to Python
+	//int getVictoryThreshold(int i) const;					// Exposed to Python
+	int getVictoryThreshold(int i, int j = -1) const;					// Exposed to Python	// DarkLunaPhantom
+	//int getVictoryMinThreshold(int i) const;					// Exposed to Python
+	int getVictoryMinThreshold(int i, int j = -1) const;					// Exposed to Python	// DarkLunaPhantom
 	int getProjectsNeeded(int i) const;						// Exposed to Python
 
 	bool read(CvXMLLoadUtility* pXML);

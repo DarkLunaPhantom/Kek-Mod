@@ -80,7 +80,7 @@ void CyInfoPythonInterface2()
 		.def("getMinLandPercent", &CvVictoryInfo::getMinLandPercent, "int ()")
 		.def("getReligionPercent", &CvVictoryInfo::getReligionPercent, "int ()")
 		.def("getCityCulture", &CvVictoryInfo::getCityCulture, "int ()")
-		.def("getNumCultureCities", &CvVictoryInfo::getNumCultureCities, "int ()")
+		.def("getNumCultureCities", &CvVictoryInfo::getNumCultureCities, "int (int i)")
 		.def("getTotalCultureRatio", &CvVictoryInfo::getTotalCultureRatio, "int ()")
 		.def("getVictoryDelayTurns", &CvVictoryInfo::getVictoryDelayTurns, "int ()")
 

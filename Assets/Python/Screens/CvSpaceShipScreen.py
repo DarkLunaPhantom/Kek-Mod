@@ -167,11 +167,11 @@ class CvSpaceShipScreen:
 
 				#completed
 				completed = gc.getTeam(activeTeam).getProjectCount(index)
-				totalAllowed = component.getMaxTeamInstances()
+				totalAllowed = component.getMaxTeamInstances(activeTeam)
 				screen.setLabel("ComponentCompletedLabel" + str(i), "ComponentPanel" + str(i), localText.getText("TXT_KEY_SPACE_SHIP_SCREEN_COMPLETED_LABEL", (completed, totalAllowed)), CvUtil.FONT_LEFT_JUSTIFY, xPosition + self.componentCompletedLabelXOffset, yPosition + self.componentCompletedLabelYOffset, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 				#required
-				required = component.getVictoryMinThreshold(self.spaceVictory)
+				required = component.getVictoryMinThreshold(self.spaceVictory, -1)
 				screen.setLabel("ComponentRequiredLabel" + str(i), "ComponentPanel" + str(i), localText.getText("TXT_KEY_SPACE_SHIP_SCREEN_REQUIRED_LABEL", (required,)), CvUtil.FONT_LEFT_JUSTIFY, xPosition + self.componentRequiredLabelXOffset, yPosition + self.componentRequiredLabelYOffset, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 				#in production

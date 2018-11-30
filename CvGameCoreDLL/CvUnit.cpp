@@ -4324,10 +4324,13 @@ bool CvUnit::nuke(int iX, int iY)
 		{
 			if (!isEnemy((TeamTypes)iI))
 			{
-				GET_TEAM(getTeam()).declareWar(((TeamTypes)iI), false, WARPLAN_LIMITED);
+				//GET_TEAM(getTeam()).declareWar(((TeamTypes)iI), false, WARPLAN_LIMITED);
+				CvTeam::queueWar(getTeam(), (TeamTypes)iI, false, WARPLAN_LIMITED); // DarkLunaPhantom
 			}
 		}
 	}
+	
+	CvTeam::triggerWars(); // DarkLunaPhantom
 
 	iBestInterception = 0;
 	eBestTeam = NO_TEAM;

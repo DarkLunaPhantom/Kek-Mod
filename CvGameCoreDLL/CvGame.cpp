@@ -7836,7 +7836,8 @@ bool CvGame::testVictory(VictoryTypes eVictory, TeamTypes eTeam, bool* pbEndScor
 				}
 			}
 
-			if (iCount < GC.getVictoryInfo(eVictory).getNumCultureCities())
+			//if (iCount < GC.getVictoryInfo(eVictory).getNumCultureCities())
+			if (iCount < GC.getVictoryInfo(eVictory).getNumCultureCities(eTeam)) // DarkLunaPhantom
 			{
 				bValid = false;
 			}
@@ -7889,7 +7890,8 @@ bool CvGame::testVictory(VictoryTypes eVictory, TeamTypes eTeam, bool* pbEndScor
 	{
 		for (int iK = 0; iK < GC.getNumProjectInfos(); iK++)
 		{
-			if (GC.getProjectInfo((ProjectTypes) iK).getVictoryMinThreshold(eVictory) > GET_TEAM(eTeam).getProjectCount((ProjectTypes)iK))
+			//if (GC.getProjectInfo((ProjectTypes) iK).getVictoryMinThreshold(eVictory) > GET_TEAM(eTeam).getProjectCount((ProjectTypes)iK))
+			if (GC.getProjectInfo((ProjectTypes) iK).getVictoryMinThreshold(eVictory, eTeam) > GET_TEAM(eTeam).getProjectCount((ProjectTypes)iK)) // DarkLunaPhantom
 			{
 				bValid = false;
 				break;
@@ -8184,10 +8186,13 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
 				{
 					if (GET_TEAM(kLoopPlayer.getTeam()).canChangeWarPeace(kPlayer.getTeam()))
 					{
-						GET_TEAM(kLoopPlayer.getTeam()).declareWar(kPlayer.getTeam(), false, WARPLAN_DOGPILE);
+						//GET_TEAM(kLoopPlayer.getTeam()).declareWar(kPlayer.getTeam(), false, WARPLAN_DOGPILE);
+						CvTeam::queueWar(kLoopPlayer.getTeam(), kPlayer.getTeam(), false, WARPLAN_DOGPILE); // DarkLunaPhantom
 					}
 				}
 			}
+			
+			CvTeam::triggerWars(); // DarkLunaPhantom
 
 			setVoteOutcome(kData, NO_PLAYER_VOTE);
 		}
@@ -9549,8 +9554,15 @@ bool CvGame::culturalVictoryValid()
 	return false;
 }
 
-int CvGame::culturalVictoryNumCultureCities()
+// DarkLunaPhantom begin
+//int CvGame::culturalVictoryNumCultureCities()
+int CvGame::culturalVictoryNumCultureCities(TeamTypes eTeam)
 {
+	if (eTeam != NO_TEAM)
+	{
+		return (int) (m_iNumCultureVictoryCities * (1 + 0.5 * (GET_TEAM(eTeam).getNumMembers() - 1)));
+	}
+// DarkLunaPhantom end
 	return m_iNumCultureVictoryCities;
 }
 

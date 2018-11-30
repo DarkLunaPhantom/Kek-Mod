@@ -96,7 +96,7 @@ class WBProjectScreen:
 			Info = gc.getProjectInfo(i)
 			if iProjectType == 1 and not isTeamProject(i): continue
 			if iProjectType == 2 and not isWorldProject(i): continue
-			iTeam = Info.getMaxTeamInstances()
+			iTeam = Info.getMaxTeamInstances(pTeam.getID())
 			iWorld = Info.getMaxGlobalInstances()
 			iMax = max(iTeam, iWorld)
 			if iTeam > -1 and iWorld > -1:
@@ -221,7 +221,7 @@ class WBProjectScreen:
 			iCount = max(iCount, - pTeamX.getProjectCount(item))
 		else:
 			Info = gc.getProjectInfo(item)
-			iTeam = Info.getMaxTeamInstances()
+			iTeam = Info.getMaxTeamInstances(pTeam.getID())
 			iWorld = Info.getMaxGlobalInstances()
 			iMax = max(iTeam, iWorld)
 			if iTeam > -1 and iWorld > -1:

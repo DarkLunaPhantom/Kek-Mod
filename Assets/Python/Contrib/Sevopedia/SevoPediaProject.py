@@ -88,7 +88,7 @@ class SevoPediaProject:
 			screen.appendListBoxString(panelName, u"<font=4>" + szProjectType.upper() + u"</font>", WidgetTypes.WIDGET_GENERAL, 0, 0, CvUtil.FONT_LEFT_JUSTIFY)
 
 		if (isTeamProject(self.iProject)):
-			iMaxInstances = gc.getProjectInfo(self.iProject).getMaxTeamInstances()
+			iMaxInstances = gc.getProjectInfo(self.iProject).getMaxTeamInstances(gc.getPlayer(self.top.iActivePlayer).getTeam())
 			szProjectType = localText.getText("TXT_KEY_PEDIA_TEAM_PROJECT", ())
 			if (iMaxInstances > 1):
 				szProjectType += " " + localText.getText("TXT_KEY_PEDIA_WONDER_INSTANCES", (iMaxInstances,))

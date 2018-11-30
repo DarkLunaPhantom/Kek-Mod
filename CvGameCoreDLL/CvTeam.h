@@ -6,6 +6,7 @@
 #define CIV4_TEAM_H
 
 //#include "CvEnums.h"
+#include <queue> // DarkLunaPhantom
 
 class CvArea;
 
@@ -384,6 +385,10 @@ public:
 	DllExport void getCompletedSpaceshipProjects(std::map<ProjectTypes, int>& mapProjects) const;
 	DllExport int getProjectPartNumber(ProjectTypes projectType, bool bAssert) const;
 	DllExport bool hasLaunched() const;
+	
+	// DarkLunaPhantom - Changed how multiple war declarations work. declareWar used to nest war declarations, now they are queued to trigger defensive pacts and everything else in the correct order.
+	static void queueWar(TeamTypes eAttackingTeam, TeamTypes eDefendingTeam, bool bNewDiplo, WarPlanTypes eWarPlan, bool bPrimaryDOW = true);
+	static void triggerWars();
 
 	virtual void AI_init() = 0;
 	virtual void AI_reset(bool bConstructor) = 0;
@@ -502,6 +507,14 @@ protected:
 
 	void cancelDefensivePacts();
 	void announceTechToPlayers(TechTypes eIndex, bool bPartial = false);
+	
+	// DarkLunaPhantom
+	static std::queue<TeamTypes> attacking_queue;
+	static std::queue<TeamTypes> defending_queue;
+	static std::queue<bool> newdiplo_queue;
+	static std::queue<WarPlanTypes> warplan_queue;
+	static std::queue<bool> primarydow_queue;
+	static bool bTriggeringWars;
 
 	virtual void read(FDataStreamBase* pStream);
 	virtual void write(FDataStreamBase* pStream);

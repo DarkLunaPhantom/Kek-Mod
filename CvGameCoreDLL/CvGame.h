@@ -510,7 +510,8 @@ public:
 	void changeShrineBuilding(BuildingTypes eBuilding, ReligionTypes eReligion, bool bRemove = false);
 
 	bool culturalVictoryValid();
-	int culturalVictoryNumCultureCities();
+	//int culturalVictoryNumCultureCities();
+	int culturalVictoryNumCultureCities(TeamTypes eTeam = NO_TEAM); // DarkLunaPhantom
 	CultureLevelTypes culturalVictoryCultureLevel();
 	int getCultureThreshold(CultureLevelTypes eLevel) const;
 

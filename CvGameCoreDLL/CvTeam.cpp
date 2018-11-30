@@ -30,6 +30,15 @@
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
+#include <queue> // DarkLunaPhantom
+
+// DarkLunaPhantom - Initializations of static variables.
+std::queue<TeamTypes> CvTeam::attacking_queue;
+std::queue<TeamTypes> CvTeam::defending_queue;
+std::queue<bool> CvTeam::newdiplo_queue;
+std::queue<WarPlanTypes> CvTeam::warplan_queue;
+std::queue<bool> CvTeam::primarydow_queue;
+bool CvTeam::bTriggeringWars = false;
 
 // Public Functions...
 
@@ -444,7 +453,7 @@ void CvTeam::addTeam(TeamTypes eTeam)
 	//
 
 	shareItems(eTeam);
-	GET_TEAM(eTeam).shareItems(getID());
+	//GET_TEAM(eTeam).shareItems(getID()); // DarkLunaPhantom - This team is not going to be used anymore and doing this might break some things.
 
 	for (iI = 0; iI < MAX_TEAMS; iI++)
 	{
@@ -472,15 +481,41 @@ void CvTeam::addTeam(TeamTypes eTeam)
 			{
 				if (GET_TEAM(eTeam).isAtWar((TeamTypes)iI))
 				{
-					declareWar(((TeamTypes)iI), false, GET_TEAM(eTeam).AI_getWarPlan((TeamTypes)iI));
+					//declareWar(((TeamTypes)iI), false, GET_TEAM(eTeam).AI_getWarPlan((TeamTypes)iI));
+					queueWar(getID(), (TeamTypes)iI, false, GET_TEAM(eTeam).AI_getWarPlan((TeamTypes)iI)); // DarkLunaPhantom
 				}
 				else if (isAtWar((TeamTypes)iI))
 				{
-					GET_TEAM(eTeam).declareWar(((TeamTypes)iI), false, AI_getWarPlan((TeamTypes)iI));
+					//GET_TEAM(eTeam).declareWar(((TeamTypes)iI), false, AI_getWarPlan((TeamTypes)iI));
+					queueWar(eTeam, (TeamTypes)iI, false, AI_getWarPlan((TeamTypes)iI)); // DarkLunaPhantom
 				}
 			}
 		}
 	}
+	
+	// DarkLunaPhantom begin
+	triggerWars();
+	
+	for (iI = 0; iI < MAX_TEAMS; iI++)
+	{
+		if ((iI != getID()) && (iI != eTeam))
+		{
+			if (GET_TEAM((TeamTypes)iI).isAlive())
+			{
+				if (GET_TEAM(eTeam).isAtWar((TeamTypes)iI))
+				{
+					queueWar((TeamTypes)iI, getID(), false, WARPLAN_DOGPILE, false);
+				}
+				else if (isAtWar((TeamTypes)iI))
+				{
+					queueWar((TeamTypes)iI, eTeam, false, WARPLAN_DOGPILE, false);
+				}
+			}
+		}
+	}
+	
+	triggerWars();
+	// DarkLunaPhantom end
 
 	for (iI = 0; iI < MAX_TEAMS; iI++)
 	{
@@ -600,6 +635,16 @@ void CvTeam::addTeam(TeamTypes eTeam)
 	shareCounters(eTeam);
 	//GET_TEAM(eTeam).shareCounters(getID());
 	// K-Mod note: eTeam is not going to be used after we've finished this merge, so the sharing does not need to be two-way.
+	
+	// DarkLunaPhantom - Fix for permanent alliance bug that caused permanent espionage visibility for cities that only the players with the higher team number sees at the time of the merge.
+	for (iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
+	{
+		pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
+		if (pLoopPlot->isCity())
+		{
+			pLoopPlot->getPlotCity()->setEspionageVisibility((TeamTypes)eTeam, false, true);
+		}
+	}
 
 	for (iI = 0; iI < MAX_PLAYERS; iI++)
 	{
@@ -704,13 +749,11 @@ void CvTeam::addTeam(TeamTypes eTeam)
 	{
 		pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
 		
-		// DarkLunaPhantom begin
-		// Fix for permanent alliance bug that caused permanent espionage visibility for cities both players see at the time of the merge.
-		if (pLoopPlot->isCity())
+		// DarkLunaPhantom - This part is moved above to part where members of the other team still had their old team number.
+		/*if (pLoopPlot->isCity())
 		{
-			pLoopPlot->getPlotCity()->setEspionageVisibility(getID(), std::max(pLoopPlot->getPlotCity()->getEspionageVisibility(getID()), pLoopPlot->getPlotCity()->getEspionageVisibility((TeamTypes)eTeam)), false);
-		}
-		// DarkLunaPhantom end
+			pLoopPlot->getPlotCity()->setEspionageVisibility((TeamTypes)eTeam, false, false);
+		}*/
 
 		pLoopPlot->changeVisibilityCount(getID(), pLoopPlot->getVisibilityCount(eTeam), NO_INVISIBLE, false);
 
@@ -727,12 +770,15 @@ void CvTeam::addTeam(TeamTypes eTeam)
 
 	GC.getGameINLINE().updatePlotGroups();
 
+	int iOtherTeamSize = getNumMembers() - iOriginalTeamSize; // DarkLunaPhantom
+	
 	for (iI = 0; iI < MAX_TEAMS; iI++)
 	{
 		if ((iI != getID()) && (iI != eTeam))
 		{
 			CvTeamAI& kLoopTeam = GET_TEAM((TeamTypes)iI); // K-Mod
-			kLoopTeam.setWarWeariness(getID(), ((kLoopTeam.getWarWeariness(getID()) + kLoopTeam.getWarWeariness(eTeam)) / 2));
+			// DarkLunaPhantom - These counters now scale properly with number of players in teams. Also, espionage is now sum instead of max.
+			/*kLoopTeam.setWarWeariness(getID(), ((kLoopTeam.getWarWeariness(getID()) + kLoopTeam.getWarWeariness(eTeam)) / 2));
 			kLoopTeam.setStolenVisibilityTimer(getID(), ((kLoopTeam.getStolenVisibilityTimer(getID()) + kLoopTeam.getStolenVisibilityTimer(eTeam)) / 2));
 			kLoopTeam.AI_setAtWarCounter(getID(), ((kLoopTeam.AI_getAtWarCounter(getID()) + kLoopTeam.AI_getAtWarCounter(eTeam)) / 2));
 			kLoopTeam.AI_setAtPeaceCounter(getID(), ((kLoopTeam.AI_getAtPeaceCounter(getID()) + kLoopTeam.AI_getAtPeaceCounter(eTeam)) / 2));
@@ -742,7 +788,18 @@ void CvTeam::addTeam(TeamTypes eTeam)
 			kLoopTeam.AI_setWarSuccess(getID(), ((kLoopTeam.AI_getWarSuccess(getID()) + kLoopTeam.AI_getWarSuccess(eTeam)) / 2));
 			kLoopTeam.AI_setEnemyPeacetimeTradeValue(getID(), ((kLoopTeam.AI_getEnemyPeacetimeTradeValue(getID()) + kLoopTeam.AI_getEnemyPeacetimeTradeValue(eTeam)) / 2));
 			kLoopTeam.AI_setEnemyPeacetimeGrantValue(getID(), ((kLoopTeam.AI_getEnemyPeacetimeGrantValue(getID()) + kLoopTeam.AI_getEnemyPeacetimeGrantValue(eTeam)) / 2));
-			kLoopTeam.setEspionagePointsAgainstTeam(getID(), std::max(kLoopTeam.getEspionagePointsAgainstTeam(getID()), kLoopTeam.getEspionagePointsAgainstTeam(eTeam))); // unofficial patch
+			kLoopTeam.setEspionagePointsAgainstTeam(getID(), std::max(kLoopTeam.getEspionagePointsAgainstTeam(getID()), kLoopTeam.getEspionagePointsAgainstTeam(eTeam))); // unofficial patch*/
+			kLoopTeam.setWarWeariness(getID(), ((iOriginalTeamSize * kLoopTeam.getWarWeariness(getID()) + iOtherTeamSize * kLoopTeam.getWarWeariness(eTeam)) / getNumMembers()));
+			kLoopTeam.setStolenVisibilityTimer(getID(), ((iOriginalTeamSize * kLoopTeam.getStolenVisibilityTimer(getID()) + iOtherTeamSize * kLoopTeam.getStolenVisibilityTimer(eTeam)) / getNumMembers()));
+			kLoopTeam.AI_setAtWarCounter(getID(), ((iOriginalTeamSize * kLoopTeam.AI_getAtWarCounter(getID()) + iOtherTeamSize * kLoopTeam.AI_getAtWarCounter(eTeam)) / getNumMembers()));
+			kLoopTeam.AI_setAtPeaceCounter(getID(), ((iOriginalTeamSize * kLoopTeam.AI_getAtPeaceCounter(getID()) + iOtherTeamSize * kLoopTeam.AI_getAtPeaceCounter(eTeam)) / getNumMembers()));
+			kLoopTeam.AI_setHasMetCounter(getID(), ((iOriginalTeamSize * kLoopTeam.AI_getHasMetCounter(getID()) + iOtherTeamSize * kLoopTeam.AI_getHasMetCounter(eTeam)) / getNumMembers()));
+			kLoopTeam.AI_setDefensivePactCounter(getID(), ((iOriginalTeamSize * kLoopTeam.AI_getDefensivePactCounter(getID()) + iOtherTeamSize * kLoopTeam.AI_getDefensivePactCounter(eTeam)) / getNumMembers()));
+			kLoopTeam.AI_setShareWarCounter(getID(), ((iOriginalTeamSize * kLoopTeam.AI_getShareWarCounter(getID()) + iOtherTeamSize * kLoopTeam.AI_getShareWarCounter(eTeam)) / getNumMembers()));
+			kLoopTeam.AI_setWarSuccess(getID(), ((iOriginalTeamSize * kLoopTeam.AI_getWarSuccess(getID()) + iOtherTeamSize * kLoopTeam.AI_getWarSuccess(eTeam)) / getNumMembers()));
+			kLoopTeam.AI_setEnemyPeacetimeTradeValue(getID(), ((iOriginalTeamSize * kLoopTeam.AI_getEnemyPeacetimeTradeValue(getID()) + iOtherTeamSize * kLoopTeam.AI_getEnemyPeacetimeTradeValue(eTeam)) / getNumMembers()));
+			kLoopTeam.AI_setEnemyPeacetimeGrantValue(getID(), ((iOriginalTeamSize * kLoopTeam.AI_getEnemyPeacetimeGrantValue(getID()) + iOtherTeamSize * kLoopTeam.AI_getEnemyPeacetimeGrantValue(eTeam)) / getNumMembers()));
+			kLoopTeam.setEspionagePointsAgainstTeam(getID(), kLoopTeam.getEspionagePointsAgainstTeam(getID()) + kLoopTeam.getEspionagePointsAgainstTeam(eTeam));
 
 			if (kLoopTeam.isAlive())
 			{
@@ -773,7 +830,18 @@ void CvTeam::shareItems(TeamTypes eTeam)
 	{
 		if (GET_TEAM(eTeam).isHasTech((TechTypes)iI))
 		{
+            setNoTradeTech((TechTypes)iI, (!isHasTech((TechTypes)iI) || isNoTradeTech((TechTypes)iI)) && GET_TEAM(eTeam).isNoTradeTech((TechTypes)iI)); // DarkLunaPhantom - Preserve no tech brokering status.
 			setHasTech(((TechTypes)iI), true, NO_PLAYER, true, false);
+		}
+	}
+	
+	// DarkLunaPhantom - Other direction also done here as other direction of shareItems is not used anymore.
+	for (iI = 0; iI < GC.getNumTechInfos(); iI++)
+	{
+		if (isHasTech((TechTypes)iI))
+		{
+            GET_TEAM(eTeam).setNoTradeTech((TechTypes)iI, (!GET_TEAM(eTeam).isHasTech((TechTypes)iI) || GET_TEAM(eTeam).isNoTradeTech((TechTypes)iI)) && isNoTradeTech((TechTypes)iI));
+			GET_TEAM(eTeam).setHasTech(((TechTypes)iI), true, NO_PLAYER, true, false);
 		}
 	}
 
@@ -784,12 +852,24 @@ void CvTeam::shareItems(TeamTypes eTeam)
 			setForceRevealedBonus((BonusTypes)iI, true);
 		}
 	}
+	
+	// DarkLunaPhantom - Other direction also done here as other direction of shareItems is not used anymore.
+	for (iI = 0; iI < GC.getNumBonusInfos(); ++iI)
+	{
+		if (isForceRevealedBonus((BonusTypes)iI))
+		{
+			GET_TEAM(eTeam).setForceRevealedBonus((BonusTypes)iI, true);
+		}
+	}
 
 	for (int iTeam = 0; iTeam < MAX_TEAMS; ++iTeam)
 	{
-		setEspionagePointsAgainstTeam((TeamTypes)iTeam, std::max(GET_TEAM(eTeam).getEspionagePointsAgainstTeam((TeamTypes)iTeam), getEspionagePointsAgainstTeam((TeamTypes)iTeam)));
+	// DarkLunaPhantom - Espionage is now sum instead of max.
+		//setEspionagePointsAgainstTeam((TeamTypes)iTeam, std::max(GET_TEAM(eTeam).getEspionagePointsAgainstTeam((TeamTypes)iTeam), getEspionagePointsAgainstTeam((TeamTypes)iTeam)));
+		setEspionagePointsAgainstTeam((TeamTypes)iTeam, GET_TEAM(eTeam).getEspionagePointsAgainstTeam((TeamTypes)iTeam) + getEspionagePointsAgainstTeam((TeamTypes)iTeam));
 	}
-	setEspionagePointsEver(std::max(GET_TEAM(eTeam).getEspionagePointsEver(), getEspionagePointsEver())); // K-Mod
+	//setEspionagePointsEver(std::max(GET_TEAM(eTeam).getEspionagePointsEver(), getEspionagePointsEver())); // K-Mod
+	setEspionagePointsEver(GET_TEAM(eTeam).getEspionagePointsEver() + getEspionagePointsEver());
 
 	for (iI = 0; iI < MAX_PLAYERS; iI++)
 	{
@@ -824,12 +904,47 @@ void CvTeam::shareItems(TeamTypes eTeam)
 			}
 		}
 	}
+	
+	// DarkLunaPhantom - Other direction also done here as other direction of shareItems is not used anymore.
+	for (iI = 0; iI < MAX_PLAYERS; iI++)
+	{
+		if (GET_PLAYER((PlayerTypes)iI).isAlive())
+		{
+			if (GET_PLAYER((PlayerTypes)iI).getTeam() == getID())
+			{
+				for (pLoopCity = GET_PLAYER((PlayerTypes)iI).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER((PlayerTypes)iI).nextCity(&iLoop))
+				{
+					for (iJ = 0; iJ < GC.getNumBuildingInfos(); iJ++)
+					{
+						if (pLoopCity->getNumBuilding((BuildingTypes)iJ) > 0)
+						{
+							if (!isObsoleteBuilding((BuildingTypes)iJ))
+							{
+								if (GC.getBuildingInfo((BuildingTypes)iJ).isTeamShare())
+								{
+									for (iK = 0; iK < MAX_PLAYERS; iK++)
+									{
+										if (GET_PLAYER((PlayerTypes)iK).getTeam() == eTeam)
+										{
+											GET_PLAYER((PlayerTypes)iK).processBuilding(((BuildingTypes)iJ), pLoopCity->getNumBuilding((BuildingTypes)iJ), pLoopCity->area());
+										}
+									}
+								}
+								GET_TEAM(eTeam).processBuilding(((BuildingTypes)iJ), pLoopCity->getNumBuilding((BuildingTypes)iJ));
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 
 	for (iI = 0; iI < MAX_PLAYERS; iI++)
 	{
 		if (GET_PLAYER((PlayerTypes)iI).isAlive())
 		{
-			if (GET_PLAYER((PlayerTypes)iI).getTeam() == eTeam)
+			//if (GET_PLAYER((PlayerTypes)iI).getTeam() == eTeam)
+			if (GET_PLAYER((PlayerTypes)iI).getTeam() == eTeam || GET_PLAYER((PlayerTypes)iI).getTeam() == getID()) // DarkLunaPhantom - Other direction also done here as other direction of shareItems is not used anymore.
 			{
 				GET_PLAYER((PlayerTypes)iI).AI_updateBonusValue();
 			}
@@ -980,11 +1095,13 @@ void CvTeam::shareCounters(TeamTypes eTeam)
 			//
 		}
 
+        // DarkLunaPhantom begin - What was this even supposed to be doing? No tech brokering is now applied if necessary when tech is shared in CvTeam::shareItems.
 		// unofficial patch
-		if ( kShareTeam.isHasTech(eTech) && !(kShareTeam.isNoTradeTech(eTech)) )
-		{
-			setNoTradeTech((eTech), false);
-		}
+		//if ( kShareTeam.isHasTech(eTech) && !(kShareTeam.isNoTradeTech(eTech)) )
+		//{
+		//	setNoTradeTech((eTech), false);
+		//}
+        // DarkLunaPhantom end
 		//
 		//if (isHasTech(eTech) && !isNoTradeTech(eTech)))
 		//	kShareTeam.setNoTradeTech((eTech), false);
@@ -1612,12 +1729,14 @@ void CvTeam::declareWar(TeamTypes eTeam, bool bNewDiplo, WarPlanTypes eWarPlan, 
 		{
 			if (GET_TEAM((TeamTypes)iI).isDefensivePact(eTeam))
 			{
-				GET_TEAM((TeamTypes)iI).declareWar(getID(), bNewDiplo, WARPLAN_DOGPILE, false);
+				//GET_TEAM((TeamTypes)iI).declareWar(getID(), bNewDiplo, WARPLAN_DOGPILE, false);
+				queueWar((TeamTypes)iI, getID(), bNewDiplo, WARPLAN_DOGPILE, false); // DarkLunaPhantom
 			}
 			else if( (GC.getBBAI_DEFENSIVE_PACT_BEHAVIOR() > 1) && GET_TEAM((TeamTypes)iI).isDefensivePact(getID()))
 			{
 				// For alliance option.  This teams pacts are canceled above if not using alliance option.
-				GET_TEAM((TeamTypes)iI).declareWar(eTeam, bNewDiplo, WARPLAN_DOGPILE, false);
+				//GET_TEAM((TeamTypes)iI).declareWar(eTeam, bNewDiplo, WARPLAN_DOGPILE, false);
+				queueWar((TeamTypes)iI, eTeam, bNewDiplo, WARPLAN_DOGPILE, false); // DarkLunaPhantom
 			}
 		}
 	}
@@ -1637,24 +1756,30 @@ void CvTeam::declareWar(TeamTypes eTeam, bool bNewDiplo, WarPlanTypes eWarPlan, 
 			{
 				if (GET_TEAM((TeamTypes)iI).isVassal(eTeam) || GET_TEAM(eTeam).isVassal((TeamTypes)iI))
 				{
-					declareWar((TeamTypes)iI, bNewDiplo, AI_getWarPlan(eTeam), false);
+					//declareWar((TeamTypes)iI, bNewDiplo, AI_getWarPlan(eTeam), false);
+					queueWar(getID(), (TeamTypes)iI, bNewDiplo, AI_getWarPlan(eTeam), false); // DarkLunaPhantom
 				}
 				else if (GET_TEAM((TeamTypes)iI).isVassal(getID()) || isVassal((TeamTypes)iI))
 				{
-					GET_TEAM((TeamTypes)iI).declareWar(eTeam, bNewDiplo, WARPLAN_DOGPILE, false);
+					//GET_TEAM((TeamTypes)iI).declareWar(eTeam, bNewDiplo, WARPLAN_DOGPILE, false);
+					queueWar((TeamTypes)iI, eTeam, bNewDiplo, WARPLAN_DOGPILE, false);
 				}
 			}
 		}
 	}
+	
 	// K-Mod. update attitude
-	if (bPrimaryDoW)
+	/*if (bPrimaryDoW) // DarkLunaPhantom - This is now updated when the war queue is emptied.
 	{
 		for (PlayerTypes i = (PlayerTypes)0; i < MAX_CIV_PLAYERS; i=(PlayerTypes)(i+1))
 		{
 			GET_PLAYER(i).AI_updateAttitudeCache();
 		}
-	}
+	}*/
 	// K-Mod end
+	
+	//DarkLunaPhantom
+	triggerWars();
 }
 
 void CvTeam::makePeace(TeamTypes eTeam, bool bBumpUnits)
@@ -4317,7 +4442,8 @@ void CvTeam::setVassal(TeamTypes eIndex, bool bNewValue, bool bCapitulated)
 
 						if (GET_TEAM(eIndex).isAtWar((TeamTypes)iI))
 						{
-							declareWar(((TeamTypes)iI), false, WARPLAN_DOGPILE);
+							//declareWar(((TeamTypes)iI), false, WARPLAN_DOGPILE);
+							queueWar(getID(), (TeamTypes)iI, false, WARPLAN_DOGPILE, !bCapitulated); // DarkLunaPhantom
 						}
 						else if (isAtWar((TeamTypes)iI))
 						{
@@ -4327,12 +4453,15 @@ void CvTeam::setVassal(TeamTypes eIndex, bool bNewValue, bool bCapitulated)
 							}
 							else
 							{
-								GET_TEAM(eIndex).declareWar((TeamTypes)iI, false, WARPLAN_DOGPILE);
+								//GET_TEAM(eIndex).declareWar((TeamTypes)iI, false, WARPLAN_DOGPILE);
+								queueWar(eIndex, (TeamTypes)iI, false, WARPLAN_DOGPILE); // DarkLunaPhantom
 							}
 						}
 					}
 				}
 			}
+			
+			triggerWars(); // DarkLunaPhantom
 
 			for (int iI = 0; iI < MAX_TEAMS; iI++)
 			{
@@ -4645,9 +4774,11 @@ bool CvTeam::isProjectMaxedOut(ProjectTypes eIndex, int iExtra) const
 		return false;
 	}
 
-	FAssertMsg(getProjectCount(eIndex) <= GC.getProjectInfo(eIndex).getMaxTeamInstances(), "Current Project count is expected to not exceed the maximum number of instances for this project");
+	//FAssertMsg(getProjectCount(eIndex) <= GC.getProjectInfo(eIndex).getMaxTeamInstances(), "Current Project count is expected to not exceed the maximum number of instances for this project");
+	FAssertMsg(getProjectCount(eIndex) <= GC.getProjectInfo(eIndex).getMaxTeamInstances(getID()), "Current Project count is expected to not exceed the maximum number of instances for this project"); // DarkLunaPhantom
 
-	return ((getProjectCount(eIndex) + iExtra) >= GC.getProjectInfo(eIndex).getMaxTeamInstances());
+	//return ((getProjectCount(eIndex) + iExtra) >= GC.getProjectInfo(eIndex).getMaxTeamInstances());
+	return ((getProjectCount(eIndex) + iExtra) >= GC.getProjectInfo(eIndex).getMaxTeamInstances(getID())); // DarkLunaPhantom
 }
 
 bool CvTeam::isProjectAndArtMaxedOut(ProjectTypes eIndex) const
@@ -4655,7 +4786,8 @@ bool CvTeam::isProjectAndArtMaxedOut(ProjectTypes eIndex) const
 	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
 	FAssertMsg(eIndex < GC.getNumProjectInfos(), "eIndex is expected to be within maximum bounds (invalid Index)");
 
-	if(getProjectCount(eIndex) >= GC.getProjectInfo(eIndex).getMaxTeamInstances())
+	//if(getProjectCount(eIndex) >= GC.getProjectInfo(eIndex).getMaxTeamInstances())
+	if(getProjectCount(eIndex) >= GC.getProjectInfo(eIndex).getMaxTeamInstances(getID())) // DarkLunaPhantom
 	{
 		int count = getProjectCount(eIndex);
 		for(int i=0;i<count;i++)
@@ -5184,15 +5316,18 @@ int CvTeam::getVictoryDelay(VictoryTypes eVictory) const
 		CvProjectInfo& kProject = GC.getProjectInfo((ProjectTypes)iProject);
 		int iCount = getProjectCount((ProjectTypes)iProject);
 
-		if (iCount < kProject.getVictoryMinThreshold(eVictory))
+		//if (iCount < kProject.getVictoryMinThreshold(eVictory)))
+		if (iCount < kProject.getVictoryMinThreshold(eVictory, getID())) // DarkLunaPhantom
 		{
 			FAssert(false);
 			return -1;
 		}
 		
-		if (iCount < kProject.getVictoryThreshold(eVictory))
+		//if (iCount < kProject.getVictoryThreshold(eVictory))
+		if (iCount < kProject.getVictoryThreshold(eVictory, getID())) // DarkLunaPhantom
 		{
-			iExtraDelayPercent += ((kProject.getVictoryThreshold(eVictory)  - iCount) * kProject.getVictoryDelayPercent()) / kProject.getVictoryThreshold(eVictory);
+			//iExtraDelayPercent += ((kProject.getVictoryThreshold(eVictory)  - iCount) * kProject.getVictoryDelayPercent()) / kProject.getVictoryThreshold(eVictory);
+			iExtraDelayPercent += ((kProject.getVictoryThreshold(eVictory, getID())  - iCount) * kProject.getVictoryDelayPercent()) / kProject.getVictoryThreshold(eVictory, getID()); // DarkLunaPhantom
 		}
 	}
 
@@ -5217,16 +5352,19 @@ int CvTeam::getLaunchSuccessRate(VictoryTypes eVictory) const
 		CvProjectInfo& kProject = GC.getProjectInfo((ProjectTypes)iProject);
 		int iCount = getProjectCount((ProjectTypes)iProject);
 
-		if (iCount < kProject.getVictoryMinThreshold(eVictory))
+		//if (iCount < kProject.getVictoryMinThreshold(eVictory))
+		if (iCount < kProject.getVictoryMinThreshold(eVictory, getID())) // DarkLunaPhantom
 		{
 			return 0;
 		}
 
-		if (iCount < kProject.getVictoryThreshold(eVictory))
+		//if (iCount < kProject.getVictoryThreshold(eVictory))
+		if (iCount < kProject.getVictoryThreshold(eVictory, getID())) // DarkLunaPhantom
 		{
 			if (kProject.getSuccessRate() > 0)
 			{
-				iSuccessRate -= (kProject.getSuccessRate() * (kProject.getVictoryThreshold(eVictory) - iCount));
+				//iSuccessRate -= (kProject.getSuccessRate() * (kProject.getVictoryThreshold(eVictory) - iCount));
+				iSuccessRate -= ((kProject.getSuccessRate() * (kProject.getVictoryThreshold(eVictory, getID()) - iCount) * kProject.getVictoryThreshold(eVictory)) / kProject.getVictoryThreshold(eVictory, getID())); // DarkLunaPhantom
 			}
 		}
 	}
@@ -6884,7 +7022,8 @@ int CvTeam::getProjectPartNumber(ProjectTypes eProject, bool bAssert) const
 	}
 
 	//return the last one
-	return std::min(iNumBuilt, GC.getProjectInfo(eProject).getMaxTeamInstances() - 1);
+	//return std::min(iNumBuilt, GC.getProjectInfo(eProject).getMaxTeamInstances() - 1);
+	return std::min(iNumBuilt, GC.getProjectInfo(eProject).getMaxTeamInstances(getID()) - 1); // DarkLunaPhantom
 }
 
 bool CvTeam::hasLaunched() const
@@ -6897,3 +7036,49 @@ bool CvTeam::hasLaunched() const
 	return false;
 }
 
+// DarkLunaPhantom - Changed how multiple war declarations work. declareWar used to nest war declarations, now they are queued to trigger defensive pacts and everything else in the correct order.
+void CvTeam::queueWar(TeamTypes eAttackingTeam, TeamTypes eDefendingTeam, bool bNewDiplo, WarPlanTypes eWarPlan, bool bPrimaryDOW)
+{
+	attacking_queue.push(eAttackingTeam);
+	defending_queue.push(eDefendingTeam);
+	newdiplo_queue.push(bNewDiplo);
+	warplan_queue.push(eWarPlan);
+	primarydow_queue.push(bPrimaryDOW);
+}
+
+// DarkLunaPhantom
+void CvTeam::triggerWars()
+{
+	bool bWarsDeclared = false;
+	
+	if (bTriggeringWars)
+	{
+		return;
+	}
+	else
+	{
+		bTriggeringWars = true;
+	}
+	
+	while (!attacking_queue.empty())
+	{
+		GET_TEAM(attacking_queue.front()).declareWar(defending_queue.front(), newdiplo_queue.front(), warplan_queue.front(), primarydow_queue.front());
+		attacking_queue.pop();
+		defending_queue.pop();
+		newdiplo_queue.pop();
+		warplan_queue.pop();
+		primarydow_queue.pop();
+		
+		bWarsDeclared = true;
+	}
+	
+	if (bWarsDeclared)
+	{
+		for (PlayerTypes i = (PlayerTypes)0; i < MAX_CIV_PLAYERS; i=(PlayerTypes)(i+1))
+		{
+			GET_PLAYER(i).AI_updateAttitudeCache();
+		}
+	}
+	
+	bTriggeringWars = false;
+}
