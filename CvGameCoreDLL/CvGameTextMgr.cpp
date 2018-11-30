@@ -11028,13 +11028,14 @@ void CvGameTextMgr::setProjectHelp(CvWStringBuffer &szBuffer, ProjectTypes eProj
 			if (pCity == NULL)
 			{
 				szBuffer.append(NEWLINE);
-				szBuffer.append(gDLL->getText("TXT_KEY_PROJECT_TEAM_NUM_ALLOWED", kProject.getMaxTeamInstances()));
+				//szBuffer.append(gDLL->getText("TXT_KEY_PROJECT_TEAM_NUM_ALLOWED", kProject.getMaxTeamInstances()));
+				szBuffer.append(gDLL->getText("TXT_KEY_PROJECT_TEAM_NUM_ALLOWED", kProject.getMaxTeamInstances(GET_PLAYER(ePlayer).getTeam()))); // DarkLunaPhantom
 			}
 			else
 			{
 				// DarkLunaPhantom
                 //szBuffer.append(gDLL->getText("TXT_KEY_PROJECT_TEAM_NUM_LEFT", (kProject.getMaxTeamInstances() - GET_TEAM(GET_PLAYER(ePlayer).getTeam()).getProjectCount(eProject) - GET_TEAM(GET_PLAYER(ePlayer).getTeam()).getProjectMaking(eProject))));
-				szBuffer.append(gDLL->getText("TXT_KEY_PROJECT_TEAM_NUM_LEFT", (kProject.getMaxTeamInstances() - GET_TEAM(GET_PLAYER(ePlayer).getTeam()).getProjectCount(eProject) - GET_PLAYER(ePlayer).getProjectMaking(eProject))));
+				szBuffer.append(gDLL->getText("TXT_KEY_PROJECT_TEAM_NUM_LEFT", (kProject.getMaxTeamInstances(GET_PLAYER(ePlayer).getTeam()) - GET_TEAM(GET_PLAYER(ePlayer).getTeam()).getProjectCount(eProject) - GET_PLAYER(ePlayer).getProjectMaking(eProject))));
 			}
 		}
 	}
@@ -11073,13 +11074,16 @@ void CvGameTextMgr::setProjectHelp(CvWStringBuffer &szBuffer, ProjectTypes eProj
 	{
 		if (kProject.getVictoryThreshold(iI) > 0)
 		{
-			if (kProject.getVictoryThreshold(iI) == kProject.getVictoryMinThreshold(iI))
+			//if (kProject.getVictoryThreshold(iI) == kProject.getVictoryMinThreshold(iI))
+			if (kProject.getVictoryThreshold(iI, GET_PLAYER(ePlayer).getTeam()) == kProject.getVictoryMinThreshold(iI, GET_PLAYER(ePlayer).getTeam())) // DarkLunaPhantom
 			{
-				szTempBuffer.Format(L"%d", kProject.getVictoryThreshold(iI));
+				//szTempBuffer.Format(L"%d", kProject.getVictoryThreshold(iI));
+				szTempBuffer.Format(L"%d", kProject.getVictoryThreshold(iI, GET_PLAYER(ePlayer).getTeam())); // DarkLunaPhantom
 			}
 			else
 			{
-				szTempBuffer.Format(L"%d-%d", kProject.getVictoryMinThreshold(iI), kProject.getVictoryThreshold(iI));
+				//szTempBuffer.Format(L"%d-%d", kProject.getVictoryMinThreshold(iI), kProject.getVictoryThreshold(iI));
+				szTempBuffer.Format(L"%d-%d", kProject.getVictoryMinThreshold(iI, GET_PLAYER(ePlayer).getTeam()), kProject.getVictoryThreshold(iI, GET_PLAYER(ePlayer).getTeam())); // DarkLunaPhantom
 			}
 
 			szBuffer.append(NEWLINE);

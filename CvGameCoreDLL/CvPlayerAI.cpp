@@ -1778,7 +1778,8 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 				if( 2*pLoopCity->getCulture(pCity->getPreviousOwner()) > pLoopCity->getCultureThreshold(GC.getGameINLINE().culturalVictoryCultureLevel()) )
 				{
 					iHighCultureCount++;
-					if( iHighCultureCount >= GC.getGameINLINE().culturalVictoryNumCultureCities() )
+					//if( iHighCultureCount >= GC.getGameINLINE().culturalVictoryNumCultureCities() )
+					if(iHighCultureCount >= GC.getGameINLINE().culturalVictoryNumCultureCities(GET_PLAYER(pCity->getPreviousOwner()).getTeam())) // DarkLunaPhantom
 					{
 						//Raze city enemy needs for cultural victory unless we greatly over power them
 						logBBAI( "  Razing enemy cultural victory city" );
@@ -2399,7 +2400,8 @@ void CvPlayerAI::AI_updateCommerceWeights()
 	// City culture weight.
 	//
 	int iLegendaryCulture = GC.getGame().getCultureThreshold((CultureLevelTypes)(GC.getNumCultureLevelInfos() - 1));
-	int iVictoryCities = GC.getGameINLINE().culturalVictoryNumCultureCities();
+	//int iVictoryCities = GC.getGameINLINE().culturalVictoryNumCultureCities();
+	int iVictoryCities = GC.getGameINLINE().culturalVictoryNumCultureCities(getTeam()); // DarkLunaPhantom
 
 	// Use culture slider to decide whether a human player is going for cultural victory
 	bool bUseCultureRank = AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2) || getCommercePercent(COMMERCE_CULTURE) >= 40;
@@ -4120,7 +4122,8 @@ int CvPlayerAI::AI_targetCityValue(CvCity* pCity, bool bRandomize, bool bIgnoreA
 				iValue += 25;
 
 				 if (pCity->getCultureLevel() >= (GC.getGameINLINE().culturalVictoryCultureLevel()) ||
-					 pCity->findCommerceRateRank(COMMERCE_CULTURE) <= GC.getGameINLINE().culturalVictoryNumCultureCities()) // K-Mod
+					 //pCity->findCommerceRateRank(COMMERCE_CULTURE) <= GC.getGameINLINE().culturalVictoryNumCultureCities()) // K-Mod
+					 pCity->findCommerceRateRank(COMMERCE_CULTURE) <= GC.getGameINLINE().culturalVictoryNumCultureCities(getTeam())) // K-Mod // DarkLunaPhantom
 				{
 					iValue += 60; // was 10
 				}
@@ -19504,7 +19507,8 @@ int CvPlayerAI::AI_calculateCultureVictoryStage() const
 	// K-Mod
 	int iEraThresholdPercent = 80 - (AI_getStrategyRand(1) % 2)*20; // some (arbitrary) fraction of the game, after which we get more serious. (cf. old code)
 	int iLegendaryCulture = GC.getGame().getCultureThreshold((CultureLevelTypes)(GC.getNumCultureLevelInfos() - 1));
-	int iVictoryCities = GC.getGameINLINE().culturalVictoryNumCultureCities();
+	//int iVictoryCities = GC.getGameINLINE().culturalVictoryNumCultureCities();
+	int iVictoryCities = GC.getGameINLINE().culturalVictoryNumCultureCities(getTeam()); // DarkLunaPhantom
 
 	int iHighCultureMark = 300; // turns
 	iHighCultureMark *= (3*GC.getNumEraInfos() - 2*getCurrentEra());
@@ -19829,7 +19833,8 @@ int CvPlayerAI::AI_calculateSpaceVictoryStage() const
 		} */
 		// K-Mod. I don't think that's a good way to do it.
 		// instead, compare our spaceship progress to that of our rivals.
-		int iOurProgress = 0;
+		//int iOurProgress = 0;
+		float iOurProgress = 0; // DarkLunaPhantom
 		for (int i = 0; i < GC.getNumProjectInfos(); i++)
 		{
 			if (GC.getProjectInfo((ProjectTypes)i).isSpaceship())
@@ -19837,7 +19842,8 @@ int CvPlayerAI::AI_calculateSpaceVictoryStage() const
 				int iBuilt = GET_TEAM(getTeam()).getProjectCount((ProjectTypes)i);
 
 				if (iBuilt > 0 || GET_TEAM(getTeam()).isHasTech((TechTypes)(GC.getProjectInfo((ProjectTypes)i).getTechPrereq())))
-					iOurProgress += 2 + iBuilt;
+					//iOurProgress += 2 + iBuilt;
+					iOurProgress += 2 + (iBuilt / ((float) GC.getProjectInfo((ProjectTypes)i).getVictoryThreshold(eSpace, getTeam()) / GC.getProjectInfo((ProjectTypes)i).getVictoryThreshold(eSpace))); // DarkLunaPhantom
 			}
 		}
 		int iKnownTeams = 0;
@@ -19847,7 +19853,8 @@ int CvPlayerAI::AI_calculateSpaceVictoryStage() const
 			const CvTeam& kLoopTeam = GET_TEAM((TeamTypes)iTeam);
 			if (iTeam != getTeam() && kLoopTeam.isAlive() && kLoopTeam.isHasMet(getTeam()))
 			{
-				int iProgress = 0;
+				//int iProgress = 0;
+				float iProgress = 0; // DarkLunaPhantom
 				for (int i = 0; i < GC.getNumProjectInfos(); i++)
 				{
 					if (GC.getProjectInfo((ProjectTypes)i).isSpaceship())
@@ -19855,7 +19862,8 @@ int CvPlayerAI::AI_calculateSpaceVictoryStage() const
 						int iBuilt = kLoopTeam.getProjectCount((ProjectTypes)i);
 
 						if (iBuilt > 0 || kLoopTeam.isHasTech((TechTypes)(GC.getProjectInfo((ProjectTypes)i).getTechPrereq())))
-							iProgress += 2 + iBuilt;
+							//iProgress += 2 + iBuilt;
+							iProgress += 2 + (iBuilt / ((float) GC.getProjectInfo((ProjectTypes)i).getVictoryThreshold(eSpace, iTeam) / GC.getProjectInfo((ProjectTypes)i).getVictoryThreshold(eSpace))); // DarkLunaPhantom
 					}
 				}
 				iKnownTeams++;

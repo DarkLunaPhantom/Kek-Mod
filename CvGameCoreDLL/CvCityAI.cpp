@@ -657,7 +657,8 @@ void CvCityAI::AI_chooseProduction()
 	int iNumCitiesInArea = pArea->getCitiesPerPlayer(getOwnerINLINE());
 	bool bImportantCity = false; //be very careful about setting this.
 	int iCultureRateRank = findCommerceRateRank(COMMERCE_CULTURE);
-	int iCulturalVictoryNumCultureCities = GC.getGameINLINE().culturalVictoryNumCultureCities();
+	//int iCulturalVictoryNumCultureCities = GC.getGameINLINE().culturalVictoryNumCultureCities();
+	int iCulturalVictoryNumCultureCities = GC.getGameINLINE().culturalVictoryNumCultureCities(getTeam()); // DarkLunaPhantom
 
 	int iWarSuccessRating = GET_TEAM(getTeam()).AI_getWarSuccessRating();
 	int iEnemyPowerPerc = GET_TEAM(getTeam()).AI_getEnemyPowerPercent(true);
@@ -3573,7 +3574,8 @@ int CvCityAI::AI_buildingValue(BuildingTypes eBuilding, int iFocusFlags, int iTh
 	bool bIsHighProductionCity = (findBaseYieldRateRank(YIELD_PRODUCTION) <= std::max(3, (iNumCities / 2)));
 
 	int iCultureRank = findCommerceRateRank(COMMERCE_CULTURE);
-	int iCulturalVictoryNumCultureCities = GC.getGameINLINE().culturalVictoryNumCultureCities();
+	//int iCulturalVictoryNumCultureCities = GC.getGameINLINE().culturalVictoryNumCultureCities();
+	int iCulturalVictoryNumCultureCities = GC.getGameINLINE().culturalVictoryNumCultureCities(getTeam()); // DarkLunaPhantom
 
 	bool bFinancialTrouble = GET_PLAYER(getOwnerINLINE()).AI_isFinancialTrouble();
 
@@ -5474,10 +5476,12 @@ ProjectTypes CvCityAI::AI_bestProject(int* piBestValue)
 					for (ProjectTypes k = (ProjectTypes)0; k < GC.getNumProjectInfos(); k = (ProjectTypes)(k+1))
 					{
 						// try not to confuse loop project i, with loop project k, or loop victory j...
-						iNeededPieces += std::max(0, GC.getProjectInfo(k).getVictoryThreshold(j) - GET_TEAM(getTeam()).getProjectCount(k));
+						//iNeededPieces += std::max(0, GC.getProjectInfo(k).getVictoryThreshold(j) - GET_TEAM(getTeam()).getProjectCount(k));
+						iNeededPieces += std::max(0, GC.getProjectInfo(k).getVictoryThreshold(j, getTeam()) - GET_TEAM(getTeam()).getProjectCount(k)); // DarkLunaPhantom
 					}
 
-					if (GET_TEAM(getTeam()).getProjectCount(i) < kLoopProject.getVictoryThreshold(j))
+					//if (GET_TEAM(getTeam()).getProjectCount(i) < kLoopProject.getVictoryThreshold(j))
+					if (GET_TEAM(getTeam()).getProjectCount(i) < kLoopProject.getVictoryThreshold(j, getTeam())) // DarkLunaPhantom
 					{
 						// we need more of this project. ie. it is a high priority.
 						FAssert(iNeededPieces > 0);
@@ -5506,9 +5510,8 @@ ProjectTypes CvCityAI::AI_bestProject(int* piBestValue)
 			}
 			if (kLoopProject.getMaxTeamInstances() >= 0) // team limit
 			{
-				// DarkLunaPhantom
 				//int iRemaining = std::max(0, kLoopProject.getMaxTeamInstances() - GET_TEAM(getTeam()).getProjectCount(i) - GET_TEAM(getTeam()).getProjectMaking(i));
-				int iRemaining = std::max(0, kLoopProject.getMaxTeamInstances() - GET_TEAM(getTeam()).getProjectCount(i) - GET_PLAYER(getOwnerINLINE()).getProjectMaking(i));
+				int iRemaining = std::max(0, kLoopProject.getMaxTeamInstances(getTeam()) - GET_TEAM(getTeam()).getProjectCount(i) - GET_PLAYER(getOwnerINLINE()).getProjectMaking(i)); // DarkLunaPhantom
 				if (iLimit < 0 || iRemaining < iLimit)
 					iLimit = iRemaining;
 			}
@@ -5740,7 +5743,8 @@ int CvCityAI::AI_projectValue(ProjectTypes eProject)
 			/* iSpaceValue += 20;
 			iSpaceValue += std::max(0, kProject.getVictoryThreshold(iI) - GET_TEAM(getTeam()).getProjectCount(eProject)) * 20; */
 			iSpaceValue += 15;
-			iSpaceValue += std::max(0, kProject.getVictoryMinThreshold(iI) - GET_TEAM(getTeam()).getProjectCount(eProject)) * (kOwner.AI_isDoVictoryStrategy(AI_VICTORY_SPACE4) ? 60 : 30);
+			//iSpaceValue += std::max(0, kProject.getVictoryMinThreshold(iI) - GET_TEAM(getTeam()).getProjectCount(eProject)) * (kOwner.AI_isDoVictoryStrategy(AI_VICTORY_SPACE4) ? 60 : 30);
+			iSpaceValue += (int) ((std::max(0, kProject.getVictoryMinThreshold(iI, getTeam()) - GET_TEAM(getTeam()).getProjectCount(eProject)) / ((float) kProject.getVictoryMinThreshold(iI, getTeam()) / kProject.getVictoryMinThreshold(iI))) * (kOwner.AI_isDoVictoryStrategy(AI_VICTORY_SPACE4) ? 60 : 30)); // DarkLunaPhantom
 			iSpaceValue += kProject.getSuccessRate();
 			iSpaceValue += kProject.getVictoryDelayPercent() / (4 * kProject.getVictoryThreshold(iI));
 			//
@@ -6094,7 +6098,8 @@ int CvCityAI::AI_neededDefenders()
 
 	if( GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_CULTURE3) )
 	{
-		if( findCommerceRateRank(COMMERCE_CULTURE) <= GC.getGameINLINE().culturalVictoryNumCultureCities() )
+		//if( findCommerceRateRank(COMMERCE_CULTURE) <= GC.getGameINLINE().culturalVictoryNumCultureCities() )
+		if( findCommerceRateRank(COMMERCE_CULTURE) <= GC.getGameINLINE().culturalVictoryNumCultureCities(getTeam())) // DarkLunaPhantom
 		{
 			iDefenders += 4;
 
@@ -11432,7 +11437,8 @@ int CvCityAI::AI_getCityImportance(bool bEconomy, bool bMilitary)
 	if (GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_CULTURE3)) // K-Mod (bbai used culture2)
     {
         int iCultureRateRank = findCommerceRateRank(COMMERCE_CULTURE);
-        int iCulturalVictoryNumCultureCities = GC.getGameINLINE().culturalVictoryNumCultureCities();
+        //int iCulturalVictoryNumCultureCities = GC.getGameINLINE().culturalVictoryNumCultureCities();
+		int iCulturalVictoryNumCultureCities = GC.getGameINLINE().culturalVictoryNumCultureCities(getTeam()); // DarkLunaPhantom
         
         if (iCultureRateRank <= iCulturalVictoryNumCultureCities)
         {
@@ -12206,7 +12212,8 @@ int CvCityAI::AI_cityThreat(bool bDangerPercent)
 			if (getCultureLevel() >= GC.getGameINLINE().culturalVictoryCultureLevel() - 1)
 			{
 				iImportanceFactor += 20;
-				if (findCommerceRateRank(COMMERCE_CULTURE) <= GC.getGameINLINE().culturalVictoryNumCultureCities())
+				//if (findCommerceRateRank(COMMERCE_CULTURE) <= GC.getGameINLINE().culturalVictoryNumCultureCities())
+				if (findCommerceRateRank(COMMERCE_CULTURE) <= GC.getGameINLINE().culturalVictoryNumCultureCities(getTeam())) // DarkLunaPhantom
 				{
 					iImportanceFactor += 30;
 					if (kOwner.AI_isDoVictoryStrategy(AI_VICTORY_CULTURE4))

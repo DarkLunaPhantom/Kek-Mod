@@ -4774,9 +4774,11 @@ bool CvTeam::isProjectMaxedOut(ProjectTypes eIndex, int iExtra) const
 		return false;
 	}
 
-	FAssertMsg(getProjectCount(eIndex) <= GC.getProjectInfo(eIndex).getMaxTeamInstances(), "Current Project count is expected to not exceed the maximum number of instances for this project");
+	//FAssertMsg(getProjectCount(eIndex) <= GC.getProjectInfo(eIndex).getMaxTeamInstances(), "Current Project count is expected to not exceed the maximum number of instances for this project");
+	FAssertMsg(getProjectCount(eIndex) <= GC.getProjectInfo(eIndex).getMaxTeamInstances(getID()), "Current Project count is expected to not exceed the maximum number of instances for this project"); // DarkLunaPhantom
 
-	return ((getProjectCount(eIndex) + iExtra) >= GC.getProjectInfo(eIndex).getMaxTeamInstances());
+	//return ((getProjectCount(eIndex) + iExtra) >= GC.getProjectInfo(eIndex).getMaxTeamInstances());
+	return ((getProjectCount(eIndex) + iExtra) >= GC.getProjectInfo(eIndex).getMaxTeamInstances(getID())); // DarkLunaPhantom
 }
 
 bool CvTeam::isProjectAndArtMaxedOut(ProjectTypes eIndex) const
@@ -4784,7 +4786,8 @@ bool CvTeam::isProjectAndArtMaxedOut(ProjectTypes eIndex) const
 	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
 	FAssertMsg(eIndex < GC.getNumProjectInfos(), "eIndex is expected to be within maximum bounds (invalid Index)");
 
-	if(getProjectCount(eIndex) >= GC.getProjectInfo(eIndex).getMaxTeamInstances())
+	//if(getProjectCount(eIndex) >= GC.getProjectInfo(eIndex).getMaxTeamInstances())
+	if(getProjectCount(eIndex) >= GC.getProjectInfo(eIndex).getMaxTeamInstances(getID())) // DarkLunaPhantom
 	{
 		int count = getProjectCount(eIndex);
 		for(int i=0;i<count;i++)
@@ -5313,15 +5316,18 @@ int CvTeam::getVictoryDelay(VictoryTypes eVictory) const
 		CvProjectInfo& kProject = GC.getProjectInfo((ProjectTypes)iProject);
 		int iCount = getProjectCount((ProjectTypes)iProject);
 
-		if (iCount < kProject.getVictoryMinThreshold(eVictory))
+		//if (iCount < kProject.getVictoryMinThreshold(eVictory)))
+		if (iCount < kProject.getVictoryMinThreshold(eVictory, getID())) // DarkLunaPhantom
 		{
 			FAssert(false);
 			return -1;
 		}
 		
-		if (iCount < kProject.getVictoryThreshold(eVictory))
+		//if (iCount < kProject.getVictoryThreshold(eVictory))
+		if (iCount < kProject.getVictoryThreshold(eVictory, getID())) // DarkLunaPhantom
 		{
-			iExtraDelayPercent += ((kProject.getVictoryThreshold(eVictory)  - iCount) * kProject.getVictoryDelayPercent()) / kProject.getVictoryThreshold(eVictory);
+			//iExtraDelayPercent += ((kProject.getVictoryThreshold(eVictory)  - iCount) * kProject.getVictoryDelayPercent()) / kProject.getVictoryThreshold(eVictory);
+			iExtraDelayPercent += ((kProject.getVictoryThreshold(eVictory, getID())  - iCount) * kProject.getVictoryDelayPercent()) / kProject.getVictoryThreshold(eVictory, getID()); // DarkLunaPhantom
 		}
 	}
 
@@ -5346,16 +5352,19 @@ int CvTeam::getLaunchSuccessRate(VictoryTypes eVictory) const
 		CvProjectInfo& kProject = GC.getProjectInfo((ProjectTypes)iProject);
 		int iCount = getProjectCount((ProjectTypes)iProject);
 
-		if (iCount < kProject.getVictoryMinThreshold(eVictory))
+		//if (iCount < kProject.getVictoryMinThreshold(eVictory))
+		if (iCount < kProject.getVictoryMinThreshold(eVictory, getID())) // DarkLunaPhantom
 		{
 			return 0;
 		}
 
-		if (iCount < kProject.getVictoryThreshold(eVictory))
+		//if (iCount < kProject.getVictoryThreshold(eVictory))
+		if (iCount < kProject.getVictoryThreshold(eVictory, getID())) // DarkLunaPhantom
 		{
 			if (kProject.getSuccessRate() > 0)
 			{
-				iSuccessRate -= (kProject.getSuccessRate() * (kProject.getVictoryThreshold(eVictory) - iCount));
+				//iSuccessRate -= (kProject.getSuccessRate() * (kProject.getVictoryThreshold(eVictory) - iCount));
+				iSuccessRate -= ((kProject.getSuccessRate() * (kProject.getVictoryThreshold(eVictory, getID()) - iCount) * kProject.getVictoryThreshold(eVictory)) / kProject.getVictoryThreshold(eVictory, getID())); // DarkLunaPhantom
 			}
 		}
 	}
@@ -7013,7 +7022,8 @@ int CvTeam::getProjectPartNumber(ProjectTypes eProject, bool bAssert) const
 	}
 
 	//return the last one
-	return std::min(iNumBuilt, GC.getProjectInfo(eProject).getMaxTeamInstances() - 1);
+	//return std::min(iNumBuilt, GC.getProjectInfo(eProject).getMaxTeamInstances() - 1);
+	return std::min(iNumBuilt, GC.getProjectInfo(eProject).getMaxTeamInstances(getID()) - 1); // DarkLunaPhantom
 }
 
 bool CvTeam::hasLaunched() const

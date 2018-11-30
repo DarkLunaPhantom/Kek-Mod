@@ -2611,7 +2611,8 @@ void CvGame::cheatSpaceship() const
 			}
 
 			//cheat one space component
-			if (kTeam.getProjectCount(eProject) < kProject.getMaxTeamInstances())
+			//if (kTeam.getProjectCount(eProject) < kProject.getMaxTeamInstances())
+			if (kTeam.getProjectCount(eProject) < kProject.getMaxTeamInstances(getActiveTeam())) // DarkLunaPhantom
 			{
 				kTeam.changeProjectCount(eProject, 1);
 

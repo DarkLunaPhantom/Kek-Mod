@@ -1406,7 +1406,7 @@ class CvCustomizableDomesticAdvisor:
 					pInfo = gc.getProjectInfo(city.getProductionProject())
 					if pInfo.getMaxGlobalInstances() != -1:
 						szIcon = self.starIcon
-					elif pInfo.getMaxTeamInstances() != -1:
+					elif pInfo.getMaxTeamInstances(-1) != -1:
 						szIcon = self.silverStarIcon
 				elif city.isProductionUnit():
 					szColorKey = "UNIT"

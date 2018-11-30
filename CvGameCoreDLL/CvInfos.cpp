@@ -9934,8 +9934,14 @@ int CvVictoryInfo::getCityCulture() const
 	return m_iCityCulture;
 }
 
-int CvVictoryInfo::getNumCultureCities() const		
+// DarkLunaPhantom
+//int CvVictoryInfo::getNumCultureCities() const		
+int CvVictoryInfo::getNumCultureCities(int i) const
 {
+	if (i != -1)
+	{
+		return (int) (m_iNumCultureCities * (1 + 0.5 * (GET_TEAM((TeamTypes)i).getNumMembers() - 1)));
+	}
 	return m_iNumCultureCities;
 }
 
@@ -15601,8 +15607,14 @@ int CvProjectInfo::getMaxGlobalInstances() const
 	return m_iMaxGlobalInstances; 
 }
 
-int CvProjectInfo::getMaxTeamInstances() const
+// DarkLunaPhantom
+//int CvProjectInfo::getMaxTeamInstances() const
+int CvProjectInfo::getMaxTeamInstances(int i) const
 {
+	if (i != -1 && m_bSpaceship)
+	{
+		return (int) (m_iMaxTeamInstances * (1 + 0.5 * (GET_TEAM((TeamTypes)i).getNumMembers() - 1)) + 0.5);
+	}
 	return m_iMaxTeamInstances; 
 }
 
@@ -15675,24 +15687,40 @@ int CvProjectInfo::getBonusProductionModifier(int i) const
 	return m_piBonusProductionModifier ? m_piBonusProductionModifier[i] : -1; 
 }
 
-int CvProjectInfo::getVictoryThreshold(int i) const																					
+// DarkLunaPhantom
+//int CvProjectInfo::getVictoryThreshold(int i) const	
+int CvProjectInfo::getVictoryThreshold(int i, int j) const
 {
 	FAssertMsg(i < GC.getNumVictoryInfos(), "Index out of bounds");
 	FAssertMsg(i > -1, "Index out of bounds");
+	if (j != -1)
+	{
+		if (m_piVictoryThreshold)
+		{
+			return (int) (m_piVictoryThreshold[i] * (1 + 0.5 * (GET_TEAM((TeamTypes)j).getNumMembers() - 1)) + 0.5);
+		}
+	}
 	return m_piVictoryThreshold ? m_piVictoryThreshold[i] : -1; 
 }
 
-int CvProjectInfo::getVictoryMinThreshold(int i) const																					
+// DarkLunaPhantom
+//int CvProjectInfo::getVictoryMinThreshold(int i) const	
+int CvProjectInfo::getVictoryMinThreshold(int i, int j) const																					
 {
 	FAssertMsg(i < GC.getNumVictoryInfos(), "Index out of bounds");
 	FAssertMsg(i > -1, "Index out of bounds");
 
 	if (m_piVictoryMinThreshold && m_piVictoryMinThreshold[i] != 0)
 	{
+		if (j != -1)
+		{
+			return (int) (m_piVictoryMinThreshold[i] * (1 + 0.5 * (GET_TEAM((TeamTypes)j).getNumMembers() - 1)) + 0.5);
+		}
 		return m_piVictoryMinThreshold[i];
 	}
-
-	return getVictoryThreshold(i); 
+	
+	//return getVictoryThreshold(i); 
+	return getVictoryThreshold(i, j); 
 }
 
 int CvProjectInfo::getProjectsNeeded(int i) const
