@@ -6007,7 +6007,8 @@ int CvCity::calculateDistanceMaintenanceTimes100() const
 		iTempMaintenance *= GC.getHandicapInfo(getHandicapType()).getDistanceMaintenancePercent();
 		iTempMaintenance /= 100;
 
-		iTempMaintenance /= GC.getMapINLINE().maxPlotDistance();
+		//iTempMaintenance /= GC.getMapINLINE().maxPlotDistance();
+        iTempMaintenance /= GC.getMapINLINE().maxPlotDistance(true); // DarkLunaPhantom
 
 	/* original bts code
 		iWorstCityMaintenance = std::max(iWorstCityMaintenance, iTempMaintenance);
@@ -6130,7 +6131,8 @@ int CvCity::calculateColonyMaintenanceTimes100() const
 	iMaintenanceCap *= GC.getHandicapInfo(getHandicapType()).getDistanceMaintenancePercent();
 	iMaintenanceCap /= 100;
 
-	iMaintenanceCap /= GC.getMapINLINE().maxPlotDistance();
+	//iMaintenanceCap /= GC.getMapINLINE().maxPlotDistance();
+    iMaintenanceCap /= GC.getMapINLINE().maxPlotDistance(true); // DarkLunaPhantom
 
 	iMaintenanceCap *= GC.getHandicapInfo(getHandicapType()).getMaxColonyMaintenance();
 	iMaintenanceCap /= 100;

@@ -15318,7 +15318,8 @@ int CvPlayer::getEspionageMissionCostModifier(EspionageMissionTypes eMission, Pl
 		// K-Mod end
 
 		// Distance mod
-		int iDistance = GC.getMap().maxPlotDistance();
+		//int iDistance = GC.getMap().maxPlotDistance();
+        int iDistance = GC.getMap().maxPlotDistance(true); // DarkLunaPhantom
 
 		CvCity* pOurCapital = getCapitalCity();
 		if (NULL != pOurCapital)
@@ -15338,7 +15339,8 @@ int CvPlayer::getEspionageMissionCostModifier(EspionageMissionTypes eMission, Pl
 			}
 		}
 
-		iModifier *= (iDistance + GC.getMapINLINE().maxPlotDistance()) * GC.getDefineINT("ESPIONAGE_DISTANCE_MULTIPLIER_MOD") / GC.getMapINLINE().maxPlotDistance();
+		//iModifier *= (iDistance + GC.getMapINLINE().maxPlotDistance()) * GC.getDefineINT("ESPIONAGE_DISTANCE_MULTIPLIER_MOD") / GC.getMapINLINE().maxPlotDistance();
+        iModifier *= (iDistance + GC.getMapINLINE().maxPlotDistance(true)) * GC.getDefineINT("ESPIONAGE_DISTANCE_MULTIPLIER_MOD") / GC.getMapINLINE().maxPlotDistance(true); // DarkLunaPhantom
 		iModifier /= 100;
 	}
 

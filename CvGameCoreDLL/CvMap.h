@@ -154,7 +154,8 @@ public:
 	float getWidthCoords();
 	float getHeightCoords();
 
-	int maxPlotDistance();																								// Exposed to Python
+	//int maxPlotDistance();																								// Exposed to Python
+    int maxPlotDistance(bool bDefaultWrap = false); // DarkLunaPhantom																								// Exposed to Python
 	int maxStepDistance();																								// Exposed to Python
 
 	DllExport int getGridWidth() const;																		// Exposed to Python

@@ -17616,7 +17616,8 @@ void CvGameTextMgr::setEspionageCostHelp(CvWStringBuffer &szBuffer, EspionageMis
 			// K-Mod end
 
 			// Distance mod
-			int iDistance = GC.getMap().maxPlotDistance();
+			//int iDistance = GC.getMap().maxPlotDistance();
+            int iDistance = GC.getMap().maxPlotDistance(true); // DarkLunaPhantom
 
 			CvCity* pOurCapital = kPlayer.getCapitalCity();
 			if (NULL != pOurCapital)
@@ -17635,7 +17636,8 @@ void CvGameTextMgr::setEspionageCostHelp(CvWStringBuffer &szBuffer, EspionageMis
 				}
 			}
 
-			iTempModifier = (iDistance + GC.getMapINLINE().maxPlotDistance()) * GC.getDefineINT("ESPIONAGE_DISTANCE_MULTIPLIER_MOD") / GC.getMapINLINE().maxPlotDistance() - 100;
+			//iTempModifier = (iDistance + GC.getMapINLINE().maxPlotDistance()) * GC.getDefineINT("ESPIONAGE_DISTANCE_MULTIPLIER_MOD") / GC.getMapINLINE().maxPlotDistance() - 100;
+            iTempModifier = (iDistance + GC.getMapINLINE().maxPlotDistance(true)) * GC.getDefineINT("ESPIONAGE_DISTANCE_MULTIPLIER_MOD") / GC.getMapINLINE().maxPlotDistance(true) - 100; // DarkLunaPhantom
 			if (0 != iTempModifier)
 			{
 				szBuffer.append(NEWLINE);
