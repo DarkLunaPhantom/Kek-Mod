@@ -5211,7 +5211,7 @@ class CvMainInterface:
 												szTempBuffer = u" <color=255,0,0>* %s *</color> (%d)" %(CyGameTextMgr().getOOSSeeds(ePlayer), CyGame().getTurnSlice()%8) # K-Mod, added TurnSlice
 												szBuffer = szBuffer + szTempBuffer
 												if (bAlignIcons):
-													scores.setNetStats(szTempBuffer)
+													scores.setOOS(szTempBuffer)
 												
 											szBuffer = szBuffer + "</font>"
 	
