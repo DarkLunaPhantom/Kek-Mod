@@ -148,6 +148,8 @@
 	<load mod="Strategy Overlay"/>
 	<load mod="StatusDump"/>
 	
+	<load mod="OOSLogger"/> <!-- DarkLunaPhantom - OOS logging, idea from Fall From Heaven 2 by Kael. -->
+	
 	<!-- BULL -->
 	
 	<load mod="BULL Core"/>
