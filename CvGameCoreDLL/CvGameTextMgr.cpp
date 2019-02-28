@@ -16228,7 +16228,17 @@ void CvGameTextMgr::buildCityBillboardProductionString( CvWStringBuffer& szBuffe
 void CvGameTextMgr::buildCityBillboardCitySizeString( CvWStringBuffer& szBuffer, CvCity* pCity, const NiColorA& kColor)
 {
 #define CAPARAMS(c) (int)((c).r * 255.0f), (int)((c).g * 255.0f), (int)((c).b * 255.0f), (int)((c).a * 255.0f)
-	szBuffer.assign(CvWString::format(SETCOLR L"%d" ENDCOLR, CAPARAMS(kColor), pCity->getPopulation()));
+	// DarkLunaPhantom begin - Added * next to the city population number to denote it will be autorazed on conquest.
+	//szBuffer.assign(CvWString::format(SETCOLR L"%d" ENDCOLR, CAPARAMS(kColor), pCity->getPopulation()));
+	if (!GC.getGameINLINE().isOption(GAMEOPTION_NO_CITY_RAZING) && pCity->getHighestPopulation() == 1) // cf. CvCity::isAutoRaze()
+	{
+		szBuffer.assign(CvWString::format(SETCOLR L"%d*" ENDCOLR, CAPARAMS(kColor), pCity->getPopulation()));
+	}
+	else
+	{
+		szBuffer.assign(CvWString::format(SETCOLR L"%d" ENDCOLR, CAPARAMS(kColor), pCity->getPopulation()));
+	}
+	// DarkLunaPhantom end
 #undef CAPARAMS
 }
 
