@@ -198,7 +198,7 @@ def writeLog():
 			iLoopPlayer = 0
 			for iLoopPlayer in range(gc.getMAX_PLAYERS()):
 				pLoopPlayer = gc.getPlayer(iLoopPlayer)
-				pFile.write("Players %d - %d, Attitude: %d (Note, actual attitudeval number is used for the OOS checksum.)\n" % (iPlayer, iLoopPlayer, pPlayer.AI_getAttitude(iLoopPlayer, false)))
+				pFile.write("Players %d - %d, Attitude: %d (Note, actual attitudeval number is used for the OOS checksum.)\n" % (iPlayer, iLoopPlayer, pPlayer.AI_getAttitude(iLoopPlayer)))
 
 			pFile.write("\n\n")
 
