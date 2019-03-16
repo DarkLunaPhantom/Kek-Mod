@@ -6408,6 +6408,7 @@ void CvTeam::updateTechShare(TechTypes eTech)
 		if (iCount >= iBestShare)
 		{
 			setHasTech(eTech, true, NO_PLAYER, true, true);
+			setNoTradeTech(eTech, true); // DarkLunaPhantom
 		}
 	}
 }
