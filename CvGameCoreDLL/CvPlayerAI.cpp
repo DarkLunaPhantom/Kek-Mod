@@ -4169,7 +4169,7 @@ int CvPlayerAI::AI_targetCityValue(CvCity* pCity, bool bRandomize, bool bIgnoreA
 	}
 
 	// K-Mod
-	if (pCity->getHighestPopulation() < 1)
+	if (pCity->getHighestPopulation() == 1 && !GC.getGameINLINE().isOption(GAMEOPTION_NO_CITY_RAZING)) // DarkLunaPhantom - Was <1 and was missing game options check (cf. CvCity::isAutoRaze).
 	{
 		// Usually this means the city would be auto-razed.
 		// (We can't use isAutoRaze for this, because that assumes the city is already captured.)
