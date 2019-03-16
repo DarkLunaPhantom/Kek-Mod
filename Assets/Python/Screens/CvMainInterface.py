@@ -4913,6 +4913,10 @@ class CvMainInterface:
 			screen.hide( szName )
 			szName = "ScoreTech" + str(i)
 			screen.hide( szName )
+			szName = "ScoreLeader" + str(i) # DarkLunaPhantom
+			screen.hide( szName )
+			szName = "ScoreCiv" + str(i) # DarkLunaPhantom
+			screen.hide( szName )
 			for j in range( Scoreboard.NUM_PARTS ):
 				szName = "ScoreText%d-%d" %( i, j )
 				screen.hide( szName )
@@ -5062,6 +5066,10 @@ class CvMainInterface:
 												szBuffer = szBuffer + (" ?")
 												if (bAlignIcons):
 													scores.setNotMet()
+													
+											if (bAlignIcons): # DarkLunaPhantom
+												scores.setLeader(gc.getPlayer(ePlayer).getLeaderType())
+												scores.setCiv(gc.getPlayer(ePlayer).getCivilizationType())
 											
 											if (gc.getPlayer(ePlayer).isAlive()):
 												if (bAlignIcons):

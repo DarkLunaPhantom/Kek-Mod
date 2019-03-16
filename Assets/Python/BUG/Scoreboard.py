@@ -28,7 +28,7 @@ gc = CyGlobalContext()
 Z_DEPTH = -0.3
 
 # Columns IDs
-NUM_PARTS = 27
+NUM_PARTS = 29
 (
 	ALIVE,
 	WAR,
@@ -56,7 +56,9 @@ NUM_PARTS = 27
 	NET_STATS,
 	OOS,
 	TEAM, # DarkLunaPhantom
-	TEAM_SCORE #DarkLunaPhantom
+	TEAM_SCORE, # DarkLunaPhantom
+	LEADER, # DarkLunaPhantom
+	CIV # DarkLunaPhantom
 ) = range(NUM_PARTS)
 
 # Types
@@ -92,9 +94,9 @@ def init():
 	global columns
 	
 	# Used keys:
-	# ABCDEHIJKLMNOPQRSTUVYWZ*!?
+	# ABCDEFGHIJKLMNOPQRSTUVYWZ*!?
 	# Unused keys:
-	# FGX
+	# X
 	columns.append(Column('', ALIVE))
 	columns.append(Column('S', SCORE, DYNAMIC))
 	columns.append(Column('Z', SCORE_DELTA, DYNAMIC))
@@ -122,6 +124,8 @@ def init():
 	columns.append(Column('O', OOS, DYNAMIC))
 	columns.append(Column('J', TEAM, DYNAMIC)) # DarkLunaPhantom
 	columns.append(Column('Y', TEAM_SCORE, DYNAMIC)) # DarkLunaPhantom
+	columns.append(Column('F', LEADER, SPECIAL)) # DarkLunaPhantom
+	columns.append(Column('G', CIV, SPECIAL)) # DarkLunaPhantom
 	
 	global WAR_ICON, PEACE_ICON
 	WAR_ICON = smallSymbol(FontSymbols.WAR_CHAR)
@@ -292,11 +296,17 @@ class Scoreboard:
 	def setOOS(self, value):
 		self._set(OOS, smallText(value))
 		
-	def setTeam(self, value): #DarkLunaPhantom
+	def setTeam(self, value): # DarkLunaPhantom
 		self._set(TEAM, smallText(value))
 		
-	def setTeamScore(self, value): #DarkLunaPhantom
+	def setTeamScore(self, value): # DarkLunaPhantom
 		self._set(TEAM_SCORE, smallText(value))
+		
+	def setLeader(self, leader): # DarkLunaPhantom
+		self._set(LEADER, leader)
+		
+	def setCiv(self, civ): # DarkLunaPhantom
+		self._set(CIV, civ)
 		
 		
 	def _getContactWidget(self):
@@ -480,6 +490,30 @@ class Scoreboard:
 							info = gc.getTechInfo(tech)
 							screen.addDDSGFC( name, info.getButton(), x - techIconSize, y - p * height - 1, techIconSize, techIconSize, 
 											  WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, tech, -1 )
+					x -= techIconSize
+					totalWidth += techIconSize + spacing
+					spacing = defaultSpacing
+				elif (c == LEADER): # DarkLunaPhantom
+					x -= spacing
+					for p, playerScore in enumerate(self._playerScores):
+						if (playerScore.has(c)):
+							leader = playerScore.value(c)
+							name = "ScoreLeader%d" % p
+							info = gc.getLeaderHeadInfo(leader)
+							screen.addDDSGFC( name, info.getButton(), x - techIconSize, y - p * height - 1, techIconSize, techIconSize, 
+											  WidgetTypes.WIDGET_PEDIA_JUMP_TO_LEADER, leader, 1 )
+					x -= techIconSize
+					totalWidth += techIconSize + spacing
+					spacing = defaultSpacing
+				elif (c == CIV): # DarkLunaPhantom
+					x -= spacing
+					for p, playerScore in enumerate(self._playerScores):
+						if (playerScore.has(c)):
+							civ = playerScore.value(c)
+							name = "ScoreCiv%d" % p
+							info = gc.getCivilizationInfo(civ)
+							screen.addDDSGFC( name, info.getButton(), x - techIconSize, y - p * height - 1, techIconSize, techIconSize, 
+											  WidgetTypes.WIDGET_PEDIA_JUMP_TO_CIV, civ, -1 )
 					x -= techIconSize
 					totalWidth += techIconSize + spacing
 					spacing = defaultSpacing
