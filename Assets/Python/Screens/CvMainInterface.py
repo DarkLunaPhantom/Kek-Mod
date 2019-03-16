@@ -4948,7 +4948,7 @@ class CvMainInterface:
 				while (i > -1):
 					eTeam = gc.getGame().getRankTeam(i)
 
-					if (gc.getTeam(gc.getGame().getActiveTeam()).isHasMet(eTeam) or gc.getTeam(eTeam).isHuman() or gc.getGame().isDebugMode()):
+					if (gc.getTeam(gc.getGame().getActiveTeam()).isHasMet(eTeam) or gc.getTeam(eTeam).isHuman() or gc.getGame().isDebugMode() or not gc.getTeam(eTeam).isAlive()):
 # BUG - Align Icons - start
 						if (bAlignIcons):
 							scores.addTeam(gc.getTeam(eTeam), i)
@@ -5058,6 +5058,11 @@ class CvMainInterface:
 												else:
 													scores.setTeam("")
 											
+											if not gc.getTeam(gc.getGame().getActiveTeam()).isHasMet(eTeam):
+												szBuffer = szBuffer + (" ?")
+												if (bAlignIcons):
+													scores.setNotMet()
+											
 											if (gc.getPlayer(ePlayer).isAlive()):
 												if (bAlignIcons):
 													scores.setAlive()
@@ -5068,10 +5073,6 @@ class CvMainInterface:
 														# if (bAlignIcons):
 															# scores.setNotMet()
 												# K-Mod
-												if gc.getTeam(eTeam).isAlive() and not gc.getTeam(gc.getGame().getActiveTeam()).isHasMet(eTeam):
-													szBuffer = szBuffer + (" ?")
-													if (bAlignIcons):
-														scores.setNotMet()
 												if gc.getTeam(eTeam).isAlive() and (gc.getTeam(gc.getGame().getActiveTeam()).isHasMet(eTeam) or gc.getGame().isDebugMode()):
 												# K-Mod end
 													if (gc.getTeam(eTeam).isAtWar(gc.getGame().getActiveTeam())):
