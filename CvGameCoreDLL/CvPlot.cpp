@@ -744,7 +744,9 @@ void CvPlot::updateMinimapColor()
 		return;
 	}
 
-	gDLL->getInterfaceIFace()->setMinimapColor(MINIMAPMODE_TERRITORY, getX_INLINE(), getY_INLINE(), plotMinimapColor(), STANDARD_MINIMAP_ALPHA);
+	// DarkLunaPhantom - Lighter player color on water tiles in minimap. Idea from AdvCiv by f1rpo.
+	//gDLL->getInterfaceIFace()->setMinimapColor(MINIMAPMODE_TERRITORY, getX_INLINE(), getY_INLINE(), plotMinimapColor(), STANDARD_MINIMAP_ALPHA);
+	gDLL->getInterfaceIFace()->setMinimapColor(MINIMAPMODE_TERRITORY, getX_INLINE(), getY_INLINE(), plotMinimapColor(), STANDARD_MINIMAP_ALPHA / (isWater() ? 2 : 1));
 }
 
 
