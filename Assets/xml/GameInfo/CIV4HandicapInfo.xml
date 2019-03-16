@@ -13,7 +13,7 @@
 			<iFreeWinsVsBarbs>5</iFreeWinsVsBarbs>
 			<iAnimalAttackProb>25</iAnimalAttackProb>
 			<iStartingLocPercent>10</iStartingLocPercent>
-			<iAdvancedStartPointsMod>150</iAdvancedStartPointsMod>
+			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>
 			<iGold>0</iGold>
 			<iFreeUnits>24</iFreeUnits>
 			<iUnitCostPercent>20</iUnitCostPercent>
@@ -66,7 +66,7 @@
 			<iAIInflationPercent>100</iAIInflationPercent>
 			<iAIWarWearinessPercent>100</iAIWarWearinessPercent>
 			<iAIPerEraModifier>0</iAIPerEraModifier>
-			<iAIAdvancedStartPercent>100</iAIAdvancedStartPercent>
+			<iAIAdvancedStartPercent>67</iAIAdvancedStartPercent>
 			<Goodies>
 				<GoodyType>GOODY_HIGH_GOLD</GoodyType>
 				<GoodyType>GOODY_HIGH_GOLD</GoodyType>
@@ -112,7 +112,7 @@
 			<iFreeWinsVsBarbs>4</iFreeWinsVsBarbs>
 			<iAnimalAttackProb>50</iAnimalAttackProb>
 			<iStartingLocPercent>20</iStartingLocPercent>
-			<iAdvancedStartPointsMod>130</iAdvancedStartPointsMod>
+			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>
 			<iGold>0</iGold>
 			<iFreeUnits>18</iFreeUnits>
 			<iUnitCostPercent>30</iUnitCostPercent>
@@ -165,7 +165,7 @@
 			<iAIInflationPercent>90</iAIInflationPercent>
 			<iAIWarWearinessPercent>90</iAIWarWearinessPercent>
 			<iAIPerEraModifier>0</iAIPerEraModifier>
-			<iAIAdvancedStartPercent>100</iAIAdvancedStartPercent>
+			<iAIAdvancedStartPercent>77</iAIAdvancedStartPercent>
 			<Goodies>
 				<GoodyType>GOODY_HIGH_GOLD</GoodyType>
 				<GoodyType>GOODY_HIGH_GOLD</GoodyType>
@@ -207,7 +207,7 @@
 			<iFreeWinsVsBarbs>3</iFreeWinsVsBarbs>
 			<iAnimalAttackProb>75</iAnimalAttackProb>
 			<iStartingLocPercent>30</iStartingLocPercent>
-			<iAdvancedStartPointsMod>110</iAdvancedStartPointsMod>
+			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>
 			<iGold>0</iGold>
 			<iFreeUnits>12</iFreeUnits>
 			<iUnitCostPercent>40</iUnitCostPercent>
@@ -260,7 +260,7 @@
 			<iAIInflationPercent>80</iAIInflationPercent>
 			<iAIWarWearinessPercent>80</iAIWarWearinessPercent>
 			<iAIPerEraModifier>0</iAIPerEraModifier>
-			<iAIAdvancedStartPercent>100</iAIAdvancedStartPercent>
+			<iAIAdvancedStartPercent>91</iAIAdvancedStartPercent>
 			<Goodies>
 				<GoodyType>GOODY_HIGH_GOLD</GoodyType>
 				<GoodyType>GOODY_HIGH_GOLD</GoodyType>
@@ -384,7 +384,7 @@
 			<iFreeWinsVsBarbs>1</iFreeWinsVsBarbs>
 			<iAnimalAttackProb>90</iAnimalAttackProb>
 			<iStartingLocPercent>50</iStartingLocPercent>
-			<iAdvancedStartPointsMod>95</iAdvancedStartPointsMod>
+			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>
 			<iGold>0</iGold>
 			<iFreeUnits>6</iFreeUnits>
 			<iUnitCostPercent>60</iUnitCostPercent>
@@ -437,7 +437,7 @@
 			<iAIInflationPercent>80</iAIInflationPercent>
 			<iAIWarWearinessPercent>80</iAIWarWearinessPercent>
 			<iAIPerEraModifier>-1</iAIPerEraModifier>
-			<iAIAdvancedStartPercent>110</iAIAdvancedStartPercent>
+			<iAIAdvancedStartPercent>116</iAIAdvancedStartPercent>
 			<Goodies>
 				<GoodyType>GOODY_HIGH_GOLD</GoodyType>
 				<GoodyType>GOODY_HIGH_GOLD</GoodyType>
@@ -470,7 +470,7 @@
 			<iFreeWinsVsBarbs>0</iFreeWinsVsBarbs>
 			<iAnimalAttackProb>90</iAnimalAttackProb>
 			<iStartingLocPercent>60</iStartingLocPercent>
-			<iAdvancedStartPointsMod>90</iAdvancedStartPointsMod>
+			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>
 			<iGold>0</iGold>
 			<iFreeUnits>4</iFreeUnits>
 			<iUnitCostPercent>70</iUnitCostPercent>
@@ -523,7 +523,7 @@
 			<iAIInflationPercent>80</iAIInflationPercent>
 			<iAIWarWearinessPercent>75</iAIWarWearinessPercent>
 			<iAIPerEraModifier>-2</iAIPerEraModifier>
-			<iAIAdvancedStartPercent>120</iAIAdvancedStartPercent>
+			<iAIAdvancedStartPercent>133</iAIAdvancedStartPercent>
 			<Goodies>
 				<GoodyType>GOODY_HIGH_GOLD</GoodyType>
 				<GoodyType>GOODY_LOW_GOLD</GoodyType>
@@ -561,7 +561,7 @@
 			<iFreeWinsVsBarbs>0</iFreeWinsVsBarbs>
 			<iAnimalAttackProb>90</iAnimalAttackProb>
 			<iStartingLocPercent>70</iStartingLocPercent>
-			<iAdvancedStartPointsMod>85</iAdvancedStartPointsMod>
+			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>
 			<iGold>0</iGold>
 			<iFreeUnits>3</iFreeUnits>
 			<iUnitCostPercent>80</iUnitCostPercent>
@@ -614,7 +614,7 @@
 			<iAIInflationPercent>80</iAIInflationPercent>
 			<iAIWarWearinessPercent>70</iAIWarWearinessPercent>
 			<iAIPerEraModifier>-3</iAIPerEraModifier>
-			<iAIAdvancedStartPercent>135</iAIAdvancedStartPercent>
+			<iAIAdvancedStartPercent>159</iAIAdvancedStartPercent>
 			<Goodies>
 				<GoodyType>GOODY_HIGH_GOLD</GoodyType>
 				<GoodyType>GOODY_LOW_GOLD</GoodyType>
@@ -656,7 +656,7 @@
 			<iFreeWinsVsBarbs>0</iFreeWinsVsBarbs>
 			<iAnimalAttackProb>90</iAnimalAttackProb>
 			<iStartingLocPercent>80</iStartingLocPercent>
-			<iAdvancedStartPointsMod>80</iAdvancedStartPointsMod>
+			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>
 			<iGold>0</iGold>
 			<iFreeUnits>2</iFreeUnits>
 			<iUnitCostPercent>90</iUnitCostPercent>
@@ -709,7 +709,7 @@
 			<iAIInflationPercent>80</iAIInflationPercent>
 			<iAIWarWearinessPercent>60</iAIWarWearinessPercent>
 			<iAIPerEraModifier>-4</iAIPerEraModifier>
-			<iAIAdvancedStartPercent>150</iAIAdvancedStartPercent>
+			<iAIAdvancedStartPercent>188</iAIAdvancedStartPercent>
 			<Goodies>
 				<GoodyType>GOODY_LOW_GOLD</GoodyType>
 				<GoodyType>GOODY_LOW_GOLD</GoodyType>
@@ -755,7 +755,7 @@
 			<iFreeWinsVsBarbs>0</iFreeWinsVsBarbs>
 			<iAnimalAttackProb>90</iAnimalAttackProb>
 			<iStartingLocPercent>90</iStartingLocPercent>
-			<iAdvancedStartPointsMod>75</iAdvancedStartPointsMod>
+			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>
 			<iGold>0</iGold>
 			<iFreeUnits>1</iFreeUnits>
 			<iUnitCostPercent>100</iUnitCostPercent>
@@ -808,7 +808,7 @@
 			<iAIInflationPercent>80</iAIInflationPercent>
 			<iAIWarWearinessPercent>50</iAIWarWearinessPercent>
 			<iAIPerEraModifier>-5</iAIPerEraModifier>
-			<iAIAdvancedStartPercent>170</iAIAdvancedStartPercent>
+			<iAIAdvancedStartPercent>227</iAIAdvancedStartPercent>
 			<Goodies>
 				<GoodyType>GOODY_LOW_GOLD</GoodyType>
 				<GoodyType>GOODY_LOW_GOLD</GoodyType>

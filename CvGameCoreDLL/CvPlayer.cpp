@@ -1538,12 +1538,18 @@ void CvPlayer::initFreeUnits()
 	{
 		int iPoints = GC.getGameINLINE().getNumAdvancedStartPoints();
 
-		iPoints *= GC.getHandicapInfo(getHandicapType()).getAdvancedStartPointsMod();
-		iPoints /= 100;
-
-		if (!isHuman())
+		// DarkLunaPhantom - This used to give human multiplier to both the AI and humans (based on their own handicaps) and give AI multiplier to the AI also based on ITS handicap.
+		// This usually meant no bonuses or maluses for the AI since its handicap is usually Noble. Changed it to give human multiplier only to humans and to give AI multiplier to the AI based on game handicap.
+		if (isHuman())
 		{
-			iPoints *= GC.getHandicapInfo(getHandicapType()).getAIAdvancedStartPercent();
+			iPoints *= GC.getHandicapInfo(getHandicapType()).getAdvancedStartPointsMod();
+			iPoints /= 100;
+		}
+		else
+		//if (!isHuman())
+		{
+			//iPoints *= GC.getHandicapInfo(getHandicapType()).getAIAdvancedStartPercent();
+			iPoints *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIAdvancedStartPercent();
 			iPoints /= 100;
 		}
 
