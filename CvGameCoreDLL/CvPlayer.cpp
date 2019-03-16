@@ -1521,8 +1521,12 @@ void CvPlayer::setupGraphical()
 void CvPlayer::initFreeState()
 {
 	setGold(0);
-	changeGold(GC.getHandicapInfo(getHandicapType()).getStartingGold());
-	changeGold(GC.getEraInfo(GC.getGameINLINE().getStartEra()).getStartingGold());
+	// DarkLunaPhantom - Don't give starting gold in advanced start.
+	if (!GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_START))
+	{
+		changeGold(GC.getHandicapInfo(getHandicapType()).getStartingGold());
+		changeGold(GC.getEraInfo(GC.getGameINLINE().getStartEra()).getStartingGold());
+	}
 
 	clearResearchQueue();
 }
@@ -1533,8 +1537,13 @@ void CvPlayer::initFreeUnits()
 	UnitTypes eLoopUnit;
 	int iFreeCount;
 	int iI, iJ;
+	
+	if (isBarbarian()) // Don't try to give advanced start points or free units to barbarians.
+	{
+		return;
+	}
 
-	if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_START) && !isBarbarian())
+	if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_START) /*&& !isBarbarian()*/)
 	{
 		int iPoints = GC.getGameINLINE().getNumAdvancedStartPoints();
 

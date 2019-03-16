@@ -832,7 +832,7 @@ void CvGame::initFreeState()
 				if (!bValid)
 				{
 					if (//(GC.getHandicapInfo(getHandicapType()).isFreeTechs(iI)) || // disabled by K-Mod. (moved & changed. See below)
-						  (!(GET_TEAM((TeamTypes)iJ).isHuman())&& GC.getHandicapInfo(getHandicapType()).isAIFreeTechs(iI)) ||
+						  (!(GET_TEAM((TeamTypes)iJ).isHuman())&& GC.getHandicapInfo(getHandicapType()).isAIFreeTechs(iI)) && !isOption(GAMEOPTION_ADVANCED_START) || // DarkLunaPhantom - Don't give handicap techs in advanced start.
 						  (GC.getTechInfo((TechTypes)iI).getEra() < getStartEra()))
 					{
 						bValid = true;
@@ -848,8 +848,8 @@ void CvGame::initFreeState()
 						{
 							if (kLoopPlayer.getTeam() == iJ)
 							{
-								if (GC.getCivilizationInfo(kLoopPlayer.getCivilizationType()).isCivilizationFreeTechs(iI) ||
-									(GC.getHandicapInfo(kLoopPlayer.getHandicapType()).isFreeTechs(iI))) // K-Mod (give techs based on player handicap, not game handicap.)
+								if (GC.getCivilizationInfo(kLoopPlayer.getCivilizationType()).isCivilizationFreeTechs(iI) || // DarkLunaPhantom - Don't give handicap techs in advanced start.
+									(GC.getHandicapInfo(kLoopPlayer.getHandicapType()).isFreeTechs(iI) && !isOption(GAMEOPTION_ADVANCED_START))) // K-Mod (give techs based on player handicap, not game handicap.)
 								{
 									bValid = true;
 									break;
