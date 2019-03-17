@@ -4443,7 +4443,7 @@ void CvTeam::setVassal(TeamTypes eIndex, bool bNewValue, bool bCapitulated)
 						if (GET_TEAM(eIndex).isAtWar((TeamTypes)iI))
 						{
 							//declareWar(((TeamTypes)iI), false, WARPLAN_DOGPILE);
-							queueWar(getID(), (TeamTypes)iI, false, WARPLAN_DOGPILE, !bCapitulated); // DarkLunaPhantom
+							queueWar(getID(), (TeamTypes)iI, false, WARPLAN_DOGPILE, !bCapitulated); // DarkLunaPhantom - These wars declared by capitulated vassal don't trigger defensive pacts.
 						}
 						else if (isAtWar((TeamTypes)iI))
 						{
