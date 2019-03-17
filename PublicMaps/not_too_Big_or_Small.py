@@ -17,13 +17,14 @@ def isAdvancedMap():
 	return 0
 
 def getNumCustomMapOptions():
-	return 2
+	return 3
 	
 def getCustomMapOptionName(argsList):
 	[iOption] = argsList
 	option_names = {
 		0:	"TXT_KEY_MAP_SCRIPT_CONTINENTS_SIZE",
-		1:	"TXT_KEY_MAP_SCRIPT_ISLANDS_SIZE"
+		1:	"TXT_KEY_MAP_SCRIPT_ISLANDS_SIZE",
+		2:	"TXT_KEY_MAP_WORLD_WRAP"
 		}
 	translated_text = unicode(CyTranslator().getText(option_names[iOption], ()))
 	return translated_text
@@ -32,7 +33,8 @@ def getNumCustomMapOptionValues(argsList):
 	[iOption] = argsList
 	option_values = {
 		0:	3,
-		1:	2
+		1:	2,
+		2:	3
 		}
 	return option_values[iOption]
 	
@@ -47,6 +49,11 @@ def getCustomMapOptionDescAt(argsList):
 		1:	{
 			0: "TXT_KEY_MAP_SCRIPT_ISLANDS",
 			1: "TXT_KEY_MAP_SCRIPT_TINY_ISLANDS"
+			},
+		2:	{
+			0: "TXT_KEY_MAP_WRAP_FLAT",
+			1: "TXT_KEY_MAP_WRAP_CYLINDER",
+			2: "TXT_KEY_MAP_WRAP_TOROID"
 			}
 		}
 	translated_text = unicode(CyTranslator().getText(selection_names[iOption][iSelection], ()))
@@ -56,9 +63,16 @@ def getCustomMapOptionDefault(argsList):
 	[iOption] = argsList
 	option_defaults = {
 		0:	1,
-		1:	0
+		1:	0,
+		2:	1
 		}
 	return option_defaults[iOption]
+	
+def getWrapX():
+	return (CyMap().getCustomMapOption(2) >= 1)
+	
+def getWrapY():
+	return (CyMap().getCustomMapOption(2) == 2)
 
 def minStartingDistanceModifier():
 	return -12
