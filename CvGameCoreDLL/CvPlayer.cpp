@@ -11939,7 +11939,7 @@ void CvPlayer::setLastStateReligion(ReligionTypes eNewValue)
 
 			if (!isBarbarian())
 			{
-				if (getLastStateReligion() != NO_RELIGION)
+				// if (getLastStateReligion() != NO_RELIGION) // DarkLunaPhantom - Show message when a player abandons its state religion.
 				{
 					for (iI = 0; iI < MAX_PLAYERS; iI++)
 					{
@@ -11947,13 +11947,28 @@ void CvPlayer::setLastStateReligion(ReligionTypes eNewValue)
 						{
 							if (GET_TEAM(getTeam()).isHasMet(GET_PLAYER((PlayerTypes)iI).getTeam()))
 							{
-								szBuffer = gDLL->getText("TXT_KEY_MISC_PLAYER_CONVERT_RELIGION", getNameKey(), GC.getReligionInfo(getLastStateReligion()).getTextKeyWide());
+								if (getLastStateReligion() != NO_RELIGION) // DarkLunaPhantom
+								{
+									szBuffer = gDLL->getText("TXT_KEY_MISC_PLAYER_CONVERT_RELIGION", getNameKey(), GC.getReligionInfo(getLastStateReligion()).getTextKeyWide());
+									
+								}
+								else
+								{
+									szBuffer = gDLL->getText("TXT_KEY_MISC_PLAYER_CONVERT_NO_RELIGION", getNameKey());
+								}
 								gDLL->getInterfaceIFace()->addHumanMessage(((PlayerTypes)iI), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_RELIGION_CONVERT", MESSAGE_TYPE_MAJOR_EVENT);
 							}
 						}
 					}
 
-					szBuffer = gDLL->getText("TXT_KEY_MISC_PLAYER_CONVERT_RELIGION", getNameKey(), GC.getReligionInfo(getLastStateReligion()).getTextKeyWide());
+					if (getLastStateReligion() != NO_RELIGION) // DarkLunaPhantom
+					{
+						szBuffer = gDLL->getText("TXT_KEY_MISC_PLAYER_CONVERT_RELIGION", getNameKey(), GC.getReligionInfo(getLastStateReligion()).getTextKeyWide());
+					}
+					else
+					{
+						szBuffer = gDLL->getText("TXT_KEY_MISC_PLAYER_CONVERT_NO_RELIGION", getNameKey());
+					}
 					GC.getGameINLINE().addReplayMessage(REPLAY_MESSAGE_MAJOR_EVENT, getID(), szBuffer);
 				}
 			}

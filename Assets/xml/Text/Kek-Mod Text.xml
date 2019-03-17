@@ -49,4 +49,12 @@
 		<Italian>Pi&#249; di due civilt&#224; possono formare un'alleanza permanente che dura per il resto del partito.</Italian>
 		<Spanish>M&#225;s de dos civilizaciones pueden formar una alianza permanente que dura para el resto de la fiesta.</Spanish>
 	</TEXT>
+		<TEXT>
+		<Tag>TXT_KEY_MISC_PLAYER_CONVERT_NO_RELIGION</Tag>
+		<English>%s1_PlyrName converts to [COLOR_HIGHLIGHT_TEXT]No State Religion[COLOR_REVERT]!</English>
+		<French>%s1_PlyrName se convertit &#224; [COLOR_HIGHLIGHT_TEXT]aucune religion d'État.[COLOR_REVERT]!</French>
+		<German>%s1_PlyrName konvertiert zu [COLOR_HIGHLIGHT_TEXT]keiner Staatsreligion[COLOR_REVERT]!</German>
+		<Italian>%s1_PlyrName si converte in [COLOR_HIGHLIGHT_TEXT]nessuna religione di stato[COLOR_REVERT]!</Italian>
+		<Spanish>%s1_PlyrName se convierte a [COLOR_HIGHLIGHT_TEXT]la religión no estatal[COLOR_REVERT].</Spanish>
+	</TEXT>
 </Civ4GameText>
