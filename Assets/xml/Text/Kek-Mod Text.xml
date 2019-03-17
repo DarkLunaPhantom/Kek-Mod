@@ -57,4 +57,32 @@
 		<Italian>%s1_PlyrName si converte in [COLOR_HIGHLIGHT_TEXT]nessuna religione di stato[COLOR_REVERT]!</Italian>
 		<Spanish>%s1_PlyrName se convierte a [COLOR_HIGHLIGHT_TEXT]la religión no estatal[COLOR_REVERT].</Spanish>
 	</TEXT>
+		<TEXT>
+		<Tag>TXT_KEY_PROCESS_ESPIONAGE</Tag>
+		<English>Espionage</English>
+		<French>
+			<Text>Espionnage</Text>
+			<Plural>0</Plural>
+		</French>
+		<German>
+			<Text>Spionage</Text>
+			<Plural>0</Plural>
+		</German>
+		<Italian>
+			<Text>Spionaggio</Text>
+			<Plural>0</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Espionaje</Text>
+			<Plural>0</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PROCESS_ESPIONAGE_STRATEGY</Tag>
+		<English>Focusing on espionage converts production into espionage within that particular city.</English>
+		<French>Si vous favorisez l'espionnage, la production est transform&#233;e en espionnage dans cette ville.</French>
+		<German>Konzentrieren Sie sich auf die Spionage, tritt in der jeweiligen Stadt die Spionage an die Stelle der Produktion.</German>
+		<Italian>Concentrandoti sullo spionaggio, trasformerai la produzione in spionaggio in una determinata citt&#224;.</Italian>
+		<Spanish>Al centrarse en el espionaje, la producci&#243;n se convierte en espionaje en esa ciudad en concreto.</Spanish>
+	</TEXT>
 </Civ4GameText>

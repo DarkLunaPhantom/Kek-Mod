@@ -42,5 +42,18 @@
 			</ProductionToCommerceModifiers>
 			<Button>Art/Interface/Buttons/Process/ProcessCulture.dds</Button>
 		</ProcessInfo>
+		<ProcessInfo>
+			<Type>PROCESS_ESPIONAGE</Type>
+			<Description>TXT_KEY_PROCESS_ESPIONAGE</Description>
+			<Strategy>TXT_KEY_PROCESS_ESPIONAGE_STRATEGY</Strategy>
+			<TechPrereq>TECH_UTOPIA</TechPrereq>
+			<ProductionToCommerceModifiers>
+				<iProductionToCommerceModifier>0</iProductionToCommerceModifier>
+				<iProductionToCommerceModifier>0</iProductionToCommerceModifier>
+				<iProductionToCommerceModifier>0</iProductionToCommerceModifier>
+				<iProductionToCommerceModifier>100</iProductionToCommerceModifier>
+			</ProductionToCommerceModifiers>
+			<Button>Art/Interface/Buttons/Process/ProcessEspionage.dds</Button>
+		</ProcessInfo>
 	</ProcessInfos>
 </Civ4ProcessInfo>
