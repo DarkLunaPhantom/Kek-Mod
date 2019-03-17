@@ -14840,8 +14840,10 @@ int CvPlayer::getEspionageMissionCost(EspionageMissionTypes eMission, PlayerType
 		return -1;
 	}
 
-	// Multiply cost of mission * number of team members
-	iMissionCost *= GET_TEAM(getTeam()).getNumMembers();
+	// DarkLunaPhantom - New formula for espionage costs in team. Essentially, I want costs to scale with 1+0.5(number of members - 1), but since there are two teams (and two directions) involved,
+	// it will scale with the square root of the ratio of those values. Idea for formula by Fran.
+	//iMissionCost *= GET_TEAM(getTeam()).getNumMembers();
+	iMissionCost *= sqrt((1 + 0.5 * (GET_TEAM(getTeam()).getNumMembers() - 1))/(1 + 0.5 * (GET_TEAM(GET_PLAYER(eTargetPlayer).getTeam()).getNumMembers() - 1)));
 
 	iMissionCost *= getEspionageMissionCostModifier(eMission, eTargetPlayer, pPlot, iExtraData, pSpyUnit);
 	iMissionCost /= 100;

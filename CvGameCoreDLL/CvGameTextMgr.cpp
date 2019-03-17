@@ -17290,7 +17290,10 @@ void CvGameTextMgr::setEspionageCostHelp(CvWStringBuffer &szBuffer, EspionageMis
 	//szBuffer.assign(kMission.getDescription());
 
 	int iMissionCost = kPlayer.getEspionageMissionBaseCost(eMission, eTargetPlayer, pPlot, iExtraData, pSpyUnit);
-	iMissionCost *= GET_TEAM(kPlayer.getTeam()).getNumMembers(); // K-Mod
+	// DarkLunaPhantom - New formula for espionage costs in team. Essentially, I want costs to scale with 1+0.5(number of members - 1), but since there are two teams (and two directions) involved,
+	// it will scale with the square root of the ratio of those values. Idea for formula by Fran.
+	//iMissionCost *= GET_TEAM(kPlayer.getTeam()).getNumMembers(); // K-Mod
+	iMissionCost *= sqrt((1 + 0.5 * (GET_TEAM(kPlayer.getTeam()).getNumMembers() - 1))/(1 + 0.5 * (GET_TEAM(GET_PLAYER(eTargetPlayer).getTeam()).getNumMembers() - 1)));
 
 	if (kMission.isDestroyImprovement())
 	{
