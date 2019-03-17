@@ -167,7 +167,7 @@ void CyPlayerPythonInterface1(python::class_<CyPlayer>& x)
 		.def("canDoReligion", &CyPlayer::canDoReligion, "int (int /*ReligionTypes*/ eReligion)")
 		.def("canChangeReligion", &CyPlayer::canChangeReligion, "bool ()")
 		.def("canConvert", &CyPlayer::canConvert, "bool (int /*ReligionTypes*/ iIndex)")
-		.def("convert", &CyPlayer::convert, "void (int /*ReligionTypes*/ iIndex)")
+		.def("convert", &CyPlayer::convert, "void (int /*ReligionTypes*/ iIndex, bool bForce)")
 		.def("hasHolyCity", &CyPlayer::hasHolyCity, "bool (int (ReligionTypes) eReligion)")
 		.def("countHolyCities", &CyPlayer::countHolyCities, "int () - Counts the # of holy cities this player has")
 

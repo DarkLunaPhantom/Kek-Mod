@@ -8549,12 +8549,13 @@ bool CvPlayer::canConvert(ReligionTypes eReligion) const
 	return true;
 }
 
-
-void CvPlayer::convert(ReligionTypes eReligion)
+//void CvPlayer::convert(ReligionTypes eReligion)
+void CvPlayer::convert(ReligionTypes eReligion, bool bForce) // DarkLunaPhantom - Religious conversion can be forced. Idea by f1rpo.
 {
 	int iAnarchyLength;
 
-	if (!canConvert(eReligion))
+	//if (!canConvert(eReligion))
+	if (!canConvert(eReligion) && !bForce) // DarkLunaPhantom
 	{
 		return;
 	}

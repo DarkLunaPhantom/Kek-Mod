@@ -933,7 +933,8 @@ bool CvDeal::startTrade(TradeData trade, PlayerTypes eFromPlayer, PlayerTypes eT
 		break;
 
 	case TRADE_RELIGION:
-		GET_PLAYER(eFromPlayer).convert((ReligionTypes)trade.m_iData);
+		// GET_PLAYER(eFromPlayer).convert((ReligionTypes)trade.m_iData);
+		GET_PLAYER(eFromPlayer).convert((ReligionTypes)trade.m_iData, true); // DarkLunaPhantom - Religious conversion here is forced like in the case of civics. Idea by f1rpo.
 
 		if (GET_PLAYER(eFromPlayer).AI_getReligionTimer() < GC.getDefineINT("PEACE_TREATY_LENGTH"))
 		{

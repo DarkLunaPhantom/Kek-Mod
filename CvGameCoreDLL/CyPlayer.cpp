@@ -669,10 +669,12 @@ bool CyPlayer::canConvert(int /*ReligionTypes*/ iIndex)
 	return m_pPlayer ? m_pPlayer->canConvert((ReligionTypes)iIndex) : false;
 }
 
-void CyPlayer::convert(int /*ReligionTypes*/ iIndex)
+//void CyPlayer::convert(int /*ReligionTypes*/ iIndex)
+void CyPlayer::convert(int /*ReligionTypes*/ iIndex, bool bForce) // DarkLunaPhantom - Religious conversion can be forced. Idea by f1rpo.
 {
 	if (m_pPlayer)
-		m_pPlayer->convert((ReligionTypes)iIndex);
+		//m_pPlayer->convert((ReligionTypes)iIndex);
+		m_pPlayer->convert((ReligionTypes)iIndex, bForce);
 }
 
 bool CyPlayer::hasHolyCity(int /*ReligionTypes*/ eReligion)

@@ -179,7 +179,8 @@ public:
 	bool canDoReligion(int /*ReligionTypes*/ eReligion);
 	bool canChangeReligion();
 	bool canConvert(int /*ReligionTypes*/ iIndex);
-	void convert(int /*ReligionTypes*/ iIndex);
+	//void convert(int /*ReligionTypes*/ iIndex);
+	void convert(int /*ReligionTypes*/ iIndex, bool bForce);  // DarkLunaPhantom - Religious conversion can be forced. Idea by f1rpo.
 	bool hasHolyCity(int /*ReligionTypes*/ eReligion);
 	int countHolyCities();
 
