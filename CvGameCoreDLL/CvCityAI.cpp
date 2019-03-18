@@ -2106,7 +2106,8 @@ void CvCityAI::AI_chooseProduction()
 	
 		if (!bFinancialTrouble && iMissileCarriers > 0 && !bImportantCity)
 		{
-			if( (iProductionRank <= ((kPlayer.getNumCities() / 2) + 1)) )
+			//if( (iProductionRank <= ((kPlayer.getNumCities() / 2) + 1)) )
+			if( (iProductionRank > ((kPlayer.getNumCities() / 2) + 1)) ) // DarkLunaPhantom - I assume this was a bug, i.e. missiles for filling up missile carriers should be built in cities with low production.
 			{
 				UnitTypes eBestMissileCarrierUnit = NO_UNIT;  
 				kPlayer.AI_bestCityUnitAIValue(UNITAI_MISSILE_CARRIER_SEA, NULL, &eBestMissileCarrierUnit);
