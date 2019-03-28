@@ -8,6 +8,7 @@
 #include "CyCity.h"
 
 void CyCityPythonInterface1(python::class_<CyCity>& x);
+void CyCityPythonInterface2(python::class_<CyCity>& x);
 void CyPlotPythonInterface1(python::class_<CyPlot>& x);
 void CyPlayerPythonInterface1(python::class_<CyPlayer>& x);
 void CyPlayerPythonInterface2(python::class_<CyPlayer>& x);
@@ -61,21 +62,22 @@ DllExport void DLLPublishToPython()
 	// large interfaces which can be split across files if need be
 	//
 	python::class_<CyCity> city ("CyCity");		// define city class
-	CyCityPythonInterface1(city);				// publish it's methods
+	CyCityPythonInterface1(city);				// publish its methods
+	CyCityPythonInterface2(city);               // publish its methods
 
 	python::class_<CyPlayer> player ("CyPlayer");	// define player class
-	CyPlayerPythonInterface1(player);				// publish it's methods
-	CyPlayerPythonInterface2(player);				// publish it's methods
+	CyPlayerPythonInterface1(player);				// publish its methods
+	CyPlayerPythonInterface2(player);				// publish its methods
 
 	python::class_<CyUnit> unit ("CyUnit");		// define unit class
-	CyUnitPythonInterface1(unit);				// publish it's methods
+	CyUnitPythonInterface1(unit);				// publish its methods
 
 	python::class_<CyPlot> plot ("CyPlot");		// define plot class
-	CyPlotPythonInterface1(plot);				// publish it's methods
+	CyPlotPythonInterface1(plot);				// publish its methods
 
 	python::class_<CyGlobalContext> gc ("CyGlobalContext");	// define globals class 
-	CyGlobalContextPythonInterface1(gc);					// publish it's methods 
-	CyGlobalContextPythonInterface2(gc);					// publish it's methods
-	CyGlobalContextPythonInterface3(gc);					// publish it's methods
-	CyGlobalContextPythonInterface4(gc);					// publish it's methods 
+	CyGlobalContextPythonInterface1(gc);					// publish its methods 
+	CyGlobalContextPythonInterface2(gc);					// publish its methods
+	CyGlobalContextPythonInterface3(gc);					// publish its methods
+	CyGlobalContextPythonInterface4(gc);					// publish its methods 
 }

@@ -333,6 +333,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\CyCityInterface2.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\CyDeal.cpp"
 				>
 			</File>
