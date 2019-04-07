@@ -24019,7 +24019,7 @@ int CvUnitAI::AI_nukeValue(CvPlot* pCenterPlot, int iSearchRange, CvPlot*& pBest
 								int iBasicCost = 0;
 								for (int iI = 0; iI < aeConscriptUnits.size(); ++iI)
 								{
-									iBasicCost += GC.getUnitInfo(aeConscriptUnits[i]).getProductionCost();
+									iBasicCost += GC.getUnitInfo(aeConscriptUnits[iI]).getProductionCost();
 								}
 								iBasicCost /= std::max(1, (int)aeConscriptUnits.size());
 								iBasicCost = std::max(10, iBasicCost);
