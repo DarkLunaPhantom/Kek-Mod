@@ -865,7 +865,7 @@ public:
 	int getDomainCargo() const;								// Exposed to Python
 
 	int getCargoSpace() const;								// Exposed to Python
-	int getConscriptionValue() const;					// Exposed to Python
+	//int getConscriptionValue() const;					// Exposed to Python // DarkLunaPhantom - Unused. cf. CvCity::getConscriptUnits
 	int getCultureGarrisonValue() const;			// Exposed to Python
 	int getExtraCost() const;									// Exposed to Python
 	int getAssetValue() const;								// Exposed to Python

@@ -3632,9 +3632,7 @@ std::wstring CvCity::getConscriptText() const
 	{
 		if (iI > 0)
 		{
-			szConscriptText += L" ";
 			szConscriptText += gDLL->getText("TXT_KEY_OR");
-			szConscriptText += L" ";
 		}
 		szConscriptText += GC.getUnitInfo(aeConscriptUnits[iI]).getDescription();
 	}

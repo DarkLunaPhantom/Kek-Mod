@@ -241,7 +241,7 @@ void CyInfoPythonInterface1()
 		.def("getDomainCargo", &CvUnitInfo::getDomainCargo, "int ()")
 
 		.def("getCargoSpace", &CvUnitInfo::getCargoSpace, "int ()")
-		.def("getConscriptionValue", &CvUnitInfo::getConscriptionValue, "int ()")
+		//.def("getConscriptionValue", &CvUnitInfo::getConscriptionValue, "int ()") // DarkLunaPhantom - Unused. cf. CvCity::getConscriptUnits
 		.def("getCultureGarrisonValue", &CvUnitInfo::getCultureGarrisonValue, "int ()")
 		.def("getExtraCost", &CvUnitInfo::getExtraCost, "int ()")
 		.def("getAssetValue", &CvUnitInfo::getAssetValue, "int ()")

@@ -3503,10 +3503,11 @@ int CvUnitInfo::getCargoSpace() const
 	return m_iCargoSpace;
 }
 
-int CvUnitInfo::getConscriptionValue() const
+// DarkLunaPhantom - Unused. cf. CvCity::getConscriptUnits
+/*int CvUnitInfo::getConscriptionValue() const
 {
 	return m_iConscriptionValue;
-}
+}*/
 
 int CvUnitInfo::getCultureGarrisonValue() const
 {
