@@ -850,7 +850,8 @@ class MultilayeredFractal:
 			WorldSizeTypes.WORLDSIZE_SMALL:	 (3,2,1,2),
 			WorldSizeTypes.WORLDSIZE_STANDARD:  (4,2,1,2),
 			WorldSizeTypes.WORLDSIZE_LARGE:	 (4,2,1,2),
-			WorldSizeTypes.WORLDSIZE_HUGE:	  (5,2,1,2)
+			WorldSizeTypes.WORLDSIZE_HUGE:	  (5,2,1,2),
+			WorldSizeTypes.WORLDSIZE_GIGANTIC:	  (5,2,1,2)
 			}
 		# You can add as many grain entries as you like.
 		# Seed them all from the matrix using the following type of line:

@@ -151,5 +151,29 @@
 			<iNumCitiesAnarchyPercent>6</iNumCitiesAnarchyPercent>
 			<iAdvancedStartPointsMod>120</iAdvancedStartPointsMod>
 		</WorldInfo>
+		<WorldInfo>
+			<Type>WORLDSIZE_GIGANTIC</Type>
+			<Description>TXT_KEY_WORLD_GIGANTIC</Description>
+			<Help>TXT_KEY_WORLD_GIGANTIC_HELP</Help>
+			<iDefaultPlayers>13</iDefaultPlayers>
+			<iUnitNameModifier>0</iUnitNameModifier>
+			<iTargetNumCities>7</iTargetNumCities>
+			<iNumFreeBuildingBonuses>9</iNumFreeBuildingBonuses>
+			<iBuildingClassPrereqModifier>125</iBuildingClassPrereqModifier>
+			<iMaxConscriptModifier>100</iMaxConscriptModifier>
+			<iWarWearinessModifier>-70</iWarWearinessModifier>
+			<iGridWidth>40</iGridWidth>
+			<iGridHeight>25</iGridHeight>
+			<iTerrainGrainChange>2</iTerrainGrainChange>
+			<iFeatureGrainChange>2</iFeatureGrainChange>
+			<iResearchPercent>160</iResearchPercent>
+			<iTradeProfitPercent>20</iTradeProfitPercent>
+			<iDistanceMaintenancePercent>110</iDistanceMaintenancePercent>
+			<iNumCitiesMaintenancePercent>15</iNumCitiesMaintenancePercent>
+			<iColonyMaintenancePercent>22</iColonyMaintenancePercent>
+			<iCorporationMaintenancePercent>35</iCorporationMaintenancePercent>
+			<iNumCitiesAnarchyPercent>5</iNumCitiesAnarchyPercent>
+			<iAdvancedStartPointsMod>130</iAdvancedStartPointsMod>
+		</WorldInfo>
 	</WorldInfos>
 </Civ4WorldInfo>

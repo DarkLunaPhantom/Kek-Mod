@@ -627,6 +627,7 @@ enum WorldSizeTypes				// Exposed to Python
 	WORLDSIZE_STANDARD,
 	WORLDSIZE_LARGE,
 	WORLDSIZE_HUGE,
+	WORLDSIZE_GIGANTIC, // DarkLunaPhantom
 
 #ifdef _USRDLL
 	NUM_WORLDSIZE_TYPES

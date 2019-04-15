@@ -117,4 +117,36 @@
 		<Italian>Caldo</Italian>
 		<Spanish>C&#225;lido</Spanish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WORLD_GIGANTIC</Tag>
+		<English>Gigantic</English>
+		<French>
+			<Text>Gigantesque</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</French>
+		<German>
+			<Text>Gigantisch</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>
+			<Text>Gigantesco</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Gigantesco</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WORLDSIZE_GIGANTIC_HELP</Tag>
+		<English>If you are looking for a truly epic experience, this map size is for you.  It has room for you and 12 opponents.</English>
+		<French>Si vous voulez vivre une v&#233;ritable &#233;pop&#233;e, cette carte est faite pour vous. Elle est immense et oppose 12 adversaires.</French>
+		<German>Wenn Sie eine unvergessliche Erfahrung suchen, ist diese Karte Ihre erste Wahl. Immerhin treffen Sie hier auf bis zu 12 Gegner!</German>
+		<Italian>Se sei alla ricerca di un'esperienza davvero epica, la dimensione di questa mappa &#232; quello che fa per te, poich&#233; oltre a te c'&#232; posto per altri dodici rivali.</Italian>
+		<Spanish>Si quer&#233;is una experiencia &#233;pica de verdad, el tama&#241;o de este mapa es lo que and&#225;is buscando.  Tiene espacio suficiente para vos y para otros doce rivales.</Spanish>
+	</TEXT>
 </Civ4GameText>
