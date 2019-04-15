@@ -9,6 +9,22 @@
 #include "CvDeal.h"
 #include "CvRandom.h"
 
+// PB Mod
+#include <iostream>
+
+#define BOOST_THREAD_NO_LIB
+#define BOOST_THREAD_USE_LIB
+#include <boost/bind.hpp>
+#include <boost/thread.hpp>
+#include <boost/noncopyable.hpp>
+
+#include "CyArgsList.h"
+
+#define WITH_TIMER
+class Timer;
+// PB Mod END
+
+
 class CvPlot;
 class CvCity;
 class CvReplayMessage;
@@ -580,8 +596,10 @@ public:
 
 	DllExport void handleDiplomacySetAIComment(DiploCommentTypes eComment) const;
 	// PB Mod begin
-	DllExport bool isDiploScreenUp() const;
-	// PB Mod end
+	bool isDiploScreenUp() const;
+	int delayedPythonCall(int milliseconds, int arg1 = -1, int arg2 = -1); // Starts new thread
+	int delayedPythonCall2(); // Called by other thread
+	// PB Mod END
 
 	std::set<int> m_ActivePlayerCycledGroups; // K-Mod. This is used to track which groups have been cycled through in the current turn. Note: it does not need to be kept in sync for multiplayer games.
 
@@ -688,6 +706,15 @@ protected:
 
 	int		m_iNumCultureVictoryCities;
 	int		m_eCultureVictoryCultureLevel;
+
+// PB Mod
+#ifdef WITH_TIMER
+	Timer *m_pTimer;
+	HANDLE m_pMainThreadDup;
+	CyArgsList m_timerArgsList;
+#endif
+// PB Mod END
+
 
 	void doTurn();
 	void doDeals();

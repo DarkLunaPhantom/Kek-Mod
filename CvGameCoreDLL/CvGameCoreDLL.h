@@ -13,8 +13,18 @@
 //
 #pragma warning( disable: 4530 )	// C++ exception handler used, but unwind semantics are not enabled
 
+#if 0
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+
+#else 
+#define WIN32_LEAN_AND_MEAN
+#define _WIN32_WINNT 0x0501
+#include <windows.h>
+#include <shldisp.h> // For BSTR
+
+#endif
+
 #include <MMSystem.h>
 #if defined _DEBUG && !defined USE_MEMMANAGER
 #define USE_MEMMANAGER
@@ -218,6 +228,12 @@ void DumpMemUsage(const char* fn, int line);
 #define MEMORY_TRACE_FUNCTION()
 #endif
 
+// PB Mod
+int StringToWString(std::wstring &ws, const std::string &s);
+int CharToWString(std::wstring &ws, const char *chars);
+const char *get_dll_folder();
+bool Unzip2Folder( BSTR lpZipFile, BSTR lpFolder);
+// PB Mod End
 
 //
 // Boost Python

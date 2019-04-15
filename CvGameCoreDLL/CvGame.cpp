@@ -33,9 +33,134 @@
 #include "BetterBTSAI.h" // bbai
 #include "CvBugOptions.h" // K-Mod
 
+//PB Mod
+
+/* Delayed Python Call stuff ... */
+
+#ifdef WITH_TIMER
+class Timer : boost::noncopyable
+{
+		boost::xtime wait_time, next_time;
+		boost::mutex monitor;
+		boost::condition aborted;
+		boost::thread thread;
+		CvGame *m_pGame;
+public:
+
+		explicit Timer(boost::xtime const & interval, CvGame *pGame)
+				: wait_time(interval)
+				, m_pGame(pGame)
+				, thread( boost::bind(& Timer::thread_body, this) )
+		{ }
+
+		~Timer()
+		{
+				aborted.notify_one();
+#ifdef NEWER_BOOST_VERSION_REQ
+				try
+				{
+						thread.join();
+				}
+				catch ( const boost::thread_interrupted& )
+				{
+						/* suppressed to avoid kill of application*/
+				}
+#else
+				thread.join();
+#endif
+		}
+
+		private:
+
+		void calc_next_time()
+		{
+				boost::xtime_get(& next_time, boost::TIME_UTC);
+				next_time.sec += wait_time.sec;
+				next_time.nsec += wait_time.nsec;
+				next_time.sec += next_time.nsec / 1000000000;
+				next_time.nsec %= 1000000000;
+		}
+
+		void thread_body()
+		{
+				boost::mutex::scoped_lock lock(monitor);
+
+				for (;;)
+				{
+						calc_next_time();
+						if (aborted.timed_wait(lock, next_time)) break;
+
+						// Event ...
+						//std::cout << "event" << std::endl;
+						int next_milliseconds = m_pGame->delayedPythonCall2();
+
+						if (next_milliseconds == 0){
+								break; // Quit delayed thread
+						}
+
+						wait_time.sec = next_milliseconds/1000;
+						wait_time.nsec = (next_milliseconds%1000)*1000000L;
+				}
+		}
+};
+#endif
+
+int CvGame::delayedPythonCall(int milliseconds, int arg1, int arg2)
+{
+#ifdef WITH_TIMER 
+		// Destroy previous timer object. If this timer is still waiting, it will abort.
+		if (m_pTimer){
+				delete m_pTimer; m_pTimer = NULL;
+		}
+
+		// Save handle to current thread. It suspends this thread if delayedPythonCall2
+		// is called. (Hardcore mutex :))
+		DuplicateHandle(GetCurrentProcess(),
+						GetCurrentThread(),
+						GetCurrentProcess(),
+						&m_pMainThreadDup,
+						0,
+						FALSE,
+						DUPLICATE_SAME_ACCESS);
+
+		m_timerArgsList.clear();
+		m_timerArgsList.add(arg1);
+		m_timerArgsList.add(arg2);
+
+		boost::xtime interval = { milliseconds/1000, (milliseconds%1000)*1000000L }; // sec, nanosec.
+		m_pTimer = new Timer(interval, this);
+#endif
+		return 0;
+}
+
+int CvGame::delayedPythonCall2()
+{
+		long lResult=0;
+		if( m_pMainThreadDup ){
+			SuspendThread(m_pMainThreadDup);
+		}
+		gDLL->getPythonIFace()->callFunction(PYGameModule, "delayedPythonCall", m_timerArgsList.makeFunctionArgs(), &lResult);
+		if( m_pMainThreadDup ){
+			ResumeThread(m_pMainThreadDup);
+		}
+		if (lResult >= 0)
+		{
+				//...
+				return lResult; // Repeat
+		}
+
+		return 0; // Abort
+}
+//PB Mod END
+
 // Public Functions...
 
 CvGame::CvGame()
+#ifdef WITH_TIMER //PB Mod
+		: m_pTimer(NULL)
+		, m_pMainThreadDup(NULL)
+		, m_timerArgsList()
+#endif
 {
 	m_aiRankPlayer = new int[MAX_PLAYERS];        // Ordered by rank...
 	m_aiPlayerRank = new int[MAX_PLAYERS];        // Ordered by player ID...
@@ -75,6 +200,12 @@ CvGame::CvGame()
 CvGame::~CvGame()
 {
 	uninit();
+
+#ifdef WITH_TIMER //PB Mod
+	if (m_pTimer){
+			delete m_pTimer; m_pTimer = NULL;
+	}
+#endif
 
 	SAFE_DELETE_ARRAY(m_aiRankPlayer);
 	SAFE_DELETE_ARRAY(m_aiPlayerRank);

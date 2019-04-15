@@ -9,6 +9,7 @@
 #include "CvDLLUtilityIFaceBase.h"
 #include "CvGameAI.h"
 #include "CvGameCoreUtils.h"
+#include "CvMessageControl.h"
 
 // PB Mod begin
 #define PBMOD_FRAME_POINTER_ENABLED 1
@@ -2164,5 +2165,19 @@ void CvInitCore::setPitbossShortNames( bool bShort, int maxLenName, int maxLenDe
 		pbmod.iMaxLenName = maxLenName>0?maxLenName:0;
 		pbmod.iMaxLenDesc = maxLenDesc>0?maxLenDesc:0;
 	}
+}
+
+void CvInitCore::sendTurnCompletePB(PlayerTypes eActivePlayer)
+{
+  // required to set active player variable without side effects.
+  if( gDLL->IsPitbossHost() ){
+    if( (int)eActivePlayer > NO_PLAYER && (int)eActivePlayer <= MAX_CIV_PLAYERS){
+      PlayerTypes backup_active;
+      backup_active = m_eActivePlayer;
+      m_eActivePlayer = eActivePlayer;
+      CvMessageControl::getInstance().sendTurnComplete();
+      m_eActivePlayer = backup_active;
+    }
+  }
 }
 // PB Mod end

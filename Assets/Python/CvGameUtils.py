@@ -6,6 +6,7 @@
 import CvUtil
 from CvPythonExtensions import *
 import CvEventInterface
+import CvScreensInterface
 
 # globals
 gc = CyGlobalContext()
@@ -713,3 +714,30 @@ class CvGameUtils:
 		if 0 != iModifier:
 			iExperienceNeeded += (iExperienceNeeded * iModifier + 99) / 100   # ROUND UP
 		return iExperienceNeeded
+		
+	def delayedPythonCall(self, argsList):
+		iArg1, iArg2 = argsList
+		#print("delayedPythonCall triggerd with %i %i" % (iArg1, iArg2))
+
+		if iArg1 == 1 and iArg2 == 0:
+
+			# To avoid nested redrawing of two threads (leads to CtD)
+			# try to win the battle by periodical requests if getMousePos()
+			# returns a valid value.
+			#(If yes, drawing will not causes an 'unidentifiable C++ exception'
+			# in fullscreen mode.)
+
+			iRepeat = 15  # Milliseconds till next check
+			pt = CyInterface().getMousePos()
+			#print("Mouse position (%i, %i)" % (int(pt.x), int(pt.y)))
+
+			if pt.x == 0 and pt.y == 0:
+				return iRepeat
+			else:
+				if not CvScreensInterface.modUpdaterScreen.FIRST_DRAWN:
+					CvScreensInterface.showModUpdaterScreen()
+
+				return 0
+
+		# Unhandled argument combination... Should not be reached.
+		return 0
