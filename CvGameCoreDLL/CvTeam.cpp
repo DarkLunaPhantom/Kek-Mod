@@ -745,7 +745,7 @@ void CvTeam::addTeam(TeamTypes eTeam)
 	}
 	// K-Mod end
 
-	for (iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
+	for (int iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
 	{
 		pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
 		
@@ -772,7 +772,7 @@ void CvTeam::addTeam(TeamTypes eTeam)
 
 	int iOtherTeamSize = getNumMembers() - iOriginalTeamSize; // DarkLunaPhantom
 	
-	for (iI = 0; iI < MAX_TEAMS; iI++)
+	for (int iI = 0; iI < MAX_TEAMS; iI++)
 	{
 		if ((iI != getID()) && (iI != eTeam))
 		{

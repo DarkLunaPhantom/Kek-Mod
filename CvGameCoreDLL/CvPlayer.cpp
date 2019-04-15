@@ -1986,7 +1986,7 @@ CvPlot* CvPlayer::findStartingPlot(bool bRandomize)
 	//for(int iPass = 0; iPass < GC.getMapINLINE().maxPlotDistance(); iPass++)
 	for(int iPass = 0; iPass < 2; ++iPass) // DarkLunaPhantom - First pass avoids starting locations that have very little food (before normalization) to avoid starting on the edge of very bad terrain.
 	{
-		for(int iJ = 0; iJ < areas_by_value.size(); ++iJ) // DarkLunaPhantom
+		for(int iJ = 0; iJ < (int)areas_by_value.size(); ++iJ) // DarkLunaPhantom
 		{
 			CvPlot *pBestPlot = NULL;
 			int iBestValue = 0;
@@ -2403,7 +2403,7 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 	pNewCity->setNeverLost(false);
 	pNewCity->changeDefenseDamage(iDamage);
 
-	for (iI = 0; iI < MAX_PLAYERS; iI++)
+	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{
 		pNewCity->setEverOwned(((PlayerTypes)iI), abEverOwned[iI]);
 		pNewCity->setCultureTimes100(((PlayerTypes)iI), aiCulture[iI], false, false);
@@ -2418,7 +2418,7 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
     }
     // DarkLunaPhantom end
 
-	for (iI = 0; iI < GC.getNumBuildingInfos(); iI++)
+	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 	{
 		int iNum = 0;
 
@@ -2482,12 +2482,12 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 		pNewCity->setBuildingHealthChange((*it).first, (*it).second);
 	}
 
-	for (iI = 0; iI < GC.getNumSpecialistInfos(); ++iI)
+	for (int iI = 0; iI < GC.getNumSpecialistInfos(); ++iI)
 	{
 		pNewCity->changeFreeSpecialistCount((SpecialistTypes)iI, aeFreeSpecialists[iI]);
 	}
 
-	for (iI = 0; iI < GC.getNumReligionInfos(); iI++)
+	for (int iI = 0; iI < GC.getNumReligionInfos(); iI++)
 	{
 		if (pabHasReligion[iI])
 		{
@@ -2500,7 +2500,7 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 		}
 	}
 
-	for (iI = 0; iI < GC.getNumCorporationInfos(); iI++)
+	for (int iI = 0; iI < GC.getNumCorporationInfos(); iI++)
 	{
 		if (pabHasCorporation[iI])
 		{
@@ -11184,7 +11184,6 @@ bool CvPlayer::isEverAlive() const
 void CvPlayer::setAlive(bool bNewValue)
 {
 	CvWString szBuffer;
-	int iI;
 
 	if (isAlive() != bNewValue)
 	{
@@ -11263,7 +11262,7 @@ void CvPlayer::setAlive(bool bNewValue)
 				{
 					szBuffer = gDLL->getText("TXT_KEY_MISC_CIV_DESTROYED", getCivilizationAdjectiveKey());
 
-					for (iI = 0; iI < MAX_PLAYERS; iI++)
+					for (int iI = 0; iI < MAX_PLAYERS; iI++)
 					{
 						if (GET_PLAYER((PlayerTypes)iI).isAlive())
 						{
@@ -14899,7 +14898,7 @@ int CvPlayer::getEspionageMissionCost(EspionageMissionTypes eMission, PlayerType
 	// DarkLunaPhantom - New formula for espionage costs in team. Essentially, I want costs to scale with 1+0.5(number of members - 1), but since there are two teams (and two directions) involved,
 	// it will scale with the square root of the ratio of those values. Idea for formula by Fran.
 	//iMissionCost *= GET_TEAM(getTeam()).getNumMembers();
-	iMissionCost *= sqrt((1 + 0.5 * (GET_TEAM(getTeam()).getNumMembers() - 1))/(1 + 0.5 * (GET_TEAM(GET_PLAYER(eTargetPlayer).getTeam()).getNumMembers() - 1)));
+	iMissionCost = (int)(iMissionCost * sqrt((1 + 0.5 * (GET_TEAM(getTeam()).getNumMembers() - 1))/(1 + 0.5 * (GET_TEAM(GET_PLAYER(eTargetPlayer).getTeam()).getNumMembers() - 1))));
 
 	iMissionCost *= getEspionageMissionCostModifier(eMission, eTargetPlayer, pPlot, iExtraData, pSpyUnit);
 	iMissionCost /= 100;
