@@ -17,14 +17,15 @@ def isAdvancedMap():
 	return 0
 
 def getNumCustomMapOptions():
-	return 3
+	return 4
 	
 def getCustomMapOptionName(argsList):
 	[iOption] = argsList
 	option_names = {
 		0:	"TXT_KEY_MAP_SCRIPT_CONTINENTS_SIZE",
 		1:	"TXT_KEY_MAP_SCRIPT_ISLANDS_SIZE",
-		2:	"TXT_KEY_MAP_WORLD_WRAP"
+		2:	"TXT_KEY_MAP_WORLD_WRAP",
+		3:	"TXT_KEY_MAP_ADJUST_WATER_PERCENT"
 		}
 	translated_text = unicode(CyTranslator().getText(option_names[iOption], ()))
 	return translated_text
@@ -34,7 +35,8 @@ def getNumCustomMapOptionValues(argsList):
 	option_values = {
 		0:	3,
 		1:	2,
-		2:	3
+		2:	3,
+		3:	6
 		}
 	return option_values[iOption]
 	
@@ -54,6 +56,14 @@ def getCustomMapOptionDescAt(argsList):
 			0: "TXT_KEY_MAP_WRAP_FLAT",
 			1: "TXT_KEY_MAP_WRAP_CYLINDER",
 			2: "TXT_KEY_MAP_WRAP_TOROID"
+			},
+		3:	{ # DarkLunaPhantom - These values should correspond to the ones in formula in definition of iWater variable below.
+			0: "TXT_KEY_MAP_NO_CHANGE",
+			1: "-5%",
+			2: "-10%",
+			3: "-15%",
+			4: "-20%",
+			5: "-25%"
 			}
 		}
 	translated_text = unicode(CyTranslator().getText(selection_names[iOption][iSelection], ()))
@@ -64,7 +74,8 @@ def getCustomMapOptionDefault(argsList):
 	option_defaults = {
 		0:	1,
 		1:	0,
-		2:	1
+		2:	1,
+		3:	0
 		}
 	return option_defaults[iOption]
 	
@@ -95,7 +106,7 @@ class BnSMultilayeredFractal(CvMapGeneratorUtil.MultilayeredFractal):
 		iIslandsGrain = 4 + self.map.getCustomMapOption(1)
 
 		# Water variables need to differ if Overlap is set. Defining default here.
-		iWater = 74
+		iWater = 74 + (CyMap().getCustomMapOption(3) * (-5)) # DarkLunaPhantom - This formula should correspond to the values in map options above.
 
 		iTargetSize = 30 + self.dice.get(min(36, self.iW/3), "zone target size (horiz)")
 		iHorizontalZones = max(1, (self.iW+iTargetSize/2) / iTargetSize)

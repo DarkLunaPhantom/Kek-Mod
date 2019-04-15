@@ -93,4 +93,28 @@
 		<Italian>Leva %s1_Unit, %d2-%d2 Pop</Italian>
 		<Spanish>Reclutar %s1_Unit, %d2-%d2 pob</Spanish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MAP_ADJUST_WATER_PERCENT</Tag>
+		<English>Adjust Water Percent</English>
+		<French>Ajuster le pourcentage d'eau</French>
+		<German>Passen Sie den Wasseranteil an</German>
+		<Italian>Regola la percentuale di acqua</Italian>
+		<Spanish>Ajustar el porcentaje de agua</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MAP_NO_CHANGE</Tag>
+		<English>No Change</English>
+		<French>Pas de changement</French>
+		<German>Keine &#196;nderung</German>
+		<Italian>Nessun cambiamento</Italian>
+		<Spanish>Ning&#250;n cambio</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CLIMATE_WARM</Tag>
+		<English>Warm</English>
+		<French>Chaud</French>
+		<German>Warmes</German>
+		<Italian>Caldo</Italian>
+		<Spanish>C&#225;lido</Spanish>
+	</TEXT>
 </Civ4GameText>

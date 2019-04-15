@@ -81,5 +81,20 @@
 			<fIceLatitude>0.9</fIceLatitude>
 			<fRandIceLatitude>0.5</fRandIceLatitude>
 		</ClimateInfo>
+		<ClimateInfo>
+			<Type>CLIMATE_WARM</Type>
+			<Description>TXT_KEY_CLIMATE_WARM</Description>
+			<iDesertPercentChange>0</iDesertPercentChange>
+			<iJungleLatitude>5</iJungleLatitude>
+			<iHillRange>6</iHillRange>
+			<iPeakPercent>27</iPeakPercent>
+			<fSnowLatitudeChange>0.25</fSnowLatitudeChange>
+			<fTundraLatitudeChange>0.2</fTundraLatitudeChange>
+			<fGrassLatitudeChange>0.0</fGrassLatitudeChange>
+			<fDesertBottomLatitudeChange>-0.02</fDesertBottomLatitudeChange>
+			<fDesertTopLatitudeChange>-0.01</fDesertTopLatitudeChange>
+			<fIceLatitude>0.98</fIceLatitude>
+			<fRandIceLatitude>0.15</fRandIceLatitude>
+		</ClimateInfo>
 	</ClimateInfos>
 </Civ4ClimateInfo>
