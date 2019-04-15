@@ -35,6 +35,7 @@
 #include "CvDLLFlagEntityIFaceBase.h"
 #include "BetterBTSAI.h"
 //bbai end
+#include <algorithm> // DarkLunaPhantom
 
 // Public Functions...
 
@@ -1848,11 +1849,23 @@ int CvPlayer::startingPlotDistanceFactor(CvPlot* pPlot, PlayerTypes ePlayer, int
 
 }
 
+// DarkLunaPhantom
+class VectorPairSecondGreaterComparator
+{
+	public:
+		bool operator() (const std::pair<int, int> &a, const std::pair<int, int> &b)
+		{
+			return (a.second >= b.second);
+		}
+};
 
-// Returns the id of the best area, or -1 if it doesn't matter:
-int CvPlayer::findStartingArea() const
+// DarkLunaPhantom - Returns a vector of all starting areas sorted by their value (instead of one best starting area).
+//int CvPlayer::findStartingArea() const
+std::vector<std::pair<int, int> > CvPlayer::findStartingArea() const
 {
 	PROFILE_FUNC();
+	
+	std::vector<std::pair<int, int> > areas_by_value; // DarkLunaPhantom
 
 	long result = -1;
 	CyArgsList argsList;
@@ -1863,7 +1876,10 @@ int CvPlayer::findStartingArea() const
 		{
 			if (result == -1 || GC.getMapINLINE().getArea(result) != NULL)
 			{
-				return result;
+				// DarkLunaPhantom
+				//return result;
+				areas_by_value.push_back(std::make_pair(result, 0));
+				return areas_by_value;
 			}
 			else
 			{
@@ -1886,7 +1902,8 @@ int CvPlayer::findStartingArea() const
 		{
 			// iNumPlayersOnArea is the number of players starting on the area, plus this player
 			int iNumPlayersOnArea = (pLoopArea->getNumStartingPlots() + 1);
-			int iTileValue = ((pLoopArea->calculateTotalBestNatureYield() + (pLoopArea->countCoastalLand() * 2) + pLoopArea->getNumRiverEdges() + (pLoopArea->getNumTiles())) + 1);
+			//int iTileValue = ((pLoopArea->calculateTotalBestNatureYield() + (pLoopArea->countCoastalLand() * 2) + pLoopArea->getNumRiverEdges() + (pLoopArea->getNumTiles())) + 1);
+			int iTileValue = (pLoopArea->calculateTotalBestNatureYield() + (pLoopArea->countCoastalLand() * 2) + pLoopArea->getNumRiverEdges()); // DarkLunaPhantom - Large number of tiles might just be large bad area.
 			iValue = iTileValue / iNumPlayersOnArea;
 
 			iValue *= std::min(NUM_CITY_PLOTS + 1, pLoopArea->getNumTiles() + 1);
@@ -1898,18 +1915,25 @@ int CvPlayer::findStartingArea() const
 				iValue /= 3;
 			}
 
-			if (iValue > iBestValue)
+			// DarkLunaPhantom
+			/*if (iValue > iBestValue)
 			{
 				iBestValue = iValue;
 				iBestArea = pLoopArea->getID();
-			}
+			}*/
+			areas_by_value.push_back(std::make_pair(pLoopArea->getID(), iValue));
 		}
 	}
 
-	return iBestArea;
+	// DarkLunaPhantom
+	//return iBestArea;
+	VectorPairSecondGreaterComparator kComparator;
+	std::sort(areas_by_value.begin(), areas_by_value.end(), kComparator);
+	return areas_by_value;
 }
 
 
+// DarkLunaPhantom - This function is adjusted to work with a list of possible starting areas instead of a single one.
 CvPlot* CvPlayer::findStartingPlot(bool bRandomize)
 {
 	PROFILE_FUNC();
@@ -1935,7 +1959,8 @@ CvPlot* CvPlayer::findStartingPlot(bool bRandomize)
 
 	CvPlot* pLoopPlot;
 	bool bValid;
-	int iBestArea = -1;
+	//int iBestArea = -1;
+	std::vector<std::pair<int, int> > areas_by_value; // DarkLunaPhantom
 	int iValue;
 	int iRange;
 	int iI;
@@ -1943,7 +1968,8 @@ CvPlot* CvPlayer::findStartingPlot(bool bRandomize)
 	bool bNew = false;
 	if (getStartingPlot() != NULL)
 	{
-		iBestArea = getStartingPlot()->getArea();
+		//iBestArea = getStartingPlot()->getArea();
+		areas_by_value.push_back(std::make_pair(getStartingPlot()->getArea(), 0)); // DarkLunaPhantom
 		setStartingPlot(NULL, true);
 		bNew = true;
 	}
@@ -1952,47 +1978,76 @@ CvPlot* CvPlayer::findStartingPlot(bool bRandomize)
 	
 	if (!bNew)
 	{
-		iBestArea = findStartingArea();
+		//iBestArea = findStartingArea();
+		areas_by_value = findStartingArea(); // DarkLunaPhantom
 	}
 
 	iRange = startingPlotRange();
-	for(int iPass = 0; iPass < GC.getMapINLINE().maxPlotDistance(); iPass++)
+	//for(int iPass = 0; iPass < GC.getMapINLINE().maxPlotDistance(); iPass++)
+	for(int iPass = 0; iPass < 2; ++iPass) // DarkLunaPhantom - First pass avoids starting locations that have very little food (before normalization) to avoid starting on the edge of very bad terrain.
 	{
-		CvPlot *pBestPlot = NULL;
-		int iBestValue = 0;
-		
-		for (iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
+		for(int iJ = 0; iJ < areas_by_value.size(); ++iJ) // DarkLunaPhantom
 		{
-			pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
-
-			if ((iBestArea == -1) || (pLoopPlot->getArea() == iBestArea))
+			CvPlot *pBestPlot = NULL;
+			int iBestValue = 0;
+		
+			for (iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
 			{
-				//the distance factor is now done inside foundValue
-				iValue = pLoopPlot->getFoundValue(getID());
+				pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
 
-				if (bRandomize && iValue > 0)
+				//if ((iBestArea == -1) || (pLoopPlot->getArea() == iBestArea))
+				if (pLoopPlot->getArea() == areas_by_value[iJ].first) // DarkLunaPhantom
 				{
-					iValue += GC.getGameINLINE().getSorenRandNum(10000, "Randomize Starting Location");
-				}
-
-				if (iValue > iBestValue)
-				{
-					bValid = true;
-
-					if (bValid)
+					if (iPass == 0) // DarkLunaPhantom - Avoid very bad terrain in the first pass.
 					{
-						iBestValue = iValue;
-						pBestPlot = pLoopPlot;
+						float iFoodAverage = 0;
+						int iLandPlots = 0;
+						for (int iX = -2; iX <= 2; ++iX)
+						{
+							for (int iY = -2; iY <= 2; ++iY)
+							{
+								CvPlot* pCheckPlot = plotXY(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE(), iX, iY);
+								if (pCheckPlot != NULL && !pCheckPlot->isWater())
+								{
+									++iLandPlots;
+									iFoodAverage += pCheckPlot->calculateBestNatureYield(YIELD_FOOD, NO_TEAM);
+								}
+							}
+						}
+						iFoodAverage /= std::max(1, iLandPlots);
+						if (iFoodAverage < 0.5)
+						{
+							continue;
+						}
+					}
+					
+					//the distance factor is now done inside foundValue
+					iValue = pLoopPlot->getFoundValue(getID());
+
+					if (bRandomize && iValue > 0)
+					{
+						iValue += GC.getGameINLINE().getSorenRandNum(10000, "Randomize Starting Location");
+					}
+
+					if (iValue > iBestValue)
+					{
+						bValid = true;
+
+						if (bValid)
+						{
+							iBestValue = iValue;
+							pBestPlot = pLoopPlot;
+						}
 					}
 				}
 			}
-		}
 
-		if (pBestPlot != NULL)
-		{
-			return pBestPlot;
+			if (pBestPlot != NULL)
+			{
+				return pBestPlot;
+			}
 		}
-
+		
 		FAssertMsg(iPass != 0, "CvPlayer::findStartingPlot - could not find starting plot in first pass.");
 	}
 

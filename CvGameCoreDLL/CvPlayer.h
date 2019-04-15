@@ -11,6 +11,9 @@
 #include "CvPlotGroup.h"
 #include "LinkedList.h"
 #include "CvTalkingHeadMessage.h"
+// DarkLunaPhantom
+#include <vector>
+#include <utility>
 
 class CvDiploParameters;
 class CvPopupInfo;
@@ -77,7 +80,8 @@ public:
 	int startingPlotRange() const;																																									// Exposed to Python
 	bool startingPlotWithinRange(CvPlot* pPlot, PlayerTypes ePlayer, int iRange, int iPass) const;									// Exposed to Python
 	int startingPlotDistanceFactor(CvPlot* pPlot, PlayerTypes ePlayer, int iRange) const;
-	int findStartingArea() const;
+	//int findStartingArea() const;
+	std::vector<std::pair<int, int> > findStartingArea() const; // DarkLunaPhantom - Returns a vector of all starting areas sorted by their value (instead of one best starting area).
 	CvPlot* findStartingPlot(bool bRandomize = false);																																									// Exposed to Python
 
 	CvPlotGroup* initPlotGroup(CvPlot* pPlot);													

@@ -1121,7 +1121,8 @@ void CvGame::assignStartingPlots()
 	std::vector<int> playerOrder;
 	std::vector<int>::iterator playerOrderIter;
 
-	if (isTeamGame())
+	// DarkLunaPhantom - Starting plot picking system and order will be the same no matter whether the game is singleplayer, multiplayer, team game, etc.
+	/*if (isTeamGame())
 	{
 		for (int iPass = 0; iPass < 2 * MAX_PLAYERS; ++iPass)
 		{
@@ -1207,12 +1208,18 @@ void CvGame::assignStartingPlots()
 			}
 		}
 	}
-	else
+	else*/
 	{
-		int iHumanSlot = range((((countCivPlayersAlive() - 1) * GC.getHandicapInfo(getHandicapType()).getStartingLocationPercent()) / 100), 0, (countCivPlayersAlive() - 1));
-
-		for (int iI = 0; iI < iHumanSlot; iI++)
+		// DarkLunaPhantom begin - First pick starting locations for some number of AIs depending on handicap, then for all humans, then for the rest of AIs. Randomness is here to make pick order independent of player id number.
+		//int iHumanSlot = range((((countCivPlayersAlive() - 1) * GC.getHandicapInfo(getHandicapType()).getStartingLocationPercent()) / 100), 0, (countCivPlayersAlive() - 1));
+		int iHumanSlot = range((((countCivPlayersAlive() - countHumanPlayersAlive()) * GC.getHandicapInfo(getHandicapType()).getStartingLocationPercent()) / 100), 0, (countCivPlayersAlive() - countHumanPlayersAlive()));
+		int iAIStartsPicked = 0;
+		
+		int iRandOffset = getSorenRandNum(countCivPlayersAlive(), "Player Starting Plot");
+		//for (int iI = 0; iI < iHumanSlot; iI++)
+		for (int iJ = 0; iAIStartsPicked < iHumanSlot; iJ++)
 		{
+			int iI = ((iJ + iRandOffset) % MAX_CIV_PLAYERS);
 			if (GET_PLAYER((PlayerTypes)iI).isAlive())
 			{
 				if (!(GET_PLAYER((PlayerTypes)iI).isHuman()))
@@ -1222,12 +1229,15 @@ void CvGame::assignStartingPlots()
 						GET_PLAYER((PlayerTypes)iI).setStartingPlot(GET_PLAYER((PlayerTypes)iI).findStartingPlot(), true);
 						playerOrder.push_back(iI);
 					}
+					iAIStartsPicked++;
 				}
 			}
 		}
 
-		for (int iI = 0; iI < MAX_CIV_PLAYERS; iI++)
+		//for (int iI = 0; iI < MAX_CIV_PLAYERS; iI++)
+		for (int iJ = 0; iJ < MAX_CIV_PLAYERS; iJ++)
 		{
+			int iI = ((iJ + iRandOffset) % MAX_CIV_PLAYERS);
 			if (GET_PLAYER((PlayerTypes)iI).isAlive())
 			{
 				if (GET_PLAYER((PlayerTypes)iI).isHuman())
@@ -1241,8 +1251,11 @@ void CvGame::assignStartingPlots()
 			}
 		}
 
-		for (int iI = 0; iI < MAX_CIV_PLAYERS; iI++)
+		//for (int iI = 0; iI < MAX_CIV_PLAYERS; iI++)
+		for (int iJ = 0; iJ < MAX_CIV_PLAYERS; iJ++)
 		{
+			int iI = ((iJ + iRandOffset) % MAX_CIV_PLAYERS);
+		// DarkLunaPhantom end
 			if (GET_PLAYER((PlayerTypes)iI).isAlive())
 			{
 				if (GET_PLAYER((PlayerTypes)iI).getStartingPlot() == NULL)

@@ -22499,7 +22499,8 @@ CvPlot* CvPlayerAI::AI_advancedStartFindCapitalPlot()
 						{
 							iValue += 1000;
 						}
-						else
+						// DarkLunaPhantom - Don't exchange team members starting location.
+						/*else
 						{
 							iValue += GC.getGame().getSorenRandNum(100, "AI Advanced Start Choose Team Start");
 						}
@@ -22512,7 +22513,7 @@ CvPlot* CvPlayerAI::AI_advancedStartFindCapitalPlot()
 							{
 								iValue /= (10 - iDistance);
 							}
-						}
+						}*/
 						
 						if (iValue > iBestValue)
 						{
@@ -22539,7 +22540,8 @@ CvPlot* CvPlayerAI::AI_advancedStartFindCapitalPlot()
 	//Execution should almost never reach here.
 	
 	//Update found values just in case - particulary important for simultaneous turns.
-	AI_updateFoundValues();
+	//AI_updateFoundValues();
+	AI_updateFoundValues(true); // DarkLunaPhantom
 	
 	pBestPlot = NULL;
 	iBestValue = -1;
