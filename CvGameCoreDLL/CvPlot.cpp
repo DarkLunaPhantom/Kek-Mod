@@ -10255,10 +10255,11 @@ bool CvPlot::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible) const
 
 		if (GC.getUnitInfo(eUnit).getPrereqAndBonus() != NO_BONUS)
 		{
-			// DarkLunaPhantom begin - Enabled barbarians to build units without having resources, requiring only the tech that enables them.
+			// DarkLunaPhantom begin - Enabled barbarians to build units without having resources, requiring only techs that reveal and enable them.
 			if (isBarbarian())
 			{
-				if (!GET_TEAM(BARBARIAN_TEAM).isHasTech((TechTypes)GC.getBonusInfo((BonusTypes)GC.getUnitInfo(eUnit).getPrereqAndBonus()).getTechCityTrade()))
+				if (!GET_TEAM(BARBARIAN_TEAM).isHasTech((TechTypes)GC.getBonusInfo((BonusTypes)GC.getUnitInfo(eUnit).getPrereqAndBonus()).getTechCityTrade()) ||
+					!GET_TEAM(BARBARIAN_TEAM).isHasTech((TechTypes)GC.getBonusInfo((BonusTypes)GC.getUnitInfo(eUnit).getPrereqAndBonus()).getTechReveal()))
 				{
 					return false;
 				}
@@ -10290,10 +10291,11 @@ bool CvPlot::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible) const
 			{
 				bRequiresBonus = true;
 
-				// DarkLunaPhantom begin - Enabled barbarians to build units without having resources, requiring only the tech that enables them.
+				// DarkLunaPhantom begin - Enabled barbarians to build units without having resources, requiring only techs that reveal and enable them.
 				if (isBarbarian())
 				{
-					if (GET_TEAM(BARBARIAN_TEAM).isHasTech((TechTypes)GC.getBonusInfo((BonusTypes)GC.getUnitInfo(eUnit).getPrereqOrBonuses(iI)).getTechCityTrade()))
+					if (GET_TEAM(BARBARIAN_TEAM).isHasTech((TechTypes)GC.getBonusInfo((BonusTypes)GC.getUnitInfo(eUnit).getPrereqOrBonuses(iI)).getTechCityTrade()) &&
+						GET_TEAM(BARBARIAN_TEAM).isHasTech((TechTypes)GC.getBonusInfo((BonusTypes)GC.getUnitInfo(eUnit).getPrereqOrBonuses(iI)).getTechReveal()))
 					{
 						bNeedsBonus = false;
 						break;

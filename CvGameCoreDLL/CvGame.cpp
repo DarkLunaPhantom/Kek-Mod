@@ -7232,7 +7232,8 @@ void CvGame::createBarbarianUnits()
 									{
 										if (NO_BONUS != kUnit.getPrereqAndBonus())
 										{
-											if (!GET_TEAM(BARBARIAN_TEAM).isHasTech((TechTypes)GC.getBonusInfo((BonusTypes)kUnit.getPrereqAndBonus()).getTechCityTrade()))
+											if (!GET_TEAM(BARBARIAN_TEAM).isHasTech((TechTypes)GC.getBonusInfo((BonusTypes)kUnit.getPrereqAndBonus()).getTechCityTrade()) ||
+												!GET_TEAM(BARBARIAN_TEAM).isHasTech((TechTypes)GC.getBonusInfo((BonusTypes)kUnit.getPrereqAndBonus()).getTechReveal())) // DarkLunaPhantom - Barbarians need to also have revealing tech for resources.
 											{
 												bValid = false;
 											}
@@ -7248,11 +7249,12 @@ void CvGame::createBarbarianUnits()
 											if (NO_BONUS != kUnit.getPrereqOrBonuses(i))
 											{
 												TechTypes eTech = (TechTypes)GC.getBonusInfo((BonusTypes)kUnit.getPrereqOrBonuses(i)).getTechCityTrade();
-												if (NO_TECH != eTech)
+												TechTypes eTech2 = (TechTypes)GC.getBonusInfo((BonusTypes)kUnit.getPrereqOrBonuses(i)).getTechReveal(); // DarkLunaPhantom - Barbarians also need to have revealing tech for resources.
+												if (NO_TECH != eTech || NO_TECH != eTech2) // DarkLunaPhantom
 												{
 													bRequires = true;
 													
-													if (GET_TEAM(BARBARIAN_TEAM).isHasTech(eTech))
+													if (GET_TEAM(BARBARIAN_TEAM).isHasTech(eTech) && GET_TEAM(BARBARIAN_TEAM).isHasTech(eTech2)) // DarkLunaPhantom
 													{
 														bFound = true;
 														break;

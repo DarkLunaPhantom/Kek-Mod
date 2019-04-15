@@ -1152,6 +1152,37 @@ void CvTeam::doTurn()
 
 	if (isBarbarian())
 	{
+		// DarkLunaPhantom - Give some starting research to barbarians in advanced start depending on other players' tech status after advanced start.
+		if (GC.getGameINLINE().getElapsedGameTurns() == 1 && GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_START))
+		{
+			for (TechTypes i = (TechTypes)0; i < GC.getNumTechInfos(); i = (TechTypes)(i+1))
+			{
+				if (!isHasTech((TechTypes)i))
+				{
+					int iCount = 0;
+					int iPossibleCount = 0;
+
+					for (int iJ = 0; iJ < MAX_CIV_TEAMS; iJ++)
+					{
+						if (GET_TEAM((TeamTypes)iJ).isAlive())
+						{
+							if (GET_TEAM((TeamTypes)iJ).isHasTech(i))
+							{
+								iCount++;
+							}
+
+							iPossibleCount++;
+						}
+					}
+
+					if (iCount > 0)
+					{
+						setResearchProgress(i, (getResearchCost(i) * iCount) / iPossibleCount, getLeaderID());
+					}
+				}
+			}
+		}
+		
 		// K-Mod. Delay the start of the barbarian research. (This is an experimental change. It is currently compensated by an increase in the barbarian tech rate.)
 		const CvPlayerAI& kBarbPlayer = GET_PLAYER(getLeaderID());
 		const CvGame& kGame = GC.getGameINLINE();
