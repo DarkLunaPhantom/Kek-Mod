@@ -5959,7 +5959,7 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 		if (eUnit != NO_UNIT)
 		{
 			CvUnit* pUnit = initUnit(eUnit, pPlot->getX_INLINE(), pPlot->getY_INLINE());
-			pUnit->setMoves(0); // DarkLunaPhantom - Units from hut cannot move in their first turn.
+			pUnit->finishMoves(); // DarkLunaPhantom - Units from hut cannot move in their first turn.
 		}
 	}
 
