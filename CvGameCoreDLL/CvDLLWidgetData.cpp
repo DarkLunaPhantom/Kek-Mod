@@ -1935,6 +1935,7 @@ void CvDLLWidgetData::parseHurryHelp(CvWidgetDataStruct &widgetDataStruct, CvWSt
 }
 
 
+// DarkLunaPhantom - Changed to account for multiple possible draft unit types. Changes unmarked.
 void CvDLLWidgetData::parseConscriptHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {
 	CvCity* pHeadSelectedCity;
@@ -1943,20 +1944,33 @@ void CvDLLWidgetData::parseConscriptHelp(CvWidgetDataStruct &widgetDataStruct, C
 	int iConscriptAngerLength;
 	int iMinCityPopulation;
 	int iMinCulturePercent;
-	int iI;
+	//int iI;
 	bool bFirst;
 
 	pHeadSelectedCity = gDLL->getInterfaceIFace()->getHeadSelectedCity();
 
 	if (pHeadSelectedCity != NULL)
 	{
-		if (pHeadSelectedCity->getConscriptUnit() != NO_UNIT)
+		//if (pHeadSelectedCity->getConscriptUnit() != NO_UNIT)
+		std::vector<UnitTypes> aeConscriptUnits = pHeadSelectedCity->getConscriptUnits();
+		for (int iI = 0; iI < aeConscriptUnits.size(); ++iI)
 		{
 			CvWString szTemp;
-			szTemp.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_UNIT_TEXT"), GC.getUnitInfo(pHeadSelectedCity->getConscriptUnit()).getDescription());
-			szBuffer.assign(szTemp);
+			//szTemp.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_UNIT_TEXT"), GC.getUnitInfo(pHeadSelectedCity->getConscriptUnit()).getDescription());
+			szTemp.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_UNIT_TEXT"), GC.getUnitInfo(aeConscriptUnits[iI]).getDescription());
+			//szBuffer.assign(szTemp);
+			if (iI == 0)
+			{
+				szBuffer.assign(szTemp);
+			}
+			else
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(szTemp);
+			}
 
-			iConscriptPopulation = pHeadSelectedCity->getConscriptPopulation();
+			//iConscriptPopulation = pHeadSelectedCity->getConscriptPopulation();
+			iConscriptPopulation = pHeadSelectedCity->getConscriptPopulation(aeConscriptUnits[iI]);
 
 			if (iConscriptPopulation > 0)
 			{
@@ -1972,7 +1986,8 @@ void CvDLLWidgetData::parseConscriptHelp(CvWidgetDataStruct &widgetDataStruct, C
 				szBuffer.append(gDLL->getText("TXT_KEY_MISC_ANGER_TURNS", GC.getDefineINT("CONSCRIPT_POP_ANGER"), (iConscriptAngerLength + pHeadSelectedCity->getConscriptAngerTimer())));
 			}
 
-			iMinCityPopulation = pHeadSelectedCity->conscriptMinCityPopulation();
+			//iMinCityPopulation = pHeadSelectedCity->conscriptMinCityPopulation();
+			iMinCityPopulation = pHeadSelectedCity->conscriptMinCityPopulation(aeConscriptUnits[iI]);
 
 			if (pHeadSelectedCity->getPopulation() < iMinCityPopulation)
 			{
@@ -1988,13 +2003,13 @@ void CvDLLWidgetData::parseConscriptHelp(CvWidgetDataStruct &widgetDataStruct, C
 				szBuffer.append(gDLL->getText("TXT_KEY_MISC_MIN_CULTURE_PERCENT", iMinCulturePercent));
 			}
 
-			if (GET_PLAYER(pHeadSelectedCity->getOwnerINLINE()).getMaxConscript() == 0)
+			/*if (GET_PLAYER(pHeadSelectedCity->getOwnerINLINE()).getMaxConscript() == 0)
 			{
 				bFirst = true;
 
-				for (iI = 0; iI < GC.getNumCivicInfos(); iI++)
+				for (int iJ = 0; iJ < GC.getNumCivicInfos(); iJ++)
 				{
-					if (getWorldSizeMaxConscript((CivicTypes)iI) > 0)
+					if (getWorldSizeMaxConscript((CivicTypes)iJ) > 0)
 					{
 						szTempBuffer = NEWLINE + gDLL->getText("TXT_KEY_REQUIRES");
 						setListHelp(szBuffer, szTempBuffer, GC.getCivicInfo((CivicTypes)iI).getDescription(), gDLL->getText("TXT_KEY_OR").c_str(), bFirst);
@@ -2006,6 +2021,27 @@ void CvDLLWidgetData::parseConscriptHelp(CvWidgetDataStruct &widgetDataStruct, C
 				{
 					szBuffer.append(ENDCOLR);
 				}
+			}*/
+		}
+		
+		if (GET_PLAYER(pHeadSelectedCity->getOwnerINLINE()).getMaxConscript() == 0)
+		{
+			bFirst = true;
+			szBuffer.append(NEWLINE);
+			
+			for (int iI = 0; iI < GC.getNumCivicInfos(); iI++)
+			{
+				if (getWorldSizeMaxConscript((CivicTypes)iI) > 0)
+				{
+					szTempBuffer = NEWLINE + gDLL->getText("TXT_KEY_REQUIRES");
+					setListHelp(szBuffer, szTempBuffer, GC.getCivicInfo((CivicTypes)iI).getDescription(), gDLL->getText("TXT_KEY_OR").c_str(), bFirst);
+					bFirst = false;
+				}
+			}		
+
+			if (!bFirst)
+			{
+				szBuffer.append(ENDCOLR);
 			}
 		}
 	}

@@ -24012,8 +24012,19 @@ int CvUnitAI::AI_nukeValue(CvPlot* pCenterPlot, int iSearchRange, CvPlot*& pBest
 							// if we don't have vision of the city, just assume that there are at least a couple of defenders, and count that into our evaluation.
 							if (!pLoopPlot->isVisible(getTeam(), false))
 							{
-								UnitTypes eBasicUnit = pLoopCity->getConscriptUnit();
-								int iBasicCost = std::max(10, eBasicUnit != NO_UNIT ? GC.getUnitInfo(eBasicUnit).getProductionCost() : 0);
+								// DarkLunaPhantom begin - Adjusted for multiple possible draft unit types.
+								//UnitTypes eBasicUnit = pLoopCity->getConscriptUnit();
+								std::vector<UnitTypes> aeConscriptUnits = pLoopCity->getConscriptUnits();
+								//int iBasicCost = std::max(10, eBasicUnit != NO_UNIT ? GC.getUnitInfo(eBasicUnit).getProductionCost() : 0);
+								int iBasicCost = 0;
+								for (int iI = 0; iI < aeConscriptUnits.size(); ++iI)
+								{
+									iBasicCost += GC.getUnitInfo(aeConscriptUnits[i]).getProductionCost();
+								}
+								iBasicCost /= std::max(1, (int)aeConscriptUnits.size());
+								iBasicCost = std::max(10, iBasicCost);
+								// DarkLunaPhantom end
+								
 								int iExpectedUnits = 1 + ((1 + pLoopCity->getCultureLevel()) * pLoopCity->getPopulation() + pLoopCity->getHighestPopulation()/2) / std::max(1, pLoopCity->getHighestPopulation());
 
 								iPlotValue += iMilitaryTargetWeight * iExpectedUnits * iBasicCost;

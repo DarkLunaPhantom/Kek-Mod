@@ -1510,13 +1510,13 @@ class CvCustomizableDomesticAdvisor:
 
 	def calculatePotentialConscriptUnit (self, city, szKey, arg):
 		
-		szReturn = unicode(gc.getUnitInfo(city.getConscriptUnit()).getDescription() )
+		szReturn = unicode(city.getConscriptText())
 		return szReturn
 
 	def calculateConscriptUnit (self, city, szKey, arg):
 		
 		if(city.canConscript()):
-			szReturn = unicode(gc.getUnitInfo(city.getConscriptUnit()).getDescription() )
+			szReturn = unicode(city.getConscriptText())
 		else:
 			szReturn = u""
 		return szReturn

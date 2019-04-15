@@ -97,9 +97,13 @@ public:
 
 	bool canHurry(int /*HurryTypes*/ iHurry, bool bTestVisible);
 	void hurry(int /*HurryTypes*/ iHurry);
+	python::tuple CyCity::getConscriptUnits(); // DarkLunaPhantom
 	int /*UnitTypes*/ getConscriptUnit();
-	int getConscriptPopulation();
-	int conscriptMinCityPopulation();
+	std::wstring getConscriptText(); // DarkLunaPhantom
+	//int getConscriptPopulation();
+	int getConscriptPopulation(int /*UnitTypes*/ iUnit); // DarkLunaPhantom
+	//int conscriptMinCityPopulation();
+	int conscriptMinCityPopulation(int /*UnitTypes*/ iUnit); // DarkLunaPhantom
 	int flatConscriptAngerLength();
 	bool canConscript();
 	void conscript();

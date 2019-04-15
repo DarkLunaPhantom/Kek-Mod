@@ -396,7 +396,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 					Logger.writeLog(message, vColor="Red")
 
 				if iCurrentConstrictCounter > self.CityConscriptCounter[i]:
-					message = BugUtil.getText("TXT_KEY_AUTOLOG_CONSCRIPT", (gc.getUnitInfo(iCity.getConscriptUnit()).getDescription(), iCity.getName()))
+					message = BugUtil.getText("TXT_KEY_AUTOLOG_CONSCRIPT", iCity.getName())
 					Logger.writeLog(message, vColor="Red")
 
 				if (self.CityWhipCounter[i] != 0

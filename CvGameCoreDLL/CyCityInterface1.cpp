@@ -89,7 +89,10 @@ void CyCityPythonInterface1(python::class_<CyCity>& x)
 
 		.def("canHurry", &CyCity::canHurry, "bool (HurryTypes eHurry, bool bTestVisible = 0) - can player eHurry in this city?")
 		.def("hurry", &CyCity::hurry, "void (HurryTypes eHurry) - forces the city to rush production using eHurry")
-		.def("getConscriptUnit", &CyCity::getConscriptUnit, "UnitID () - UnitID for the best unit the city can conscript")
+		//.def("getConscriptUnit", &CyCity::getConscriptUnit, "UnitID () - UnitID for the best unit the city can conscript")
+		.def("getConscriptUnits", &CyCity::getConscriptUnits, "python::tuple - tuple of the best units the city can conscript") // DarkLunaPhantom
+		.def("getConscriptUnit", &CyCity::getConscriptUnit, "UnitID () - UnitID for one random of the best units the city can conscript") // DarkLunaPhantom
+		.def("getConscriptText", &CyCity::getConscriptText, "string () - Gives back a list of potential conscript units") // DarkLunaPhantom
 		.def("getConscriptPopulation", &CyCity::getConscriptPopulation, "int ()")
 		.def("conscriptMinCityPopulation", &CyCity::conscriptMinCityPopulation, "int ()")
 		.def("flatConscriptAngerLength", &CyCity::flatConscriptAngerLength, "int ()")

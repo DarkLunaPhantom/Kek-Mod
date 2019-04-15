@@ -3535,13 +3535,17 @@ void CvCity::hurry(HurryTypes eHurry)
 }
 
 
-UnitTypes CvCity::getConscriptUnit() const
+// DarkLunaPhantom - New method for determining drafted unit type. This now returns a vector of units that can currently be drafted.
+// CvUnitInfo::getConscriptionValue is not used anymore.
+//UnitTypes CvCity::getConscriptUnit() const
+std::vector<UnitTypes> CvCity::getConscriptUnits() const
 {
 	UnitTypes eLoopUnit;
 	UnitTypes eBestUnit;
 	int iValue;
 	int iBestValue;
 	int iI;
+	std::vector<UnitTypes> aeBestUnits; // DarkLunaPhantom
 
 	long lConscriptUnit;
 	
@@ -3551,17 +3555,27 @@ UnitTypes CvCity::getConscriptUnit() const
 	for (iI = 0; iI < GC.getNumUnitClassInfos(); iI++)
 	{
 		eLoopUnit = (UnitTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(iI);
+		CvUnitInfo& kUnitInfo = GC.getUnitInfo(eLoopUnit); // DarkLunaPhantom
 
 		if (eLoopUnit != NO_UNIT)
 		{
-			if (canTrain(eLoopUnit))
+			// DarkLunaPhantom - Draft highest strength unit which is buildable, land unit, combat unit,
+			// not defensive only, not combat limited, can capture cities and can receive defensive bonuses.
+			//if (canTrain(eLoopUnit))
+			if (canTrain(eLoopUnit) && kUnitInfo.getDomainType() == DOMAIN_LAND && kUnitInfo.getCombat() > 0 &&
+				!kUnitInfo.isOnlyDefensive() && kUnitInfo.getCombatLimit() == 100 && !kUnitInfo.isNoCapture() && !kUnitInfo.isNoDefensiveBonus())
 			{
-				iValue = GC.getUnitInfo(eLoopUnit).getConscriptionValue();
-
+				//iValue = GC.getUnitInfo(eLoopUnit).getConscriptionValue();
+				iValue = kUnitInfo.getCombat();
 				if (iValue > iBestValue)
 				{
 					iBestValue = iValue;
-					eBestUnit = eLoopUnit;
+					//eBestUnit = eLoopUnit;
+					aeBestUnits.clear();
+				}
+				if (iValue >= iBestValue)
+				{
+					aeBestUnits.push_back(eLoopUnit);
 				}
 			}
 		}
@@ -3575,18 +3589,66 @@ UnitTypes CvCity::getConscriptUnit() const
 	
 	if (lConscriptUnit != -1)
 	{
-		eBestUnit = ((UnitTypes)lConscriptUnit);
+		// DarkLunaPhantom
+		aeBestUnits.clear();
+		//eBestUnit = ((UnitTypes)lConscriptUnit);
+		aeBestUnits.push_back((UnitTypes)lConscriptUnit);
 	}
 
-	return eBestUnit;
+	//return eBestUnit;
+	return aeBestUnits; // DarkLunaPhantom
 }
 
 
-int CvCity::getConscriptPopulation() const
+// DarkLunaPhantom - Randomly selects a unit type for draft from all currently possible ones. bFree ignores population costs. Uses SorenRand so must be used in sync.
+UnitTypes CvCity::getConscriptUnit(bool bFree) const
 {
-	UnitTypes eConscriptUnit;
+	UnitTypes eConscriptUnit = NO_UNIT;
+	std::vector<UnitTypes> aeConscriptUnits = getConscriptUnits();
+	std::vector<UnitTypes> aePossibleUnits;
+	
+	for (int iI = 0; iI < aeConscriptUnits.size(); ++iI)
+	{
+		if (bFree || canConscript(aeConscriptUnits[iI]))
+		{
+			aePossibleUnits.push_back(aeConscriptUnits[iI]);
+		}
+	}
+	if (!aePossibleUnits.empty())
+	{
+		eConscriptUnit = aePossibleUnits[GC.getGameINLINE().getSorenRandNum(aePossibleUnits.size(), "Draft unit type")];
+	}
+	
+	return eConscriptUnit;
+}
 
-	eConscriptUnit = getConscriptUnit();
+
+// DarkLunaPhantom - Returns a string with all draft possibilities.
+std::wstring CvCity::getConscriptText() const
+{
+	std::vector<UnitTypes> aeConscriptUnits = getConscriptUnits();
+	std::wstring szConscriptText = std::wstring();
+	for (int iI = 0; iI < aeConscriptUnits.size(); ++iI)
+	{
+		if (iI > 0)
+		{
+			szConscriptText += L" ";
+			szConscriptText += gDLL->getText("TXT_KEY_OR");
+			szConscriptText += L" ";
+		}
+		szConscriptText += GC.getUnitInfo(aeConscriptUnits[iI]).getDescription();
+	}
+	return szConscriptText;
+}
+
+
+// DarkLunaPhantom - Adjusted for new drafted unit selection method.
+//int CvCity::getConscriptPopulation() const
+int CvCity::getConscriptPopulation(UnitTypes eConscriptUnit) const
+{
+	//UnitTypes eConscriptUnit;
+
+	//eConscriptUnit = getConscriptUnit();
 
 	if (eConscriptUnit == NO_UNIT)
 	{
@@ -3602,13 +3664,16 @@ int CvCity::getConscriptPopulation() const
 }
 
 
-int CvCity::conscriptMinCityPopulation() const
+// DarkLunaPhantom - Adjusted for new drafted unit selection method.
+//int CvCity::conscriptMinCityPopulation() const
+int CvCity::conscriptMinCityPopulation(UnitTypes eConscriptUnit) const
 {
 	int iPopulation;
 
 	iPopulation = GC.getDefineINT("CONSCRIPT_MIN_CITY_POPULATION");
 
-	iPopulation += getConscriptPopulation();
+	//iPopulation += getConscriptPopulation();
+	iPopulation += getConscriptPopulation(eConscriptUnit);
 
 	return iPopulation;
 }
@@ -3644,6 +3709,8 @@ bool CvCity::canConscript() const
 		return false;
 	}
 
+	// DarkLunaPhantom - These checks are now done for each unit separately below.
+	/*
 	if (getPopulation() <= getConscriptPopulation())
 	{
 		return false;
@@ -3652,14 +3719,29 @@ bool CvCity::canConscript() const
 	if (getPopulation() < conscriptMinCityPopulation())
 	{
 		return false;
-	}
+	}*/
 
 	if (plot()->calculateTeamCulturePercent(getTeam()) < GC.getDefineINT("CONSCRIPT_MIN_CULTURE_PERCENT"))
 	{
 		return false;
 	}
 
-	if (getConscriptUnit() == NO_UNIT)
+	// DarkLunaPhantom begin - Adjusted this check for multiple possible unit types.
+	//if (getConscriptUnit() == NO_UNIT)
+
+	bool bFound = false;
+	std::vector<UnitTypes> aeConscriptUnits = getConscriptUnits();
+	for (int iI = 0; iI < aeConscriptUnits.size(); ++iI)
+	{
+		if (canConscript(aeConscriptUnits[iI]))
+		{
+			bFound = true;
+			break;
+		}
+	}
+	
+	if (!bFound)
+	// DarkLunaPhantom end
 	{
 		return false;
 	}
@@ -3667,10 +3749,20 @@ bool CvCity::canConscript() const
 	return true;
 }
 
-CvUnit* CvCity::initConscriptedUnit()
+
+// DarkLunaPhantom - Checks that were removed from the function above.
+bool CvCity::canConscript(UnitTypes eConscriptUnit) const
+{
+	return (getPopulation() > getConscriptPopulation(eConscriptUnit) && getPopulation() >= conscriptMinCityPopulation(eConscriptUnit));
+}
+
+
+// DarkLunaPhantom - Adjusted for multiple possible unit types.
+//CvUnit* CvCity::initConscriptedUnit()
+CvUnit* CvCity::initConscriptedUnit(UnitTypes eConscriptUnit)
 {
 	UnitAITypes eCityAI = NO_UNITAI;
-	UnitTypes eConscriptUnit = getConscriptUnit();
+	//UnitTypes eConscriptUnit = getConscriptUnit(); // DarkLunaPhantom
 
 	if (NO_UNIT == eConscriptUnit)
 	{
@@ -3727,7 +3819,10 @@ void CvCity::conscript()
 /*                                                                                              */
 /* AI logging                                                                                   */
 /************************************************************************************************/
-	int iPopChange = -(getConscriptPopulation());
+	// DarkLunaPhantom - Adjusted for multiple possible draft unit types.
+	UnitTypes eConscriptUnit = getConscriptUnit(false);
+	//int iPopChange = -(getConscriptPopulation());
+	int iPopChange = -(getConscriptPopulation(eConscriptUnit));
 	int iAngerLength = flatConscriptAngerLength();
 	changePopulation(iPopChange);
 	changeConscriptAngerTimer(iAngerLength);
@@ -3736,7 +3831,8 @@ void CvCity::conscript()
 
 	GET_PLAYER(getOwnerINLINE()).changeConscriptCount(1);
 
-	CvUnit* pUnit = initConscriptedUnit();
+	//CvUnit* pUnit = initConscriptedUnit();
+	CvUnit* pUnit = initConscriptedUnit(eConscriptUnit); // DarkLunaPhantom - Adjusted for multiple possible draft unit types.
 	FAssertMsg(pUnit != NULL, "pUnit expected to be assigned (not NULL)");
 
 	if (NULL != pUnit)

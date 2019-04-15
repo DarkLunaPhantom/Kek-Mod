@@ -3018,7 +3018,7 @@ def getHelpCrusadeDone1(argsList):
 	kTriggeredData = argsList[1]
 	
 	holyCity = gc.getGame().getHolyCity(kTriggeredData.eReligion)
-	szUnit = gc.getUnitInfo(holyCity.getConscriptUnit()).getTextKey()
+	szUnit = holyCity.getConscriptText()
 	iNumUnits = gc.getWorldInfo(gc.getMap().getWorldSize()).getDefaultPlayers() / 2 + 1
 	szHelp = localText.getText("TXT_KEY_EVENT_CRUSADE_DONE_HELP_1", (iNumUnits, szUnit, holyCity.getNameKey()))	
 
@@ -3029,7 +3029,7 @@ def canApplyCrusadeDone1(argsList):
 	kTriggeredData = argsList[1]
 	
 	holyCity = gc.getGame().getHolyCity(kTriggeredData.eReligion)
-	if -1 == holyCity.getConscriptUnit():
+	if 0 == holyCity.getConscriptUnits().size():
 		return false
 	
 	return true
@@ -3040,12 +3040,11 @@ def applyCrusadeDone1(argsList):
 	player = gc.getPlayer(kTriggeredData.ePlayer)
 	
 	holyCity = gc.getGame().getHolyCity(kTriggeredData.eReligion)						
-	iUnitType = holyCity.getConscriptUnit()
 	iNumUnits = gc.getWorldInfo(gc.getMap().getWorldSize()).getDefaultPlayers() / 2 + 1
 	
 	if iUnitType != -1:
 		for i in range(iNumUnits):
-			player.initUnit(iUnitType, holyCity.getX(), holyCity.getY(), UnitAITypes.UNITAI_CITY_DEFENSE, DirectionTypes.DIRECTION_SOUTH)
+			player.initUnit(holyCity.getConscriptUnit(), holyCity.getX(), holyCity.getY(), UnitAITypes.UNITAI_CITY_DEFENSE, DirectionTypes.DIRECTION_SOUTH)
 
 def getHelpCrusadeDone2(argsList):
 	iEvent = argsList[0]
@@ -3212,7 +3211,7 @@ def getHelpPartisans1(argsList):
 	
 	if None != capital and not capital.isNone():
 		iNumUnits = getNumPartisanUnits(plot, kTriggeredData.ePlayer)
-		szUnit = gc.getUnitInfo(capital.getConscriptUnit()).getTextKey()
+		szUnit = capital.getConscriptText()
 		
 		szHelp = localText.getText("TXT_KEY_EVENT_PARTISANS_HELP_1", (iNumUnits, szUnit))	
 

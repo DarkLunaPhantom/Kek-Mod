@@ -139,12 +139,19 @@ public:
 	bool canHurry(HurryTypes eHurry, bool bTestVisible = false) const;		// Exposed to Python
 	void hurry(HurryTypes eHurry);																						// Exposed to Python
 
-	UnitTypes getConscriptUnit() const;																// Exposed to Python
-	CvUnit* initConscriptedUnit();
-	int getConscriptPopulation() const;																// Exposed to Python
-	int conscriptMinCityPopulation() const;																			// Exposed to Python
+	//UnitTypes getConscriptUnit() const;																// Exposed to Python
+	std::vector<UnitTypes> getConscriptUnits() const; // DarkLunaPhantom									// Exposed to Python
+	UnitTypes getConscriptUnit(bool bFree = true) const; // DarkLunaPhantom                                                // Exposed to Python
+	std::wstring CvCity::getConscriptText() const; // DarkLunaPhantom                                                         // Exposed to Python
+	//CvUnit* initConscriptedUnit();
+	CvUnit* initConscriptedUnit(UnitTypes eConscriptUnit); // DarkLunaPhantom
+	//int getConscriptPopulation() const;																// Exposed to Python
+	int getConscriptPopulation(UnitTypes eUnit) const; // DarkLunaPhantom																// Exposed to Python
+	//int conscriptMinCityPopulation() const;																			// Exposed to Python
+	int conscriptMinCityPopulation(UnitTypes eUnit) const; // DarkLunaPhantom																			// Exposed to Python
 	int flatConscriptAngerLength() const;																				// Exposed to Python
 	bool canConscript() const;																				// Exposed to Python
+	bool canConscript(UnitTypes eUnit) const; // DarkLunaPhantom	
 	void conscript();																											// Exposed to Python
 
 	int getBonusHealth(BonusTypes eBonus) const;																// Exposed to Python - getBonusHealth

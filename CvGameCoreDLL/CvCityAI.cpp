@@ -7722,12 +7722,28 @@ void CvCityAI::AI_doDraft(bool bForce)
 
 			// K-Mod. See if our drafted unit is particularly good value.
 			// (cf. my calculation in CvPlayerAI::AI_civicValue)
-			UnitTypes eConscriptUnit = getConscriptUnit();
-			int iConscriptPop = std::max(1, GC.getUnitInfo(eConscriptUnit).getProductionCost() / GC.getDefineINT("CONSCRIPT_POPULATION_PER_COST"));
+			// DarkLunaPhantom begin - Adjusted for multiple possible draft unit types.
+			//UnitTypes eConscriptUnit = getConscriptUnit();
+			std::vector<UnitTypes> aeConscriptUnits = getConscriptUnits();
+			int iProductionCost = 0;
+			int iPossibleCount = 0;
+			for (int iI = 0; iI < aeConscriptUnits.size(); ++iI)
+			{
+				if (canConscript(aeConscriptUnits[iI]))
+				{
+					iProductionCost += aeConscriptUnits[iI];
+					iPossibleCount++;
+				}
+			}
+			iProductionCost /= std::max(1, iPossibleCount);
+			//int iConscriptPop = std::max(1, GC.getUnitInfo(eConscriptUnit).getProductionCost() / GC.getDefineINT("CONSCRIPT_POPULATION_PER_COST"));
+			int iConscriptPop = std::max(1, iProductionCost / GC.getDefineINT("CONSCRIPT_POPULATION_PER_COST"));
 
 			// call it "good value" if we get at least 1.4 times the normal hammers-per-conscript-pop.
 			// (with standard settings, this only happens for riflemen)
-			bool bGoodValue = 10 * GC.getUnitInfo(eConscriptUnit).getProductionCost() / (iConscriptPop * GC.getDefineINT("CONSCRIPT_POPULATION_PER_COST")) >= 14;
+			//bool bGoodValue = 10 * GC.getUnitInfo(eConscriptUnit).getProductionCost() / (iConscriptPop * GC.getDefineINT("CONSCRIPT_POPULATION_PER_COST")) >= 14;
+			bool bGoodValue = 10 * iProductionCost / (iConscriptPop * GC.getDefineINT("CONSCRIPT_POPULATION_PER_COST")) >= 14;
+			// DarkLunaPhantom end
 
 			// one more thing... it's not "good value" if we already have too many troops.
 			if (!bLandWar && bGoodValue)

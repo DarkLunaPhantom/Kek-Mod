@@ -14203,13 +14203,20 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	int iMaxConscript = getWorldSizeMaxConscript(eCivic);
 	if( iMaxConscript > 0 && (pCapital != NULL) )
 	{
-		UnitTypes eConscript = pCapital->getConscriptUnit();
-		if( eConscript != NO_UNIT )
+		// DarkLunaPhantom - Adjusted for multiple possible draft unit types.
+		//UnitTypes eConscript = pCapital->getConscriptUnit();
+		std::vector<UnitTypes> aeConscriptUnits = pCapital->getConscriptUnits();
+		int iTempTempValue = 0;
+		int iPossibleUnits = 0;
+		//if( eConscript != NO_UNIT )
+		for (int iI = 0; iI < aeConscriptUnits.size(); ++iI)
 		{
 			// Nationhood
+			UnitTypes eConscript = aeConscriptUnits[iI];
 			int iCombatValue = kGame.AI_combatValue(eConscript);
 			if( iCombatValue > 33 )
 			{
+				iPossibleUnits++;
 				int iTempValue = iCities + ((bWarPlan) ? 30 : 10);
 
 				/* iTempValue *= range(kTeam.AI_getEnemyPowerPercent(), 50, 300);
@@ -14248,9 +14255,13 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 				// todo. put in something to do with how much happiness we can afford to lose.. or something like that.
 				// K-Mod end
 
-				iValue += iTempValue;
+				//iValue += iTempValue;
+				iTempTempValue += iTempValue;
 			}
 		}
+		iTempTempValue /= std::max(1, iPossibleUnits);
+		iValue += iTempTempValue;
+		// DarkLunaPhantom end
 	}
 	// bbai end
 /*

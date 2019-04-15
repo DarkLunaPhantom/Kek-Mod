@@ -2239,12 +2239,53 @@ void CvGame::startFlyoutMenu(const CvPlot* pPlot, std::vector<CvFlyoutMenuData>&
 
 			if (pCity->canConscript())
 			{
-				UnitTypes eConscriptUnit = pCity->getConscriptUnit();
-				if (eConscriptUnit != NO_UNIT)
+				// DarkLunaPhantom begin - Changed to account for multiple possible draft unit types.
+				//UnitTypes eConscriptUnit = pCity->getConscriptUnit();
+				std::vector<UnitTypes> aeConscriptUnits = pCity->getConscriptUnits();
+				int iPossibleUnits = 0;
+				CvWStringBuffer szTempBuffer;
+				int iMinPop;
+				int iMaxPop;
+				szTempBuffer.assign("");
+				
+				//if (eConscriptUnit != NO_UNIT)
+				for (int iI = 0; iI < aeConscriptUnits.size(); ++iI)
 				{
-					szBuffer = gDLL->getText("TXT_KEY_DRAFT_UNIT", GC.getUnitInfo(eConscriptUnit).getDescription(), pCity->getConscriptPopulation());
-					aFlyoutItems.push_back(CvFlyoutMenuData(FLYOUT_CONSCRIPT, GC.getNumHurryInfos(), pPlot->getX_INLINE(), pPlot->getY_INLINE(), szBuffer));
+					//szBuffer = gDLL->getText("TXT_KEY_DRAFT_UNIT", GC.getUnitInfo(eConscriptUnit).getDescription(), pCity->getConscriptPopulation());
+					//aFlyoutItems.push_back(CvFlyoutMenuData(FLYOUT_CONSCRIPT, GC.getNumHurryInfos(), pPlot->getX_INLINE(), pPlot->getY_INLINE(), szBuffer));
+					if (pCity->canConscript(aeConscriptUnits[iI]))
+					{
+						if (iPossibleUnits > 0)
+						{
+							szTempBuffer.append(gDLL->getText("TXT_KEY_OR"));
+						}
+						else
+						{
+							iMinPop = pCity->getConscriptPopulation(aeConscriptUnits[iI]);
+							iMaxPop = pCity->getConscriptPopulation(aeConscriptUnits[iI]);
+						}
+						szTempBuffer.append(GC.getUnitInfo(aeConscriptUnits[iI]).getDescription());
+						iPossibleUnits++;
+						if (pCity->getConscriptPopulation(aeConscriptUnits[iI]) < iMinPop)
+						{
+							iMinPop = pCity->getConscriptPopulation(aeConscriptUnits[iI]);
+						}
+						if (pCity->getConscriptPopulation(aeConscriptUnits[iI]) > iMaxPop)
+						{
+							iMaxPop = pCity->getConscriptPopulation(aeConscriptUnits[iI]);
+						}
+					}
 				}
+				if (iMinPop == iMaxPop)
+				{
+					szBuffer = gDLL->getText("TXT_KEY_DRAFT_UNIT", szTempBuffer, iMinPop);
+				}
+				else
+				{
+					szBuffer = gDLL->getText("TXT_KEY_DRAFT_UNITS", szTempBuffer, iMinPop, iMaxPop);
+				}
+				aFlyoutItems.push_back(CvFlyoutMenuData(FLYOUT_CONSCRIPT, GC.getNumHurryInfos(), pPlot->getX_INLINE(), pPlot->getY_INLINE(), szBuffer));
+				// DarkLunaPhantom end
 			}
 		}
 	}

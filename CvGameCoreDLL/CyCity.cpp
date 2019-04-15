@@ -354,19 +354,45 @@ void CyCity::hurry(int /*HurryTypes*/ iHurry)
 		m_pCity->hurry((HurryTypes)iHurry);
 }
 
+// DarkLunaPhantom
+python::tuple CyCity::getConscriptUnits()
+{
+	python::tuple tup = python::make_tuple();
+	if (m_pCity)
+	{
+		std::vector<UnitTypes> pointsVec = m_pCity->getConscriptUnits();
+		uint i;
+		for(i=0;i<pointsVec.size();i++)
+			tup += pointsVec[i];
+	}
+
+	return tup;
+}
+
 int /*UnitTypes*/ CyCity::getConscriptUnit()
 {
 	return m_pCity ? (int)m_pCity->getConscriptUnit() : -1;
 }
 
-int CyCity::getConscriptPopulation()
+
+// DarkLunaPhantom
+std::wstring CyCity::getConscriptText()
 {
-	return m_pCity ? m_pCity->getConscriptPopulation() : -1;
+	return m_pCity ? m_pCity->getConscriptText() : std::wstring();
 }
 
-int CyCity::conscriptMinCityPopulation()
+//int CyCity::getConscriptPopulation()
+int CyCity::getConscriptPopulation(int /*UnitTypes*/ iUnit) // DarkLunaPhantom
 {
-	return m_pCity ? m_pCity->conscriptMinCityPopulation() : -1;
+	//return m_pCity ? m_pCity->getConscriptPopulation() : -1;
+	return m_pCity ? m_pCity->getConscriptPopulation((UnitTypes)iUnit) : -1;
+}
+
+//int CyCity::conscriptMinCityPopulation()
+int CyCity::conscriptMinCityPopulation(int /*UnitTypes*/ iUnit) // DarkLunaPhantom
+{
+	//return m_pCity ? m_pCity->conscriptMinCityPopulation() : -1;
+	return m_pCity ? m_pCity->conscriptMinCityPopulation((UnitTypes)iUnit) : -1;
 }
 
 int CyCity::flatConscriptAngerLength()

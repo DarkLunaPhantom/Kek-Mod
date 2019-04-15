@@ -162,11 +162,11 @@
     </TEXT> 
     <TEXT>
         <Tag>TXT_KEY_AUTOLOG_CONSCRIPT</Tag>
-        <English>A %s1 was drafted in %s2</English>
-        <French>A %s1 was drafted in %s2</French>
-        <German>[NUM1:Ein:Eine:Ein:Einige:Einige:Einige] %s1 wurd[NUM1:e:en] in %s2 aufgestellt</German>
-        <Italian>Un'unità %s1 è stata coscritta a %s2</Italian>
-        <Spanish>Unidad %s1 fué reclutada en %s2</Spanish>
+        <English>A unit was drafted in %s2</English>
+        <French>A unit was drafted in %s2</French>
+        <German>Unit wurd[NUM1:e:en] in %s2 aufgestellt</German>
+        <Italian>Unit è stata coscritta a %s2</Italian>
+        <Spanish>Unit fué reclutada en %s2</Spanish>
     </TEXT> 
     <TEXT>
         <Tag>TXT_KEY_AUTOLOG_WHIP_ANGER_DECREASED</Tag>

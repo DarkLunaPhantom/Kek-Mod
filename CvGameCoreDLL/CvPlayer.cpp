@@ -21568,11 +21568,25 @@ bool CvPlayer::splitEmpire(int iAreaId)
 				{
 					//pCity->setCultureTimes100(eNewPlayer, iCulture, false, false);
 				//}
-
-                    for (int i = 0; i < GC.getDefineINT("COLONY_NUM_FREE_DEFENDERS"); ++i) // DarkLunaPhantom - Moved inside if clause.
+					// DarkLunaPhantom - Give best defender unit type instead of draft unit type.
+                    /*for (int i = 0; i < GC.getDefineINT("COLONY_NUM_FREE_DEFENDERS"); ++i) // DarkLunaPhantom - Moved inside if clause.
                     {
                         pCity->initConscriptedUnit();
-                    }
+                    }*/
+					UnitTypes eBestUnit = pCity->AI_bestUnitAI(UNITAI_CITY_DEFENSE);
+
+					if (eBestUnit == NO_UNIT)
+					{
+						eBestUnit = pCity->AI_bestUnitAI(UNITAI_ATTACK);
+					}
+
+					if (eBestUnit != NO_UNIT)
+					{
+						for (int iI = 0; iI < GC.getDefineINT("COLONY_NUM_FREE_DEFENDERS"); ++iI)
+						{
+							GET_PLAYER(eNewPlayer).initUnit(eBestUnit, pPlot->getX_INLINE(), pPlot->getY_INLINE(), UNITAI_CITY_DEFENSE);
+						}
+					}
                 }
 			}
 		}

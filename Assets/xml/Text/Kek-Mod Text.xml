@@ -85,4 +85,12 @@
 		<Italian>Concentrandoti sullo spionaggio, trasformerai la produzione in spionaggio in una determinata citt&#224;.</Italian>
 		<Spanish>Al centrarse en el espionaje, la producci&#243;n se convierte en espionaje en esa ciudad en concreto.</Spanish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_DRAFT_UNITS</Tag>
+		<English>Draft %s1_Unit, %d2-%d2 Pop</English>
+		<French>Enr&#244;ler %s1_Unit, %d2-%d2 pop</French>
+		<German>Einberufung von %s1_Unit, %d2-%d2 Bev.</German>
+		<Italian>Leva %s1_Unit, %d2-%d2 Pop</Italian>
+		<Spanish>Reclutar %s1_Unit, %d2-%d2 pob</Spanish>
+	</TEXT>
 </Civ4GameText>
