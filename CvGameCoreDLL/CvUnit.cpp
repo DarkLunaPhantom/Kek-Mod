@@ -3395,7 +3395,11 @@ void CvUnit::gift(bool bTestTransport)
 	FAssertMsg(pGiftUnit != NULL, "GiftUnit is not assigned a valid value");
 
 	pGiftUnit->convert(this);
-    pGiftUnit->changeImmobileTimer(GC.getDefineINT("GIFTED_UNIT_IMMOBILE_TURNS")); // DarkLunaPhantom - Gifted units now cannot move for first 2 turns.
+	
+	if (plot()->getTeam() != getTeam())// DarkLunaPhantom - Gifted units which change teams cannot move for first 2 turns.
+	{
+		pGiftUnit->changeImmobileTimer(GC.getDefineINT("GIFTED_UNIT_IMMOBILE_TURNS"));
+	}
 
 	PlayerTypes eOwner = getOwnerINLINE();
 
