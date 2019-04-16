@@ -3,6 +3,6 @@
 		"http://localhost/Mods/[MODNAME]",
         "http://potez.noip.me/Mods/[MODNAME]"],
     "visit_url": "http://potez.noip.me/",
-    "current_version": "KekMod v0.23.zip",
+    "current_version": "KekMod v0.24.zip",
     "check_at_startup": 0
 }
