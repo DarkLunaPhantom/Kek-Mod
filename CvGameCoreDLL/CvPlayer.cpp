@@ -3279,7 +3279,7 @@ bool CvPlayer::isBarbarian() const
 	return (getID() == BARBARIAN_PLAYER);
 }
 
-static bool concealUnknownCivs() { return GC.getGameINLINE().getActiveTeam() != NO_TEAM && gDLL->getChtLvl() == 0 && !gDLL->GetWorldBuilderMode(); } // K-Mod
+static bool concealUnknownCivs() { return GC.getGameINLINE().getActiveTeam() != NO_TEAM && /*gDLL->getChtLvl() == 0*/ !GC.getGameINLINE().isDebugMode() && !gDLL->GetWorldBuilderMode(); } // K-Mod // DarkLunaPhantom - Require debug mode.
 
 const wchar* CvPlayer::getName(uint uiForm) const
 {
@@ -23771,7 +23771,7 @@ void CvPlayer::getCultureLayerColors(std::vector<NiColorA>& aColors, std::vector
 
 void CvPlayer::cheat(bool bCtrl, bool bAlt, bool bShift)
 {
-	if (gDLL->getChtLvl() > 0)
+	if (/*gDLL->getChtLvl() > 0*/ GC.getGameINLINE().isDebugMode()) // DarkLunaPhantom - Require debug mode.
 	{
 		GET_TEAM(getTeam()).setHasTech(getCurrentResearch(), true, getID(), true, false);
 	}

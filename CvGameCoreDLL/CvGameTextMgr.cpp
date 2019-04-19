@@ -585,7 +585,7 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 			szString.append(szTempBuffer);
 		}
 	}
-    if (bAlt && (gDLL->getChtLvl() > 0))
+    if (bAlt && /*(gDLL->getChtLvl() > 0)*/ GC.getGameINLINE().isDebugMode()) // DarkLunaPhantom - Require debug mode.
     {
 		CvSelectionGroup* eGroup = pUnit->getGroup();
 		if (eGroup != NULL)
@@ -1185,7 +1185,7 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 			szString.append(pUnit->getUnitInfo().getHelp());
 		}
 
-        if (bShift && (gDLL->getChtLvl() > 0))
+        if (bShift && /*(gDLL->getChtLvl() > 0)*/ GC.getGameINLINE().isDebugMode()) // DarkLunaPhantom - Require debug mode.
         {
             szTempBuffer.Format(L"\nUnitAI Type = %s.", GC.getUnitAIInfo(pUnit->AI_getUnitAIType()).getDescription());
             szString.append(szTempBuffer);
@@ -1203,7 +1203,7 @@ void CvGameTextMgr::setPlotListHelp(CvWStringBuffer &szString, CvPlot* pPlot, bo
 	int numPromotionInfos = GC.getNumPromotionInfos();
 	
 	// if cheatmode and ctrl, display grouping info instead
-	if ((gDLL->getChtLvl() > 0) && GC.ctrlKey())
+	if (/*(gDLL->getChtLvl() > 0)*/ GC.getGameINLINE().isDebugMode() && GC.ctrlKey()) // DarkLunaPhantom - Require debug mode.
 	{
 		if (pPlot->isVisible(GC.getGameINLINE().getActiveTeam(), true))
 		{
@@ -4137,7 +4137,7 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 	bAlt = GC.altKey();
 	bCtrl = GC.ctrlKey();
 	
-	if (bCtrl && (gDLL->getChtLvl() > 0))
+	if (bCtrl && /*(gDLL->getChtLvl() > 0)*/ GC.getGameINLINE().isDebugMode()) // DarkLunaPhantom - Require debug mode.
 	{
 		if (bShift && pPlot->headUnitNode() != NULL)
 		{
@@ -4478,7 +4478,7 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 		}
 		return;	
 	}
-	else if (bShift && !bAlt && (gDLL->getChtLvl() > 0))
+	else if (bShift && !bAlt && /*(gDLL->getChtLvl() > 0)*/ GC.getGameINLINE().isDebugMode()) // DarkLunaPhantom - Require debug mode.
 	{
 		szString.append(GC.getTerrainInfo(pPlot->getTerrainType()).getDescription());
 
@@ -4684,7 +4684,7 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 			}			
 		}
 	}
-	else if (!bShift && bAlt && (gDLL->getChtLvl() > 0))
+	else if (!bShift && bAlt && /*(gDLL->getChtLvl() > 0)*/ GC.getGameINLINE().isDebugMode()) // DarkLunaPhantom - Require debug mode.
 	{
 	    if (pPlot->isOwned())
 	    {
@@ -5045,7 +5045,7 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
             }
         }
 	}
-	else if (bShift && bAlt && (gDLL->getChtLvl() > 0))
+	else if (bShift && bAlt && /*(gDLL->getChtLvl() > 0)*/ GC.getGameINLINE().isDebugMode()) // DarkLunaPhantom - Require debug mode.
 	{
 		CvCity*	pCity = pPlot->getWorkingCity();
 		if (pCity != NULL)
@@ -6455,7 +6455,7 @@ void CvGameTextMgr::parseSpecialistHelp(CvWStringBuffer &szHelpString, Specialis
 			szHelpString.append(gDLL->getText("TXT_KEY_SPECIALIST_BIRTH_RATE", kInfo.getGreatPeopleRateChange()));
 
 			// K-Mod
-			if (!bCivilopediaText && gDLL->getChtLvl() > 0 && GC.ctrlKey())
+			if (!bCivilopediaText && /*gDLL->getChtLvl() > 0 &&*/ GC.ctrlKey() && GC.getGameINLINE().isDebugMode()) // DarkLunaPhantom - Require debug mode.
 			{
 				szHelpString.append(NEWLINE);
 				szHelpString.append(CvWString::format(L"weight: %d", GET_PLAYER((pCity != NULL) ? pCity->getOwnerINLINE() : GC.getGameINLINE().getActivePlayer()).AI_getGreatPersonWeight((UnitClassTypes)kInfo.getGreatPeopleUnitClass())));
@@ -6464,7 +6464,7 @@ void CvGameTextMgr::parseSpecialistHelp(CvWStringBuffer &szHelpString, Specialis
 		}
 
 // BUG - Specialist Actual Effects - start
-		if (pCity && (GC.altKey() || getBugOptionBOOL("MiscHover__SpecialistActualEffects", false, "BUG_MISC_SPECIALIST_HOVER_ACTUAL_EFFECTS")) && (pCity->getOwnerINLINE() == GC.getGame().getActivePlayer() || gDLL->getChtLvl() > 0))
+		if (pCity && (GC.altKey() || getBugOptionBOOL("MiscHover__SpecialistActualEffects", false, "BUG_MISC_SPECIALIST_HOVER_ACTUAL_EFFECTS")) && (pCity->getOwnerINLINE() == GC.getGame().getActivePlayer() || /*gDLL->getChtLvl() > 0*/ GC.getGameINLINE().isDebugMode())) // DarkLunaPhantom - Require debug mode.
 		{
 			bool bStarted = false;
 			CvWString szStart;
@@ -7588,7 +7588,7 @@ void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool
 
 	// show debug info if cheat level > 0 and alt down
 	bool bAlt = GC.altKey();
-    if (bAlt && (gDLL->getChtLvl() > 0))
+    if (bAlt && /*(gDLL->getChtLvl() > 0)*/ GC.getGameINLINE().isDebugMode()) // DarkLunaPhantom - Require debug mode.
     {
 		szBuffer.clear();
 
@@ -9168,7 +9168,7 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool
 	
 	if (pCity != NULL)
 	{
-		if ((gDLL->getChtLvl() > 0) && GC.ctrlKey())
+		if (/*(gDLL->getChtLvl() > 0)*/ GC.getGameINLINE().isDebugMode() && GC.ctrlKey()) // DarkLunaPhantom - Require debug mode.
 		{
 			szBuffer.append(NEWLINE);
 			for (int iUnitAI = 0; iUnitAI < NUM_UNITAI_TYPES; iUnitAI++)
@@ -10520,7 +10520,7 @@ void CvGameTextMgr::setBuildingHelpActual(CvWStringBuffer &szBuffer, BuildingTyp
 			else
 			{
 		// BUG - Building Actual Effects (edited and moved by K-Mod) - start
-				if (bActual && (GC.altKey() || getBugOptionBOOL("MiscHover__BuildingActualEffects", false, "BUG_BUILDING_HOVER_ACTUAL_EFFECTS")) && (pCity->getOwnerINLINE() == GC.getGame().getActivePlayer() || gDLL->getChtLvl() > 0))
+				if (bActual && (GC.altKey() || getBugOptionBOOL("MiscHover__BuildingActualEffects", false, "BUG_BUILDING_HOVER_ACTUAL_EFFECTS")) && (pCity->getOwnerINLINE() == GC.getGame().getActivePlayer() || /*gDLL->getChtLvl() > 0*/ GC.getGameINLINE().isDebugMode())) // DarkLunaPhantom - Require debug mode.
 				{
 					setBuildingNetEffectsHelp(szBuffer, eBuilding, pCity);
 				}
@@ -10610,7 +10610,7 @@ void CvGameTextMgr::setBuildingHelpActual(CvWStringBuffer &szBuffer, BuildingTyp
 	}
 
 	// K-Mod. Moved from inside that }, above.
-	if (pCity && gDLL->getChtLvl() > 0 && GC.ctrlKey())
+	if (pCity && /*gDLL->getChtLvl() > 0*/ GC.getGameINLINE().isDebugMode() && GC.ctrlKey()) // DarkLunaPhantom - Require debug mode.
 	{
 		int iBuildingValue = pCity->AI_buildingValue(eBuilding, 0, 0, true);
 		szBuffer.append(CvWString::format(L"\nAI Building Value = %d", iBuildingValue));
@@ -11257,7 +11257,7 @@ void CvGameTextMgr::setProjectHelp(CvWStringBuffer &szBuffer, ProjectTypes eProj
 	}
 
 	// K-Mod
-	if (pCity && gDLL->getChtLvl() > 0 && GC.ctrlKey())
+	if (pCity && /*gDLL->getChtLvl() > 0*/ GC.getGameINLINE().isDebugMode() && GC.ctrlKey()) // DarkLunaPhantom - Require debug mode.
 	{
 		int iValue = pCity->AI_projectValue(eProject);
 		szBuffer.append(CvWString::format(L"\nProject Value (base) = %d", iValue));
@@ -12563,7 +12563,7 @@ void CvGameTextMgr::setReligionHelpCity(CvWStringBuffer &szBuffer, ReligionTypes
 	}
 
 	// K-Mod
-	if (GC.getGameINLINE().isReligionFounded(eReligion) && pCity && gDLL->getChtLvl() > 0 && GC.ctrlKey())
+	if (GC.getGameINLINE().isReligionFounded(eReligion) && pCity && /*gDLL->getChtLvl() > 0*/ GC.getGameINLINE().isDebugMode() && GC.ctrlKey()) // DarkLunaPhantom - Require debug mode.
 	{
 		szBuffer.append(CvWString::format(L"grip: %d", pCity->getReligionGrip(eReligion)));
 		szBuffer.append(NEWLINE);
@@ -15134,7 +15134,7 @@ void CvGameTextMgr::parseLeaderHeadHelp(CvWStringBuffer &szBuffer, PlayerTypes e
 	parsePlayerTraits(szBuffer, eThisPlayer);
 
 	// Some debug info: found-site traits, and AI flavours
-	if (gDLL->getChtLvl() > 0 && GC.altKey())
+	if (/*gDLL->getChtLvl() > 0*/ GC.getGameINLINE().isDebugMode() && GC.altKey()) // DarkLunaPhantom - Require debug mode.
 	{
 		szBuffer.append(CvWString::format(SETCOLR SEPARATOR NEWLINE, TEXT_COLOR("COLOR_LIGHT_GREY")));
 		CvPlayerAI::CvFoundSettings kFoundSet(kPlayer, false);
@@ -17873,7 +17873,7 @@ void CvGameTextMgr::getPlotHelp(CvPlot* pMouseOverPlot, CvCity* pCity, CvPlot* p
 			if (pMouseOverPlot != NULL)
 			{
 				//if ((pMouseOverPlot == gDLL->getInterfaceIFace()->getGotoPlot()) || bAlt)
-				if (pMouseOverPlot == gDLL->getInterfaceIFace()->getGotoPlot() || (bAlt && gDLL->getChtLvl() == 0)) // K-Mod. (alt does something else in cheat mode)
+				if (pMouseOverPlot == gDLL->getInterfaceIFace()->getGotoPlot() || (bAlt && /*gDLL->getChtLvl() == 0*/ !GC.getGameINLINE().isDebugMode())) // K-Mod. (alt does something else in cheat mode) // DarkLunaPhantom - Require debug mode.
 				{
 					if (pMouseOverPlot->isActiveVisible(true))
 					{

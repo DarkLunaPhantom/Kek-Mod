@@ -13592,7 +13592,7 @@ bool CvUnit::shouldShowFoundBorders() const
 
 void CvUnit::cheat(bool bCtrl, bool bAlt, bool bShift)
 {
-	if (gDLL->getChtLvl() > 0)
+	if (/*gDLL->getChtLvl() > 0*/ GC.getGameINLINE().isDebugMode()) // DarkLunaPhantom - Require debug mode.
 	{
 		if (bCtrl)
 		{

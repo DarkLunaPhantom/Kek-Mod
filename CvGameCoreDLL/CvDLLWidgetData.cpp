@@ -3365,7 +3365,7 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 	CvTeamAI& kActiveTeam = GET_TEAM(eActiveTeam);
 
 	// if alt down and cheat on, show extra info
-	if (GC.altKey() && gDLL->getChtLvl() > 0)
+	if (GC.altKey() && /*gDLL->getChtLvl() > 0*/ GC.getGameINLINE().isDebugMode()) // DarkLunaPhantom - Require debug mode.
 	{
 		// K-Mod. I've moved the code from here into its own function, just to get it out of the way.
 		parseScoreboardCheatText(widgetDataStruct, szBuffer);
@@ -3373,7 +3373,7 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 	}
 
 	//	Show score info instead if we are trying to contact ourselves...
-	if ( eActivePlayer == ePlayer || (GC.ctrlKey() && gDLL->getChtLvl() > 0) )
+	if ( eActivePlayer == ePlayer || (GC.ctrlKey() && /*gDLL->getChtLvl() > 0*/ GC.getGameINLINE().isDebugMode()) ) // DarkLunaPhantom - Require debug mode.
 	{
 		parseScoreHelp(widgetDataStruct, szBuffer);
 		return;
@@ -3433,7 +3433,7 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 			szBuffer.append(NEWLINE);
 			szBuffer.append(gDLL->getText("TXT_KEY_MISC_REFUSES_TO_TALK"));
 		}
-		if (!((GC.altKey() || GC.ctrlKey()) && gDLL->getChtLvl() > 0))
+		if (!((GC.altKey() || GC.ctrlKey()) && /*gDLL->getChtLvl() > 0*/ GC.getGameINLINE().isDebugMode())) // DarkLunaPhantom - Require debug mode.
 		{
 			GAMETEXT.getAttitudeString(szBuffer, ePlayer, eActivePlayer);
 			GAMETEXT.getWarWearinessString(szBuffer, ePlayer, eActivePlayer); // K-Mod
