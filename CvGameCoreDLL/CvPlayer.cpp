@@ -1983,6 +1983,7 @@ CvPlot* CvPlayer::findStartingPlot(bool bRandomize)
 	}
 
 	iRange = startingPlotRange();
+	int iStartingRange = GC.getDefineINT("ADVANCED_START_SIGHT_RANGE"); // DarkLunaPhantom
 	//for(int iPass = 0; iPass < GC.getMapINLINE().maxPlotDistance(); iPass++)
 	for(int iPass = 0; iPass < 2; ++iPass) // DarkLunaPhantom - First pass avoids starting locations that have very little food (before normalization) to avoid starting on the edge of very bad terrain.
 	{
@@ -2002,12 +2003,12 @@ CvPlot* CvPlayer::findStartingPlot(bool bRandomize)
 					{
 						float iFoodAverage = 0;
 						int iLandPlots = 0;
-						for (int iX = -2; iX <= 2; ++iX)
+						for (int iX = -iStartingRange; iX <= iStartingRange; ++iX)
 						{
-							for (int iY = -2; iY <= 2; ++iY)
+							for (int iY = -iStartingRange; iY <= iStartingRange; ++iY)
 							{
 								CvPlot* pCheckPlot = plotXY(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE(), iX, iY);
-								if (pCheckPlot != NULL && !pCheckPlot->isWater())
+								if (pCheckPlot != NULL && !pCheckPlot->isWater() && (plotDistance(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE(), pCheckPlot->getX_INLINE(), pCheckPlot->getY_INLINE()) <= iStartingRange))
 								{
 									++iLandPlots;
 									iFoodAverage += pCheckPlot->calculateBestNatureYield(YIELD_FOOD, NO_TEAM);
@@ -16178,13 +16179,14 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 					changeAdvancedStartPoints(-std::min(iCost, getAdvancedStartPoints()));
 					GC.getGameINLINE().updateColoredPlots();
 					CvCity* pCity = pPlot->getPlotCity();
-					if (pCity != NULL)
+					// DarkLunaPhantom - No free food in this case (or any other).
+					/*if (pCity != NULL)
 					{
 						if (pCity->getPopulation() > 1)
 						{
 							pCity->setFood(pCity->growthThreshold() / 2);
 						}
-					}
+					}*/
 				}
 			}
 
