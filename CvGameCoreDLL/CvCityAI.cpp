@@ -7727,7 +7727,7 @@ void CvCityAI::AI_doDraft(bool bForce)
 			std::vector<UnitTypes> aeConscriptUnits = getConscriptUnits();
 			int iProductionCost = 0;
 			int iPossibleCount = 0;
-			for (int iI = 0; iI < aeConscriptUnits.size(); ++iI)
+			for (int iI = 0; iI < (int)aeConscriptUnits.size(); ++iI)
 			{
 				if (canConscript(aeConscriptUnits[iI]))
 				{

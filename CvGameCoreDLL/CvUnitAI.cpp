@@ -24017,7 +24017,7 @@ int CvUnitAI::AI_nukeValue(CvPlot* pCenterPlot, int iSearchRange, CvPlot*& pBest
 								std::vector<UnitTypes> aeConscriptUnits = pLoopCity->getConscriptUnits();
 								//int iBasicCost = std::max(10, eBasicUnit != NO_UNIT ? GC.getUnitInfo(eBasicUnit).getProductionCost() : 0);
 								int iBasicCost = 0;
-								for (int iI = 0; iI < aeConscriptUnits.size(); ++iI)
+								for (int iI = 0; iI < (int)aeConscriptUnits.size(); ++iI)
 								{
 									iBasicCost += GC.getUnitInfo(aeConscriptUnits[iI]).getProductionCost();
 								}

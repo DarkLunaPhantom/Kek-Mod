@@ -1953,7 +1953,7 @@ void CvDLLWidgetData::parseConscriptHelp(CvWidgetDataStruct &widgetDataStruct, C
 	{
 		//if (pHeadSelectedCity->getConscriptUnit() != NO_UNIT)
 		std::vector<UnitTypes> aeConscriptUnits = pHeadSelectedCity->getConscriptUnits();
-		for (int iI = 0; iI < aeConscriptUnits.size(); ++iI)
+		for (int iI = 0; iI < (int)aeConscriptUnits.size(); ++iI)
 		{
 			CvWString szTemp;
 			//szTemp.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_UNIT_TEXT"), GC.getUnitInfo(pHeadSelectedCity->getConscriptUnit()).getDescription());

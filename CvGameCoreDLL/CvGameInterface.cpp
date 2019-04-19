@@ -2249,7 +2249,7 @@ void CvGame::startFlyoutMenu(const CvPlot* pPlot, std::vector<CvFlyoutMenuData>&
 				szTempBuffer.assign("");
 				
 				//if (eConscriptUnit != NO_UNIT)
-				for (int iI = 0; iI < aeConscriptUnits.size(); ++iI)
+				for (int iI = 0; iI < (int)aeConscriptUnits.size(); ++iI)
 				{
 					//szBuffer = gDLL->getText("TXT_KEY_DRAFT_UNIT", GC.getUnitInfo(eConscriptUnit).getDescription(), pCity->getConscriptPopulation());
 					//aFlyoutItems.push_back(CvFlyoutMenuData(FLYOUT_CONSCRIPT, GC.getNumHurryInfos(), pPlot->getX_INLINE(), pPlot->getY_INLINE(), szBuffer));

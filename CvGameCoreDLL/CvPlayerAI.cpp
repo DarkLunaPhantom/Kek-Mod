@@ -14209,7 +14209,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		int iTempTempValue = 0;
 		int iPossibleUnits = 0;
 		//if( eConscript != NO_UNIT )
-		for (int iI = 0; iI < aeConscriptUnits.size(); ++iI)
+		for (int iI = 0; iI < (int)aeConscriptUnits.size(); ++iI)
 		{
 			// Nationhood
 			UnitTypes eConscript = aeConscriptUnits[iI];
