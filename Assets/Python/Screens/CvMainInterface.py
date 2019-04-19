@@ -5014,7 +5014,7 @@ class CvMainInterface:
 												if (bAlignIcons):
 													scores.setScore(szPlayerScore)
 													if (gc.getTeam(gc.getPlayer(ePlayer).getTeam()).getNumMembers() > 1): #DarkLunaPhantom
-														scores.setTeamScore(u"(%d)" % gc.getGame().getTeamScore(gc.getPlayer(ePlayer).getTeam()))
+														scores.setTeamScore(u"%d" % gc.getGame().getTeamScore(gc.getPlayer(ePlayer).getTeam()))
 													else:
 														scores.setTeamScore("")
 # BUG - Score Delta - start
@@ -5043,22 +5043,22 @@ class CvMainInterface:
 														if (bAlignIcons):
 															scores.setScoreDelta(szScoreDelta)
 # BUG - Score Delta - end
-											
+											if (not gc.getPlayer(ePlayer).isAlive() and ScoreOpt.isGreyOutDeadCivs()):
+												colorTuple = (175, 175, 175, gc.getPlayer(ePlayer).getPlayerTextColorA())
+											else:
+												colorTuple = (gc.getPlayer(ePlayer).getPlayerTextColorR(), gc.getPlayer(ePlayer).getPlayerTextColorG(), gc.getPlayer(ePlayer).getPlayerTextColorB(), gc.getPlayer(ePlayer).getPlayerTextColorA())
 											if (not CyInterface().isFlashingPlayer(ePlayer) or CyInterface().shouldFlash(ePlayer)):
 												if (ePlayer == gc.getGame().getActivePlayer()):
-													szPlayerName = u"[<color=%d,%d,%d,%d>%s</color>]" %(gc.getPlayer(ePlayer).getPlayerTextColorR(), gc.getPlayer(ePlayer).getPlayerTextColorG(), gc.getPlayer(ePlayer).getPlayerTextColorB(), gc.getPlayer(ePlayer).getPlayerTextColorA(), szPlayerName)
+													szPlayerName = u"[<color=%d,%d,%d,%d>%s</color>]" %(colorTuple + (szPlayerName,))
 												else:
-													if (not gc.getPlayer(ePlayer).isAlive() and ScoreOpt.isGreyOutDeadCivs()):
-														szPlayerName = u"<color=%d,%d,%d,%d>%s</color>" %(175, 175, 175, gc.getPlayer(ePlayer).getPlayerTextColorA(), szPlayerName)
-													else:
-														szPlayerName = u"<color=%d,%d,%d,%d>%s</color>" %(gc.getPlayer(ePlayer).getPlayerTextColorR(), gc.getPlayer(ePlayer).getPlayerTextColorG(), gc.getPlayer(ePlayer).getPlayerTextColorB(), gc.getPlayer(ePlayer).getPlayerTextColorA(), szPlayerName)
+													szPlayerName = u"<color=%d,%d,%d,%d>%s</color>" %(colorTuple + (szPlayerName,))
 											szTempBuffer = u"%s: %s" %(szPlayerScore, szPlayerName)
 											szBuffer = szBuffer + szTempBuffer
 											if (bAlignIcons):
 												scores.setName(szPlayerName)
-												scores.setID(u"<color=%d,%d,%d,%d>%d</color>" %(gc.getPlayer(ePlayer).getPlayerTextColorR(), gc.getPlayer(ePlayer).getPlayerTextColorG(), gc.getPlayer(ePlayer).getPlayerTextColorB(), gc.getPlayer(ePlayer).getPlayerTextColorA(), ePlayer))
+												scores.setID(u"<color=%d,%d,%d,%d>%d</color>" %(colorTuple + (ePlayer,)))
 												if (gc.getTeam(gc.getPlayer(ePlayer).getTeam()).getNumMembers() > 1): #DarkLunaPhantom
-													scores.setTeam(u"<color=%d,%d,%d,%d>(%d)</color>" %(gc.getPlayer(ePlayer).getPlayerTextColorR(), gc.getPlayer(ePlayer).getPlayerTextColorG(), gc.getPlayer(ePlayer).getPlayerTextColorB(), gc.getPlayer(ePlayer).getPlayerTextColorA(), gc.getPlayer(ePlayer).getTeam() + 1))
+													scores.setTeam(u"<color=%d,%d,%d,%d>%d</color>" %(colorTuple + (gc.getPlayer(ePlayer).getTeam(),)))
 												else:
 													scores.setTeam("")
 											
