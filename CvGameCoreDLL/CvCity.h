@@ -1084,6 +1084,8 @@ public:
 	void invalidateCommerceRankCache(CommerceTypes eCommerce = NO_COMMERCE);
 
 	int getBestYieldAvailable(YieldTypes eYield) const;
+	
+	virtual UnitTypes AI_bestDefender() = 0; // DarkLunaPhantom
 
 protected:
 

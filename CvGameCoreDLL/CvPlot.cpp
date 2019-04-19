@@ -4986,12 +4986,7 @@ void CvPlot::setOwner(PlayerTypes eNewValue, bool bCheckUnits, bool bUpdatePlotG
 					}
 				}
 
-				eBestUnit = pNewCity->AI_bestUnitAI(UNITAI_CITY_DEFENSE);
-
-				if (eBestUnit == NO_UNIT)
-				{
-					eBestUnit = pNewCity->AI_bestUnitAI(UNITAI_ATTACK);
-				}
+				eBestUnit = pNewCity->AI_bestDefender(); // DarkLunaPhantom - Put code inside of a function.
 
 				if (eBestUnit != NO_UNIT)
 				{

@@ -12511,6 +12511,19 @@ BuildingTypes CvCityAI::AI_bestAdvancedStartBuilding(int iPass)
 	return AI_bestBuildingThreshold(iFocusFlags, 0, std::max(0, 20 - iPass * 5));
 }
 
+// DarkLunaPhantom
+UnitTypes CvCityAI::AI_bestDefender()
+{
+	UnitTypes eBestDefender = AI_bestUnitAI(UNITAI_CITY_DEFENSE);
+
+	if (eBestDefender == NO_UNIT)
+	{
+		eBestDefender = AI_bestUnitAI(UNITAI_ATTACK);
+	}
+	
+	return eBestDefender;
+}
+
 //
 //
 //

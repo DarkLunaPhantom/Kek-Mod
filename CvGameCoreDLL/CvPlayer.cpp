@@ -6273,12 +6273,7 @@ void CvPlayer::found(int iX, int iY)
 
 	if (isBarbarian())
 	{
-		eDefenderUnit = pCity->AI_bestUnitAI(UNITAI_CITY_DEFENSE);
-
-		if (eDefenderUnit == NO_UNIT)
-		{
-			eDefenderUnit = pCity->AI_bestUnitAI(UNITAI_ATTACK);
-		}
+		eDefenderUnit = pCity->AI_bestDefender(); // DarkLunaPhantom - Put code inside of a function.
 
 		if (eDefenderUnit != NO_UNIT)
 		{
@@ -21631,12 +21626,7 @@ bool CvPlayer::splitEmpire(int iAreaId)
                     {
                         pCity->initConscriptedUnit();
                     }*/
-					UnitTypes eBestUnit = pCity->AI_bestUnitAI(UNITAI_CITY_DEFENSE);
-
-					if (eBestUnit == NO_UNIT)
-					{
-						eBestUnit = pCity->AI_bestUnitAI(UNITAI_ATTACK);
-					}
+					UnitTypes eBestUnit = pCity->AI_bestDefender(); // DarkLunaPhantom - Put code inside of a function.
 
 					if (eBestUnit != NO_UNIT)
 					{
