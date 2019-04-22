@@ -10505,7 +10505,8 @@ bool CvPlot::checkLateEra() const
 		}
 	}
 
-	return (GET_PLAYER(ePlayer).getCurrentEra() > GC.getNumEraInfos() / 2);
+	//return (GET_PLAYER(ePlayer).getCurrentEra() > GC.getNumEraInfos() / 2);
+	return (normalizeEraFactor(GET_PLAYER(ePlayer).getCurrentEra()) > 3); // DarkLunaPhantom - Adjust era factor for mods.
 }
 
 /************************************************************************************************/

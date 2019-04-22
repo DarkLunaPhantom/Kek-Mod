@@ -2047,7 +2047,8 @@ int CvTeamAI::AI_endWarVal(TeamTypes eTeam) const
 		iTheirAttackers += countEnemyDangerByArea(pLoopArea, eTeam);
 	}
 
-	int iAttackerRatio = (100 * iOurAttackers) / std::max(1 + GC.getGameINLINE().getCurrentEra(), iTheirAttackers);
+	//int iAttackerRatio = (100 * iOurAttackers) / std::max(1 + GC.getGameINLINE().getCurrentEra(), iTheirAttackers);
+	int iAttackerRatio = (100 * iOurAttackers) / std::max(1 + normalizeEraFactor(GC.getGameINLINE().getCurrentEra()), iTheirAttackers); // DarkLunaPhantom - Adjusted era factor for mods.
 
 	if( GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI) )
 	{
@@ -3581,7 +3582,8 @@ void CvTeamAI::AI_getWarThresholds( int &iTotalWarThreshold, int &iLimitedWarThr
 	iTotalWarThreshold /= 3;
 	iTotalWarThreshold += bAggressive ? 1 : 0;
 
-	if( bAggressive && GET_PLAYER(getLeaderID()).getCurrentEra() < 3 )
+	//if( bAggressive && GET_PLAYER(getLeaderID()).getCurrentEra() < 3 )
+	if( bAggressive && normalizeEraFactor(GET_PLAYER(getLeaderID()).getCurrentEra()) < 3 ) // DarkLunaPhantom - Adjusted era factor for mods.
 	{
 		iLimitedWarThreshold += 2;
 	}

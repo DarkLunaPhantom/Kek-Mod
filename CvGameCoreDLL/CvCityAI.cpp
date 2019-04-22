@@ -1349,7 +1349,8 @@ void CvCityAI::AI_chooseProduction()
 
 		if ((getDomainFreeExperience(DOMAIN_LAND) == 0) && (getYieldRate(YIELD_PRODUCTION) > 4))
 		{
-    		if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (kPlayer.getCurrentEra() > 1) ? 0 : 7, 33))
+    		//if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (kPlayer.getCurrentEra() > 1) ? 0 : 7, 33))
+			if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (normalizeEraFactor(kPlayer.getCurrentEra()) > 1) ? 0 : 7, 33)) // DarkLunaPhantom - Adjusted era factor for mods.
 			{
 				if( gCityLogLevel >= 2 ) logBBAI("      City %S uses special BUILDINGFOCUS_EXPERIENCE 1a", getName().GetCString());
 				return;
@@ -1729,7 +1730,8 @@ void CvCityAI::AI_chooseProduction()
 
 	if ((getDomainFreeExperience(DOMAIN_LAND) == 0) && (getYieldRate(YIELD_PRODUCTION) > 4))
 	{
-    	if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (kPlayer.getCurrentEra() > 1) ? 0 : 7, 33))
+    	//if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (kPlayer.getCurrentEra() > 1) ? 0 : 7, 33))
+		if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (normalizeEraFactor(kPlayer.getCurrentEra()) > 1) ? 0 : 7, 33)) // DarkLunaPhantom - Adjusted era factor for mods.
 		{
 			if( gCityLogLevel >= 2 ) logBBAI("      City %S uses special BUILDINGFOCUS_EXPERIENCE 1", getName().GetCString());
 			return;
@@ -3738,7 +3740,8 @@ int CvCityAI::AI_buildingValue(BuildingTypes eBuilding, int iFocusFlags, int iTh
 			int iBuildingActualHappiness = getAdditionalHappinessByBuilding(eBuilding,iGood,iBad);
 
 			// K-Mod
-			int iCitValue = 6 + kOwner.getCurrentEra(); // (estimating citizen value to be 6 + era commerce per turn)
+			//int iCitValue = 6 + kOwner.getCurrentEra(); // (estimating citizen value to be 6 + era commerce per turn)
+			int iCitValue = 6 + normalizeEraFactor(kOwner.getCurrentEra()); // (estimating citizen value to be 6 + era commerce per turn) // DarkLunaPhantom - Adjusted era factor for mods.
 			int iAngerDelta = std::max(0, -(iHappinessLevel+iBuildingActualHappiness)) - std::max(0, -iHappinessLevel);
 			// High value for any immediate change in anger.
 			iValue -= iAngerDelta * 4 * iCitValue;
@@ -3805,7 +3808,8 @@ int CvCityAI::AI_buildingValue(BuildingTypes eBuilding, int iFocusFlags, int iTh
 			int iBuildingActualHealth = getAdditionalHealthByBuilding(eBuilding,iGood,iBad);
 
 			// K-Mod. I've essentially rewritten this evaluation of health; but there may still be some bbai code / original bts code.
-			int iCitValue = 6 + kOwner.getCurrentEra(); // (estimating citizen value to be 6 + era commerce per turn)
+			//int iCitValue = 6 + kOwner.getCurrentEra(); // (estimating citizen value to be 6 + era commerce per turn)
+			int iCitValue = 6 + normalizeEraFactor(kOwner.getCurrentEra()); // (estimating citizen value to be 6 + era commerce per turn) // DarkLunaPhantom - Adjusted era factor for mods.
 			int iWasteDelta = std::max(0, -(iHealthLevel+iBuildingActualHealth)) - std::max(0, -iHealthLevel);
 			// High value for change in our food deficit.
 			iValue -= 2 * iCitValue * (std::max(0, -(iFoodDifference - iWasteDelta)) - std::max(0, -iFoodDifference));
@@ -5004,7 +5008,8 @@ int CvCityAI::AI_buildingValue(BuildingTypes eBuilding, int iFocusFlags, int iTh
 					}*/
 					// K-Mod
 					int iExpectedSpread = GC.getGameINLINE().countReligionLevels((ReligionTypes)kBuilding.getGlobalReligionCommerce());
-					iExpectedSpread += (GC.getNumEraInfos() - kOwner.getCurrentEra() + (eStateReligion == (ReligionTypes)(kBuilding.getGlobalReligionCommerce())? 2 : 0)) * GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers();
+					//iExpectedSpread += (GC.getNumEraInfos() - kOwner.getCurrentEra() + (eStateReligion == (ReligionTypes)(kBuilding.getGlobalReligionCommerce())? 2 : 0)) * GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers();
+					iExpectedSpread += (7 - normalizeEraFactor(kOwner.getCurrentEra()) + (eStateReligion == (ReligionTypes)(kBuilding.getGlobalReligionCommerce())? 2 : 0)) * GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers(); // DarkLunaPhantom - Adjusted era factor for mods. 
 					iTempValue += GC.getReligionInfo((ReligionTypes)kBuilding.getGlobalReligionCommerce()).getGlobalReligionCommerce(iI) * iExpectedSpread * 4;
 				}
 
@@ -10215,7 +10220,8 @@ int CvCityAI::AI_buildUnitProb()
 
 	if (GET_PLAYER(getOwnerINLINE()).getCurrentEra() < GC.getGameINLINE().getCurrentEra())
 	{
-		iProb *= std::max(40, 100 - 20 * (GC.getGameINLINE().getCurrentEra() - GET_PLAYER(getOwnerINLINE()).getCurrentEra()));
+		//iProb *= std::max(40, 100 - 20 * (GC.getGameINLINE().getCurrentEra() - GET_PLAYER(getOwnerINLINE()).getCurrentEra()));
+		iProb *= std::max(40, 100 - 20 * (normalizeEraFactor(GC.getGameINLINE().getCurrentEra()) - normalizeEraFactor(GET_PLAYER(getOwnerINLINE()).getCurrentEra()))); // DarkLunaPhantom - Adjusted era factor for mods.
 		iProb /= 100;
 	}
 
@@ -12443,7 +12449,8 @@ void CvCityAI::AI_updateWorkersNeededHere()
 		}
 	}
 
-	iWorkersNeeded += (std::max(0, iUnimprovedWorkedPlotCount - 1) * (GET_PLAYER(getOwnerINLINE()).getCurrentEra())) / 3;
+	//iWorkersNeeded += (std::max(0, iUnimprovedWorkedPlotCount - 1) * (GET_PLAYER(getOwnerINLINE()).getCurrentEra())) / 3;
+	iWorkersNeeded += (std::max(0, iUnimprovedWorkedPlotCount - 1) * normalizeEraFactor(GET_PLAYER(getOwnerINLINE()).getCurrentEra())) / 3; // DarkLunaPhantom - Adjusted era factor for mods.
 
 	if (GET_PLAYER(getOwnerINLINE()).AI_isFinancialTrouble())
 	{

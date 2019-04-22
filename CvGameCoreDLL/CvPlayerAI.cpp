@@ -2493,7 +2493,8 @@ void CvPlayerAI::AI_updateCommerceWeights()
 			// then culture probably isn't worth much to us at all.
 
 			// don't reduce the value if we are still on-track for a potential cultural victory.
-			if (getCurrentEra() > GC.getNumEraInfos()/2 && pCity->getCultureLevel() >= 3)
+			//if (getCurrentEra() > GC.getNumEraInfos()/2 && pCity->getCultureLevel() >= 3)
+			if (normalizeEraFactor(getCurrentEra()) > 3 && pCity->getCultureLevel() >= 3) // DarkLunaPhantom - Adjusted era factor for mods.
 			{
 				int iLegendaryCulture = GC.getGame().getCultureThreshold((CultureLevelTypes)(GC.getNumCultureLevelInfos() - 1));
 				int iCultureProgress = pCity->getCultureTimes100(getID()) / std::max(1, iLegendaryCulture);
@@ -2804,7 +2805,8 @@ CvPlayerAI::CvFoundSettings::CvFoundSettings(const CvPlayerAI& kPlayer, bool bSt
 		iClaimThreshold = 100 + 100 * kPlayer.getCurrentEra() / std::max(1, GC.getNumEraInfos()-1);
 		iClaimThreshold += 80 * std::max(0, iCitiesTarget - kPlayer.getNumCities()) / iCitiesTarget;
 
-		iClaimThreshold *= bEasyCulture ? (kPlayer.getCurrentEra() < 2 ? 200 : 150) : 100;
+		//iClaimThreshold *= bEasyCulture ? (kPlayer.getCurrentEra() < 2 ? 200 : 150) : 100;
+		iClaimThreshold *= bEasyCulture ? (normalizeEraFactor(kPlayer.getCurrentEra()) < 2 ? 200 : 150) : 100; // DarkLunaPhantom - Adjusted era factor for mods.
 		iClaimThreshold *= bAmbitious ? 150 : 100;
 		iClaimThreshold /= 10000;
 	}
@@ -5507,6 +5509,20 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bFreeTech, b
 	int iRandomFactor = 0;// Amount of random value in the answer.
 	int iRandomMax = 0;   // Max random value. (These randomness trackers aren't actually used, and may not even be accurate.)
 
+	// DarkLunaPhantom - Number of non-early religions, characterized by giving free missionaries.
+	static int iLaterReligions = -1;
+	if (iLaterReligions == -1)
+	{
+		iLaterReligions = 0;
+		for (int iI = 0; iI < GC.getNumReligionInfos(); ++iI)
+		{
+			if (GC.getReligionInfo((ReligionTypes)iI).getNumFreeUnits() > 0)
+			{
+				iLaterReligions++;
+			}
+		}
+	}
+
 	//if (iPathLength <= 1) // K-Mod. Don't include random bonus for follow-on tech values.
 	{
 		iRandomFactor = ((bAsync) ? GC.getASyncRand().get(80*iCityCount, "AI Research ASYNC") : GC.getGameINLINE().getSorenRandNum(80*iCityCount, "AI Research"));
@@ -6580,7 +6596,8 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bFreeTech, b
 							iReligionValue += 84;
 					}
 
-					if (iAvailableReligions <= 4 || AI_getFlavorValue(FLAVOR_RELIGION) > 0) // DarkLunaPhantom - I guess that 4 here denotes the number of non-early religions. This is often different in mods.
+					//if (iAvailableReligions <= 4 || AI_getFlavorValue(FLAVOR_RELIGION) > 0)
+					if (iAvailableReligions <= iLaterReligions || AI_getFlavorValue(FLAVOR_RELIGION) > 0) // DarkLunaPhantom - I assume that number 4 here means the number of non-early religions.
 					{
 						iReligionValue *= 2;
 						iReligionValue += 56 + std::max(0, 6 - iAvailableReligions)*28;
@@ -6916,7 +6933,8 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, bool bConstCache, bool& bE
 					if (hasBonus(i))
 						iMultiplier += kLoopBuilding.getBonusProductionModifier(i);
 				}
-				int iScale = 15 * (3 + getCurrentEra()); // hammers (ideally this would be based on the average city yield or something like that.)
+				//int iScale = 15 * (3 + getCurrentEra()); // hammers (ideally this would be based on the average city yield or something like that.)
+				int iScale = 15 * (3 + normalizeEraFactor(getCurrentEra())); // hammers (ideally this would be based on the average city yield or something like that.) // DarkLunaPhantom - Adjusted era factor for mods.
 				iScale += AI_isCapitalAreaAlone() ? 30 : 0; // can afford to spend more on infrastructure if we are alone.
 				// decrease when at war
 				if (GET_TEAM(getTeam()).getAnyWarPlanCount(true) > 0)
@@ -10571,7 +10589,8 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 						// devalue units which are related to our current era. (but not if it is still our best unit!)
 						if (kLoopUnit.getPrereqAndTech() != NO_TECH)
 						{
-							int iDiff = GC.getTechInfo((TechTypes)(kLoopUnit.getPrereqAndTech())).getEra() - getCurrentEra();
+							//int iDiff = GC.getTechInfo((TechTypes)(kLoopUnit.getPrereqAndTech())).getEra() - getCurrentEra();
+							int iDiff = normalizeEraFactor((EraTypes)GC.getTechInfo((TechTypes)(kLoopUnit.getPrereqAndTech())).getEra()) - normalizeEraFactor(getCurrentEra()); // DarkLunaPhantom - Adjusted era factor for mods.
 							if (iDiff > 0 || !bCanTrain || iNewTypeValue < iBestTypeValue)
 								iUnitValue = iUnitValue * 2/(2 + std::abs(iDiff));
 						}
@@ -10666,7 +10685,8 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 
 						if (kLoopBuilding.getPrereqAndTech() != NO_TECH)
 						{
-							int iDiff = abs(GC.getTechInfo((TechTypes)(kLoopBuilding.getPrereqAndTech())).getEra() - getCurrentEra());
+							//int iDiff = abs(GC.getTechInfo((TechTypes)(kLoopBuilding.getPrereqAndTech())).getEra() - getCurrentEra());
+							int iDiff = abs(normalizeEraFactor((EraTypes)GC.getTechInfo((TechTypes)(kLoopBuilding.getPrereqAndTech())).getEra()) - normalizeEraFactor(getCurrentEra())); // DarkLunaPhantom - Adjusted era factor for mods.
 
 							if (iDiff == 0)
 							{
@@ -10708,7 +10728,8 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 
 					if (kLoopProject.getTechPrereq() != NO_TECH)
 					{
-						int iDiff = abs(GC.getTechInfo((TechTypes)(kLoopProject.getTechPrereq())).getEra() - getCurrentEra());
+						//int iDiff = abs(GC.getTechInfo((TechTypes)(kLoopProject.getTechPrereq())).getEra() - getCurrentEra());
+						int iDiff = abs(normalizeEraFactor((EraTypes)GC.getTechInfo((TechTypes)(kLoopProject.getTechPrereq())).getEra()) - normalizeEraFactor(getCurrentEra())); // DarkLunaPhantom - Adjusted era factor for mods.
 
 						if (iDiff == 0)
 						{
@@ -15384,7 +15405,8 @@ int CvPlayerAI::AI_espionageVal(PlayerTypes eTargetPlayer, EspionageMissionTypes
 
 		// K-Mod (I didn't comment that line out, btw.)
 		const TeamTypes eTeam = GET_PLAYER(eTargetPlayer).getTeam();
-		const int iEra = getCurrentEra();
+		//const int iEra = getCurrentEra();
+		const int iEra = normalizeEraFactor(getCurrentEra()); // DarkLunaPhantom - Adjust era factor for mods.
 		int iCounterValue = 5 + 3*iEra + (AI_isDoVictoryStrategy(AI_VICTORY_CULTURE3 || AI_VICTORY_SPACE3) ? 20 : 0);
 		// this is pretty bogus. I'll try to come up with something better some other time.
 		iCounterValue *= 50*iEra*(iEra+1)/2 + GET_TEAM(eTeam).getEspionagePointsAgainstTeam(getTeam());
@@ -19620,7 +19642,7 @@ int CvPlayerAI::AI_calculateCultureVictoryStage() const
 		// K-Mod
 		iValue += 30 * std::min(iCloseToLegendaryCount, iVictoryCities + 1);
 		iValue += 10 * std::min(iHighCultureCount, iVictoryCities + 1);
-		iValue += getCurrentEra() < (iEraThresholdPercent-20)*GC.getNumEraInfos()/100; // prep for culture in the early game, just in case.
+		iValue += getCurrentEra() < (iEraThresholdPercent-20)*GC.getNumEraInfos()/100; // prep for culture in the early game, just in case. // DarkLunaPhantom - This can only add 1 to iValue? Seems irrelevant.
 		// K-Mod end
 		if( iValue > 20 && getNumCities() >= iVictoryCities )
 		{
@@ -19742,9 +19764,11 @@ int CvPlayerAI::AI_calculateCultureVictoryStage() const
     }
 
 	//if (getCurrentEra() >= ((GC.getNumEraInfos() / 3) + iNonsense % 2))
-	if (getCurrentEra() >= ((GC.getNumEraInfos() / 3) + AI_getStrategyRand(1) % 2) || iHighCultureCount >= iVictoryCities-1)
+	//if (getCurrentEra() >= ((GC.getNumEraInfos() / 3) + AI_getStrategyRand(1) % 2) || iHighCultureCount >= iVictoryCities-1)
+	if (normalizeEraFactor(getCurrentEra()) >= (2 + AI_getStrategyRand(1) % 2) || iHighCultureCount >= iVictoryCities-1) // DarkLunaPhantom - Adjusted era factor for mods.
 	{
-		if (iHighCultureCount < getCurrentEra() + iVictoryCities - GC.getNumEraInfos())
+		//if (iHighCultureCount < getCurrentEra() + iVictoryCities - GC.getNumEraInfos())
+		if (iHighCultureCount < normalizeEraFactor(getCurrentEra()) + iVictoryCities - 7) // DarkLunaPhantom - Adjusted era factor for mods.
 			return 1;
 	    return 2;
 	}
@@ -19931,7 +19955,8 @@ int CvPlayerAI::AI_calculateSpaceVictoryStage() const
 
 		if (iValue >= 100)
 		{
-			if( getCurrentEra() >= GC.getNumEraInfos() - 3 )
+			//if( getCurrentEra() >= GC.getNumEraInfos() - 3 )
+			if( normalizeEraFactor(getCurrentEra()) >= 4 ) // DarkLunaPhantom - Adjusted era factor for mods.
 			{
 				return 2;
 			}
@@ -20982,7 +21007,8 @@ void CvPlayerAI::AI_updateStrategyHash()
     //dagger
 	if( !(AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2)) 
 	 && !(m_iStrategyHash & AI_STRATEGY_MISSIONARY)
-     && (iCurrentEra <= (2+(AI_getStrategyRand(11)%2))) && (iCloseTargets > 0) )
+    // && (iCurrentEra <= (2+(AI_getStrategyRand(11)%2))) && (iCloseTargets > 0) )
+	 && (normalizeEraFactor((EraTypes)iCurrentEra) <= (2+(AI_getStrategyRand(11)%2))) && (iCloseTargets > 0) ) // DarkLunaPhantom - Adjusted era factor for mods.
     {	    
 	    int iDagger = 0;
 	    iDagger += 12000 / std::max(100, (50 + GC.getLeaderHeadInfo(getPersonalityType()).getMaxWarRand()));
@@ -22186,10 +22212,12 @@ int CvPlayerAI::AI_getTotalFloatingDefendersNeeded(CvArea* pArea) const
 {
 	PROFILE_FUNC();
 	int iDefenders;
-	int iCurrentEra = getCurrentEra();
+	//int iCurrentEra = getCurrentEra();
+	int iCurrentEra = normalizeEraFactor(getCurrentEra()); // DarkLunaPhantom - Adjusted era factor for mods.
 	int iAreaCities = pArea->getCitiesPerPlayer(getID());
 	
-	iCurrentEra = std::max(0, iCurrentEra - GC.getGame().getStartEra() / 2);
+	//iCurrentEra = std::max(0, iCurrentEra - GC.getGame().getStartEra() / 2);
+	iCurrentEra = std::max(0, iCurrentEra - normalizeEraFactor(GC.getGame().getStartEra()) / 2); // DarkLunaPhantom - Adjusted era factor for mods.
 	
 	/* original bts code
 	iDefenders = 1 + ((iCurrentEra + ((GC.getGameINLINE().getMaxCityElimination() > 0) ? 3 : 2)) * iAreaCities);
@@ -22732,7 +22760,8 @@ bool CvPlayerAI::AI_advancedStartPlaceCity(CvPlot* pPlot)
 		}
 	}
 
-	int iTargetPopulation = pCity->happyLevel() + (getCurrentEra() / 2);
+	//int iTargetPopulation = pCity->happyLevel() + (getCurrentEra() / 2);
+	int iTargetPopulation = pCity->happyLevel() + (normalizeEraFactor(getCurrentEra()) / 2); // DarkLunaPhantom - Adjusted era factor for mods.
 	
 	while (iPlotsImproved < iTargetPopulation)
 	{
@@ -23275,7 +23304,8 @@ void CvPlayerAI::AI_doAdvancedStart(bool bNoExit)
 	{
 		//Land
 		AI_advancedStartPlaceExploreUnits(true);
-		if (getCurrentEra() > 2)
+		//if (getCurrentEra() > 2)
+		if (normalizeEraFactor(getCurrentEra()) > 2) // DarkLunaPhantom - Adjusted era factor for mods.
 		{
 			//Sea
 			AI_advancedStartPlaceExploreUnits(false);
@@ -23945,7 +23975,8 @@ void CvPlayerAI::AI_doEnemyUnitData()
 
 			TechTypes eTech = (TechTypes)GC.getUnitInfo((UnitTypes)iI).getPrereqAndTech();
 			
-			int iEraDiff = (eTech == NO_TECH) ? 4 : std::min(4, getCurrentEra() - GC.getTechInfo(eTech).getEra());
+			//int iEraDiff = (eTech == NO_TECH) ? 4 : std::min(4, getCurrentEra() - GC.getTechInfo(eTech).getEra());
+			int iEraDiff = (eTech == NO_TECH) ? 4 : std::min(4, normalizeEraFactor(getCurrentEra()) - normalizeEraFactor((EraTypes)GC.getTechInfo(eTech).getEra())); // DarkLunaPhantom - Adjusted era factor for mods.
 
 			if (iEraDiff > 1)
 			{

@@ -4404,7 +4404,8 @@ int CvPlayer::countOwnedBonuses(BonusTypes eBonus) const
 		return 0;
 	// K-Mod end
     
-    bool bAdvancedStart = (getAdvancedStartPoints() >= 0) && (getCurrentEra() < 3);
+    //bool bAdvancedStart = (getAdvancedStartPoints() >= 0) && (getCurrentEra() < 3);
+	bool bAdvancedStart = (getAdvancedStartPoints() >= 0) && (normalizeEraFactor(getCurrentEra()) < 3); // DarkLunaPhantom - Adjusted era factor for mods. This era seems like nonsense meant to prevent counting all bonuses when the map is fully revealed.
 
 	iCount = 0;
 

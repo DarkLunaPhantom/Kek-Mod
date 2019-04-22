@@ -5152,7 +5152,8 @@ int CvCity::cultureStrength(PlayerTypes ePlayer) const
 		{
 			if (pLoopPlot->getOwnerINLINE() == ePlayer)
 			{
-				iStrength += (GC.getGameINLINE().getCurrentEra() + 1);
+				//iStrength += (GC.getGameINLINE().getCurrentEra() + 1);
+				iStrength += (normalizeEraFactor(GC.getGameINLINE().getCurrentEra()) + 1); // DarkLunaPhantom - Adjusted era factor for mods.
 			}
 		}
 	}

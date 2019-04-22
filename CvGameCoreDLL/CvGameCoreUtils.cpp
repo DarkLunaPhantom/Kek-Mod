@@ -694,6 +694,15 @@ bool isLimitedProject(ProjectTypes eProject)
 	return (isWorldProject(eProject) || isTeamProject(eProject));
 }
 
+// DarkLunaPhantom - Adjusts era factor for mods for use in calculations. In BTS there are 7 eras enumerated by 0,1,2,3,4,5,6.
+// In a mod with just 4 eras they would be enumerated by 0,1,2,3, but normalizing by this function would give 0,2,4,6.
+int normalizeEraFactor(EraTypes eEra)
+{
+	FASSERT_BOUNDS(0, GC.getNumEraInfos(), eEra, "normalizeEraFactor");
+	FAssert(GC.getNumEraInfos() > 1);
+	return ROUND_DIVIDE(eEra * 6, GC.getNumEraInfos() - 1);
+}
+
 // FUNCTION: getBinomialCoefficient
 // Needed for getCombatOdds
 // Returns int value, being the possible number of combinations 

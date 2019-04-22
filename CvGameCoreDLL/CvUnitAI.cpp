@@ -6104,14 +6104,16 @@ void CvUnitAI::AI_spyMove()
 	int iAttackChance = 0;
 	int iTransportChance = 0;
 	{
-		int iScale = 100 * (kOwner.getCurrentEra() + 1);
+		//int iScale = 100 * (kOwner.getCurrentEra() + 1);
+		int iScale = 100 * (normalizeEraFactor(kOwner.getCurrentEra()) + 1); // DarkLunaPhantom - Adjusted era factor for mods.
 		int iAttackSpies = kOwner.AI_areaMissionAIs(area(), MISSIONAI_ATTACK_SPY);
 		int iLocalPoints = 0;
 		int iTotalPoints = 0;
 
 		if (kOwner.AI_isDoStrategy(AI_STRATEGY_ESPIONAGE_ECONOMY))
 		{
-			iScale += 50 * kOwner.getCurrentEra() * (kOwner.getCurrentEra()+1);
+			//iScale += 50 * kOwner.getCurrentEra() * (kOwner.getCurrentEra()+1);
+			iScale += 50 * normalizeEraFactor(kOwner.getCurrentEra()) * (normalizeEraFactor(kOwner.getCurrentEra())+1); // DarkLunaPhantom - Adjusted era factor for mods.
 		}
 
 		for (int iI = 0; iI < MAX_CIV_TEAMS; iI++)
@@ -23068,7 +23070,8 @@ bool CvUnitAI::AI_cityOffenseSpy(int iMaxPath, CvCity* pSkipCity)
 	const CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
 	const CvTeamAI& kTeam = GET_TEAM(getTeam());
 
-	const int iEra = kOwner.getCurrentEra();
+	//const int iEra = kOwner.getCurrentEra();
+	const int iEra = normalizeEraFactor(kOwner.getCurrentEra()); // DarkLunaPhantom - Adjusted era factor for mods.
 	int iBaselinePoints = 50 * iEra * (iEra+1); // cf the "big espionage" minimum value.
 	int iAverageUnspentPoints;
 	{
@@ -23392,7 +23395,8 @@ EspionageMissionTypes CvUnitAI::AI_bestPlotEspionage(PlayerTypes& eTargetPlayer,
 
 					// Block small missions when using "big espionage", unless the mission is really good value.
 					if (bBigEspionage
-						&& iValue < 50*kPlayer.getCurrentEra()*(kPlayer.getCurrentEra()+1) // 100, 300, 600, 1000, 1500, ...
+						//&& iValue < 50*kPlayer.getCurrentEra()*(kPlayer.getCurrentEra()+1) // 100, 300, 600, 1000, 1500, ...
+						&& iValue < 50*normalizeEraFactor(kPlayer.getCurrentEra())*(normalizeEraFactor(kPlayer.getCurrentEra())+1) // 100, 300, 600, 1000, 1500, ... // DarkLunaPhantom - Adjusted era factor for mods.
 						&& iValue < (kPlayer.AI_isDoStrategy(AI_STRATEGY_ESPIONAGE_ECONOMY) ? 4 : 2)*iCost)
 					{
 						iValue = 0;
@@ -24291,7 +24295,8 @@ int CvUnitAI::AI_stackOfDoomExtra() const
 	int iFlavourExtra = kOwner.AI_getFlavorValue(FLAVOR_MILITARY)/2 + (kOwner.AI_getFlavorValue(FLAVOR_MILITARY) > 0 ? 8 : 4);
 	int iEra = kOwner.getCurrentEra();
 	// 4 base. then rand between 0 and ... (1 or 2 + iEra + flavour * era ratio)
-	return AI_getBirthmark() % ((kOwner.AI_isDoStrategy(AI_STRATEGY_CRUSH) ? 2 : 1) + iEra + (iEra+1)*iFlavourExtra/std::max(1, GC.getNumEraInfos())) + 4;
+	//return AI_getBirthmark() % ((kOwner.AI_isDoStrategy(AI_STRATEGY_CRUSH) ? 2 : 1) + iEra + (iEra+1)*iFlavourExtra/std::max(1, GC.getNumEraInfos())) + 4;
+	return AI_getBirthmark() % ((kOwner.AI_isDoStrategy(AI_STRATEGY_CRUSH) ? 2 : 1) + normalizeEraFactor((EraTypes)iEra) + (iEra+1)*iFlavourExtra/std::max(1, GC.getNumEraInfos())) + 4; // DarkLunaPhantom - Adjusted era factor for mods.
 	// K-Mod end
 }
 
