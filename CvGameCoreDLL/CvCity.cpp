@@ -3628,7 +3628,7 @@ std::wstring CvCity::getConscriptText() const
 {
 	std::vector<UnitTypes> aeConscriptUnits = getConscriptUnits();
 	std::wstring szConscriptText = std::wstring();
-	for (int iI = 0; (int)iI < aeConscriptUnits.size(); ++iI)
+	for (int iI = 0; iI < (int)aeConscriptUnits.size(); ++iI)
 	{
 		if (iI > 0)
 		{
