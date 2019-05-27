@@ -3029,7 +3029,7 @@ def canApplyCrusadeDone1(argsList):
 	kTriggeredData = argsList[1]
 	
 	holyCity = gc.getGame().getHolyCity(kTriggeredData.eReligion)
-	if 0 == holyCity.getConscriptUnits().size():
+	if 0 == len(holyCity.getConscriptUnits()):
 		return false
 	
 	return true
@@ -3042,7 +3042,7 @@ def applyCrusadeDone1(argsList):
 	holyCity = gc.getGame().getHolyCity(kTriggeredData.eReligion)						
 	iNumUnits = gc.getWorldInfo(gc.getMap().getWorldSize()).getDefaultPlayers() / 2 + 1
 	
-	if iUnitType != -1:
+	if len(holyCity.getConscriptUnits()) != 0:
 		for i in range(iNumUnits):
 			player.initUnit(holyCity.getConscriptUnit(), holyCity.getX(), holyCity.getY(), UnitAITypes.UNITAI_CITY_DEFENSE, DirectionTypes.DIRECTION_SOUTH)
 

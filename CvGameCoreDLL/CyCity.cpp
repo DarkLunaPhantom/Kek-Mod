@@ -363,7 +363,7 @@ python::tuple CyCity::getConscriptUnits()
 		std::vector<UnitTypes> pointsVec = m_pCity->getConscriptUnits();
 		uint i;
 		for(i=0;i<pointsVec.size();i++)
-			tup += pointsVec[i];
+			tup += python::make_tuple(pointsVec[i]);
 	}
 
 	return tup;
