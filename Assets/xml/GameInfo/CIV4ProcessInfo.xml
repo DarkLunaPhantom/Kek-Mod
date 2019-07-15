@@ -53,7 +53,7 @@
 				<iProductionToCommerceModifier>0</iProductionToCommerceModifier>
 				<iProductionToCommerceModifier>100</iProductionToCommerceModifier>
 			</ProductionToCommerceModifiers>
-			<Button>Art/Interface/Buttons/Process/ProcessEspionage.dds</Button>
+			<Button>,Art/Interface/Buttons/Process/ProcessEspionage.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,16</Button>
 		</ProcessInfo>
 	</ProcessInfos>
 </Civ4ProcessInfo>
