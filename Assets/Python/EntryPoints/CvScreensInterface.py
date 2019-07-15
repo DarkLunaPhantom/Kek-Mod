@@ -31,6 +31,8 @@ import CvSpaceShipScreen
 import SevoScreenEnums
 # BUG - Sevopedia - end
 
+import CvModUpdaterScreen
+
 import CvDebugTools
 import CvDebugInfoScreen
 #import CvDiplomacy
@@ -294,6 +296,10 @@ victoryScreen = CvVictoryScreen.CvVictoryScreen(VICTORY_SCREEN)
 def showVictoryScreen():
 	if (-1 != CyGame().getActivePlayer()):
 		victoryScreen.interfaceScreen()
+
+modUpdaterScreen = CvModUpdaterScreen.CvModUpdaterScreen()
+def showModUpdaterScreen(argsList=None):
+	modUpdaterScreen.showScreen(True)
 
 # BUG - Sevopedia - start
 
@@ -967,6 +973,8 @@ HandleInputMap = {  MAIN_INTERFACE : mainInterface,
 					WORLDBUILDER_SCREEN : worldBuilderScreen,
 
 					DEBUG_INFO_SCREEN : debugInfoScreen,
+					
+					MODUPDATER_SCREEN : modUpdaterScreen,
 ## World Builder ##
 					WB_PLOT : WBPlotScreen.WBPlotScreen(),
 					WB_EVENT: WBEventScreen.WBEventScreen(),

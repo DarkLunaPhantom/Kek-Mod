@@ -284,7 +284,7 @@ bool isWorldProject(ProjectTypes eProject);														// Exposed to Python
 bool isTeamProject(ProjectTypes eProject);														// Exposed to Python
 bool isLimitedProject(ProjectTypes eProject);													// Exposed to Python
 
-int normalizeEraFactor(EraTypes eEra);
+int normalizeEraFactor(EraTypes eEra); // DarkLunaPhantom
 
 __int64 getBinomialCoefficient(int iN, int iK);
 int getCombatOdds(const CvUnit* pAttacker, const CvUnit* pDefender); // Exposed to Python

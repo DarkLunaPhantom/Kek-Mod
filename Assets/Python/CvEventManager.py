@@ -29,10 +29,6 @@ import WBPlotScreen
 import CvPlatyBuilderScreen
 ## Ultrapack ##
 
-# Updater Mod
-import CvModUpdaterScreen
-# Updater Mod END
-
 gc = CyGlobalContext()
 localText = CyTranslator()
 PyPlayer = PyHelpers.PyPlayer
@@ -326,16 +322,6 @@ class CvEventManager:
 	def onWindowActivation(self, argsList):
 		'Called when the game window activates or deactivates'
 		bActive = argsList[0]
-
-		# Updater Mod
-		if not hasattr(CvScreensInterface, "showModUpdaterScreen"):
-			CvModUpdaterScreen.integrate()
-
-		# Show ModUpdater screen after Window switch
-		if( bActive and
-			-1 == CyGame().getActivePlayer() and not CyGame().isPitbossHost()):
-			CvScreensInterface.showModUpdaterScreen()
-		# Updater Mod END
 
 	def onUnInit(self, argsList):
 		'Called when Civ shuts down'

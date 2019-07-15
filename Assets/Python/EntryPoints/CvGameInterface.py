@@ -294,6 +294,3 @@ def getUpgradePriceOverride(argsList):
 
 def getExperienceNeeded(argsList):
 	return gameUtils().getExperienceNeeded(argsList)
-	
-def delayedPythonCall(argsList):
-	return gameUtils().delayedPythonCall(argsList)

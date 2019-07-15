@@ -333,6 +333,13 @@ class CvOptionsScreen:
 			szWidgetName = "BugOptionsButton"
 			tab.attachButton("KmodBox", szWidgetName, szOptionDesc, "CvScreensInterface", "showBugOptionsScreen", szWidgetName)
 		# K-Mod end
+		tab.attachVSeparator("LangHBox", "LangHBoxSeparator")
+		tab.attachVBox("LangHBox", "KmodBox")
+		tab.setLayoutFlag("KmodBox", "LAYOUT_SIZE_HEXPANDING")
+		tab.setLayoutFlag("KmodBox", "LAYOUT_HCENTER")
+		szOptionDesc = localText.getText("TXT_KEY_UPDATE_MOD", ())
+		szWidgetName = "ModUpdaterButton"
+		tab.attachButton("KmodBox", szWidgetName, szOptionDesc, "CvScreensInterface", "showModUpdaterScreen", szWidgetName)
 
 		########## Lower Panel
 

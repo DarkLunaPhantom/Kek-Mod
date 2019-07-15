@@ -149,4 +149,12 @@
 		<Italian>Se sei alla ricerca di un'esperienza davvero epica, la dimensione di questa mappa &#232; quello che fa per te, poich&#233; oltre a te c'&#232; posto per altri dodici rivali.</Italian>
 		<Spanish>Si quer&#233;is una experiencia &#233;pica de verdad, el tama&#241;o de este mapa es lo que and&#225;is buscando.  Tiene espacio suficiente para vos y para otros doce rivales.</Spanish>
 	</TEXT>
+		<TEXT>
+		<Tag>TXT_KEY_UPDATE_MOD</Tag>
+		<English>Update Mod</English>
+		<French>Mettre &#224; jour le mod</French>
+		<German>Mod aktualisieren</German>
+		<Italian>Aggiorna mod</Italian>
+		<Spanish>Actualizar mod</Spanish>
+	</TEXT>
 </Civ4GameText>
