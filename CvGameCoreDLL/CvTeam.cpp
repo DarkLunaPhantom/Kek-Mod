@@ -7081,8 +7081,6 @@ void CvTeam::queueWar(TeamTypes eAttackingTeam, TeamTypes eDefendingTeam, bool b
 // DarkLunaPhantom
 void CvTeam::triggerWars()
 {
-	bool bWarsDeclared = false;
-	
 	if (bTriggeringWars)
 	{
 		return;
@@ -7100,16 +7098,11 @@ void CvTeam::triggerWars()
 		newdiplo_queue.pop();
 		warplan_queue.pop();
 		primarydow_queue.pop();
-		
-		bWarsDeclared = true;
 	}
 	
-	if (bWarsDeclared)
+	for (PlayerTypes i = (PlayerTypes)0; i < MAX_CIV_PLAYERS; i=(PlayerTypes)(i+1))
 	{
-		for (PlayerTypes i = (PlayerTypes)0; i < MAX_CIV_PLAYERS; i=(PlayerTypes)(i+1))
-		{
-			GET_PLAYER(i).AI_updateAttitudeCache();
-		}
+		GET_PLAYER(i).AI_updateAttitudeCache();
 	}
 	
 	bTriggeringWars = false;
