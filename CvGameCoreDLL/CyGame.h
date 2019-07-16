@@ -40,8 +40,10 @@ public:
 
 	int getProductionPerPopulation(int /*HurryTypes*/ eHurry);
 
-	int getAdjustedPopulationPercent(int /*VictoryTypes*/ eVictory);
-	int getAdjustedLandPercent(int /* VictoryTypes*/ eVictory);
+	//int getAdjustedPopulationPercent(int /*VictoryTypes*/ eVictory);
+    int getAdjustedPopulationPercent(int /*VictoryTypes*/ eVictory, int iTeam); // DarkLunaPhantom
+	//int getAdjustedLandPercent(int /* VictoryTypes*/ eVictory);
+    int getAdjustedLandPercent(int /* VictoryTypes*/ eVictory, int iTeam); // DarkLunaPhantom
 
 	bool isTeamVote(int /*VoteTypes*/ eVote) const;
 	bool isChooseElection(int /*VoteTypes*/ eVote) const;

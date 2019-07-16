@@ -226,7 +226,7 @@ class MoreCiv4lertsEvent( AbstractMoreCiv4lertsEvent):
 			# Population Limit
 			if (self.getCheckForDomPopVictory()):
 				VictoryPopPercent = 0.0
-				VictoryPopPercent = gc.getGame().getAdjustedPopulationPercent(DomVictory) * 1.0
+				VictoryPopPercent = gc.getGame().getAdjustedPopulationPercent(DomVictory, activeTeam.getID()) * 1.0
 				totalPop = gc.getGame().getTotalPopulation()
 				LimitPop = int((totalPop * VictoryPopPercent) / 100.0)
 				ourPop = activeTeam.getTotalPopulation()
@@ -266,7 +266,7 @@ class MoreCiv4lertsEvent( AbstractMoreCiv4lertsEvent):
 			# Land Limit
 			if (self.getCheckForDomLandVictory()):
 				VictoryLandPercent = 0.0
-				VictoryLandPercent = gc.getGame().getAdjustedLandPercent(DomVictory) * 1.0
+				VictoryLandPercent = gc.getGame().getAdjustedLandPercent(DomVictory, activeTeam.getID()) * 1.0
 				totalLand = gc.getMap().getLandPlots()
 				LimitLand = int((totalLand * VictoryLandPercent) / 100.0)
 				ourLand = activeTeam.getTotalLand()

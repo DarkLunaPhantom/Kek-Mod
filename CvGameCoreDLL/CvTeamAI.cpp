@@ -2774,11 +2774,13 @@ DenialTypes CvTeamAI::AI_surrenderTrade(TeamTypes eTeam, int iPowerMultiplier) c
 		for (int i = 0; i < GC.getNumVictoryInfos(); i++)
 		{
 			bool bPopulationThreat = true;
-			if (GC.getGameINLINE().getAdjustedPopulationPercent((VictoryTypes)i) > 0)
+			//if (GC.getGameINLINE().getAdjustedPopulationPercent((VictoryTypes)i) > 0)
+            if (GC.getVictoryInfo((VictoryTypes)i).getPopulationPercentLead() > 0) // DarkLunaPhantom
 			{
 				bPopulationThreat = false;
 
-				int iThreshold = GC.getGameINLINE().getTotalPopulation() * GC.getGameINLINE().getAdjustedPopulationPercent((VictoryTypes)i);
+				//int iThreshold = GC.getGameINLINE().getTotalPopulation() * GC.getGameINLINE().getAdjustedPopulationPercent((VictoryTypes)i);
+                int iThreshold = GC.getGameINLINE().getTotalPopulation() * GC.getGameINLINE().getAdjustedPopulationPercent((VictoryTypes)i, getID()); // DarkLunaPhantom
 				if (400 * getTotalPopulation(!isAVassal()) > 3 * iThreshold)
 				{
 					return DENIAL_VICTORY;
@@ -2786,6 +2788,7 @@ DenialTypes CvTeamAI::AI_surrenderTrade(TeamTypes eTeam, int iPowerMultiplier) c
 
 				if (!atWar(getID(), eTeam))
 				{
+                    int iThreshold = GC.getGameINLINE().getTotalPopulation() * GC.getGameINLINE().getAdjustedPopulationPercent((VictoryTypes)i, eTeam); // DarkLunaPhantom
 					if (400 * (getTotalPopulation(isAVassal()) + GET_TEAM(eTeam).getTotalPopulation()) > 3 * iThreshold)
 					{
 						bPopulationThreat = true;
@@ -2794,11 +2797,13 @@ DenialTypes CvTeamAI::AI_surrenderTrade(TeamTypes eTeam, int iPowerMultiplier) c
 			}
 
 			bool bLandThreat = true;
-			if (GC.getGameINLINE().getAdjustedLandPercent((VictoryTypes)i) > 0)
+			//if (GC.getGameINLINE().getAdjustedLandPercent((VictoryTypes)i) > 0)
+            if (GC.getVictoryInfo((VictoryTypes)i).getLandPercent() > 0) // DarkLunaPhantom
 			{
 				bLandThreat = false;
 
-				int iThreshold = GC.getMapINLINE().getLandPlots() * GC.getGameINLINE().getAdjustedLandPercent((VictoryTypes)i);
+				//int iThreshold = GC.getMapINLINE().getLandPlots() * GC.getGameINLINE().getAdjustedLandPercent((VictoryTypes)i);
+                int iThreshold = GC.getMapINLINE().getLandPlots() * GC.getGameINLINE().getAdjustedLandPercent((VictoryTypes)i, getID()); // DarkLunaPhantom
 				if (400 * getTotalLand(!isAVassal()) > 3 * iThreshold)
 				{
 					return DENIAL_VICTORY;
@@ -2806,6 +2811,7 @@ DenialTypes CvTeamAI::AI_surrenderTrade(TeamTypes eTeam, int iPowerMultiplier) c
 
 				if (!atWar(getID(), eTeam))
 				{
+                    iThreshold = GC.getMapINLINE().getLandPlots() * GC.getGameINLINE().getAdjustedLandPercent((VictoryTypes)i, eTeam); // DarkLunaPhantom
 					if (400 * (getTotalLand(isAVassal()) + GET_TEAM(eTeam).getTotalLand()) > 3 * iThreshold)
 					{
 						bLandThreat = true;
@@ -2813,7 +2819,8 @@ DenialTypes CvTeamAI::AI_surrenderTrade(TeamTypes eTeam, int iPowerMultiplier) c
 				}
 			}
 
-			if (GC.getGameINLINE().getAdjustedPopulationPercent((VictoryTypes)i) > 0 || GC.getGameINLINE().getAdjustedLandPercent((VictoryTypes)i) > 0)
+			//if (GC.getGameINLINE().getAdjustedPopulationPercent((VictoryTypes)i) > 0 || GC.getGameINLINE().getAdjustedLandPercent((VictoryTypes)i) > 0)
+            if (GC.getVictoryInfo((VictoryTypes)i).getPopulationPercentLead() > 0 || GC.getVictoryInfo((VictoryTypes)i).getLandPercent() > 0) // DarkLunaPhantom
 			{
 				if (bLandThreat && bPopulationThreat)
 				{

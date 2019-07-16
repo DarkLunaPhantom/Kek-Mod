@@ -2952,11 +2952,13 @@ int CvGame::getSymbolID(int iSymbol)
 }
 
 
-int CvGame::getAdjustedPopulationPercent(VictoryTypes eVictory) const
+//int CvGame::getAdjustedPopulationPercent(VictoryTypes eVictory) const
+int CvGame::getAdjustedPopulationPercent(VictoryTypes eVictory, int iTeam) const // DarkLunaPhantom - Adjusted to permanent alliances.
 {
 	int iPopulation;
 	int iBestPopulation;
 	int iNextBestPopulation;
+    int iBestTeam, iNextBestTeam; // DarkLunaPhantom
 	int iI;
 
 	if (GC.getVictoryInfo(eVictory).getPopulationPercentLead() == 0)
@@ -2982,15 +2984,21 @@ int CvGame::getAdjustedPopulationPercent(VictoryTypes eVictory) const
 			{
 				iNextBestPopulation = iBestPopulation;
 				iBestPopulation = iPopulation;
+                
+                iNextBestTeam = iBestTeam; // DarkLunaPhantom
+                iBestTeam = iI;
 			}
 			else if (iPopulation > iNextBestPopulation)
 			{
 				iNextBestPopulation = iPopulation;
+                iNextBestTeam = iI; // DarkLunaPhantom
 			}
 		}
 	}
 
-	return std::min(100, (((iNextBestPopulation * 100) / getTotalPopulation()) + GC.getVictoryInfo(eVictory).getPopulationPercentLead()));
+	//return std::min(100, (((iNextBestPopulation * 100) / getTotalPopulation()) + GC.getVictoryInfo(eVictory).getPopulationPercentLead()));
+    double iFactor = std::max(1.0, (1 + 0.5 * (GET_TEAM((TeamTypes)iTeam).getNumMembers() - 1)) / (1 + 0.5 * (GET_TEAM((TeamTypes)iNextBestTeam).getNumMembers() - 1))); // DarkLunaPhantom
+    return std::min(100, ((int)((iNextBestPopulation * iFactor * 100) / getTotalPopulation()) + GC.getVictoryInfo(eVictory).getPopulationPercentLead()));
 }
 
 
@@ -3004,7 +3012,8 @@ int CvGame::getProductionPerPopulation(HurryTypes eHurry) const
 }
 
 
-int CvGame::getAdjustedLandPercent(VictoryTypes eVictory) const
+//int CvGame::getAdjustedLandPercent(VictoryTypes eVictory) const
+int CvGame::getAdjustedLandPercent(VictoryTypes eVictory, int iTeam) const // DarkLunaPhantom - Adjusted for permanent alliances. CvVictoryInfo::getMinLandPercent from victory conditions xml is not used here anymore.
 {
 	int iPercent;
 
@@ -3017,7 +3026,9 @@ int CvGame::getAdjustedLandPercent(VictoryTypes eVictory) const
 
 	iPercent -= (countCivTeamsEverAlive() * 2);
 
-	return std::max(iPercent, GC.getVictoryInfo(eVictory).getMinLandPercent());
+	//return std::max(iPercent, GC.getVictoryInfo(eVictory).getMinLandPercent()); // DarkLunaPhantom
+    int iMembers = GET_TEAM((TeamTypes)iTeam).getNumMembers();
+    return std::max(iPercent, (100 * (1 + iMembers)) / (3 + iMembers) + 1);
 }
 
 
@@ -7754,9 +7765,11 @@ bool CvGame::testVictory(VictoryTypes eVictory, TeamTypes eTeam, bool* pbEndScor
 
 	if (bValid)
 	{
-		if (getAdjustedPopulationPercent(eVictory) > 0)
+		//if (getAdjustedPopulationPercent(eVictory) > 0)
+        if (GC.getVictoryInfo(eVictory).getPopulationPercentLead() > 0) // DarkLunaPhantom
 		{
-			if (100 * GET_TEAM(eTeam).getTotalPopulation() < getTotalPopulation() * getAdjustedPopulationPercent(eVictory))
+			//if (100 * GET_TEAM(eTeam).getTotalPopulation() < getTotalPopulation() * getAdjustedPopulationPercent(eVictory))
+            if (100 * GET_TEAM(eTeam).getTotalPopulation() < getTotalPopulation() * getAdjustedPopulationPercent(eVictory, eTeam)) // DarkLunaPhantom
 			{
 				bValid = false;
 			}
@@ -7765,9 +7778,11 @@ bool CvGame::testVictory(VictoryTypes eVictory, TeamTypes eTeam, bool* pbEndScor
 
 	if (bValid)
 	{
-		if (getAdjustedLandPercent(eVictory) > 0)
+		//if (getAdjustedLandPercent(eVictory) > 0)
+        if (GC.getVictoryInfo(eVictory).getLandPercent() > 0) // DarkLunaPhantom
 		{
-			if (100 * GET_TEAM(eTeam).getTotalLand() < GC.getMapINLINE().getLandPlots() * getAdjustedLandPercent(eVictory))
+			//if (100 * GET_TEAM(eTeam).getTotalLand() < GC.getMapINLINE().getLandPlots() * getAdjustedLandPercent(eVictory))
+            if (100 * GET_TEAM(eTeam).getTotalLand() < GC.getMapINLINE().getLandPlots() * getAdjustedLandPercent(eVictory, eTeam)) // DarkLunaPhantom
 			{
 				bValid = false;
 			}

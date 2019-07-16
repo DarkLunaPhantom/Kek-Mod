@@ -92,14 +92,18 @@ int CyGame::getProductionPerPopulation(int /*HurryTypes*/ eHurry)
 	return m_pGame ? m_pGame->getProductionPerPopulation((HurryTypes) eHurry) : -1;
 }
 
-int CyGame::getAdjustedPopulationPercent(int /*VictoryTypes*/ eVictory)
+//int CyGame::getAdjustedPopulationPercent(int /*VictoryTypes*/ eVictory)
+int CyGame::getAdjustedPopulationPercent(int /*VictoryTypes*/ eVictory, int iTeam) // DarkLunaPhantom - Adjusted for permanent alliances.
 {
-	return m_pGame ? m_pGame->getAdjustedPopulationPercent((VictoryTypes) eVictory) : -1;
+	//return m_pGame ? m_pGame->getAdjustedPopulationPercent((VictoryTypes) eVictory) : -1;
+    return m_pGame ? m_pGame->getAdjustedPopulationPercent((VictoryTypes) eVictory, iTeam) : -1; // DarkLunaPhantom
 }
 
-int CyGame::getAdjustedLandPercent(int /* VictoryTypes*/ eVictory)
+//int CyGame::getAdjustedLandPercent(int /* VictoryTypes*/ eVictory)
+int CyGame::getAdjustedLandPercent(int /* VictoryTypes*/ eVictory, int iTeam) // DarkLunaPhantom - Adjusted for permanent alliances.
 {
-	return m_pGame ? m_pGame->getAdjustedLandPercent((VictoryTypes) eVictory) : -1;
+	//return m_pGame ? m_pGame->getAdjustedLandPercent((VictoryTypes) eVictory) : -1;
+    return m_pGame ? m_pGame->getAdjustedLandPercent((VictoryTypes) eVictory, iTeam) : -1; // DarkLunaPhantom
 }
 
 bool CyGame::isTeamVote(int /*VoteTypes*/ eVote) const

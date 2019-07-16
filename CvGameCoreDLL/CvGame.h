@@ -101,8 +101,10 @@ public:
 
 	int getProductionPerPopulation(HurryTypes eHurry) const; // Exposed to Python
 
-	int getAdjustedPopulationPercent(VictoryTypes eVictory) const;								// Exposed to Python
-	int getAdjustedLandPercent(VictoryTypes eVictory) const;											// Exposed to Python
+	//int getAdjustedPopulationPercent(VictoryTypes eVictory) const;								// Exposed to Python
+    int getAdjustedPopulationPercent(VictoryTypes eVictory, int iTeam) const; // DarkLunaPhantom								// Exposed to Python
+	//int getAdjustedLandPercent(VictoryTypes eVictory) const;											// Exposed to Python
+    int getAdjustedLandPercent(VictoryTypes eVictory, int iTeam) const; // DarkLunaPhantom											// Exposed to Python
 
 	bool isTeamVote(VoteTypes eVote) const;												// Exposed to Python
 	bool isChooseElection(VoteTypes eVote) const;									// Exposed to Python

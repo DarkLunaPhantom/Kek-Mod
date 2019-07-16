@@ -30,8 +30,10 @@ void CyGamePythonInterface()
 
 		.def("getProductionPerPopulation", &CyGame::getProductionPerPopulation, "int (int /*HurryTypes*/ eHurry)")
 
-		.def("getAdjustedPopulationPercent", &CyGame::getAdjustedPopulationPercent, "int (int eVictory)")
-		.def("getAdjustedLandPercent", &CyGame::getAdjustedLandPercent, "int (int eVictory)")
+		//.def("getAdjustedPopulationPercent", &CyGame::getAdjustedPopulationPercent, "int (int eVictory)")
+        .def("getAdjustedPopulationPercent", &CyGame::getAdjustedPopulationPercent, "int (int eVictory, int iTeam)") // DarkLunaPhantom
+		//.def("getAdjustedLandPercent", &CyGame::getAdjustedLandPercent, "int (int eVictory)")
+        .def("getAdjustedLandPercent", &CyGame::getAdjustedLandPercent, "int (int eVictory, int iTeam)") // DarkLunaPhantom
 
 		.def("isTeamVote", &CyGame::isTeamVote, "bool (int eVote)")
 		.def("isChooseElection", &CyGame::isChooseElection, "bool (int eVote)")
