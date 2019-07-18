@@ -2973,6 +2973,8 @@ int CvGame::getAdjustedPopulationPercent(VictoryTypes eVictory, int iTeam) const
 
 	iBestPopulation = 0;
 	iNextBestPopulation = 0;
+    iBestTeam = 0;
+    iNextBestTeam = 0;
 
 	for (iI = 0; iI < MAX_CIV_TEAMS; iI++)
 	{
