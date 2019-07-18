@@ -872,8 +872,14 @@ void CvSelectionGroup::startMission()
 					if (!isHuman() && canAllMove()) // AI groups might want to reconsider their action after pillaging.
 						break;
 				}
-				if (pLoopUnit->isAttacking())
-					break; // Sea patrol intercept
+                // DarkLunaPhantom - If this selection group survives sea patrol battle then the game crashes because combat clears the mission queue so there is a nullpointer dereferencing exception in the code below.
+                // Since post-combat code clears the mission queue (and this sets activity to ACTIVITY_AWAKE) and also deals with unit selection for the active player, we can just skip rest of the function here.
+				//if (pLoopUnit->isAttacking())
+					//break; // Sea patrol intercept
+                if (!headMissionQueueNode() || pLoopUnit->isAttacking())
+                {
+                    return;
+                }
 			}
 			break;
 		}
