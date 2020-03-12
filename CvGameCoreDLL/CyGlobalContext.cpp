@@ -114,6 +114,12 @@ bool CyGlobalContext::isRandLogging() {
 	return GC.getRandLogging();
 } // </dlph.27>
 
+// DarkLunaPhantom
+bool CyGlobalContext::isSynchLogging() {
+
+	return GC.getSynchLogging();
+}
+
 CvEffectInfo* CyGlobalContext::getEffectInfo(int /*EffectTypes*/ i) const
 {
 	return (i>=0 && i<GC.getNumEffectInfos()) ? &GC.getEffectInfo((EffectTypes) i) : NULL;

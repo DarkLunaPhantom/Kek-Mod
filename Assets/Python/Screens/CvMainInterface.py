@@ -5013,7 +5013,7 @@ class CvMainInterface:
 												szPlayerScore = u"%d" % iScore
 												if (bAlignIcons):
 													scores.setScore(szPlayerScore)
-													if (gc.getTeam(gc.getPlayer(ePlayer).getTeam()).getNumMembers() > 1): #DarkLunaPhantom
+													if (gc.getTeam(gc.getPlayer(ePlayer).getTeam()).getNumMembers() > 1): # DarkLunaPhantom
 														scores.setTeamScore(u"%d" % gc.getGame().getTeamScore(gc.getPlayer(ePlayer).getTeam()))
 													else:
 														scores.setTeamScore("")
@@ -5057,7 +5057,7 @@ class CvMainInterface:
 											if (bAlignIcons):
 												scores.setName(szPlayerName)
 												scores.setID(u"<color=%d,%d,%d,%d>%d</color>" %(colorTuple + (ePlayer,)))
-												if (gc.getTeam(gc.getPlayer(ePlayer).getTeam()).getNumMembers() > 1): #DarkLunaPhantom
+												if (gc.getTeam(gc.getPlayer(ePlayer).getTeam()).getNumMembers() > 1): # DarkLunaPhantom
 													scores.setTeam(u"<color=%d,%d,%d,%d>%d</color>" %(colorTuple + (gc.getPlayer(ePlayer).getTeam(),)))
 												else:
 													scores.setTeam("")

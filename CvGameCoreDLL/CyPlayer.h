@@ -450,6 +450,8 @@ public:
 	int getCombatExperience() const;
 	void changeCombatExperience(int iChange);
 	void setCombatExperience(int iExperience);
+    
+    bool isConnected() const; // DarkLunaPhantom
 
 	int getSpecialistExtraYield(int /*SpecialistTypes*/ eIndex1, int /*YieldTypes*/ eIndex2);
 

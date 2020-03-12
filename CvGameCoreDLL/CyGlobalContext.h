@@ -41,6 +41,7 @@ public:
 	bool isLogging();
 	bool isRandLogging();
 	// </dlph.27>
+    bool isSynchLogging(); // DarkLunaPhantom
 	CvEffectInfo* getEffectInfo(int i) const;
 	CvTerrainInfo* getTerrainInfo(int i) const;
 	CvBonusClassInfo* getBonusClassInfo(int i) const;

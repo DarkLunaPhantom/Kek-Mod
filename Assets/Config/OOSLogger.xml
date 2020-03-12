@@ -4,6 +4,8 @@
 
 <mod id="OOSLogger" module="OOSLogger">
 
-	<event type="gameUpdate" function="onGameUpdate"/>
+    <event type="gameUpdate" function="onGameUpdate"/>
+    <event type="GameStart" function="onGameStart"/>
+    <event type="OnLoad" function="onGameLoad"/>
 
 </mod>

@@ -1909,6 +1909,12 @@ void CyPlayer::setCombatExperience(int iExperience)
 
 }
 
+// DarkLunaPhantom
+bool CyPlayer::isConnected() const
+{
+    return m_pPlayer ? m_pPlayer->isConnected() : false;
+}
+
 int CyPlayer::getSpecialistExtraYield(int /*SpecialistTypes*/ eIndex1, int /*YieldTypes*/ eIndex2)
 {
 	return m_pPlayer ? m_pPlayer->getSpecialistExtraYield((SpecialistTypes) eIndex1, (YieldTypes) eIndex2) : -1;

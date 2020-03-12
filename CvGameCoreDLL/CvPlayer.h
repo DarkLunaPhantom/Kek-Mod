@@ -671,7 +671,7 @@ public:
 	void setCombatExperience(int iExperience);   // Exposed to Python
 	void changeCombatExperience(int iChange);   // Exposed to Python
 
-	DllExport bool isConnected() const;
+	DllExport bool isConnected() const; // Exposed to Python
 	DllExport int getNetID() const;
 	DllExport void setNetID(int iNetID);
 	DllExport void sendReminder();

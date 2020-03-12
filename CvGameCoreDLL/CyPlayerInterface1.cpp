@@ -433,6 +433,8 @@ void CyPlayerPythonInterface1(python::class_<CyPlayer>& x)
 		.def("getCombatExperience", &CyPlayer::getCombatExperience, "int () - Combat experience used to produce Warlords")
 		.def("changeCombatExperience", &CyPlayer::changeCombatExperience, "void (int) - Combat experience used to produce Warlords")
 		.def("setCombatExperience", &CyPlayer::setCombatExperience, "void (int) - Combat experience used to produce Warlords")
+        
+        .def("isConnected", &CyPlayer::isConnected, "bool () - Is player connected to the game") // DarkLunaPhantom
 
 		.def("getSpecialistExtraYield", &CyPlayer::getSpecialistExtraYield, "int (int /*SpecialistTypes*/ eIndex1, int /*YieldTypes*/ eIndex2)")
 

@@ -2,12 +2,9 @@ import os
 from CvPythonExtensions import *
 import CvUtil
 import BugPath
+from datetime import datetime # DarkLunaPhantom
 
 gc = CyGlobalContext()
-
-#szFilename = "OOSLog.txt"
-
-bWroteLog = False # (advc: I don't think this accomplishes anything)
 
 SEPERATOR = "-----------------------------------------------------------------\n"
 
@@ -17,38 +14,49 @@ SEPERATOR = "-----------------------------------------------------------------\n
 # info contained in the sync checksum to a log file, then sets the bWroteLog
 # variable so that it only happens once.
 def onGameUpdate(argsList):
-	global bWroteLog
-	# <advc> Same checks as in for the MPLog in CvRandom::get plus a WorldBuilder check for advc.135c (WorldBuilder always leads to OOS)
-	if not gc.isLogging() or not gc.isRandLogging() or gc.getGame().GetWorldBuilderMode():
+	if not gc.isLogging() or not gc.isSynchLogging(): # DarkLunaPhantom - Changed conditions for logging.
 		return # </advc>
 
 	bOOS = CyInterface().isOOSVisible()
 
-	if (bOOS and not bWroteLog):
+	if (bOOS and not onGameUpdate.bWroteLog):
 		writeLog()
 		# Automatic OOS detection START
 		#gc.getGame().setOOSVisible() # advc: This function doesn't exist in Kek-Mod/AdvCiv
 		# Automatic OOS detection END
-		bWroteLog = True
+		onGameUpdate.bWroteLog = True
+
 	# Make sure that the OOS log will be generated when the game is not restarted (advc: but e.g. reloaded?) after an OOS.
-	if (not bOOS):
-		bWroteLog = False
+	#if (not bOOS):
+	#	onGameUpdate.bWroteLog = False
+	# DarkLunaPhantom - The above does not work as intended since isOOSVisible seems to change between True and False while the message is flashing.
+	# New functions are added for cases of restarting and reloading.
+
+	# DarkLunaPhantom - This is supposed to enable logging of subsequent OOS events, but it doesn't work with PitBoss as it doesn't compare its OOSSeeds.
+	#if onGameUpdate.bWroteLog:
+	#	OOSValues = set()
+	#	for iPlayer in range(gc.getMAX_PLAYERS()):
+	#		if gc.getPlayer(iPlayer).isHuman() and gc.getPlayer(iPlayer).isConnected():
+	#			OOSValues.add(CyGameTextMgr().getOOSSeeds(iPlayer))
+	#	if len(OOSValues) <= 1:
+	#		onGameUpdate.bWroteLog = False
+
+# DarkLunaPhantom - For restarting and reloading.
+def onGameStart(argsList):
+	onGameUpdate.bWroteLog = False
+
+def onGameLoad(argsList):
+	onGameUpdate.bWroteLog = False
 
 def writeLog():
-	# advc: Overwritten below, so what's the point?
-	#if not CyGame().isPitbossHost():
-	#	playername = CvUtil.convertToStr(gc.getPlayer(gc.getGame().getActivePlayer()).getName())
-	#else:
-	#	playername = "PitBoss"
-	activePlayer = gc.getPlayer(gc.getGame().getActivePlayer())
+	if not CyGame().isPitbossHost():
+		activePlayer = gc.getPlayer(gc.getGame().getActivePlayer())
+		playername = str(activePlayer.getID()) + " " + CvUtil.convertToStr(activePlayer.getName())
+	else:
+		playername = "PitBoss" # DarkLunaPhantom - PitBoss logging doesn't work here anyway since CyInterface::isOOSVisible is not available in PitBoss (nor are BUG modules currently).
 	# advc: Prepend id b/c player names can be the same (that happens easily when testing on a single machine)
-	playername = str(activePlayer.getID()) + CvUtil.convertToStr(activePlayer.getName())
-	szNewFilename = BugPath.getRootDir() + "\\Logs\\" + "OOSLog - %s - " % (playername) + "Turn %s" % (gc.getGame().getGameTurn()) + ".log"
-	# <advc> Replacement for the bWroteLog mechanism above
-	bExists = os.path.isfile(szNewFilename)
-	if bExists:
-		return
-	# </advc>
+	szNewFilename = BugPath.getRootDir() + "\\Logs\\OOSLog - %s - Turn %s - %s.log" % (playername, gc.getGame().getGameTurn(), datetime.now().strftime("%Y-%m-%d %H-%M-%S"))
+
 	pFile = open(szNewFilename, "w")
 
 	# Backup current language
