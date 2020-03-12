@@ -3267,7 +3267,7 @@ def getHelpPartisans2(argsList):
 	
 	if None != capital and not capital.isNone():
 		iNumUnits = max(1, getNumPartisanUnits(plot, kTriggeredData.ePlayer) / 2)
-		szUnit = gc.getUnitInfo(capital.getConscriptUnit()).getTextKey()
+		szUnit = capital.getConscriptText()
 		
 		szHelp = localText.getText("TXT_KEY_EVENT_PARTISANS_HELP_2", (iNumUnits, szUnit, capital.getNameKey()))	
 
