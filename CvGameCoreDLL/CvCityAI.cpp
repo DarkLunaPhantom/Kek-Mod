@@ -5567,9 +5567,12 @@ int CvCityAI::AI_projectValue(ProjectTypes eProject)
 
 	int iValue = 0;
 
-	if (kProject.getTechShare() > 0)
+    int iTechShare = kProject.getTechShare() - 1 + kTeam.getNumMembers(); // DarkLunaPhantom - Increased Internet threshold for permanent alliances.
+	//if (kProject.getTechShare() > 0)
+    if (iTechShare > 0)
 	{
-		if (kProject.getTechShare() < GET_TEAM(getTeam()).getHasMetCivCount(true) && !kOwner.AI_avoidScience())
+		//if (kProject.getTechShare() < GET_TEAM(getTeam()).getHasMetCivCount(true) && !kOwner.AI_avoidScience())
+        if (iTechShare <= kOwner.getHasMetCivCount() && !kOwner.AI_avoidScience()) // DarkLunaPhantom begin - Internet now requires a number of players and not civilizations to know the tech.
 		{
 			TechTypes eSampleTech = kOwner.getCurrentResearch();
 

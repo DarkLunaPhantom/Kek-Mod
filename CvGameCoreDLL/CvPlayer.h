@@ -1081,6 +1081,7 @@ public:
 
 	DllExport const CvArtInfoUnit* getUnitArtInfo(UnitTypes eUnit, int iMeshGroup = 0) const;
 	DllExport bool hasSpaceshipArrived() const;
+    int getHasMetCivCount() const; // DarkLunaPhantom
 
 	// K-Mod note: Adding new virtual functions to this list seems to cause unpredictable behaviour during the initialization of the game.
 	// So beware!

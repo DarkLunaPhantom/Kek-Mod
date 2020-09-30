@@ -11049,7 +11049,8 @@ void CvGameTextMgr::setProjectHelp(CvWStringBuffer &szBuffer, ProjectTypes eProj
 	if (kProject.getTechShare() != 0)
 	{
 		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROJECT_TECH_SHARE", kProject.getTechShare()));
+		//szBuffer.append(gDLL->getText("TXT_KEY_PROJECT_TECH_SHARE", kProject.getTechShare()));
+        szBuffer.append(gDLL->getText("TXT_KEY_PROJECT_TECH_SHARE", kProject.getTechShare() - 1 + GET_TEAM(GET_PLAYER(ePlayer).getTeam()).getNumMembers())); // DarkLunaPhantom - Increased Internet threshold for permanent alliances.
 	}
 
 	if (kProject.isAllowsNukes())

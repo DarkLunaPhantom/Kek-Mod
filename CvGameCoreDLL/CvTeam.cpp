@@ -6413,7 +6413,8 @@ void CvTeam::updateTechShare(TechTypes eTech)
 	{
 		if (isTechShare(iI))
 		{
-			iBestShare = std::min(iBestShare, (iI + 1));
+			//iBestShare = std::min(iBestShare, (iI + 1));
+            iBestShare = std::min(iBestShare, (iI + getNumMembers())); // DarkLunaPhantom - Increased Internet threshold for permanent alliances by 1 for each additional team member.
 		}
 	}
 
@@ -6421,7 +6422,8 @@ void CvTeam::updateTechShare(TechTypes eTech)
 	{
 		iCount = 0;
 
-		for (iI = 0; iI < MAX_CIV_TEAMS; iI++)
+        // DarkLunaPhantom begin - Internet now requires a number of players and not civilizations to know the tech (as the description and tooltip say).
+		/*for (iI = 0; iI < MAX_CIV_TEAMS; iI++)
 		{
 			if (GET_TEAM((TeamTypes)iI).isAlive())
 			{
@@ -6434,7 +6436,20 @@ void CvTeam::updateTechShare(TechTypes eTech)
 					}
 				}
 			}
+		}*/
+        
+        for (iI = 0; iI < MAX_CIV_PLAYERS; ++iI)
+		{
+            TeamTypes eLoopTeam = GET_PLAYER((PlayerTypes)iI).getTeam();
+            const CvTeam& kLoopTeam = GET_TEAM(eLoopTeam);
+            
+			if (kLoopTeam.isAlive() && kLoopTeam.isHasTech(eTech) && isHasMet(eLoopTeam))
+			{
+				FAssertMsg(eLoopTeam != getID(), "eLoopTeam is not expected to be equal with getID()");
+				iCount++;
+			}
 		}
+        // DarkLunaPhantom end
 
 		if (iCount >= iBestShare)
 		{

@@ -23805,3 +23805,22 @@ bool CvPlayer::hasSpaceshipArrived() const
 {
 	return GET_TEAM(getTeam()).hasSpaceshipArrived();
 }
+
+int CvPlayer::getHasMetCivCount() const // DarkLunaPhantom
+{
+	int iCount = 0;
+    const CvTeam& kOwnTeam = GET_TEAM(getTeam());
+
+	for (int iI = 0; iI < MAX_CIV_PLAYERS; ++iI)
+	{
+        TeamTypes eLoopTeam = GET_PLAYER((PlayerTypes)iI).getTeam();
+        const CvTeam& kLoopTeam = GET_TEAM(eLoopTeam);
+        
+        if (kLoopTeam.isAlive() && getTeam() != eLoopTeam && !kLoopTeam.isMinorCiv() && kOwnTeam.isHasMet(eLoopTeam))
+        {
+			iCount++;
+		}
+	}
+
+	return iCount;
+}
