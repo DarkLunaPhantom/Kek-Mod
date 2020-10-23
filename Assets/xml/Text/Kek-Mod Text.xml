@@ -157,4 +157,12 @@
 		<Italian>Aggiorna mod</Italian>
 		<Spanish>Actualizar mod</Spanish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CLIMATE_FLAT</Tag>
+		<English>Flat</English>
+		<French>Plat</French>
+		<German>Flaches</German>
+		<Italian>Piatto</Italian>
+		<Spanish>Plano</Spanish>
+	</TEXT>
 </Civ4GameText>
