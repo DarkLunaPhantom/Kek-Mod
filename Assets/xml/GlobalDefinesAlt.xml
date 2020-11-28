@@ -182,4 +182,8 @@
 		<DefineName>STANDARD_BATTLE_ANIMATION_ROUNDS</DefineName>
 		<iDefineIntVal>6</iDefineIntVal> <!-- introduced by K-Mod -->
 	</Define>
+    <Define>
+		<DefineName>PITBOSS_SLOWDOWN_FACTOR</DefineName>
+		<iDefineIntVal>20</iDefineIntVal> <!-- DarkLunaPhantom - Set to 1 to disable. -->
+	</Define>
 </Civ4Defines>

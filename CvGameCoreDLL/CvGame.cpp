@@ -33,6 +33,8 @@
 #include "BetterBTSAI.h" // bbai
 #include "CvBugOptions.h" // K-Mod
 
+#include "windows.h" // DarkLunaPhantom
+
 // Public Functions...
 
 CvGame::CvGame()
@@ -2355,6 +2357,41 @@ void CvGame::update()
 		}
 
 		changeTurnSlice(1);
+        
+        // DarkLunaPhantom begin - This slows down PitBoss games when no one is connected. The purpose is to lower CPU usage to near zero
+        // when it is not needed which makes it easier to host PitBoss servers on cloud computing platforms that have resource usage limits.
+        if (gDLL->IsPitbossHost())
+        {
+            bool bHumans = false;
+            bool bConnected = false;
+        
+            for (int iI = 0; iI < MAX_PLAYERS; ++iI)
+            {
+                if (GET_PLAYER((PlayerTypes)iI).isHuman())
+                {
+                    bHumans = true;
+                    if (GET_PLAYER((PlayerTypes)iI).isConnected())
+                    {
+                        bConnected = true;
+                        break;
+                    }
+                }
+            }
+        
+            if (bHumans && !bConnected)
+            {
+                int iSleep = (GC.getDefineINT("PITBOSS_SLOWDOWN_FACTOR") - 1) * gDLL->getMillisecsPerTurn();
+                if (iSleep > 0)
+                {
+                    Sleep(iSleep);
+                    if (getElapsedGameTurns() > 0 || !isOption(GAMEOPTION_ADVANCED_START))
+                    {
+                        incrementTurnTimer(- iSleep / gDLL->getMillisecsPerTurn());
+                    }
+                }
+            }
+        }
+        // DarkLunaPhantom end
 
 		if (NO_PLAYER != getActivePlayer() && GET_PLAYER(getActivePlayer()).getAdvancedStartPoints() >= 0 && !gDLL->getInterfaceIFace()->isInAdvancedStart())
 		{
