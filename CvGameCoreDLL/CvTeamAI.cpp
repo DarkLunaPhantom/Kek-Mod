@@ -1907,8 +1907,11 @@ int CvTeamAI::AI_endWarVal(TeamTypes eTeam) const
 	int iOurPower = std::max(1, getPower(true));
 	int iTheirPower = std::max(1, kWarTeam.getDefensivePower(getID()));
 
-	iValue *= iTheirPower + 10;
-	iValue /= std::max(1, iOurPower + iTheirPower + 10);
+    // DarkLunaPhantom - Fixed an int overflow problem.
+	//iValue *= iTheirPower + 10;
+	//iValue /= std::max(1, iOurPower + iTheirPower + 10);
+    float fRatio = (iTheirPower + 10.0) / (iOurPower + iTheirPower + 10.0);
+    iValue *= fRatio;
 
 	WarPlanTypes eWarPlan = AI_getWarPlan(eTeam);
 
