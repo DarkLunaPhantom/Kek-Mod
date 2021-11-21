@@ -1797,9 +1797,11 @@ def greatMediator2Callback(argsList):
 	if iButton == 0:
 		destPlayer = gc.getPlayer(iData1)
 		player = gc.getPlayer(iData2)
-		gc.getTeam(destPlayer.getTeam()).makePeace(player.getTeam())
-		destPlayer.AI_changeAttitudeExtra(iData2, 1)
-		player.AI_changeAttitudeExtra(iData1, 1)		
+		# DarkLunaPhantom - Added a check to prevent weird bugs like making peace with a vassal if the situation changes after the event is triggered.
+		if gc.getTeam(player.getTeam()).canChangeWarPeace(destPlayer.getTeam()):
+			gc.getTeam(destPlayer.getTeam()).makePeace(player.getTeam())
+			destPlayer.AI_changeAttitudeExtra(iData2, 1)
+			player.AI_changeAttitudeExtra(iData1, 1)
 
 	return 0
 	
