@@ -1,0 +1,47 @@
+Credits: These are probably not one hundred percent complete, especially the 
+Help and Suggestions part. If you feel you should be credited here for 
+something, please let us know! We'd be happy to add you.
+
+Names are CivFanatics Center forum handles unless otherwise specified.
+
+Mod Team:
+-TC01
+-God-Emperor
+
+Contributors (Code, Art, or Otherwise):
+-deanej (bugfixes, ideas, help, mapscripts, wormhole graphics)
+-Kiwikaz (feature effects code)
+-cephalo (SpiralGalaxy mapscript)
+-T-hawk (production overflow fix)
+-stmartin and HoTK team (CAR mod)
+-Sephi (various speed improvements)
+-Valkrionn (Inno install script)
+-The Navy Seal (Final Frontier resource art)
+-ColdFever (blue marble graphics)
+-Pep (Unit orders modcomp)
+-BUG/BAT/BULL team (BUG 4.4)
+-killmeplease (Defender Withdrawl modcomp)
+-UncutDragon (Lead from Behind modcomp)
+-TheLopez (Multiple Favorite Civics modcomp, Attack/Defense combat bonus mod)
+-denev (Multiple Production modcomp
+-DarkLunaPhantom (patch to enable PitBoss + BUG to work)
+-sailbotlieh (Miranda Lawson leaderhead used for Catherine Shapiro)
+
+Help and Suggestions:
+-davidlallen, Afforess, phungus420 (DLL help)
+-The_J (python and graphics help)
+-Emperor Fool (python help, SDK help)
+-PieceOfMind (feedback)
+-PsiCorps (suggestions, bug reports)
+-dawe1311, wpulsar (bug reports)
+-apenpaap (suggestions)
+-JEELEN (suggestions)
+-renegadechicken (suggestions)
+-Imp Knoedel (many suggestions, leader text suggestions)
+-Manco Capac, Eclipse449, thegreekweegee, TezaPsyborg (leader text suggestions)
+-Strategist83, me_myrmidon (AI feedback)
+
+And of course:
+-Jon Shafer for creating Final Frontier, the scenario that this is based on
+-Firaxis/2K Games for making Civilization 4, the game for which this is a mod
+-Bioware, for the Miranda Lawson model used in sailbotlieh's leaderhead.

@@ -1,0 +1,323 @@
+Final Frontier Plus Changelog History:
+
+Changelogs for 1.9 beta releases:
+
+v1.9b1 Changelog:
+-Added a ninth human colony, Interstellar Intelligence, an espionage-focused
+faction, aka "the Watchers", based off a suggestion by Imp Knoedel. Trait
+grants Improved Stealth to all Light Ships and a bonus to espionage production,
+at a cost to upkeep.
+-Imported sailbotlieh's Miranda Lawson (imported from Mass Effect 2) leaderhead
+for Catherine Shapiro, the leader of the Watchers. Favorite civic is Police State.
+-Added Stealth Cruiser UU for the Watchers; a more expensive Stealth Ship
+that gets first strikes.
+-Added Security Directorate UB for the Watchers; an Intelligence Center that
+produces more Espionage.
+-Added Galactic Infiltration technology to the beginning of the Expansion Era.
+-Galactic Infiltration allows the training of the new Spy Ship unit, a spy
+that can perform Spy Missions but is not 100% invisible; it is only "invisible
+to most units" ala a Stealth Ship.
+-Re-enabled the No Espionage gameoption (that prevents the building of Spies and
+turns all Espionage into other commerces).
+-Added No Spies gameoption that prevents the building of spies, but still
+lets buildings produce Espionage culture.
+
+--
+
+v1.84 Patch:
+-Merged patch from DarkLunaPhantom to allow BUG to work in PitBoss mode.
+-Added some new unique diplomacy text to all leaders, based on suggestions 
+from the forums (http://forums.civfanatics.com/showthread.php?t=517635)
+-Improved the efficiency of rushing via Slave State from 30 hammers to 50.
+-Modified the AI to now forces a population reassignment every fifteen turns.
+-The target minimum food surplus for the AI has been changed to vary over
+the course of the game, as cities grow larger.
+-All AI leaders are now slightly more likely to build ships and plan war.
+-Fixed rare potential CTD that could happen if a unit withdrew off the map.
+-Fixed Wormholes bug that would stop Wormholes from working if their x *or*
+y coordinate happened to be the same.
+-Fixed potential minor Python bug involving adding a planet to a solar syste.m
+-Fixed PlotListEnhancements (BUG) crash when a starbase is built while the
+construction ship building it is selected.
+-Defined the TXT_KEYs for the (useless/hidden/ignored) Alien civilization
+to clean up the pedia.
+-Flavor change: adjusted land area computation to use lightyears as a unit.
+-Flavor change: slightly adjusted average lifespan in demographics upwards.
+
+Patch v1.83 Changelog:
+-Incremented in-game version to v1.83
+-Fixed in-game tooltip about iron being used for melee units
+-Fixed worldbuilder bug when adding resources to plots
+-Updated installer to support all possible Civ 4 installations
+-Rereleased v1.83 as a full download (no patches required, just install v1.83 
+and go)
+
+Patch v1.82 Changelog:
+-Bugfix for negative assignable population
+-Fix for over whipping when AI is in Slavery civic
+-Re-fix for UNITAI_ATTACK_CITY unit value determination
+-Adjustment for starving systems (AI planet population assignment adjustments)
+-Fix a bug in updatePlotYield where planets with lunar bases outside the current
+culture range (in a captured star system, of course) would provide negative food
+-Potential OOS bugfix
+-Base location evaluation optimization
+-A bugfix for a widget help problem (which is not an issue in FFP, but is in B5
+due to lots of extra content)
+-Fix to make the iCultureRange tag actually work
+-Building produced yield is written to the save file now (this breaks save 
+compatibility!)
+
+Patch v1.81 Changelog:
+-Added star system density option for SpiralGalaxy map types
+-Fixed civics causing unhappiness displaying positive unhappy faces
+-Fixed issues with Delta Rapid Construction Ship upgrading and being a UU
+-Fixed trait text for AstroTech's unique trait
+-Fixed issue with iCultureRange (space station culture) not updating properly
+-Updated mod version in various BUG interface displays
+-Updated CvPlayerAI.cpp (DLL source file) to latest version
+-Rebuilt DLL with updated version of above file
+-Removed hardcoded unit combat cost mod values from help text
+
+v1.8 Changelog:
+-Added Improved and Advanced tracking system promotions
+-Added Predictive Algorithms promotion
+-Added Warp Phase Modulator promotion allowing use of enemy routes
+-Added Precision Instruments Maker building
+-Added Hardened Shields promotion, allowing movement on nebulae
+-Added Reduced Pirates game option to decrease pirate spawns
+-Added Advanced Shielding technology as prereq for Fusion Weapons
+-Adjusted technology costs for later-game techs
+-Added tag allowing units to take less feature damage
+-Adjusted healing promotions and free Starbase promotions
+-Sevopedia no longer lists things with bGraphicalOnly set to 1
+-Terrain info XML updated so only space terrain shows in pedia
+-AI now uses missiles and squadrons, and missile/squadron transports
+-AI now considers planet XML-related tags more
+-Python AI handles construction ships and cities better
+
+--
+
+v1.73 Patch Changelog:
+-Fixed a Python exception in onCityRazed (really, this time)
+-Added missing Multiple Production code (Multiple Production game option now works)
+-Changed text shown by Mining Facility to indicate +2 production for The Forge
+-Fixed and Added some BUG merge related text
+-Fixed potential crash from inhabited planets
+-Include an adjusted settings file for the Domestic Advisor screen
+-Changed AI Python and civilization XML a bit to (hopefully) improve the AI behavior
+-Fixed the Astral Ascension section of the Victory screen
+-Buffed Astrotech a little: +25% to build habitation facility and slight improvement to UU
+-Changed Starabses to have free Improved Sensors upgrade to improve behavior when in sentry mode
+-Added new Productive Pirate Cities game option
+-Changed City Screen to show direct yield bonuses from traits for trade routes
+-Fixed Nanotech Hospital and Extended Habitation System to increase in cost as more are built in a system
+-Fixed nuke effects (as per Doomesday Missile) on star systems
+-Fixed building meltdown effects on planet (no building does this currently in FFP, done for Star Trek)
+-Fixed theme file issue
+
+v1.72 Patch Changelog:
+-Fixed bug with FFP tab on BUG option screen still not working
+-Fixed incorrect text for capital ship, carrier ship, and missile construction feats
+-Fixed SpiralGalaxy mapscript creating invisible floodplains
+-Fixed a Python exception in onCityRazed
+-Fixed a Multiple Favorite Civics-related Python exception that occured in a handful of places
+-Fixed a few missing icons in various places
+-Fixed bugs that resulted in odd behavior when exiting to main menu and starting another game
+-Fixed a bug when the Pirate AI checks if it can build fighters
+-Added a cleanup script to the installer to fix other potential bugs
+
+v1.71 Patch Changelog:
+-Fixed leader pages in the pedia to work properly with multiple favorite civics
+-Fixed a handful of Python merging errors between FFPBUG and FF+ 1.7
+-Fixed bug with military doctrines and free unit support
+-Fixed bug with traits civilopedia page being empty
+-Fixed logging error with BUG Core.xml and the onUpdate function
+-Added Final Frontier Plus options tab to the BUG configuration menu
+-Re-added advanced station construction AI (and remerged CvAI.py in general)
+-Reset cultural levels to the FFPBUG ones
+-Set default user settings to optimal for Final Frontier
+
+1.7 Changelog:
+-Merged BUG 4.4 by the BUG team (merge done by God-Emperor) 
+-Merged Multiple Favorite Civics modcomp by TheLopez
+-Merged Defender Withdrawl modcomp by killmeplease
+-Merged Lead from Behind modcomp by UncutDragon
+-Merged bits of BTS on Speed by Sephi (new speed modcomp)
+-Mapscripts now place starting units from FreeUnitClasses in XML
+-Implemented a FFMapscriptCore, containing mapscript functions used by all FF mapscripts
+-Added a Pirate Hordes gameoption, which uses the buggy 1.65 pirate spawning code
+-Added a No Pirate XP Cap gameoption which disables the experience cap for fighting pirates
+-Added a Calculate Trade Routes gameoption, disables random routes from BTS on Speed at cost of speed
+-Added many more Python Callback defines for the callbacks Sephi disabled
+-Implemented somewhat working version of advanced space station construction AI
+-Game now remembers production on planets after switching from them
+
+-Fixed possible crash if a unit was passing over a Gravity Field tile too close to edge of the map
+-Fixed bug with civicoption to reduce unit costs based on their unitcombat
+-Fixed bug with the No Aliens gameoption
+-Fixed bug when checking if a save is a worldbuilder save (for FF Worldbuilder)
+-Fixed a mostly irrelevant graphics error that is present in unmodded Civ too
+-Fixed FF Worldbuilder bugs when adding or removing a resource
+-Fixed Worldbuilder bugs with saving planetary buildings
+-Fixed bug with Partisans event
+-Fixed (theoretically?) bug with running FF+ in a language other than English
+
+--
+
+1.651 Hotfix:
+-Fixed barbarian spawning bug caused by 1.65
+
+1.65 Patch Changelog:
+-Fixed bug with commerce yields going out of whack (and potentially production)
+-Fixed bug where gold was set to 10 in Python regardless of iStartingGoldMultiplier
+-Fixed bug with barbarian spawning (may lead to weird numbers of barbarians!)
+-AI now better handles unhappy and unhealthy population
+-AI also now better manages food (in relation to population)
+
+1.64 Patch Changelog:
+-Fixed GFC error (and crash) if you had uninstalled Final Frontier
+-The patch installer will now produce a shortcut with the correct graphic on it
+
+1.63 Patch Changelog:
+-Fixed bug with yields from buildings, traits, and trade routes
+-Fixed bug in Worldbuilder when adding resources to solar systems
+-Changed hardcoded BUILDING_PALACE to use global define
+-Added iCostModIncrease tags for all UBs
+
+1.62 Patch Changelog:
+-Fixed bug where Extraction Facilities were unbuildable
+-Fixed bug where buildings orbited the solar system at the wrong place
+-Fixed the Planet Info Screen to display info about the 6th planet correctly
+
+1.61 Patch Changelog:
+-Fixed bug where all upgrade costs were 0
+-Fixed bug with the Star Fortress graphics
+-Fixed bug with the nukes (nuking capitals)
+-Pirates can't spawn Delta Battleship until Galactic Era
+
+1.6 Changelog:
+-Added building tags for required moon or rings, and for buildings on the same planet
+-BuildingClassNeededs tag no longer makes a building have to be on the same planet
+-Added unit tag to override upgrade price from this unit (for starbases)
+-Added unit tags for delta and omega units (double upgrade cost from normal to omega, for starbases)
+-Added trait tags for yield changes and yield changes with trade routes
+-Added unit tags or missile units and movement sound
+-Added building tag for "single building ring location" (on-map building art stuff)
+-Added building tag for planet yield changes with a specified trait
+-Added trait tag for free buildings on every planet
+-Re-added missing golden age code (again)
+-Worldbuilder now adds resources to planets when they are added to a system plot
+-Fixed text key error for Omega Battlecruiser
+-Fixed bug with buildings not switching properly when a city is taken
+-Fixed bug where sensor array spawned missiles like Starbases do
+-Fixed bug where Rapid Construction Ship could not build sensor arrays
+-Fixed bug where Cruisers didn't provide Military Happiness
+-Fixed bug where New Earth cities had 3, instead of 2, population
+-AI now checks for Mag-Lev before trying to build Commercial Satellites
+-AI now tries to build resource-specific buildings on resource planets
+-AI now likes settling systems with resources
+-AI should now try to build Extended Habitation Systems and Nanoextraction Upgrades
+-Tweaks to flavor values for Lu Tianqu (leader) and Terrestrial networking (tech)
+
+-- 
+
+v1.51 Patch Changelog:
+-Included v1.5 DLL source files
+-Added several XML files that were missing from Mirror 1 DL
+-Fixed bug with new Starbase AI code
+-Fixed bug with planet info screen not showing Commercial Satellites UBs
+-Added many missing text keys for Finaler Frontier stuff
+
+v1.5 Changelog:
+-Added Inhabited Planets (systems acting as goody huts)
+-Added "No Aliens" gameoption to turn off Inhabited Planets
+-Added "No Starbase Missiles" gameoption (stops starbases from spawning Missiles)
+-Added Sentry while Healing button
+-Added Sensor Array unit (built like starbase) that spreads visibility
+-Added trait tags for free population, bonus trade routes, and more starting gold
+-Added building tag for on-map graphics
+-Added new pedia/strategy text for some Finaler Frontier content
+-Added some new buttons for some Finaler Frontier UBs
+-The time for starbases to spawn missiles is modified by gamespeed
+-AI now likes to build defensive starbases near its solar systems
+-Fixed bug with iConquestProb on city capture
+-Started civilopedia section for FF+ concepts
+
+v1.42 Patch Changelog:
+-Fixed bug where Capital Shipyard had a cost of 0
+-Fixed bug with UBs that replaced either Mining or Nutrition Facilities
+-Fixed bug with the graphics for the New Earth UB
+-Fixed various bugs with ranged strikes
+-Fixed bugs with Starbase AI code
+-Fixed bug where Capitols weren't being removed from planets properly
+
+v1.41 Patch Changelog:
+-Fixed bug with the chance to keep some wonders
+-Tweaked some other building conquest probabilities
+-Invasion Ship III now does collateral damage
+-Q-Missile can now be spawned at Starbases after you research required tech
+-Planetary resources are now marked using their icon on Planet Info Screen and City Screen
+-Fixed bug with Worldbuilder if planet names contained umlauts (and other nonstandard characters)
+-Fixed bug with Worldbuilder loading and saving bonus types
+
+v1.4 Changelog:
+-Added unique units and buildings for all civs
+-Added new techs/tech changes from Finaler Frontier
+-Added new buildings, national wonders, and world wonders
+-Added new promotions from Finaler Frontier
+-Added Astral Gate Design project as prereq for Astral Gate pieces
+-Added God-Emperor's planetary resources
+-Added various other tweaks as done in Finaler Frontier
+-Added XML tag for building yield changes
+-Added XML tag for planet pop cap increase (due to buildings)
+-AI now prioritizes yields differently if Ignore Growth is on
+-Fixed minor bugs in CvInfos.cpp and CIV4LeaderHeadInfos.xml
+-Fixed bug stopping Control-A function from working
+-Added missing source file (CyUnitInterface1.cpp)
+
+v1.32 Patch Changelog:
+-Merged in Blue Marble space terrain
+-Merged in Blue Marble Final Frontier loading screen
+-Merged in Blue Marble Final Frontier pedia/advisors backgrounds
+-Fixed bug where AI was running starbase checks 100 times for some units
+
+v1.31 Patch Changelog:
+-Fixed bug where captured cities couldn't build buildings
+
+v1.3 Changelog:
+-Decreased number of barbarians spawning per turn
+-Some barbarian units are now more common to spawn than others
+-Changed influence tresholds according to God-Emperor's suggestions
+-Fixed bug with feature effects code
+-Fixed bug where units could never move more than one tile
+-Feature effects now display original Final Frontier messages
+-iConquestProb and bNeverCapture tags now work properly in Final Frontier
+-Religion pedia pages autodisplay religious units and buildings
+-Deleted unused python code (reduces clutter in files)
+-Fixed bug with victories occuring before turn 10
+-Merged in The Navy Seal's Final Frontier resource pack
+
+v1.2 Changelog:
+-Moved "doTerrainExtraCost()" into the DLL
+-Moved terrain effects into the DLL
+-Added eras corresponding to the three levels of units
+-Moved barbarian spawning into the DLL
+-Removed a broken link to the "Draft" page in the pedia (it no longer exists)
+-Planet mouseover now displays required culture level to work it
+-Selected and building planets are now reset on city capture
+-Fixed bug with help text for commerce-modifying buildings
+-Oil now uses the button/icon from regular Civ
+-Water now uses a new button/icon
+-Made Wormholes non-modular
+-Added "Delayed Wormholes" gameoption
+
+v1.1 Changelog:
+-Merged in stmartin's CAR Mod
+-Merged in Sephi's Faster BTS 3.19 modcomp
+-Made getBestPlanetInSystem take into account the size of planets
+-Planet mouseover now displays planet names
+-Added Unit Build feats for Final Frontier unitcombats (like Light ships)
+-Fixed bug with Unit Build feats and units with no unitcombats
+-Made AI take into account the unitcombat cost mods for civics
+-Made AI aware of civics which increase yields on planets
+-Lowered number of default civs on Standard, Large, and Huge worldsizes

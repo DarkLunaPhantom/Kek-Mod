@@ -1,0 +1,15 @@
+Final Frontier Plus v1.82 Patch
+God-Emperor
+
+Changelog:
+
+-Bugfix for negative assignable population
+-Fix for over whipping when AI is in Slavery civic
+-Re-fix for UNITAI_ATTACK_CITY unit value determination
+-Adjustment for starving systems (AI planet population assignment adjustments)
+-Fix a bug in updatePlotYield where planets with lunar bases outside the current culture range (in a captured star system, of course) would provide negative food
+-Potential OOS bugfix
+-Base location evaluation optimization
+-A bugfix for a widget help problem (which is not an issue in FFP, but is in B5 due to lots of extra content)
+-Fix to make the iCultureRange tag actually work
+-Building produced yield is written to the save file now (this breaks save compatibility!)

@@ -1,0 +1,10 @@
+Final Frontier Plus v1.83 Patch
+God-Emperor and TC01
+
+Changelog:
+
+-Incremented in-game version to v1.83
+-Fixed in-game tooltip about iron being used for melee units
+-Fixed worldbuilder bug when adding resources to plots
+-Updated installer to support all possible Civ 4 installations
+-Rereleased v1.83 as a full download (no patches required, just install v1.83 and go)

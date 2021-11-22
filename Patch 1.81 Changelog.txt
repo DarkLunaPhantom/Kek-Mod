@@ -1,0 +1,14 @@
+Final Frontier Plus v1.81 Patch
+God-Emperor and TC01
+
+Changelog:
+
+-Added star system density option for SpiralGalaxy map types
+-Fixed civics causing unhappiness displaying positive unhappy faces
+-Fixed issues with Delta Rapid Construction Ship upgrading and being a UU
+-Fixed trait text for AstroTech's unique trait
+-Fixed issue with iCultureRange (space station culture) not updating properly
+-Updated mod version in various BUG interface displays
+-Updated CvPlayerAI.cpp (DLL source file) to latest version
+-Rebuilt DLL with updated version of above file
+-Removed hardcoded unit combat cost mod values from help text
