@@ -4,8 +4,8 @@ Download link: https://forums.civfanatics.com/resources/kek-mod.24808/
 Discussion link: https://forums.civfanatics.com/threads/modmod-kek-mod.563377/
 Source code: https://github.com/DarkLunaPhantom/Kek-Mod
 
-Current version: v0.25b (based on K-Mod v1.46)
-Date: 06/Oct/2020
+Current version: v0.26 (based on K-Mod v1.46)
+Date: 05/Feb/2022
 
 Starting from v0.25, the mod can be updated to the current version in-game via Advanced -> Options -> Update Mod (as long as the update server is online).
 

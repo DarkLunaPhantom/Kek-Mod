@@ -1,3 +1,13 @@
+v0.26 - 05/Feb/2022 - (based on K-Mod v1.46)
+
+    Changed starting location conditions to improve avoidance of bad terrain and edges of bad terrain.
+    Slowed down PitBoss games when no one is connected to conserve resources on cloud computing platforms. This feature can be adjusted via GlobalDefinesAlt.xml.
+    Added a new climate called Flat that is mainly characterized by peaks. It is available for all mapscripts that use default climate system. Created by Fran.
+    Fixed an int overflow bug in the value of ending war calculation.
+    Fixed a bug in the Great Mediator event that could lead to master/vassal war status inconsistency.
+    Various minor fixes.
+
+
 v0.25b - 06/Oct/2020 - (based on K-Mod v1.46)
 
     Internet now counts players (civilizations) as the description says and not teams. Increased Internet threshold for permanent alliances (teams) by 1 for each additional member.
