@@ -1958,7 +1958,7 @@ CvPlot* CvPlayer::findStartingPlot(bool bRandomize)
 	}
 
 	CvPlot* pLoopPlot;
-	bool bValid;
+	// bool bValid; // DarkLunaPhantom - What's the point of this?
 	//int iBestArea = -1;
 	std::vector<std::pair<int, int> > areas_by_value; // DarkLunaPhantom
 	int iValue;
@@ -1985,9 +1985,9 @@ CvPlot* CvPlayer::findStartingPlot(bool bRandomize)
 	iRange = startingPlotRange();
 	int iStartingRange = GC.getDefineINT("ADVANCED_START_SIGHT_RANGE"); // DarkLunaPhantom
 	//for(int iPass = 0; iPass < GC.getMapINLINE().maxPlotDistance(); iPass++)
-	for(int iPass = 0; iPass < 2; ++iPass) // DarkLunaPhantom - First pass avoids starting locations that have very little food (before normalization) to avoid starting on the edge of very bad terrain.
+	for(int iPass = 0; iPass < 5; ++iPass) // DarkLunaPhantom - Earlier passes avoid starting locations that have low yields (before normalization) to avoid starting on the edge of very bad terrain.
 	{
-		for(int iJ = 0; iJ < (int)areas_by_value.size(); ++iJ) // DarkLunaPhantom
+		for(int iJ = 0; iJ < (int)areas_by_value.size(); ++iJ) // DarkLunaPhantom - First try to find a starting location in the best area, then second best, etc.
 		{
 			CvPlot *pBestPlot = NULL;
 			int iBestValue = 0;
@@ -1999,27 +1999,64 @@ CvPlot* CvPlayer::findStartingPlot(bool bRandomize)
 				//if ((iBestArea == -1) || (pLoopPlot->getArea() == iBestArea))
 				if (pLoopPlot->getArea() == areas_by_value[iJ].first) // DarkLunaPhantom
 				{
-					if (iPass == 0) // DarkLunaPhantom - Avoid very bad terrain in the first pass.
+					// DarkLunaPhantom - Avoid locations with low yields in the advanced start sized area.
+                    float fLandYields = 0;
+                    float fTotalYields = 0;
+                    int iLandPlots = 0;
+                    int iTotalPlots = 0;
+                    
+                    for (int iX = -iStartingRange; iX <= iStartingRange; ++iX)
 					{
-						float iFoodAverage = 0;
-						int iLandPlots = 0;
-						for (int iX = -iStartingRange; iX <= iStartingRange; ++iX)
+						for (int iY = -iStartingRange; iY <= iStartingRange; ++iY)
 						{
-							for (int iY = -iStartingRange; iY <= iStartingRange; ++iY)
+							CvPlot* pCheckPlot = plotXY(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE(), iX, iY);
+							if (pCheckPlot != NULL && plotDistance(pLoopPlot, pCheckPlot) <= iStartingRange)
 							{
-								CvPlot* pCheckPlot = plotXY(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE(), iX, iY);
-								if (pCheckPlot != NULL && !pCheckPlot->isWater() && (plotDistance(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE(), pCheckPlot->getX_INLINE(), pCheckPlot->getY_INLINE()) <= iStartingRange))
-								{
-									++iLandPlots;
-									iFoodAverage += pCheckPlot->calculateBestNatureYield(YIELD_FOOD, NO_TEAM);
-								}
+                                bool bAlreadyTaken = false;
+                                for (int iJ = 0; iJ <= MAX_CIV_PLAYERS; ++iJ)
+                                {
+                                    CvPlot* pStartingPlot = GET_PLAYER((PlayerTypes)iJ).getStartingPlot();
+                                    if (pStartingPlot != NULL && plotDistance(pCheckPlot, pStartingPlot) <= iStartingRange + CITY_PLOTS_RADIUS)
+                                    {
+                                        bAlreadyTaken = true;
+                                        break;
+                                    }
+                                    
+                                }
+                                if (!pCheckPlot->isWater())
+                                {
+                                    ++iLandPlots;
+                                    if (!bAlreadyTaken && pCheckPlot->isPotentialCityWork())
+                                    {
+                                        for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+                                        {
+                                            fLandYields += pCheckPlot->calculateNatureYield((YieldTypes)iYield, getTeam(), false);
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    ++iTotalPlots;
+                                    if (!bAlreadyTaken && pCheckPlot->isPotentialCityWork())
+                                    {
+                                        for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+                                        {
+                                            fTotalYields += pCheckPlot->calculateNatureYield((YieldTypes)iYield, getTeam(), false);
+                                        }
+                                    }
+                                }
 							}
 						}
-						iFoodAverage /= std::max(1, iLandPlots);
-						if (iFoodAverage < 0.5)
-						{
-							continue;
-						}
+					}
+                    
+                    fTotalYields += fLandYields;
+                    iTotalPlots += iLandPlots;
+                    fLandYields /= iLandPlots;
+                    fTotalYields /= iTotalPlots;
+                    
+					if ((fLandYields < 2.0 - iPass * 0.5) || (fTotalYields < 2.0 - iPass * 0.5))
+					{
+						continue;
 					}
 					
 					//the distance factor is now done inside foundValue
@@ -2027,18 +2064,20 @@ CvPlot* CvPlayer::findStartingPlot(bool bRandomize)
 
 					if (bRandomize && iValue > 0)
 					{
-						iValue += GC.getGameINLINE().getSorenRandNum(10000, "Randomize Starting Location");
+                        // DarkLunaPhantom - Replaced with more sensible randomization that doesn't depend on the magnitude of typical starting location found values.
+						//iValue += GC.getGameINLINE().getSorenRandNum(10000, "Randomize Starting Location");
+                        iValue = (int)(iValue * GC.getGameINLINE().getSorenRandScaling(1.2f, "Randomize Starting Location"));
 					}
 
 					if (iValue > iBestValue)
 					{
-						bValid = true;
+						//bValid = true; // DarkLunaPhantom - What's the point of this?
 
-						if (bValid)
-						{
-							iBestValue = iValue;
-							pBestPlot = pLoopPlot;
-						}
+						//if (bValid)
+						//{
+						iBestValue = iValue;
+						pBestPlot = pLoopPlot;
+						//}
 					}
 				}
 			}

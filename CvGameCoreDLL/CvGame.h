@@ -459,6 +459,7 @@ public:
 																																												
 	CvRandom& getSorenRand();																										// Exposed to Python	
 	int getSorenRandNum(int iNum, const char* pszLog);													
+    float getSorenRandScaling(float fBase, const char* pszLog); // DarkLunaPhantom
 																																												
 	DllExport int calculateSyncChecksum();																								// Exposed to Python	
 	DllExport int calculateOptionsChecksum();																							// Exposed to Python	

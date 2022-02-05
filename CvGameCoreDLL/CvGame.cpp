@@ -8345,6 +8345,13 @@ int CvGame::getSorenRandNum(int iNum, const char* pszLog)
 }
 
 
+// DarkLunaPhantom - Returns a random float from the interval [1, fBase] distributed exponentially to be used for adding randomness by random scaling.
+float CvGame::getSorenRandScaling(float fBase, const char* pszLog)
+{
+    return (float)pow(fBase, getSorenRandNum(MAX_UNSIGNED_SHORT, pszLog) / (float)MAX_UNSIGNED_SHORT);
+}
+
+
 int CvGame::calculateSyncChecksum()
 {
 	PROFILE_FUNC();
