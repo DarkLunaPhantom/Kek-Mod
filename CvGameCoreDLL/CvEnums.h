@@ -733,7 +733,7 @@ enum GameOptionTypes				// Exposed to Python
 	GAMEOPTION_FLIPPING_AFTER_CONQUEST,
 	GAMEOPTION_NO_BARBARIANS,
 	GAMEOPTION_RAGING_BARBARIANS,
-    GAMEOPTION_DUMMY, // DarkLunaPhantom - This should always be on the 8th place. (cf. with CvInitCore::getOption)
+    GAMEOPTION_DUMMY, // DarkLunaPhantom - This should always be in the 8th spot. (cf. with CvInitCore::getOption)
 	GAMEOPTION_AGGRESSIVE_AI,
 	GAMEOPTION_LEAD_ANY_CIV,
 	GAMEOPTION_RANDOM_PERSONALITIES,
