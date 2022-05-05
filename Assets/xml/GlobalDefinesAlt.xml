@@ -184,6 +184,6 @@
 	</Define>
     <Define>
 		<DefineName>PITBOSS_SLOWDOWN_FACTOR</DefineName>
-		<iDefineIntVal>20</iDefineIntVal> <!-- DarkLunaPhantom - Set to 1 to disable. -->
+		<iDefineIntVal>1</iDefineIntVal> <!-- DarkLunaPhantom - Set to 1 to disable. -->
 	</Define>
 </Civ4Defines>
