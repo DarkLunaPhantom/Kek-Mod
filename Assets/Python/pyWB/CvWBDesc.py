@@ -891,7 +891,7 @@ class CvUnitDesc:
 		f.write("\tBeginUnit\n")
 		f.write("\t\tUnitType=%s, UnitOwner=%d, (%s)\n" %(Info.getType(), unit.getOwner(), gc.getPlayer(unit.getOwner()).getName().encode(fileencoding)))
 		if (len(unit.getNameNoDesc()) > 0):
-			f.write("\t\tUnitName=%s\n" %(unit.getNameNoDesc().encode(fileencoding),))
+			f.write("\t\tUnitName=%s\n" %(unit.getNameNoDesc().encode('unicode_escape'),)) #FFPBUG: was (fileencoding), current version preserves delta & omega symbols
 		if unit.getLeaderUnitType() != -1:
 			f.write("\t\tLeaderUnitType=%s\n" %(gc.getUnitInfo(unit.getLeaderUnitType()).getType()))
 		if unit.getDamage() > 0:
