@@ -587,6 +587,9 @@ public:
 	// PB Mod END
 
 	std::set<int> m_ActivePlayerCycledGroups; // K-Mod. This is used to track which groups have been cycled through in the current turn. Note: it does not need to be kept in sync for multiplayer games.
+    
+    void setSleepDelayMillisecs(int iSleepDelayMillisecs);
+    int getSleepDelayMillisecs() const;
 
 protected:
 	int m_iElapsedGameTurns;
@@ -691,6 +694,8 @@ protected:
 
 	int		m_iNumCultureVictoryCities;
 	int		m_eCultureVictoryCultureLevel;
+    
+    int m_iSleepDelayMillisecs;
 
 	void doTurn();
 	void doDeals();
