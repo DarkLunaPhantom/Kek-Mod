@@ -2360,7 +2360,7 @@ void CvGame::update()
         
         // DarkLunaPhantom begin - This slows down PitBoss games when no one is connected. The purpose is to lower CPU usage to near zero
         // when it is not needed which makes it easier to host PitBoss servers on cloud computing platforms that have resource usage limits.
-        if (gDLL->IsPitbossHost() && GC.getDefineINT("PITBOSS_SLOWDOWN_FACTOR") > 1 && getSleepDelayMillisecs() <= 0)
+        if (gDLL->IsPitbossHost())
         {
             bool bHumans = false;
             bool bConnected = false;
@@ -2386,14 +2386,10 @@ void CvGame::update()
                     Sleep(iSleep);
                     if (getElapsedGameTurns() > 0 || !isOption(GAMEOPTION_ADVANCED_START))
                     {
-                        incrementTurnTimer(-iSleep / gDLL->getMillisecsPerTurn());
+                        incrementTurnTimer(- iSleep / gDLL->getMillisecsPerTurn());
                     }
                 }
             }
-        }
-        else if (getSleepDelayMillisecs() > 0)
-        {
-            setSleepDelayMillisecs(getSleepDelayMillisecs() - gDLL->getMillisecsPerTurn());
         }
         // DarkLunaPhantom end
 
@@ -10383,12 +10379,3 @@ bool CvGame::pythonIsBonusIgnoreLatitudes() const
 	return false;
 }
 
-void CvGame::setSleepDelayMillisecs(int iSleepDelayMillisecs)
-{
-    m_iSleepDelayMillisecs = iSleepDelayMillisecs;
-}
-
-int CvGame::getSleepDelayMillisecs() const
-{
-    return m_iSleepDelayMillisecs;
-}

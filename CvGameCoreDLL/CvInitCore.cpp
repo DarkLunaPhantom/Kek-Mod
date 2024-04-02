@@ -273,8 +273,6 @@ bool CvInitCore::checkBounds( int iValue, int iLower, int iUpper ) const
 bool CvInitCore::getSlotVacant(PlayerTypes eID) const
 {
 	FASSERT_BOUNDS(0, MAX_CIV_PLAYERS, eID, "CvInitCore::getSlotVacant");
-    
-    GC.getGameINLINE().setSleepDelayMillisecs(300 * 1000);
 
 	bool bRetVal = false;
 
