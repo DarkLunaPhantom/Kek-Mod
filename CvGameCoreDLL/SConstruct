@@ -1,0 +1,55 @@
+import os
+from SCons.Script import *
+
+import SConstruct_config as cfg
+
+build = ARGUMENTS.get('build', 'Release').title()
+assert build in ('Debug', 'Release', 'Profile'), f"Invalid build target '{build}', choose 'debug', 'release' or 'profile'"
+
+env = Environment(
+    CPPPATH=[f'{cfg.BTS_SRC}/Boost-1.32.0/include', f'{cfg.BTS_SRC}/Python24/include', f'{cfg.VS_TOOLKIT_03}/include', f'{cfg.WIN_SDK}/Include', f'{cfg.WIN_SDK}/Include/mfc', f'{cfg.VS_TOOLKIT_10}/include'],
+    LIBPATH=[f'{cfg.BTS_SRC}/Python24/libs', f'{cfg.BTS_SRC}/boost-1.32.0/libs', f'{cfg.VS_TOOLKIT_03}/lib', f'{cfg.WIN_SDK}/Lib'],
+    LIBS=['winmm', 'user32', 'boost_python-vc71-mt-1_32'],
+    CPPFLAGS=['/W3', '/GS', '/GR', '/Gy', '/EHsc', '/Gd', '/Gm-', '/MD'],
+    CPPDEFINES=['WIN32', '_WINDOWS', '_USRDLL'],
+    LINKFLAGS=['/DLL', '/NOLOGO', '/SUBSYSTEM:WINDOWS', '/LARGEADDRESSAWARE', '/TLBID:1'],
+    CC=f'"{cfg.VS_TOOLKIT_03}/bin/cl.exe"',
+    CXX=f'"{cfg.VS_TOOLKIT_03}/bin/cl.exe"',
+    LINK=f'"{cfg.VS_TOOLKIT_03}/bin/link.exe"',
+    RC=f'"{cfg.WIN_SDK}/bin/rc.exe"',
+)
+
+if build == 'Debug':
+    env.Append(
+        CPPDEFINES=['_DEBUG', 'LOG_AI', 'FASSERT_ENABLE'],
+        CPPFLAGS=['/RTC1', '/Z7', '/Od'],
+        LIBS=['msvcprt'],
+        LINKFLAGS=['/INCREMENTAL', '/DEBUG', f'/PDB:"{build}/CvGameCoreDLL.pdb"'],
+    )
+if build in ['Release', 'Profile']:
+    env.Append(
+        CPPDEFINES=['NDEBUG', 'FINAL_RELEASE'],
+        CPPFLAGS=['/O2', '/Oy', '/Oi', '/Og', '/G7', '/arch:SSE2'],
+        LINKFLAGS=['/INCREMENTAL:NO', '/OPT:REF', '/OPT:ICF', '/LTCG'],
+    )
+if build == 'Profile':
+    env.Append(
+        CPPDEFINES=['FP_PROFILE_ENABLE', 'USE_INTERNAL_PROFILER'],
+    )
+
+VariantDir(build, '.', duplicate=False)
+src = [file for file in Glob(f'{build}/*.cpp') if str(file) not in ('_precompile.cpp', 'CvTextScreens.cpp')]
+
+pch = env.PCH(target=f'{build}/_precompile.pch', source='_precompile.cpp', CPPFLAGS=env['CPPFLAGS'])
+env.Depends(src, pch)
+src += [f'{build}/_precompile.obj']
+
+if build == 'Release':
+    res_builder = Builder(action='$RC /fo $TARGET $RCFLAGS $SOURCES')
+    env.Append(BUILDERS={'Res': res_builder})
+    res = env.Res(target=f'{build}/CvGameCoreDLL.res', source='CvGameCoreDLL.rc', RCFLAGS=f'/I"{cfg.WIN_SDK}/Include"')
+    src += res
+
+dll = env.SharedLibrary(target=f'{build}/CvGameCoreDLL', source=src, CPPFLAGS=env['CPPFLAGS'] + ['/Yu"CvGameCoreDLL.h"', f'/Fp"{build}/_precompile.pch"'])
+Default(dll)
+Clean(build, ['*.dll', '*.exp', '*.idb', '*.ilk', '*.lib', '*.obj', '*.pdb', '*.res'])
