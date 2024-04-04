@@ -61,6 +61,87 @@
     <Filter Include="Source Files\precompiled header">
       <UniqueIdentifier>{a7d71d10-c7ef-4c0b-8dec-e4038d66ca40}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Python Files">
+      <UniqueIdentifier>{2f1458ac-bcd1-4c39-9d8c-9999f546853b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Config Files">
+      <UniqueIdentifier>{58b99790-b796-4e74-bda0-6c1fa8e130cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Xml Files">
+      <UniqueIdentifier>{132ece40-810f-4593-9ef1-ce9557d90b23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Xml Files\Art">
+      <UniqueIdentifier>{41366bce-6d56-41bc-8752-015bf797cffd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Xml Files\Audio">
+      <UniqueIdentifier>{c33896ba-cbfe-4f90-ac25-3bee05cade62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Xml Files\BasicInfos">
+      <UniqueIdentifier>{b397f14d-8f28-428c-8fec-e521550869cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Xml Files\buildings">
+      <UniqueIdentifier>{0de30bbc-a41f-4494-b8a6-1ea6c1a54ef0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Xml Files\Civilizations">
+      <UniqueIdentifier>{54fada7f-ad88-49fd-ae82-5904807521f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Xml Files\Events">
+      <UniqueIdentifier>{1c4599e9-3725-4687-b378-82abb72bf272}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Xml Files\GameInfo">
+      <UniqueIdentifier>{ede1274a-5f0c-4d28-a5e3-36176a9563c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Xml Files\Technologies">
+      <UniqueIdentifier>{5cec49f8-b6b4-4615-a5ad-b104f3b8dc77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Xml Files\Terrain">
+      <UniqueIdentifier>{16a5fd1b-a562-40bd-bead-43d3f6a1de1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Xml Files\Text">
+      <UniqueIdentifier>{6d1a19ae-f343-4291-85c7-9f88e435527d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Xml Files\Units">
+      <UniqueIdentifier>{690af5d9-5942-44ec-8c73-9b31428c2f8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Python Files\BUG">
+      <UniqueIdentifier>{f120d051-c06b-49a0-accf-56122b5da907}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Python Files\Contrib">
+      <UniqueIdentifier>{2aa4b025-5fc6-4f37-af05-5f1bb76f8f3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Python Files\EntryPoints">
+      <UniqueIdentifier>{6f5d9b50-ad9c-41c6-a21c-642b237599ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Python Files\Extras">
+      <UniqueIdentifier>{ce38b992-6207-418e-a267-32c1c248393f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Python Files\Kek-Mod">
+      <UniqueIdentifier>{993da6f0-8509-4f0f-a3bb-4b9d76687721}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Python Files\K-Mod">
+      <UniqueIdentifier>{51ee6519-69c2-4979-8101-75bfc8ae4f4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Python Files\PitBoss">
+      <UniqueIdentifier>{fcea85db-32e2-4ba0-ac73-dccfde409e67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Python Files\pyHelper">
+      <UniqueIdentifier>{e837e7a2-3189-4474-8580-fa88af27da7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Python Files\pyWB">
+      <UniqueIdentifier>{5400dc96-4836-4152-9b89-9d57ab602a8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Python Files\Screens">
+      <UniqueIdentifier>{0122d6fa-3821-408a-a0c4-ba6d5975587d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Python Files\BUG\Tabs">
+      <UniqueIdentifier>{e1906488-5081-4560-ba3c-1df5e9e63c15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Python Files\Contrib\Sevopedia">
+      <UniqueIdentifier>{b7a1063b-1c45-4500-9aa7-53eda0791410}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Python Files\Screens\PlatyBuilder">
+      <UniqueIdentifier>{9fed7d23-ff79-4c46-8653-e8f9434b2d5a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CvTextScreens.cpp">
@@ -684,10 +765,918 @@
       <Filter>Header Files\extraneous</Filter>
     </None>
     <None Include="SConstruct_config.py" />
+    <None Include="..\Assets\Python\CvAdvisorUtils.py">
+      <Filter>Python Files</Filter>
+    </None>
+    <None Include="..\Assets\Python\CvDiplomacy.py">
+      <Filter>Python Files</Filter>
+    </None>
+    <None Include="..\Assets\Python\CvEventManager.py">
+      <Filter>Python Files</Filter>
+    </None>
+    <None Include="..\Assets\Python\CvGameUtils.py">
+      <Filter>Python Files</Filter>
+    </None>
+    <None Include="..\Assets\Python\CvMapGeneratorUtil.py">
+      <Filter>Python Files</Filter>
+    </None>
+    <None Include="..\Assets\Python\CvUtil.py">
+      <Filter>Python Files</Filter>
+    </None>
+    <None Include="..\Assets\Python\Webserver.py">
+      <Filter>Python Files</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\AttitudeUtil.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\BugConfig.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\BugConfigTracker.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\BugCore.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\BugData.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\BugDll.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\BugEventManager.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\BugFile.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\BugGameUtils.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\BugHelp.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\BugInit.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\BugOptions.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\BugOptionsScreen.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\BugOptionsTab.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\BugPath.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\BugScreen.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\BugTypes.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\BugUnitPlot.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\BugUpdateChecker.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\BugUtil.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\CityUtil.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\ColorUtil.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\configobj.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\DealUtil.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\DiplomacyUtil.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\FontUtil.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\GameUtil.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\GGUtil.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\GPUtil.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\InputUtil.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\PlayerUtil.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\ProgressBarUtil.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\RawYields.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\ReligionUtil.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\Scoreboard.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\SpyUtil.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\SvnUtil.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\TechPrefs.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\TechUtil.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\TradeUtil.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\TraitUtil.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\UnitGrouper.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\UnitPlotListUtil.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\UnitUtil.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\WidgetUtil.py">
+      <Filter>Python Files\BUG</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\Tabs\BugACOOptionsTab.py">
+      <Filter>Python Files\BUG\Tabs</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\Tabs\BugAdvisorOptionsTab.py">
+      <Filter>Python Files\BUG\Tabs</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\Tabs\BugAlertsOptionsTab.py">
+      <Filter>Python Files\BUG\Tabs</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\Tabs\BugAutologOptionsTab.py">
+      <Filter>Python Files\BUG\Tabs</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\Tabs\BugCityScreenOptionsTab.py">
+      <Filter>Python Files\BUG\Tabs</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\Tabs\BugConfigTrackerTab.py">
+      <Filter>Python Files\BUG\Tabs</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\Tabs\BugErrorOptionsTab.py">
+      <Filter>Python Files\BUG\Tabs</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\Tabs\BugGeneralOptionsTab.py">
+      <Filter>Python Files\BUG\Tabs</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\Tabs\BugMapOptionsTab.py">
+      <Filter>Python Files\BUG\Tabs</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\Tabs\BugNJAGCOptionsTab.py">
+      <Filter>Python Files\BUG\Tabs</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\Tabs\BugPleOptionsTab.py">
+      <Filter>Python Files\BUG\Tabs</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\Tabs\BugScoreOptionsTab.py">
+      <Filter>Python Files\BUG\Tabs</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\Tabs\BugSystemOptionsTab.py">
+      <Filter>Python Files\BUG\Tabs</Filter>
+    </None>
+    <None Include="..\Assets\Python\BUG\Tabs\BugUnitNameOptionsTab.py">
+      <Filter>Python Files\BUG\Tabs</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\AStarTools.py">
+      <Filter>Python Files\Contrib</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\autolog.py">
+      <Filter>Python Files\Contrib</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\autologEventManager.py">
+      <Filter>Python Files\Contrib</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\AutoSave.py">
+      <Filter>Python Files\Contrib</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\Civ4lerts.py">
+      <Filter>Python Files\Contrib</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\CvAllErasDawnOfManScreenEventManager.py">
+      <Filter>Python Files\Contrib</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\CvModName.py">
+      <Filter>Python Files\Contrib</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\CvOverlayScreenUtils.py">
+      <Filter>Python Files\Contrib</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\CvStrategyOverlay.py">
+      <Filter>Python Files\Contrib</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\EventSigns.py">
+      <Filter>Python Files\Contrib</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\FavoriteCivicDetector.py">
+      <Filter>Python Files\Contrib</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\MapFinder.py">
+      <Filter>Python Files\Contrib</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\MapFinderStatusScreen.py">
+      <Filter>Python Files\Contrib</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\MonkeyTools.py">
+      <Filter>Python Files\Contrib</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\MoreCiv4lerts.py">
+      <Filter>Python Files\Contrib</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\PlotListEnhancements.py">
+      <Filter>Python Files\Contrib</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\RandomNameUtils.py">
+      <Filter>Python Files\Contrib</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\ReminderEventManager.py">
+      <Filter>Python Files\Contrib</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\Roman.py">
+      <Filter>Python Files\Contrib</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\SdToolKit.py">
+      <Filter>Python Files\Contrib</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\StatusDump.py">
+      <Filter>Python Files\Contrib</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\StatusDumpEventManager.py">
+      <Filter>Python Files\Contrib</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\TechWindow.py">
+      <Filter>Python Files\Contrib</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\TechWindowWide.py">
+      <Filter>Python Files\Contrib</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\UnitNameEventManager.py">
+      <Filter>Python Files\Contrib</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\UnitUpgradesGraph.py">
+      <Filter>Python Files\Contrib</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\Sevopedia\SevoPediaBonus.py">
+      <Filter>Python Files\Contrib\Sevopedia</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\Sevopedia\SevoPediaBuilding.py">
+      <Filter>Python Files\Contrib\Sevopedia</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\Sevopedia\SevoPediaCivic.py">
+      <Filter>Python Files\Contrib\Sevopedia</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\Sevopedia\SevoPediaCivilization.py">
+      <Filter>Python Files\Contrib\Sevopedia</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\Sevopedia\SevoPediaCorporation.py">
+      <Filter>Python Files\Contrib\Sevopedia</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\Sevopedia\SevoPediaFeature.py">
+      <Filter>Python Files\Contrib\Sevopedia</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\Sevopedia\SevoPediaHistory.py">
+      <Filter>Python Files\Contrib\Sevopedia</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\Sevopedia\SevoPediaImprovement.py">
+      <Filter>Python Files\Contrib\Sevopedia</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\Sevopedia\SevoPediaIndex.py">
+      <Filter>Python Files\Contrib\Sevopedia</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\Sevopedia\SevoPediaLeader.py">
+      <Filter>Python Files\Contrib\Sevopedia</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\Sevopedia\SevoPediaMain.py">
+      <Filter>Python Files\Contrib\Sevopedia</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\Sevopedia\SevoPediaProject.py">
+      <Filter>Python Files\Contrib\Sevopedia</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\Sevopedia\SevoPediaPromotion.py">
+      <Filter>Python Files\Contrib\Sevopedia</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\Sevopedia\SevoPediaReligion.py">
+      <Filter>Python Files\Contrib\Sevopedia</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\Sevopedia\SevoPediaSpecialist.py">
+      <Filter>Python Files\Contrib\Sevopedia</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\Sevopedia\SevoPediaTech.py">
+      <Filter>Python Files\Contrib\Sevopedia</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\Sevopedia\SevoPediaTerrain.py">
+      <Filter>Python Files\Contrib\Sevopedia</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\Sevopedia\SevoPediaTrait.py">
+      <Filter>Python Files\Contrib\Sevopedia</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\Sevopedia\SevoPediaUnit.py">
+      <Filter>Python Files\Contrib\Sevopedia</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\Sevopedia\SevoPediaUnitChart.py">
+      <Filter>Python Files\Contrib\Sevopedia</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\Sevopedia\SevoPediaUtil.py">
+      <Filter>Python Files\Contrib\Sevopedia</Filter>
+    </None>
+    <None Include="..\Assets\Python\Contrib\Sevopedia\SevoScreenEnums.py">
+      <Filter>Python Files\Contrib\Sevopedia</Filter>
+    </None>
+    <None Include="..\Assets\Python\EntryPoints\CvEventInterface.py">
+      <Filter>Python Files\EntryPoints</Filter>
+    </None>
+    <None Include="..\Assets\Python\EntryPoints\CvGameInterface.py">
+      <Filter>Python Files\EntryPoints</Filter>
+    </None>
+    <None Include="..\Assets\Python\EntryPoints\CvGameInterfaceFile.py">
+      <Filter>Python Files\EntryPoints</Filter>
+    </None>
+    <None Include="..\Assets\Python\EntryPoints\CvRandomEventInterface.py">
+      <Filter>Python Files\EntryPoints</Filter>
+    </None>
+    <None Include="..\Assets\Python\EntryPoints\CvScreensInterface.py">
+      <Filter>Python Files\EntryPoints</Filter>
+    </None>
+    <None Include="..\Assets\Python\EntryPoints\CvScreenUtilsInterface.py">
+      <Filter>Python Files\EntryPoints</Filter>
+    </None>
+    <None Include="..\Assets\Python\Extras\ModUpdater.py">
+      <Filter>Python Files\Extras</Filter>
+    </None>
+    <None Include="..\Assets\Python\Extras\simplejson.py">
+      <Filter>Python Files\Extras</Filter>
+    </None>
+    <None Include="..\Assets\Python\Kek-Mod\OOSLogger.py">
+      <Filter>Python Files\Kek-Mod</Filter>
+    </None>
+    <None Include="..\Assets\Python\K-Mod\AIAutoPlay.py">
+      <Filter>Python Files\K-Mod</Filter>
+    </None>
+    <None Include="..\Assets\Python\K-Mod\ChangePlayer.py">
+      <Filter>Python Files\K-Mod</Filter>
+    </None>
+    <None Include="..\Assets\Python\K-Mod\Tester.py">
+      <Filter>Python Files\K-Mod</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\CvBUGMilitaryAdvisor.py">
+      <Filter>Python Files\Screens</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\CvCivicsScreen.py">
+      <Filter>Python Files\Screens</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\CvCustomizableDomesticAdvisor.py">
+      <Filter>Python Files\Screens</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\CvDomesticAdvisor.py">
+      <Filter>Python Files\Screens</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\CvDotMapOverlayScreen.py">
+      <Filter>Python Files\Screens</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\CvEraMovieScreen.py">
+      <Filter>Python Files\Screens</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\CvEspionageAdvisor.py">
+      <Filter>Python Files\Screens</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\CvExoticForeignAdvisor.py">
+      <Filter>Python Files\Screens</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\CvForeignAdvisor.py">
+      <Filter>Python Files\Screens</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\CvHallOfFameScreen.py">
+      <Filter>Python Files\Screens</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\CvInfoScreen.py">
+      <Filter>Python Files\Screens</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\CvMainInterface.py">
+      <Filter>Python Files\Screens</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\CvModUpdaterScreen.py">
+      <Filter>Python Files\Screens</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\CvOptionsScreen.py">
+      <Filter>Python Files\Screens</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\CvPediaBonus.py">
+      <Filter>Python Files\Screens</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\CvPediaPromotion.py">
+      <Filter>Python Files\Screens</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\CvReligionScreen.py">
+      <Filter>Python Files\Screens</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\CvScreenEnums.py">
+      <Filter>Python Files\Screens</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\CvSpaceShipScreen.py">
+      <Filter>Python Files\Screens</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\CvTechChooser.py">
+      <Filter>Python Files\Screens</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\CvVictoryScreen.py">
+      <Filter>Python Files\Screens</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\EconomicsAdvisor.py">
+      <Filter>Python Files\Screens</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\IconGrid_BUG.py">
+      <Filter>Python Files\Screens</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\PLE.py">
+      <Filter>Python Files\Screens</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\PlatyBuilder\CvPlatyBuilderScreen.py">
+      <Filter>Python Files\Screens\PlatyBuilder</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\PlatyBuilder\WBBuildingScreen.py">
+      <Filter>Python Files\Screens\PlatyBuilder</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\PlatyBuilder\WBCityDataScreen.py">
+      <Filter>Python Files\Screens\PlatyBuilder</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\PlatyBuilder\WBCityEditScreen.py">
+      <Filter>Python Files\Screens\PlatyBuilder</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\PlatyBuilder\WBCorporationScreen.py">
+      <Filter>Python Files\Screens\PlatyBuilder</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\PlatyBuilder\WBDiplomacyScreen.py">
+      <Filter>Python Files\Screens\PlatyBuilder</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\PlatyBuilder\WBEventScreen.py">
+      <Filter>Python Files\Screens\PlatyBuilder</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\PlatyBuilder\WBGameDataScreen.py">
+      <Filter>Python Files\Screens\PlatyBuilder</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\PlatyBuilder\WBInfoScreen.py">
+      <Filter>Python Files\Screens\PlatyBuilder</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\PlatyBuilder\WBPlayerScreen.py">
+      <Filter>Python Files\Screens\PlatyBuilder</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\PlatyBuilder\WBPlayerUnits.py">
+      <Filter>Python Files\Screens\PlatyBuilder</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\PlatyBuilder\WBPlotScreen.py">
+      <Filter>Python Files\Screens\PlatyBuilder</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\PlatyBuilder\WBProjectScreen.py">
+      <Filter>Python Files\Screens\PlatyBuilder</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\PlatyBuilder\WBPromotionScreen.py">
+      <Filter>Python Files\Screens\PlatyBuilder</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\PlatyBuilder\WBReligionScreen.py">
+      <Filter>Python Files\Screens\PlatyBuilder</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\PlatyBuilder\WBTeamScreen.py">
+      <Filter>Python Files\Screens\PlatyBuilder</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\PlatyBuilder\WBTechScreen.py">
+      <Filter>Python Files\Screens\PlatyBuilder</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\PlatyBuilder\WBTradeScreen.py">
+      <Filter>Python Files\Screens\PlatyBuilder</Filter>
+    </None>
+    <None Include="..\Assets\Python\Screens\PlatyBuilder\WBUnitScreen.py">
+      <Filter>Python Files\Screens\PlatyBuilder</Filter>
+    </None>
+    <None Include="..\Assets\Python\pyWB\CvWBDesc.py">
+      <Filter>Python Files\pyWB</Filter>
+    </None>
+    <None Include="..\Assets\Python\pyHelper\Popup.py">
+      <Filter>Python Files\pyHelper</Filter>
+    </None>
+    <None Include="..\Assets\Python\PitBoss\PbAdmin.py">
+      <Filter>Python Files\PitBoss</Filter>
+    </None>
+    <None Include="..\Assets\Python\PitBoss\PbWizard.py">
+      <Filter>Python Files\PitBoss</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CvGameCoreDLL.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Assets\Config\Advanced Combat Odds.xml">
+      <Filter>Config Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Config\Advanced Scoreboard.xml">
+      <Filter>Config Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Config\All Eras Dawn of Man Screen.xml">
+      <Filter>Config Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Config\Autolog.xml">
+      <Filter>Config Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Config\AutoSave.xml">
+      <Filter>Config Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Config\Better Espionage.xml">
+      <Filter>Config Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Config\BUG Advisors.xml">
+      <Filter>Config Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Config\BUG City Screen.xml">
+      <Filter>Config Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Config\BUG Config.xml">
+      <Filter>Config Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Config\BUG Core.xml">
+      <Filter>Config Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Config\BUG Main Interface.xml">
+      <Filter>Config Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Config\BULL Actions.xml">
+      <Filter>Config Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Config\BULL City Bar.xml">
+      <Filter>Config Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Config\BULL Core.xml">
+      <Filter>Config Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Config\BULL Misc Hovers.xml">
+      <Filter>Config Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Config\Civ4lerts.xml">
+      <Filter>Config Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Config\Customizable Domestic Advisor.xml">
+      <Filter>Config Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Config\EventSigns.xml">
+      <Filter>Config Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Config\FavoriteCivicDetector.xml">
+      <Filter>Config Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Config\init.xml">
+      <Filter>Config Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Config\MapFinder.xml">
+      <Filter>Config Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Config\MoreCiv4lerts.xml">
+      <Filter>Config Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Config\Not Just Another Game Clock.xml">
+      <Filter>Config Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Config\OOSLogger.xml">
+      <Filter>Config Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Config\Plot List Enhancements.xml">
+      <Filter>Config Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Config\Reminder.xml">
+      <Filter>Config Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Config\StatusDump.xml">
+      <Filter>Config Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Config\Strategy Overlay.xml">
+      <Filter>Config Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Config\TechWindow.xml">
+      <Filter>Config Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Config\Unit Naming.xml">
+      <Filter>Config Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\BBAI_AI_Variables_GlobalDefines.xml">
+      <Filter>Xml Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\BBAI_Game_Options_GlobalDefines.xml">
+      <Filter>Xml Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\GlobalDefinesAlt.xml">
+      <Filter>Xml Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\LeadFromBehind_GlobalDefines.xml">
+      <Filter>Xml Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\PythonCallbackDefines.xml">
+      <Filter>Xml Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\TechDiffusion_GlobalDefines.xml">
+      <Filter>Xml Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Art\CIV4ArtDefines_Interface.xml">
+      <Filter>Xml Files\Art</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Art\CIV4ArtDefines_Unit.xml">
+      <Filter>Xml Files\Art</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Audio\Audio2DScripts.xml">
+      <Filter>Xml Files\Audio</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Audio\AudioDefines.xml">
+      <Filter>Xml Files\Audio</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\BasicInfos\CIV4UnitAIInfos.xml">
+      <Filter>Xml Files\BasicInfos</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\buildings\CIV4BuildingInfos.xml">
+      <Filter>Xml Files\buildings</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\buildings\CIV4BuildingsSchema.xml">
+      <Filter>Xml Files\buildings</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Civilizations\CIV4CivilizationInfos.xml">
+      <Filter>Xml Files\Civilizations</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Civilizations\CIV4CivilizationsSchema.xml">
+      <Filter>Xml Files\Civilizations</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Civilizations\CIV4LeaderHeadInfos.xml">
+      <Filter>Xml Files\Civilizations</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Events\CIV4EventInfos.xml">
+      <Filter>Xml Files\Events</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Events\CIV4EventTriggerInfos.xml">
+      <Filter>Xml Files\Events</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\GameInfo\CIV4CivicInfos.xml">
+      <Filter>Xml Files\GameInfo</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\GameInfo\CIV4ClimateInfo.xml">
+      <Filter>Xml Files\GameInfo</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\GameInfo\CIV4CommerceInfo.xml">
+      <Filter>Xml Files\GameInfo</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\GameInfo\CIV4CorporationInfo.xml">
+      <Filter>Xml Files\GameInfo</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\GameInfo\CIV4DiplomacyInfos.xml">
+      <Filter>Xml Files\GameInfo</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\GameInfo\CIV4EraInfos.xml">
+      <Filter>Xml Files\GameInfo</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\GameInfo\CIV4EspionageMissionInfo.xml">
+      <Filter>Xml Files\GameInfo</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\GameInfo\CIV4GameInfoSchema.xml">
+      <Filter>Xml Files\GameInfo</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\GameInfo\CIV4GameOptionInfos.xml">
+      <Filter>Xml Files\GameInfo</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\GameInfo\CIV4HandicapInfo.xml">
+      <Filter>Xml Files\GameInfo</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\GameInfo\CIV4Hints.xml">
+      <Filter>Xml Files\GameInfo</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\GameInfo\CIV4ProcessInfo.xml">
+      <Filter>Xml Files\GameInfo</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\GameInfo\CIV4SpecialistInfos.xml">
+      <Filter>Xml Files\GameInfo</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\GameInfo\CIV4UpKeepInfo.xml">
+      <Filter>Xml Files\GameInfo</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\GameInfo\CIV4WorldInfo.xml">
+      <Filter>Xml Files\GameInfo</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Units\CIV4BuildInfos.xml">
+      <Filter>Xml Files\Units</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Units\CIV4PromotionInfos.xml">
+      <Filter>Xml Files\Units</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Units\CIV4UnitClassInfos.xml">
+      <Filter>Xml Files\Units</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Units\CIV4UnitInfos.xml">
+      <Filter>Xml Files\Units</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Units\CIV4UnitSchema.xml">
+      <Filter>Xml Files\Units</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\Advanced Combat Odds Options.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\Advanced Scoreboard Options.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\AdvancedCombatOdds_CIV4GameText.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\Autolog Options.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\Autolog_CIV4GameText.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\AutoSave Options.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\Better Espionage Options.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\BUFFY Options.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\BUFFY_CIV4GameText.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\BUG Advisors Options.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\BUG City Screen Options.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\BUG Core Options.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\BUG Main Interface Options.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\BUG Options Screen.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\BUG_CIV4GameText.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\BULL Actions Options.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\BULL City Bar Options.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\BULL Misc Hovers Options.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\BULL_CIV4GameText.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\CIV4DiplomacyText.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\CIV4GameText_AIAutoPlay.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\CIV4GameText_BetterBTSAI.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\CIV4GameText_DiplomacyText_BTS.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\CIV4GameText_Events_BTS.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\Civ4GameText_K-Mod.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\CIV4GameText_UnofficialPatch.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\CIV4GameText_Warlords_Diplomacy.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\Civ4lerts Options.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\Civ4lerts_CIV4GameText.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\CIV4PlotListEnhancementsInfo.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\Colors_CIV4GameText.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\CustDomAdv Options.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\CustDomAdv_CIV4GameText.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\EventSigns Options.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\EventSigns_CIV4GameText.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\Kek-Mod Text.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\K-Mod hints.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\MapFinder Options.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\MapFinder_CIV4GameText.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\MoreCiv4lerts Options.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\MoreCiv4lerts_CIV4GameText.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\Not Just Another Game Clock Options.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\PBMod.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\PBModUpdater.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\PlatyPedia_CIV4GameText.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\Plot List Enhancements Options.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\Reminder Options.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\Sevopedia_CIV4GameText.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\Shortcuts_CIV4GameText.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\Strategy Overlay Options.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\StrategyOverlay_CIV4GameText.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\TechWindow Options.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\Unit Naming Options.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\Unit Naming.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Text\WorldBuilder_CIV4GameText.xml">
+      <Filter>Xml Files\Text</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Terrain\CIV4FeatureInfos.xml">
+      <Filter>Xml Files\Terrain</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Terrain\CIV4ImprovementInfos.xml">
+      <Filter>Xml Files\Terrain</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Terrain\CIV4TerrainSchema.xml">
+      <Filter>Xml Files\Terrain</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Terrain\CIV4YieldInfos.xml">
+      <Filter>Xml Files\Terrain</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Technologies\CIV4TechInfos.xml">
+      <Filter>Xml Files\Technologies</Filter>
+    </Xml>
+    <Xml Include="..\Assets\xml\Technologies\CIV4TechnologiesSchema.xml">
+      <Filter>Xml Files\Technologies</Filter>
+    </Xml>
   </ItemGroup>
 </Project>
