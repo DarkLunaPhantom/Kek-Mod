@@ -1,7 +1,13 @@
 import os
+
+
 from SCons.Script import *
 
+
 import SConstruct_config as cfg
+
+
+SetOption('num_jobs', cfg.NUM_JOBS)
 
 build = ARGUMENTS.get('build', 'Release').title()
 assert build in ('Debug', 'Release', 'Profile'), f"Invalid build target '{build}', choose 'debug', 'release' or 'profile'"
