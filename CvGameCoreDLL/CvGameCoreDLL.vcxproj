@@ -495,7 +495,6 @@ scons build=profile</NMakeReBuildCommandLine>
     <None Include="..\Assets\Python\Screens\PLE.py" />
     <None Include="..\Assets\Python\Webserver.py" />
     <None Include="FVariableSystem.inl" />
-    <None Include="interfaceDirtyBits.inl" />
     <None Include="SConstruct" />
     <None Include="SConstruct_config.py" />
   </ItemGroup>

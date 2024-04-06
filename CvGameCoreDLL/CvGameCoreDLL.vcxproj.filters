@@ -46,9 +46,6 @@
     <Filter Include="Header Files\k-mod">
       <UniqueIdentifier>{91300af3-6d57-45ff-90a0-d3a8fd151c1f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\extraneous">
-      <UniqueIdentifier>{1eb5147e-ab1a-4014-a5a7-35fa50b8e9f1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\core">
       <UniqueIdentifier>{b38b99f3-4049-45bf-a9bf-4e09d8977cd4}</UniqueIdentifier>
     </Filter>
@@ -760,9 +757,6 @@
     <None Include="SConstruct" />
     <None Include="FVariableSystem.inl">
       <Filter>Header Files\firaxis engine</Filter>
-    </None>
-    <None Include="interfaceDirtyBits.inl">
-      <Filter>Header Files\extraneous</Filter>
     </None>
     <None Include="SConstruct_config.py" />
     <None Include="..\Assets\Python\CvAdvisorUtils.py">
