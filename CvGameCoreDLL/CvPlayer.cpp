@@ -16025,6 +16025,10 @@ void CvPlayer::changeEspionageSpendingWeightAgainstTeam(TeamTypes eIndex, int iC
 
 void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, int iY, int iData, bool bAdd)
 {
+	if (eAction == ADVANCEDSTARTACTION_NOOP) {
+		return;
+	}
+
 	if (getAdvancedStartPoints() < 0)
 	{
 		return;

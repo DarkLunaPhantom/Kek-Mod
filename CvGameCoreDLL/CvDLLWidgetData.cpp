@@ -728,6 +728,12 @@ bool CvDLLWidgetData::executeAction( CvWidgetDataStruct &widgetDataStruct )
 		doConvert(widgetDataStruct);
 		break;
 
+	case WIDGET_WB_EXIT_BUTTON:
+		if (gDLL->getInterfaceIFace()->isInAdvancedStart()) {
+			CvMessageControl::getInstance().sendAdvancedStartAction(ADVANCEDSTARTACTION_EXIT, GC.getGameINLINE().getActivePlayer(), -1, -1, -1, false);
+		}
+		break;
+
 	case WIDGET_REVOLUTION:
 		// handled in Python
 		break;
