@@ -1,8 +1,6 @@
 import os
 
-
 from SCons.Script import *
-
 
 import SConstruct_config as cfg
 
@@ -18,7 +16,7 @@ env = Environment(
     LIBS=['winmm', 'user32', 'boost_python-vc71-mt-1_32'],
     CPPFLAGS=['/W3', '/GS', '/GR', '/Gy', '/EHsc', '/Gd', '/Gm-', '/MD'],
     CPPDEFINES=['WIN32', '_WINDOWS', '_USRDLL'],
-    LINKFLAGS=['/DLL', '/NOLOGO', '/SUBSYSTEM:WINDOWS', '/LARGEADDRESSAWARE', '/TLBID:1'],
+    LINKFLAGS=['/DLL', '/NOLOGO', '/SUBSYSTEM:WINDOWS', '/LARGEADDRESSAWARE'],
     CC=f'"{cfg.VS_TOOLKIT_03}/bin/cl.exe"',
     CXX=f'"{cfg.VS_TOOLKIT_03}/bin/cl.exe"',
     LINK=f'"{cfg.VS_TOOLKIT_03}/bin/link.exe"',
@@ -27,15 +25,15 @@ env = Environment(
 
 if build == 'Debug':
     env.Append(
-        CPPDEFINES=['_DEBUG', 'LOG_AI', 'FASSERT_ENABLE'],
+        CPPDEFINES=['_DEBUG', 'LOG_AI'],
         CPPFLAGS=['/RTC1', '/Z7', '/Od'],
         LIBS=['msvcprt'],
-        LINKFLAGS=['/INCREMENTAL', '/DEBUG', f'/PDB:"{build}/CvGameCoreDLL.pdb"'],
+        LINKFLAGS=['/INCREMENTAL', '/DEBUG'],
     )
 if build in ['Release', 'Profile']:
     env.Append(
         CPPDEFINES=['NDEBUG', 'FINAL_RELEASE'],
-        CPPFLAGS=['/O2', '/Oy', '/Oi', '/Og', '/G7', '/arch:SSE2'],
+        CPPFLAGS=['/GL', '/O2', '/Oy', '/Oi', '/Og', '/G7', '/arch:SSE2'],
         LINKFLAGS=['/INCREMENTAL:NO', '/OPT:REF', '/OPT:ICF', '/LTCG'],
     )
 if build == 'Profile':
@@ -46,7 +44,7 @@ if build == 'Profile':
 VariantDir(build, '.', duplicate=False)
 src = [file for file in Glob(f'{build}/*.cpp') if str(file) not in ('_precompile.cpp', 'CvTextScreens.cpp')]
 
-pch = env.PCH(target=f'{build}/_precompile.pch', source='_precompile.cpp', CPPFLAGS=env['CPPFLAGS'])
+pch = env.PCH(target=f'{build}/_precompile.pch', source='_precompile.cpp')
 env.Depends(src, pch)
 src += [f'{build}/_precompile.obj']
 
@@ -58,4 +56,4 @@ if build == 'Release':
 
 dll = env.SharedLibrary(target=f'{build}/CvGameCoreDLL', source=src, CPPFLAGS=env['CPPFLAGS'] + ['/Yu"CvGameCoreDLL.h"', f'/Fp"{build}/_precompile.pch"'])
 Default(dll)
-Clean(build, ['*.dll', '*.exp', '*.idb', '*.ilk', '*.lib', '*.obj', '*.pdb', '*.res'])
+Clean(build, ['*.dll', '*.exp', '*.idb', '*.ilk', '*.lib', '*.obj', '*.pch', '*.pdb', '*.res'])

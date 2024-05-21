@@ -46,11 +46,11 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
     <NMakeBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">scons build=debug</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">scons -c
+    <NMakeReBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">scons build=debug -c
 scons build=debug</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">scons -c build=debug</NMakeCleanCommandLine>
+    <NMakeCleanCommandLine Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">scons build=debug -c</NMakeCleanCommandLine>
     <NMakeOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
-    <NMakePreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">WIN32;_WINDOWS;_USRDLL;_DEBUG;LOG_AI;FASSERT_ENABLE;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <NMakePreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">WIN32;_WINDOWS;_USRDLL;_DEBUG;LOG_AI;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
     <NMakeIncludeSearchPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Git\K-Mod\CvGameCoreDLL;D:\Games\steamapps\common\Sid Meier%27s Civilization IV Beyond the Sword\Beyond the Sword\CvGameCoreDLL\Boost-1.32.0\include;D:\Games\steamapps\common\Sid Meier%27s Civilization IV Beyond the Sword\Beyond the Sword\CvGameCoreDLL\Python24\include;C:\Program Files %28x86%29\Civ4SDK\Microsoft Visual C++ Toolkit 2003\include;C:\Program Files %28x86%29\Civ4SDK\WindowsSDK\include;C:\Program Files %28x86%29\Civ4SDK\WindowsSDK\include\mfc;C:\Program Files %28x86%29\Microsoft Visual Studio 10.0\VC\include;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
     <NMakeForcedIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(NMakeForcedIncludes)</NMakeForcedIncludes>
     <NMakeAssemblySearchPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(NMakeAssemblySearchPath)</NMakeAssemblySearchPath>
@@ -58,9 +58,9 @@ scons build=debug</NMakeReBuildCommandLine>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
     <NMakeBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">scons build=release</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">scons -c
+    <NMakeReBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">scons build=release -c
 scons build=release</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">scons -c build=release</NMakeCleanCommandLine>
+    <NMakeCleanCommandLine Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">scons build=release -c</NMakeCleanCommandLine>
     <NMakeOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
     <NMakePreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">WIN32;_WINDOWS;_USRDLL;NDEBUG;FINAL_RELEASE;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
     <NMakeIncludeSearchPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Git\K-Mod\CvGameCoreDLL;D:\Games\steamapps\common\Sid Meier%27s Civilization IV Beyond the Sword\Beyond the Sword\CvGameCoreDLL\Boost-1.32.0\include;D:\Games\steamapps\common\Sid Meier%27s Civilization IV Beyond the Sword\Beyond the Sword\CvGameCoreDLL\Python24\include;C:\Program Files %28x86%29\Civ4SDK\Microsoft Visual C++ Toolkit 2003\include;C:\Program Files %28x86%29\Civ4SDK\WindowsSDK\include;C:\Program Files %28x86%29\Civ4SDK\WindowsSDK\include\mfc;C:\Program Files %28x86%29\Microsoft Visual Studio 10.0\VC\include;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
@@ -70,9 +70,9 @@ scons build=release</NMakeReBuildCommandLine>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">$(Configuration)\</IntDir>
     <NMakeBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">scons build=profile</NMakeBuildCommandLine>
-    <NMakeReBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">scons -c
+    <NMakeReBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">scons build=profile -c
 scons build=profile</NMakeReBuildCommandLine>
-    <NMakeCleanCommandLine Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">scons -c build=profile</NMakeCleanCommandLine>
+    <NMakeCleanCommandLine Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">scons build=profile -c</NMakeCleanCommandLine>
     <NMakeOutput Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'" />
     <NMakePreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">WIN32;_WINDOWS;_USRDLL;NDEBUG;FINAL_RELEASE;FP_PROFILE_ENABLE;USE_INTERNAL_PROFILER;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
     <NMakeIncludeSearchPath Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">D:\Git\K-Mod\CvGameCoreDLL;D:\Games\steamapps\common\Sid Meier%27s Civilization IV Beyond the Sword\Beyond the Sword\CvGameCoreDLL\Boost-1.32.0\include;D:\Games\steamapps\common\Sid Meier%27s Civilization IV Beyond the Sword\Beyond the Sword\CvGameCoreDLL\Python24\include;C:\Program Files %28x86%29\Civ4SDK\Microsoft Visual C++ Toolkit 2003\include;C:\Program Files %28x86%29\Civ4SDK\WindowsSDK\include;C:\Program Files %28x86%29\Civ4SDK\WindowsSDK\include\mfc;C:\Program Files %28x86%29\Microsoft Visual Studio 10.0\VC\include;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
