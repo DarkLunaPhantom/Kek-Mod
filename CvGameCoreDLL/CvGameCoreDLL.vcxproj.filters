@@ -139,6 +139,9 @@
     <Filter Include="Python Files\Screens\PlatyBuilder">
       <UniqueIdentifier>{9fed7d23-ff79-4c46-8653-e8f9434b2d5a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Json Files">
+      <UniqueIdentifier>{26c61835-daf9-40a2-adb7-6355620b4d13}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CvTextScreens.cpp">
@@ -1277,6 +1280,12 @@
     </None>
     <None Include="..\Assets\Python\PitBoss\PbWizard.py">
       <Filter>Python Files\PitBoss</Filter>
+    </None>
+    <None Include="..\update_config.json">
+      <Filter>Json Files</Filter>
+    </None>
+    <None Include="..\update_info.json">
+      <Filter>Json Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
