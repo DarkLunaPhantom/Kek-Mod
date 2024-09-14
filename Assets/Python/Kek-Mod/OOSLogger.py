@@ -53,7 +53,7 @@ def writeLog():
 		activePlayer = gc.getPlayer(gc.getGame().getActivePlayer())
 		playername = str(activePlayer.getID()) + " " + CvUtil.convertToStr(activePlayer.getName())
 	else:
-		playername = "PitBoss" # DarkLunaPhantom - PitBoss logging doesn't work here anyway since CyInterface::isOOSVisible is not available in PitBoss (nor are BUG modules currently).
+		playername = "PitBoss"
 	# advc: Prepend id b/c player names can be the same (that happens easily when testing on a single machine)
 	szNewFilename = BugPath.getRootDir() + "\\Logs\\OOSLog - %s - Turn %s - %s.log" % (playername, gc.getGame().getGameTurn(), datetime.now().strftime("%Y-%m-%d %H-%M-%S"))
 

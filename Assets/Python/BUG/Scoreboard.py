@@ -153,6 +153,9 @@ def onDealCanceled(argsList):
 class Column:
 	
 	def __init__(self, key, id, type=SKIP, text=None, alt=None):
+		# DarkLunaPhantom
+		if CyGame().isPitbossHost():
+			return
 		self.key = key
 		self.id = id
 		self.type = type

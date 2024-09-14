@@ -61,6 +61,9 @@ def getFavoriteCivicInfo (iPlayer):
 	return favorite
 
 def doUpdate ():
+	# DarkLunaPhantom
+	if CyGame().isPitbossHost():
+		return
 	""" Goes through the current diplomacy situation to determine potential favorite civics for each civ. """
 	if gDetectionNecessary:
 		BugUtil.debug("FavoriteCivicDetector.doUpdate() START")

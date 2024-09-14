@@ -140,6 +140,11 @@ class AbstractAutoLogEvent(object):
 class AutoLogEvent(AbstractAutoLogEvent):
 
 	def __init__(self, eventManager, *args, **kwargs):
+		# DarkLunaPhantom
+		if CyGame().isPitbossHost():
+			BugUtil.debug("BugInit - BUG component disabled for PitBoss host")
+			return
+
 		super(AutoLogEvent, self).__init__(eventManager, *args, **kwargs)
 
 		eventManager.addEventHandler("kbdEvent", self.onKbdEvent)

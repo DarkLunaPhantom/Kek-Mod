@@ -221,6 +221,9 @@ class AbstractCityAlertManager(AbstractStatefulAlert):
 	
 	def checkAllActivePlayerCities(self):
 		"Loops over active player's cities, telling each alert to perform its check."
+		# DarkLunaPhantom
+		if CyGame().isPitbossHost():
+			return
 		ePlayer, player = PlayerUtil.getActivePlayerAndID()
 		for city in PlayerUtil.playerCities(player):
 			for alert in self.alerts:
@@ -294,6 +297,9 @@ class AbstractCityAlert:
 	
 	def reset(self):
 		"Clears state kept for each city."
+		# DarkLunaPhantom
+		if CyGame().isPitbossHost():
+			return
 		self._beforeReset()
 		player = PlayerUtil.getActivePlayer()
 		for city in PlayerUtil.playerCities(player):
@@ -740,6 +746,9 @@ class GoldTrade(AbstractStatefulAlert):
 		eventManager.addEventHandler("BeginActivePlayerTurn", self.onBeginActivePlayerTurn)
 
 	def onBeginActivePlayerTurn(self, argsList):
+		# DarkLunaPhantom
+		if CyGame().isPitbossHost():
+			return
 		if (not Civ4lertsOpt.isShowGoldTradeAlert()):
 			return
 		playerID = PlayerUtil.getActivePlayerID()
@@ -778,6 +787,9 @@ class GoldPerTurnTrade(AbstractStatefulAlert):
 		eventManager.addEventHandler("BeginActivePlayerTurn", self.onBeginActivePlayerTurn)
 
 	def onBeginActivePlayerTurn(self, argsList):
+		# DarkLunaPhantom
+		if CyGame().isPitbossHost():
+			return
 		if (not Civ4lertsOpt.isShowGoldPerTurnTradeAlert()):
 			return
 		playerID = PlayerUtil.getActivePlayerID()
@@ -853,6 +865,9 @@ class RefusesToTalk(AbstractStatefulAlert):
 		"""
 		Calls check() only if the active team is any or has met all of the given teams.
 		"""
+		# DarkLunaPhantom
+		if CyGame().isPitbossHost():
+			return
 		eActiveTeam, activeTeam = PlayerUtil.getActiveTeamAndID()
 		for eTeam in eTeams:
 			if eActiveTeam != eTeam and not activeTeam.isHasMet(eTeam):
@@ -860,6 +875,9 @@ class RefusesToTalk(AbstractStatefulAlert):
 		self.check()
 
 	def check(self):
+		# DarkLunaPhantom
+		if CyGame().isPitbossHost():
+			return
 		if (not Civ4lertsOpt.isShowRefusesToTalkAlert()):
 			return
 		eActivePlayer, activePlayer = PlayerUtil.getActivePlayerAndID()
@@ -933,6 +951,9 @@ class WorstEnemy(AbstractStatefulAlert):
 		self.check()
 
 	def check(self):
+		# DarkLunaPhantom
+		if CyGame().isPitbossHost():
+			return
 		if (not Civ4lertsOpt.isShowWorstEnemyAlert()):
 			return
 		eActivePlayer = PlayerUtil.getActivePlayerID()
