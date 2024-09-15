@@ -2723,7 +2723,7 @@ enum AdvancedStartActionTypes				// Exposed to Python
 {
 	NO_ADVANCEDSTARTACTION = -1,
 
-	ADVANCEDSTARTACTION_NOOP, // Used by EXE by its value during advanced start when exiting to main menu or clicking begin.
+	ADVANCEDSTARTACTION_NOOP, // DarkLunaPhantom - Used by EXE by its value during advanced start when exiting to main menu or clicking begin.
 	ADVANCEDSTARTACTION_EXIT,
 	ADVANCEDSTARTACTION_UNIT,
 	ADVANCEDSTARTACTION_CITY,

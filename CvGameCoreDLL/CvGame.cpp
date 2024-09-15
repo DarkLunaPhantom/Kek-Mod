@@ -7139,11 +7139,12 @@ void CvGame::createBarbarianUnits()
 		bAnimals = true;
 	}
 
+	// DarkLunaPhantom - Display warning on first turn when barbarian units can spawn.
 	const int barb_start_turn = GC.getHandicapInfo(getHandicapType()).getBarbarianCreationTurnsElapsed() * GC.getGameSpeedInfo(getGameSpeedType()).getBarbPercent() / 100;
 	if (getElapsedGameTurns() < barb_start_turn) {
 		bAnimals = true;
 	} else if (getElapsedGameTurns() == barb_start_turn) {
-		for (int i = 0; i < MAX_PLAYERS; ++i) {
+		for (int i = 0; i < MAX_CIV_PLAYERS; ++i) {
 			if (GET_PLAYER((PlayerTypes)i).isAlive()) {
 				CvWString message = gDLL->getText("TXT_KEY_BARBARIAN_UNITS_WARNING");
 				ColorTypes color = (ColorTypes)GC.getInfoTypeForString("COLOR_WARNING_TEXT");
