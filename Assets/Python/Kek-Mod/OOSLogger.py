@@ -80,6 +80,15 @@ def writeLog():
 	pFile.write(SEPERATOR)
 	pFile.write(SEPERATOR)
 	pFile.write("\n\n")
+	
+	for i in range(gc.getNumGameOptionInfos()):
+		pFile.write("%s: %d\n" % (gc.getGameOptionInfo(i).getDescription(), gc.getGame().isOption(i)))
+	pFile.write("\n")
+	if gc.getGame().isGameMultiPlayer():
+		for i in range(gc.getNumMPOptionInfos()):
+			pFile.write("%s: %d\n" % (gc.getMPOptionInfo(i).getDescription(), gc.getGame().isMPOption(i)))
+		pFile.write("\n")
+
 	# advc: Call getSeed instead of get -- no need to change the state of the RNGs here.
 	pFile.write("Last Map Rand Value: %d\n" % CyGame().getMapRand().getSeed())
 	pFile.write("Last Soren Rand Value: %d\n" % CyGame().getSorenRand().getSeed())

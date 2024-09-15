@@ -8333,6 +8333,17 @@ int CvGame::calculateSyncChecksum()
 
 	iValue = 0;
 
+	// DarkLunaPhantom - Added options to checksum.
+	for (int i = 0; i < NUM_GAMEOPTION_TYPES; ++i) {
+		iValue += (i + 1) * isOption((GameOptionTypes)i);
+	}
+
+	if (isGameMultiPlayer()) {
+		for (int i = 0; i < NUM_MPOPTION_TYPES; ++i) {
+			iValue += (i + 1) * isMPOption((MultiplayerOptionTypes)i);
+		}
+	}
+
 	iValue += getMapRand().getSeed();
 	iValue += getSorenRand().getSeed();
 
