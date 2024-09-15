@@ -7139,9 +7139,17 @@ void CvGame::createBarbarianUnits()
 		bAnimals = true;
 	}
 
-	if (getElapsedGameTurns() < ((GC.getHandicapInfo(getHandicapType()).getBarbarianCreationTurnsElapsed() * GC.getGameSpeedInfo(getGameSpeedType()).getBarbPercent()) / 100))
-	{
+	const int barb_start_turn = GC.getHandicapInfo(getHandicapType()).getBarbarianCreationTurnsElapsed() * GC.getGameSpeedInfo(getGameSpeedType()).getBarbPercent() / 100;
+	if (getElapsedGameTurns() < barb_start_turn) {
 		bAnimals = true;
+	} else if (getElapsedGameTurns() == barb_start_turn) {
+		for (int i = 0; i < MAX_PLAYERS; ++i) {
+			if (GET_PLAYER((PlayerTypes)i).isAlive()) {
+				CvWString message = gDLL->getText("TXT_KEY_BARBARIAN_UNITS_WARNING");
+				ColorTypes color = (ColorTypes)GC.getInfoTypeForString("COLOR_WARNING_TEXT");
+				gDLL->getInterfaceIFace()->addHumanMessage(((PlayerTypes)i), false, GC.getEVENT_MESSAGE_TIME(), message, "AS2D_GLOBECIRCUMNAVIGATED", MESSAGE_TYPE_MAJOR_EVENT, NULL, color);
+			}
+		}
 	}
 
 	if (bAnimals)

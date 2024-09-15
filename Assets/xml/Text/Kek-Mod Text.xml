@@ -12,10 +12,10 @@
 	<TEXT>
 		<Tag>TXT_KEY_GAME_OPTION_ADVANCED_SETTLERS_HELP</Tag>
 		<English>New cities start with more population and buildings as the game progresses through eras.</English>
-		<French>Les nouvelles villes commencent avec plus de population et de b&#226;timents que le jeu progresse &#224; travers les &#233;poques.</French>
-		<German>Neue St&#228;dte beginnen mit mehr Bev&#246;lkerung und Gebäuden, w&#228;hrend das Spiel in Epochen voranschreitet.</German>
-		<Italian>Le nuove citt&#224; iniziano con pi&#249; popolazione ed edifici man mano che il gioco progredisce attraverso le epoche.</Italian>
-		<Spanish>Las nuevas ciudades comienzan con m&#225;s poblaci&#243;n y edificios a medida que el juego avanza por &#233;pocas.</Spanish>
+		<French>Les nouvelles villes commencent avec plus de population et de b&#226;timents au fur et &#224; mesure que le jeu progresse &#224; travers les &#232;res.</French>
+		<German>Neue St&#228;dte beginnen mit mehr Bev&#246;lkerung und Geb&#228;uden, w&#228;hrend das Spiel durch die Epochen fortschreitet.</German>
+		<Italian>Le nuove citt&#224; iniziano con pi&#249; popolazione e edifici man mano che il gioco progredisce attraverso le ere.</Italian>
+		<Spanish>Las nuevas ciudades comienzan con m&#225;s poblaci&#243;n y edificios a medida que el juego avanza a trav&#233;s de las eras.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_GAME_OPTION_DUMMY</Tag>
@@ -52,10 +52,10 @@
 		<TEXT>
 		<Tag>TXT_KEY_MISC_PLAYER_CONVERT_NO_RELIGION</Tag>
 		<English>%s1_PlyrName converts to [COLOR_HIGHLIGHT_TEXT]No State Religion[COLOR_REVERT]!</English>
-		<French>%s1_PlyrName se convertit &#224; [COLOR_HIGHLIGHT_TEXT]aucune religion d'État.[COLOR_REVERT]!</French>
-		<German>%s1_PlyrName konvertiert zu [COLOR_HIGHLIGHT_TEXT]keiner Staatsreligion[COLOR_REVERT]!</German>
-		<Italian>%s1_PlyrName si converte in [COLOR_HIGHLIGHT_TEXT]nessuna religione di stato[COLOR_REVERT]!</Italian>
-		<Spanish>%s1_PlyrName se convierte a [COLOR_HIGHLIGHT_TEXT]la religión no estatal[COLOR_REVERT].</Spanish>
+		<French>%s1_PlyrName se convertit &#224; [COLOR_HIGHLIGHT_TEXT]aucune religion d'&#201;tat[COLOR_REVERT]!</French>
+		<German>%s1_PlyrName wechselt zu [COLOR_HIGHLIGHT_TEXT]keiner Staatsreligion[COLOR_REVERT]!</German>
+		<Italian>%s1_PlyrName si converte a [COLOR_HIGHLIGHT_TEXT]nessuna religione di stato[COLOR_REVERT]!</Italian>
+		<Spanish>%s1_PlyrName se convierte a [COLOR_HIGHLIGHT_TEXT]sin religi&#243;n estatal[COLOR_REVERT]!</Spanish>
 	</TEXT>
 		<TEXT>
 		<Tag>TXT_KEY_PROCESS_ESPIONAGE</Tag>
@@ -164,5 +164,13 @@
 		<German>Flaches</German>
 		<Italian>Piatto</Italian>
 		<Spanish>Plano</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BARBARIAN_UNITS_WARNING</Tag>
+		<English>Barbarian forces are on the rise across untamed lands.</English>
+		<French>Les forces barbares se l&#232;vent &#224; travers les terres sauvages.</French>
+		<German>Barbarische Streitkr&#228;fte erheben sich &#252;ber die ungez&#228;hmten Lande.</German>
+		<Italian>Le forze barbariche stanno crescendo nelle terre selvagge.</Italian>
+		<Spanish>Las fuerzas b&#225;rbaras est&#225;n en auge en tierras ind&#243;mitas.</Spanish>
 	</TEXT>
 </Civ4GameText>
