@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!-- DarkLunaPhantom - From pyconsole by Yggdrasil and Zulan. -->
+
+<mod id="Civ4ShellBackend" module="Civ4ShellBackend">
+    <event type="GameStart" function="onGameStart"/>
+    <event type="gameUpdate" function="onGameUpdate"/>
+</mod>

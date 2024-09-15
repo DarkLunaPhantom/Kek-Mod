@@ -1287,6 +1287,12 @@
     <None Include="..\update_info.json">
       <Filter>Json Files</Filter>
     </None>
+    <None Include="..\Assets\Python\Kek-Mod\Civ4ShellBackend.py">
+      <Filter>Python Files\Kek-Mod</Filter>
+    </None>
+    <None Include="..\Assets\Python\Kek-Mod\simplejson.py">
+      <Filter>Python Files\Kek-Mod</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CvGameCoreDLL.rc">
@@ -1680,6 +1686,9 @@
     </Xml>
     <Xml Include="..\Assets\xml\Technologies\CIV4TechnologiesSchema.xml">
       <Filter>Xml Files\Technologies</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Config\Civ4ShellBackend.xml">
+      <Filter>Config Files</Filter>
     </Xml>
   </ItemGroup>
 </Project>

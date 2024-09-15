@@ -3,9 +3,7 @@
 <!-- DarkLunaPhantom - OOS logging, idea from Fall from Heaven 2 by Kael. -->
 
 <mod id="OOSLogger" module="OOSLogger">
-
-    <event type="gameUpdate" function="onGameUpdate"/>
     <event type="GameStart" function="onGameStart"/>
     <event type="OnLoad" function="onGameLoad"/>
-
+    <event type="gameUpdate" function="onGameUpdate"/>
 </mod>
