@@ -30,7 +30,7 @@ void CyGlobalContextPythonInterface1(python::class_<CyGlobalContext>& x)
 		.def("isLogging", &CyGlobalContext::isLogging, "bool () - returns true iff logging is enabled in the INI")
 		.def("isRandLogging", &CyGlobalContext::isRandLogging, "bool () - returns true iff rand logging (MPLog) is enabled in the INI")
 		// </dlph.27>
-		.def("isSynchLogging", &CyGlobalContext::isLogging, "bool () - returns true iff synch logging is enabled in the INI") // DarkLunaPhantom
+		.def("isSynchLogging", &CyGlobalContext::isSynchLogging, "bool () - returns true iff synch logging is enabled in the INI") // DarkLunaPhantom
 		// infos
 		.def("getNumEffectInfos", &CyGlobalContext::getNumEffectInfos, "int () - Number of effect infos")
 		.def("getEffectInfo", &CyGlobalContext::getEffectInfo, python::return_value_policy<python::reference_existing_object>(), "(int (EffectTypes) eEffectID) - CvInfo for EffectID")
