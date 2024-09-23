@@ -21,7 +21,7 @@
 			</option>
 			
 			<option id="ShowDotMap" key="Show DotMap" 
-					type="boolean" default="True">
+					type="boolean" default="False">
 				<change function="onShowDotMapOptionChanged"/>
 			</option>
 			<option id="DotMapDrawDots" key="DotMap Draw Dots" 
