@@ -387,6 +387,7 @@ public:
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 	int calculateYield(YieldTypes eIndex, bool bDisplay = false) const;												// Exposed to Python
+	int calculateYieldAs(PlayerTypes as_player, YieldTypes eIndex, bool bDisplay = false) const; // DarkLunaPhantom												// Exposed to Python
 	bool hasYield() const;																																		// Exposed to Python
 	void updateYield();
 	// int calculateMaxYield(YieldTypes eYield) const; // disabled by K-Mod

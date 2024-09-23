@@ -206,6 +206,7 @@ void CyPlotPythonInterface1(python::class_<CyPlot>& x)
 		.def("calculateTotalBestNatureYield", &CyPlot::calculateTotalBestNatureYield, "int (int (TeamTypes) eTeam)")
 		.def("calculateImprovementYieldChange", &CyPlot::calculateImprovementYieldChange, "int (int (ImprovementTypes) eImprovement, int (YieldTypes) eYield, int (PlayerTypes) ePlayer, bool bOptimal)")
 		.def("calculateYield", &CyPlot::calculateYield, "int (YieldTypes eYield, bool bDisplay)")
+		.def("calculateYieldAs", &CyPlot::calculateYieldAs, "int (int (PlayerTypes) as_player, int (YieldTypes) eYield, bool bDisplay)")
 		.def("hasYield", &CyPlot::hasYield, "bool ()")
 
 		.def("getCulture", &CyPlot::getCulture, "int (int /*PlayerTypes*/ eIndex)")

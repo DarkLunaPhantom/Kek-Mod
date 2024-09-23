@@ -211,6 +211,7 @@ public:
 	int calculateTotalBestNatureYield(TeamTypes eTeam);
 	int calculateImprovementYieldChange(int /*ImprovementTypes*/ eImprovement, YieldTypes eYield, int /*PlayerTypes*/ ePlayer, bool bOptimal);
 	int calculateYield(YieldTypes eIndex, bool bDisplay);
+	int calculateYieldAs(int /*PlayerTypes*/ as_player, int /*YieldTypes*/ eIndex, bool bDisplay);
 	bool hasYield();
 
 	int getCulture(int /*PlayerTypes*/ eIndex);

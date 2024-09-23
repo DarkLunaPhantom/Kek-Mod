@@ -865,6 +865,10 @@ int CyPlot::calculateYield(YieldTypes eIndex, bool bDisplay)
 	return m_pPlot ? m_pPlot->calculateYield(eIndex, bDisplay) : -1;
 }
 
+int CyPlot::calculateYieldAs(int /*PlayerTypes*/ as_player, int /*YieldTypes*/ eIndex, bool bDisplay) {
+	return m_pPlot ? m_pPlot->calculateYieldAs((PlayerTypes)as_player, (YieldTypes)eIndex, bDisplay) : -1;
+}
+
 bool CyPlot::hasYield()
 {
 	return m_pPlot ? m_pPlot->hasYield() : false;

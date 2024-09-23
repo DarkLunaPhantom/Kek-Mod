@@ -6373,7 +6373,13 @@ int CvPlot::calculateImprovementYieldChange(ImprovementTypes eImprovement, Yield
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 
-int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay) const
+// DarkLunaPhantom - Access other player's display data.
+int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay) const {
+	return calculateYieldAs(GC.getGameINLINE().getActivePlayer(), eYield, bDisplay);
+}
+
+
+int CvPlot::calculateYieldAs(PlayerTypes as_player, YieldTypes eYield, bool bDisplay) const
 {
 	CvCity* pCity;
 	CvCity* pWorkingCity;
@@ -6382,6 +6388,8 @@ int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay) const
 	PlayerTypes ePlayer;
 	bool bCity;
 	int iYield;
+
+	TeamTypes as_team = as_player != NO_PLAYER ? GET_PLAYER(as_player).getTeam() : NO_TEAM;
 
 	if (bDisplay && GC.getGameINLINE().isDebugMode())
 	{
@@ -6402,13 +6410,13 @@ int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay) const
 
 	if (bDisplay)
 	{
-		ePlayer = getRevealedOwner(GC.getGameINLINE().getActiveTeam(), false);
-		eImprovement = getRevealedImprovementType(GC.getGameINLINE().getActiveTeam(), false);
-		eRoute = getRevealedRouteType(GC.getGameINLINE().getActiveTeam(), false);
+		ePlayer = getRevealedOwner(as_team, false);
+		eImprovement = getRevealedImprovementType(as_team, false);
+		eRoute = getRevealedRouteType(as_team, false);
 
 		if (ePlayer == NO_PLAYER)
 		{
-			ePlayer = GC.getGameINLINE().getActivePlayer();
+			ePlayer = as_player;
 		}
 	}
 	else
@@ -6436,7 +6444,7 @@ int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay) const
 
 		if (pCity != NULL)
 		{
-			if (!bDisplay || pCity->isRevealed(GC.getGameINLINE().getActiveTeam(), false))
+			if (!bDisplay || pCity->isRevealed(as_team, false))
 			{
 				iYield += GC.getYieldInfo(eYield).getCityChange();
 				if (GC.getYieldInfo(eYield).getPopulationChangeDivisor() != 0)
@@ -6457,7 +6465,7 @@ int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay) const
 
 				if (pWorkingCity != NULL)
 				{
-					if (!bDisplay || pWorkingCity->isRevealed(GC.getGameINLINE().getActiveTeam(), false))
+					if (!bDisplay || pWorkingCity->isRevealed(as_team, false))
 					{
 						iYield += pWorkingCity->getSeaPlotYield(eYield);
 					}
@@ -6473,7 +6481,7 @@ int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay) const
 
 				if (NULL != pWorkingCity)
 				{
-					if (!bDisplay || pWorkingCity->isRevealed(GC.getGameINLINE().getActiveTeam(), false))
+					if (!bDisplay || pWorkingCity->isRevealed(as_team, false))
 					{
 						iYield += pWorkingCity->getRiverPlotYield(eYield);
 					}
