@@ -1,3 +1,22 @@
+0.3.0 - 2024-09-23 - (based on K-Mod v1.46)
+WARNING: This breaks savegame compatibility.
+
+    Changed mod folder name to Kek-Mod.
+    Added useful multiplayer executables and batch file that starts mod using them.
+    Added all K-Mod files and Blue Marble.
+    Changed versioning to SemVer.
+    Replaced Makefile with SConstruct.
+    Advanced Start is not autoplayed on exit.
+    Enabled BUG Mod in PitBoss.
+    Changed most of BUG Mod defaults.
+    Added backend for pyconsole by YggdrasiI and Zulan.
+    Increased Disorganized penalty for barbarian ships to -20% strength.
+    Warning displayed on first turn of barbarian spawns.
+    Game and multiplayer options added to OOS checksum.
+    Fixed Python isSynchLogging.
+    Easier access to player's yields for PitBoss.
+
+
 v0.26 - 05/Feb/2022 - (based on K-Mod v1.46)
 
     Changed starting location conditions to improve avoidance of bad terrain and edges of bad terrain.
